@@ -1,5 +1,4 @@
 // @refresh reload
-import "cal-sans";
 import { mount, StartClient } from "@solidjs/start/client";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
