@@ -1,0 +1,118 @@
+@property --x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --y {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.btn {
+  position: relative;
+  /*background: var(--color-3a-gray-darkest);*/
+  background-clip: padding-box; /* !importanté */
+  border: solid 2px var(--color-3a-green); /* !importanté */
+  color: var(--color-3a-green);
+  padding-left: 1.5rem;
+  transition: all 0.3s 0.1s;
+  font-family: "Cal Sans", sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.btn::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  right: calc(100% - 2.25rem);
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-3a-green);
+  opacity: 1;
+  transform-origin: center right;
+  transform: translateY(-50%);
+  transition: all 0.2s 0s;
+}
+
+.btn::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-top: 2px solid var(--color-3a-green);
+  border-right: 2px solid var(--color-3a-green);
+  transform-origin: top center;
+  transform: scale(0.1) rotate(45deg) translateY(-50%);
+  opacity: 0;
+  transition: all 0.2s 0.15s;
+}
+
+.btn:hover,
+.btn:focus {
+  padding-left: 3rem;
+  transition: all 0.3s;
+}
+
+.btn:focus::before,
+.btn:hover::before {
+  opacity: 1;
+  width: 1.5rem;
+}
+
+.btn:focus::after,
+.btn:hover::after {
+  transform: scale(1) rotate(45deg) translateY(-50%);
+  opacity: 1;
+  transition: all 0.2s 0.15s;
+}
+
+/*.btn:before {*/
+/*  content: "";*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  right: 0;*/
+/*  bottom: 0;*/
+/*  left: 0;*/
+/*  z-index: -1;*/
+/*  margin: -2px;*/
+/*  border-radius: inherit;*/
+/*  background: var(--color-3a-green);*/
+/*  transition: background;*/
+/*}*/
+
+/*.btn:hover::before {*/
+/*  background: conic-gradient(*/
+/*    from var(--y),*/
+/*    var(--color-3a-green-darker),*/
+/*    var(--color-3a-green-darker) 25%,*/
+/*    var(--color-3a-green) 40%,*/
+/*    var(--color-3a-green-lighter) 48%,*/
+/*    white 50%,*/
+/*    var(--color-3a-green-lighter) 52%,*/
+/*    var(--color-3a-green) 60%,*/
+/*    var(--color-3a-green-darker) 75%*/
+/*  );*/
+/*  animation: colorChange 3s infinite linear;*/
+/*}*/
+
+/*@keyframes colorChange {*/
+/*  0% {*/
+/*    --x: 0%;*/
+/*    --y: -360deg;*/
+/*  }*/
+/*  50% {*/
+/*    --x: 50%;*/
+/*    --y: -180deg;*/
+/*  }*/
+/*  100% {*/
+/*    --x: 100%;*/
+/*    --y: 0deg;*/
+/*  }*/
+/*}*/
