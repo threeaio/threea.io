@@ -7,120 +7,116 @@ import { Headline } from "~/components/Headline";
 import { HugeText } from "~/components/HugeText";
 import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
+import { onMount } from "solid-js";
+import { gsap } from "gsap";
 
 export default function Home() {
+  let container: HTMLElement;
+
+  onMount(() => {
+    let mm = gsap.matchMedia(),
+      breakPoint = 800;
+    mm.add(
+      {
+        isDesktop: `(min-width: ${breakPoint}px) and (prefers-reduced-motion: no-preference)`,
+        isMobile: `(max-width: ${breakPoint - 1}px) and (prefers-reduced-motion: no-preference)`,
+      },
+      (context) => {
+        let tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container,
+            scrub: true,
+            start: "top 60%",
+            end: "120% 100% ",
+          },
+        });
+
+        tl.addLabel("heading").from("#big-headline-index", {
+          y: 80,
+          autoAlpha: 0,
+          duration: 1,
+        });
+        tl.addLabel("items").from(
+          ".item",
+          {
+            autoAlpha: 0,
+            stagger: 0.2,
+            scale: 0.8,
+            y: -60,
+          },
+          ">-.3s",
+        );
+      },
+    );
+  });
   return (
     <LandingPageLayout>
       <GridIndicator />
       <main>
         <Introduction />
         <Divider />
-        <FullWidth>
-          <HugeText>
-            <div class="flex items-center py-12 md:py-16 xl:py-20">
-              <h2 class="text-pretty">
-                From Concept to Experience:{" "}
-                <span class="text-3a-green">A Holistic Approach</span>
-              </h2>
+        <div ref={(el) => (container = el)}>
+          <FullWidth>
+            <HugeText>
+              <div
+                id="big-headline-index"
+                class="flex items-center py-12 md:py-16 xl:py-20"
+              >
+                <h2 class="text-pretty">
+                  From Experience to Concept{" "}
+                  <span class="text-3a-green">and Back</span>
+                </h2>
+              </div>
+            </HugeText>
+          </FullWidth>
+          <FullWidth>
+            <div class="grid grid-cols-3 w-full">
+              {/*Conduct*/}
+              <div class="item col-span-3 md:col-span-1 py-12">
+                <Headline>Anti-Agony</Headline>
+                <SmallText class="md:pr-12">
+                  <p class="text-3a-green !mb-6">
+                    Improving daily interactions and creating tools for the
+                    people through thoughtful, human-centred software is what
+                    drives me
+                  </p>
+                  <Button href="/anti-agony" asA={true}>
+                    More <span class="hidden lg:inline">on my Motivation</span>
+                  </Button>
+                </SmallText>
+              </div>
+              {/*Code*/}
+              <div class="item col-span-3 md:col-span-1 py-12">
+                <Headline>Async Action</Headline>
+                <SmallText class="md:pr-12">
+                  <p class="text-3a-green !mb-6">
+                    As a developer, I deliver simple functional UI-solutions,
+                    focused on maintainability, stability and user-friendliness
+                  </p>
+                  <Button href="/async-action" asA={true}>
+                    More <span class="hidden lg:inline">on Coding</span>
+                  </Button>
+                </SmallText>
+              </div>
+              {/*Lead*/}
+              <div class="item col-span-3 md:col-span-1 py-12">
+                <Headline>Agile Leader</Headline>
+                <SmallText class="md:pr-12">
+                  <p class="text-3a-green !mb-6">
+                    I have a special instinct for the right solution that fits
+                    the skill and needs of team and convinces in terms of
+                    results and costs
+                  </p>
+                  <Button href="/agile-leadership" asA={true}>
+                    <span>
+                      More <span class="hidden lg:inline">on Processes</span>
+                    </span>
+                  </Button>
+                </SmallText>
+              </div>
             </div>
-          </HugeText>
-        </FullWidth>
-        <FullWidth>
-          <div class="grid grid-cols-3 w-full">
-            {/*Conduct*/}
-            <div class="col-span-3 md:col-span-1 py-12">
-              <Headline>Anti-Agony</Headline>
-              <SmallText>
-                <p class="text-3a-green !mb-12">
-                  Improving daily interactions through thoughtful, human-centred
-                  software design is what drives me
-                </p>
-                <div class="hidden">
-                  <p>
-                    I adopt a human-centered approach, mindful also of
-                    production, distribution, and environmental impact.
-                    High-quality design is crucial, especially for applications
-                    used daily for hours.
-                  </p>
-                  <p>
-                    It’s about simplifying processes while making software
-                    enjoyable and engaging. My goal is to create software that
-                    serves people by being efficient, enjoyable, and
-                    human-friendly.
-                  </p>
-                </div>
-                <Button href="/about" asA={true}>
-                  More <span class="hidden lg:inline">on my Motivation</span>
-                </Button>
-              </SmallText>
-            </div>
-            {/*Code*/}
-            <div class="col-span-3 md:col-span-1 py-12">
-              <Headline>Async Action</Headline>
-              <SmallText>
-                <p class="text-3a-green !mb-12">
-                  As a developer, I deliver simple functional solutions, focused
-                  on maintainability and user-friendliness
-                </p>
-                <div class="hidden">
-                  <p>
-                    With over 15 years in web/UI and 8+ years in TypeScript,
-                    I've tackled projects in tourism, smart home, and ticketing.
-                  </p>
-                  <p>
-                    My journey into functional programming took off with Angular
-                    2 in 2017, leveraging RxJS and NgRx for robust, reactive
-                    implementations.
-                  </p>
-                  <p>
-                    Now, I’m delving into Signals, the latest in reactive tech.
-                    Beside that I appreciate clever TypeScript solutions more
-                    and more.
-                  </p>
-                  <p>
-                    Currently, I use NX in a Mono-Repo setup, but I’m always
-                    open to exploring new challenges.
-                  </p>
-                </div>
-                <Button href="/about" asA={true}>
-                  More <span class="hidden lg:inline">on Coding</span>
-                </Button>
-              </SmallText>
-            </div>
-            {/*Lead*/}
-            <div class="col-span-3 md:col-span-1 py-12">
-              <Headline>Agile Leadership</Headline>
-              <SmallText>
-                <p class="text-3a-green !mb-12">
-                  As a product owner, I have a special instinct for the solution
-                  that convinces both in terms of results and costs
-                </p>
-                <div class="hidden">
-                  <p>
-                    In my 1.5 years as a Product Owner in ticketing, I directed
-                    both technical execution and strategic growth, emphasizing
-                    high-value iterations.
-                  </p>
-                  <p>
-                    By understanding user needs, swiftly adapting to changes,
-                    and involving the team early, we crafted solutions that were
-                    market-focused and efficient to produce.
-                  </p>
-                  <p>
-                    As an Angular coach for a year, I imparted best practices in
-                    modern UI development, empowering colleagues to create
-                    user-centric, scalable applications.
-                  </p>
-                </div>
-                <Button href="/about" asA={true}>
-                  <span>
-                    More <span class="hidden lg:inline">on Processes</span>
-                  </span>
-                </Button>
-              </SmallText>
-            </div>
-          </div>
-        </FullWidth>
+          </FullWidth>
+        </div>
       </main>
       <Divider />
     </LandingPageLayout>

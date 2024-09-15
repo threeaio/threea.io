@@ -1,12 +1,12 @@
 import { useLocation } from "@solidjs/router";
-import {FullWidth} from "~/components/layouts/Full-Width";
+import { FullWidth } from "~/components/layouts/Full-Width";
 
 export default function Nav() {
   const location = useLocation();
 
   const active = (path: string) => {
-    return   path === location.pathname ? "text-3a-green" : "";
-  }
+    return path === location.pathname ? "text-3a-green" : "";
+  };
 
   return (
     <FullWidth>
@@ -16,7 +16,7 @@ export default function Nav() {
             <a href="/">Home</a>
           </li>
           <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-            <a href="/about">About</a>
+            <a href="/src/routes/anti-agony">About</a>
           </li>
           <li class={`border-b-2 ${active("/grid")} mx-1.5 sm:mx-6`}>
             <a href="/grid">Grid</a>
@@ -24,6 +24,5 @@ export default function Nav() {
         </ul>
       </nav>
     </FullWidth>
-
   );
 }

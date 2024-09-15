@@ -9,7 +9,7 @@ export const GridIndicator = () => {
         <div class="relative h-full sm:col-span-11 xl:col-span-6">
           <div class="absolute right-0 h-full w-px bg-3a-white"></div>
         </div>
-        <div class="relative h-full sm:hidden 2xl:block xl:col-span-6">
+        <div class="relative h-full sm:hidden xl:block xl:col-span-6">
           <div class="absolute right-0 h-full w-px bg-3a-white"></div>
         </div>
       </div>
