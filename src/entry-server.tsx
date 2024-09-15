@@ -10,17 +10,9 @@ export default createHandler(() => (
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
           <style>
-            @Import
-            "https://fonts.googleapis.com/css2?family=Trispace:wght@100..800&display=swap"
-            @import "cal-sans";
+            @import "cal-sans"; @import
+            url('https://fonts.googleapis.com/css2?family=Trispace:wght@100..800&display=swap');
           </style>
-
-          {/*<link*/}
-          {/*  rel="preload"*/}
-          {/*  href="https://fonts.googleapis.com/css2?family=Trispace:wght@100..800&display=swap"*/}
-          {/*  as="style"*/}
-          {/*  onload="this.onload=null;this.rel='stylesheet'"*/}
-          {/*/>*/}
 
           {assets}
         </head>
