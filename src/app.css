@@ -6,30 +6,29 @@
   --color-3a-green: #3ef198;
   --color-3a-green-darker: #17ae63;
   --color-3a-green-lighter: #7af4b9;
-  --color-3a-red: #FF658A;
+  --color-3a-red: #ff658a;
   --color-3a-white: #dedddc;
-  --color-3a-paper: #868F84;
+  --color-3a-paper: #868f84;
   --color-3a-gray: #424940;
   --color-3a-gray-darker: #212827;
   --color-3a-gray-darkest: #171c1a;
   --color-3a-black: #040505;
 
-  --background-rgb: var(--color-3a-paper);
-  --foreground-rgb: var(--color-3a-black);
+  /*--background-rgb: var(--color-3a-paper);*/
+  /*--foreground-rgb: var(--color-3a-black);*/
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-rgb: var(--color-3a-gray-darkest);
-    --foreground-rgb: var(--color-3a-white);
-  }
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --background-rgb: var(--color-3a-gray-darkest);*/
+/*    --foreground-rgb: var(--color-3a-white);*/
+/*  }*/
+/*}*/
 
-
-body {
-  background: var(--background-rgb);
-  color: var(--foreground-rgb);
-}
+/*body {*/
+/*  background: var(--background-rgb);*/
+/*  color: var(--foreground-rgb);*/
+/*}*/
 
 svg .logo-main-color {
   fill: var(--color-3a-white);
@@ -43,7 +42,8 @@ svg {
   overflow: visible;
 }
 
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
