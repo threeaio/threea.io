@@ -35,7 +35,7 @@ export const Introduction = () => {
           ease: "power2",
           scrollTrigger: {
             start: "top 0px",
-            end: "bottom 1000px",
+            end: "bottom 800px",
             invalidateOnRefresh: true,
             scrub: 0,
           },

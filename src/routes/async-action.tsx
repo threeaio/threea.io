@@ -19,14 +19,13 @@ export default function AntiAgony() {
         <BleedLeftHalf
           Left={
             <img
-              id="hero-graphic"
               alt="Nikolaj Sokolowksi photographing himself"
               class="object-cover h-full w-full object-top"
               src="/ich.webp"
             />
           }
           Right={
-            <div class="p-8 lg:p-12">
+            <div class="sm:p-4 md:p-8 lg:p-12">
               <HugeText>
                 <div class="flex items-center mt-6">
                   <h2 class="text-pretty">Async Action</h2>
