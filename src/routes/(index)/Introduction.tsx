@@ -46,7 +46,7 @@ export const Introduction = () => {
   return (
     <BleedRight
       Left={
-        <div class="flex h-screen flex-col self-end">
+        <div class="flex h-svh flex-col self-end">
           <div id="main-logo">
             <MainLogo size="normal" />
           </div>
