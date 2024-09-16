@@ -16,6 +16,9 @@ module.exports = {
     },
     extend: {
       ...generateGrid(26),
+      gridTemplateColumns: {
+        '26': '1rem 1rem repeat(22, minmax(0, 1fr)) 1rem 1rem',
+      },
       fontFamily: {
         display: ['"Cal Sans"', ...defaultTheme.fontFamily.sans],
         sans: ['"Trispace"', ...defaultTheme.fontFamily.sans],
@@ -27,30 +30,18 @@ module.exports = {
 
 function generateGrid(size) {
   const gridColumn = {};
-  const gridTemplateColumns = {};
-  const gridRow = {};
   const gridTemplateRows = {};
-  const gridRowStart = {};
-  const gridRowEnd = {};
   const gridColumnStart = {};
   const gridColumnEnd = {};
   for (let i = 1; i <= size; i++) {
-    gridRow[`span-${i}`] = `span ${i} / span ${i}`;
     gridColumn[`span-${i}`] = `span ${i} / span ${i}`;
-    gridTemplateColumns[i] = `repeat(${i}, minmax(0, 1fr))`;
     gridTemplateRows[i] = `repeat(${i}, minmax(0, 1fr))`;
-    gridRowStart[i] = `${i}`;
-    gridRowEnd[i] = `${i}`;
     gridColumnStart[i] = `${i}`;
     gridColumnEnd[i] = `${i}`;
   }
   return {
     gridColumn,
-    gridTemplateColumns,
-    gridRow,
     gridTemplateRows,
-    gridRowStart,
-    gridRowEnd,
     gridColumnStart,
     gridColumnEnd,
   };
