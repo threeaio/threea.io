@@ -33,7 +33,7 @@ export const Introduction = () => {
             start: "top 0px",
             end: "bottom 800px",
             invalidateOnRefresh: true,
-            scrub: 0.2,
+            scrub: 0.3,
           },
         });
       },
