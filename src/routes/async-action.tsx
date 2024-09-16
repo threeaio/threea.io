@@ -15,7 +15,7 @@ import { Title } from "@solidjs/meta";
 export default function AntiAgony() {
   return (
     <LandingPageLayout>
-      <Title>Threea.io - About me s a Developer</Title>
+      <Title>Threea.io - About me as a Developer</Title>
       <GridIndicator />
       <main>
         <BleedLeftHalf

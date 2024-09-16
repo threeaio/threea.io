@@ -24,7 +24,7 @@ export const Introduction = () => {
               start: "top",
               end: "bottom",
               invalidateOnRefresh: true,
-              scrub: 0,
+              scrub: true,
             },
           });
         }
@@ -37,7 +37,7 @@ export const Introduction = () => {
             start: "top 0px",
             end: "bottom 800px",
             invalidateOnRefresh: true,
-            scrub: 0,
+            scrub: true,
           },
         });
       },

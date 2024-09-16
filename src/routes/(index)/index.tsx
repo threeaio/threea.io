@@ -27,6 +27,7 @@ export default function Home() {
           scrollTrigger: {
             trigger: container,
             scrub: true,
+            once: true,
             start: "top 60%",
             end: "120% 100% ",
           },
