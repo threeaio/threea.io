@@ -21,31 +21,31 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
   onMount(() => {
     // lenis
-    // const lenis = new Lenis({
-    //   syncTouch: true,
-    //   autoResize: true,
-    //   wheelMultiplier: 0.6,
-    //   // touchMultiplier: 0.8,
-    //   orientation: "vertical",
-    //   gestureOrientation: "vertical",
-    // });
-    //
-    // lenis.on(
-    //   "scroll",
-    //   (e: { velocity: number; progress: number; direction: -1 | 1 }) => {
-    //     setVelocity(e.velocity);
-    //     setProgress(e.progress);
-    //     setScrollDirection(e.direction);
-    //   },
-    // );
-    //
-    // lenis.on("scroll", window.scrollTrigger.update);
-    //
-    // gsap.ticker.add((time) => {
-    //   lenis.raf(time * 5000);
-    // });
-    //
-    // gsap.ticker.lagSmoothing(0);
+    const lenis = new Lenis({
+      syncTouch: false,
+      touchMultiplier: 0,
+      autoResize: true,
+      wheelMultiplier: 0.6,
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+    });
+
+    lenis.on(
+      "scroll",
+      (e: { velocity: number; progress: number; direction: -1 | 1 }) => {
+        setVelocity(e.velocity);
+        setProgress(e.progress);
+        setScrollDirection(e.direction);
+      },
+    );
+
+    lenis.on("scroll", window.scrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 5000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
   });
 
   // lenis end
