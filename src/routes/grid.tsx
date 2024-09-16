@@ -6,6 +6,8 @@ import { BleedLeftHalf } from "~/components/layouts/bleed-left/Bleed-Left-Half";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { GridIndicator } from "~/components/Grid-Indicator";
 import { GridTester } from "~/components/layouts/Grid-Tester";
+import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
+import { BleedLeftSmall } from "~/components/layouts/bleed-left/Bleed-Left-Small";
 
 export default function Home() {
   return (
@@ -23,6 +25,7 @@ export default function Home() {
       </FullWidth>
       <BleedRight Left={<GridTester />} Right={<GridTester />} />
       <BleedRightHalf Left={<GridTester />} Right={<GridTester />} />
+      <BleedRightSmall Left={<GridTester />} Right={<GridTester />} />
 
       <GridIndicator />
       <FullWidth>
@@ -30,7 +33,7 @@ export default function Home() {
       </FullWidth>
       <BleedLeft Left={<GridTester />} Right={<GridTester />} />
       <BleedLeftHalf Left={<GridTester />} Right={<GridTester />} />
-
+      <BleedLeftSmall Left={<GridTester />} Right={<GridTester />} />
       <GridIndicator />
       <FullWidth>
         <h2 class="my-4">Animated Tiles</h2>

@@ -11,6 +11,7 @@ import { Button } from "~/components/Button";
 import { LandingPageLayout } from "~/Landing-Page-Layout";
 import { BleedLeftHalf } from "~/components/layouts/bleed-left/Bleed-Left-Half";
 import { Title } from "@solidjs/meta";
+import { BleedLeftSmall } from "~/components/layouts/bleed-left/Bleed-Left-Small";
 
 export default function AntiAgony() {
   return (
@@ -18,7 +19,7 @@ export default function AntiAgony() {
       <Title>Threea.io - About my Motivation</Title>
       <GridIndicator />
       <main>
-        <BleedLeftHalf
+        <BleedLeftSmall
           Left={
             <img
               alt="Nikolaj Sokolowksi photographing himself"

@@ -2,7 +2,6 @@ import { fromLandingPageState } from "~/landing-page-state";
 import { getRandomFloat } from "~/_util";
 
 export const Divider = () => {
-  const style = `transform: perspective(500px) rotateY(${getRandomFloat(0, 20, 0)}deg) rotateZ(${getRandomFloat(-3, 3, 0)}deg);`;
   const [{ landingPageState }] = fromLandingPageState;
   return (
     <figure class="py-24 text-center" aria-hidden="true">
