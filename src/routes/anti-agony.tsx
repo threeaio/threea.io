@@ -10,10 +10,12 @@ import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
 import { LandingPageLayout } from "~/Landing-Page-Layout";
 import { BleedLeftHalf } from "~/components/layouts/bleed-left/Bleed-Left-Half";
+import { Title } from "@solidjs/meta";
 
 export default function AntiAgony() {
   return (
     <LandingPageLayout>
+      <Title>Threea.io - About my Motivation</Title>
       <GridIndicator />
       <main>
         <BleedLeftHalf
@@ -28,7 +30,7 @@ export default function AntiAgony() {
             <div class="sm:p-4 md:p-8 lg:p-12">
               <HugeText>
                 <div class="flex items-center mt-6">
-                  <h2 class="text-pretty">Anti-Agony</h2>
+                  <h1 class="text-pretty">Anti-Agony</h1>
                 </div>
               </HugeText>
               <SmallText>

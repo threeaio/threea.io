@@ -9,6 +9,7 @@ import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
+import { Title } from "@solidjs/meta";
 
 export default function Home() {
   let container: HTMLElement;
@@ -51,6 +52,7 @@ export default function Home() {
   });
   return (
     <LandingPageLayout>
+      <Title>Welcome to Threea.io</Title>
       <GridIndicator />
       <main>
         <Introduction />
