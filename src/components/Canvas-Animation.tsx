@@ -18,6 +18,7 @@ export const CanvasAnimation: ParentComponent = (props) => {
     randY2: Math.random() * landingPageState.screenHeight,
   };
 
+  let init = false;
   createEffect(() => {
     const setVals = () => {
       randX1 = Math.random() * landingPageState.totalWidth;
@@ -25,8 +26,11 @@ export const CanvasAnimation: ParentComponent = (props) => {
       randY1 = Math.random() * landingPageState.screenHeight;
       randY2 = Math.random() * landingPageState.screenHeight;
     };
-    setInterval(setVals, 3000);
-    setVals();
+    if (!init && landingPageState.totalWidth) {
+      setVals();
+      setInterval(setVals, 3000);
+      init = true;
+    }
   });
 
   onMount(() => {
