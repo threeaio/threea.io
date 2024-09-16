@@ -40,41 +40,43 @@ export const Introduction = () => {
     );
   });
   return (
-    <BleedRight
-      Left={
-        <div class="flex h-svh flex-col self-end">
-          <div id="main-logo">
-            <MainLogo size="normal" />
-          </div>
-          <div class="flex-1 flex">
-            <div class="self-end py-16">
-              <SmallText class="pr-12">
-                <p class="mb-4">
-                  Hello! I'm Nikolaj Sokolowski, a design engineer, Angular
-                  developer, and detail-oriented problem-solver. Not Triple-A,
-                  but threea here.
-                </p>
-                <p class="mb-4">
-                  I focus on creating agile concepts and user interfaces. In the
-                  past especially for scalable business applications.
-                </p>
-              </SmallText>
+    <div class="sm:bg-3a-gray-darkest">
+      <BleedRight
+        Left={
+          <div class="flex h-svh flex-col self-end ">
+            <div id="main-logo">
+              <MainLogo size="normal" />
+            </div>
+            <div class="flex-1 flex">
+              <div class="self-end py-16">
+                <SmallText class="pr-12">
+                  <p class="mb-4">
+                    Hello! I'm Nikolaj Sokolowski, a design engineer, Angular
+                    developer, and detail-oriented problem-solver. Not Triple-A,
+                    but threea here.
+                  </p>
+                  <p class="mb-4">
+                    I focus on creating agile concepts and user interfaces. In
+                    the past especially for scalable business applications.
+                  </p>
+                </SmallText>
+              </div>
             </div>
           </div>
-        </div>
-      }
-      Right={
-        <div class="bg-3a-green h-full w-full">
-          <div class="min-h-max h-full w-full bg-cover mix-blend-multiply">
-            <img
-              id="hero-graphic"
-              alt="Nikolaj Sokolowksi photographing himself"
-              class="object-cover h-full w-full object-top"
-              src="/ich.webp"
-            />
+        }
+        Right={
+          <div class="bg-3a-green h-full w-full">
+            <div class="min-h-max h-full w-full bg-cover mix-blend-multiply">
+              <img
+                id="hero-graphic"
+                alt="Nikolaj Sokolowksi photographing himself"
+                class="object-cover h-full w-full object-top"
+                src="/ich.webp"
+              />
+            </div>
           </div>
-        </div>
-      }
-    />
+        }
+      />
+    </div>
   );
 };

@@ -34,21 +34,22 @@ export default function Home() {
           },
         });
 
-        tl.addLabel("heading").from("#big-headline-index", {
-          y: 80,
-          autoAlpha: 0,
-          duration: 1,
-        });
-        tl.addLabel("items").from(
-          ".item",
-          {
+        tl.addLabel("heading")
+          .from("#big-headline-index", {
+            y: 80,
             autoAlpha: 0,
-            stagger: 0.2,
-            scale: 0.8,
-            y: -60,
-          },
-          ">-.3s",
-        );
+          })
+          .addLabel("items")
+          .from(
+            ".item",
+            {
+              autoAlpha: 0,
+              stagger: 0.2,
+              scale: 0.95,
+              y: 90,
+            },
+            ">-.5s",
+          );
       },
     );
   });
@@ -58,10 +59,10 @@ export default function Home() {
         <Title>Welcome to Threea.io</Title>
         <GridIndicator />
         <main>
-          <div id="anim-step-1">
+          <div>
             <Introduction />
           </div>
-          <div id="anim-step-2">
+          <div>
             <Divider />
             <div ref={(el) => (container = el)}>
               <FullWidth>
@@ -82,7 +83,7 @@ export default function Home() {
                   {/*Conduct*/}
                   <div class="item col-span-3 md:col-span-1 py-12">
                     <Headline>Anti-Agony</Headline>
-                    <SmallText class="md:pr-12">
+                    <SmallText class="md:pr-16">
                       <p class="!mb-6">
                         Improving daily interactions and creating tools for the
                         people through thoughtful, human-centred software is
@@ -97,7 +98,7 @@ export default function Home() {
                   {/*Code*/}
                   <div class="item col-span-3 md:col-span-1 py-12">
                     <Headline>Async Action</Headline>
-                    <SmallText class="md:pr-12">
+                    <SmallText class="md:pr-16">
                       <p class="!mb-6">
                         As a developer, I deliver simple functional
                         UI-solutions, focused on maintainability, stability and
@@ -111,11 +112,12 @@ export default function Home() {
                   {/*Lead*/}
                   <div class="item col-span-3 md:col-span-1 py-12">
                     <Headline>Agile Leader</Headline>
-                    <SmallText class="md:pr-12">
+                    <SmallText class="md:pr-16">
                       <p class="!mb-6">
-                        I have a special instinct for the right solution that
-                        fits the skill and needs of team and convinces in terms
-                        of results and costs
+                        I have a special feel for the solution that takes into
+                        account the skills and needs of the team on the one hand
+                        and is convincing in terms of results and costs on the
+                        other
                       </p>
                       <Button href="/agile-leadership" asA={true}>
                         <span>

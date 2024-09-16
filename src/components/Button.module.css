@@ -50,7 +50,7 @@
   border-top: 2px solid var(--color-3a-green);
   border-right: 2px solid var(--color-3a-green);
   transform-origin: top center;
-  transform: scale(0.1) rotate(45deg) translateY(-50%);
+  transform: scale(0) rotate(45deg) translateY(-50%);
   opacity: 0;
   transition: all 0.2s 0.15s;
 }
@@ -72,6 +72,46 @@
   transform: scale(1) rotate(45deg) translateY(-50%);
   opacity: 1;
   transition: all 0.2s 0.15s;
+}
+
+.btn--back {
+  padding-left: 2.7rem;
+  color: var(--color-3a-white);
+  border-color: var(--color-3a-white);
+}
+
+.btn--back:hover {
+  padding-left: 3rem;
+}
+
+.btn--back::before {
+  opacity: 1;
+  width: 1.3rem;
+  background-color: var(--color-3a-white);
+}
+
+.btn--back::after {
+  opacity: 1;
+  left: 1rem;
+  border-color: var(--color-3a-white);
+  transform: scale(1) rotate(225deg) translateY(-50%);
+}
+
+.btn--back::before,
+.btn--back::after,
+.btn--back:hover::before,
+.btn--back:hover::after {
+  transition: all 0.2s 0s;
+}
+
+.btn--back:hover::before {
+  width: 1.5rem;
+}
+
+.btn--back:hover::after {
+  left: 0.75rem;
+  border-color: var(--color-3a-white);
+  transform: scale(1) rotate(225deg) translateY(-50%);
 }
 
 /*.btn:before {*/
