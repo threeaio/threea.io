@@ -3,6 +3,7 @@ import { fromLandingPageState } from "./landing-page-state";
 import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { Footer } from "./content/Footer";
+import { CanvasAnimation } from "~/components/Canvas-Animation";
 
 export const LandingPageLayout: ParentComponent = (props) => {
   const [
@@ -70,8 +71,10 @@ export const LandingPageLayout: ParentComponent = (props) => {
         setupContentResizeObserver(el);
       }}
     >
-      {props.children}
-      <Footer />
+      <CanvasAnimation>
+        {props.children}
+        <Footer />
+      </CanvasAnimation>
     </div>
   );
 };

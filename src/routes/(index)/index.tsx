@@ -54,7 +54,7 @@ export default function Home() {
   });
   return (
     <LandingPageLayout>
-      <CanvasAnimation>
+      <div>
         <Title>Welcome to Threea.io</Title>
         <GridIndicator />
         <main>
@@ -83,7 +83,7 @@ export default function Home() {
                   <div class="item col-span-3 md:col-span-1 py-12">
                     <Headline>Anti-Agony</Headline>
                     <SmallText class="md:pr-12">
-                      <p class="text-3a-green !mb-6">
+                      <p class="!mb-6">
                         Improving daily interactions and creating tools for the
                         people through thoughtful, human-centred software is
                         what drives me
@@ -98,7 +98,7 @@ export default function Home() {
                   <div class="item col-span-3 md:col-span-1 py-12">
                     <Headline>Async Action</Headline>
                     <SmallText class="md:pr-12">
-                      <p class="text-3a-green !mb-6">
+                      <p class="!mb-6">
                         As a developer, I deliver simple functional
                         UI-solutions, focused on maintainability, stability and
                         user-friendliness
@@ -112,7 +112,7 @@ export default function Home() {
                   <div class="item col-span-3 md:col-span-1 py-12">
                     <Headline>Agile Leader</Headline>
                     <SmallText class="md:pr-12">
-                      <p class="text-3a-green !mb-6">
+                      <p class="!mb-6">
                         I have a special instinct for the right solution that
                         fits the skill and needs of team and convinces in terms
                         of results and costs
@@ -131,7 +131,7 @@ export default function Home() {
           </div>
         </main>
         <Divider />
-      </CanvasAnimation>
+      </div>
     </LandingPageLayout>
   );
 }

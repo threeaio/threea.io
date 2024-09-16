@@ -1,47 +1,32 @@
 import { fromLandingPageState } from "~/landing-page-state";
-import { onMount, ParentComponent, createEffect } from "solid-js";
+import { onMount, ParentComponent, createEffect, on } from "solid-js";
 import { Bound, CanvasSpace, Line, Num, Pt } from "pts";
 import { gsap } from "gsap";
-import { createStore } from "solid-js/store";
-
-type AnimationSectionState = {
-  isActive: boolean;
-  progress: number;
-  direction: -1 | 1;
-  velocity: number;
-};
 
 export const CanvasAnimation: ParentComponent = (props) => {
   const [{ landingPageState }] = fromLandingPageState;
 
-  const [section1, setSection1] = createStore<AnimationSectionState>({
-    isActive: false,
-    progress: 0,
-    direction: 1,
-    velocity: 0,
-  });
-
-  const [section2, setSection2] = createStore<AnimationSectionState>({
-    isActive: false,
-    progress: 0,
-    direction: 1,
-    velocity: 0,
-  });
-
-  const green = "#3ef198";
-
   let randX1 = 0;
   let randX2 = 0;
-  let randX3 = 0;
-  let randX4 = 0;
   let randY1 = 0;
   let randY2 = 0;
 
+  const rands = {
+    randX1: Math.random() * landingPageState.totalWidth,
+    randX2: Math.random() * landingPageState.totalWidth,
+    randY1: Math.random() * landingPageState.screenHeight,
+    randY2: Math.random() * landingPageState.screenHeight,
+  };
+
   createEffect(() => {
-    randX1 = Math.random() * landingPageState.totalWidth;
-    randX2 = Math.random() * landingPageState.totalWidth;
-    randY1 = Math.random() * landingPageState.screenHeight;
-    randY2 = Math.random() * landingPageState.screenHeight;
+    const setVals = () => {
+      randX1 = Math.random() * landingPageState.totalWidth;
+      randX2 = Math.random() * landingPageState.totalWidth;
+      randY1 = Math.random() * landingPageState.screenHeight;
+      randY2 = Math.random() * landingPageState.screenHeight;
+    };
+    setInterval(setVals, 3000);
+    setVals();
   });
 
   onMount(() => {
@@ -52,102 +37,61 @@ export const CanvasAnimation: ParentComponent = (props) => {
     });
 
     let lineOrigin = new Pt(0, 0);
-    let lineTarget = new Pt(0, 0);
-
-    // window.scrollTrigger.create({
-    //   trigger: "#anim-step-1",
-    //   start: "top top",
-    //   endTrigger: "#anim-step-2",
-    //   end: "top 30%",
-    //   onToggle: (self) => {
-    //     console.log("STEP 1", self.isActive);
-    //     setSection1({ ...section1, isActive: self.isActive });
-    //   },
-    //   onUpdate: (self) => {
-    //     setSection1({
-    //       ...section1,
-    //       progress: self.progress,
-    //       direction:
-    //         self.direction as unknown as AnimationSectionState["direction"],
-    //       velocity: self.getVelocity(),
-    //     });
-    //   },
-    // });
-    //
-    // window.scrollTrigger.create({
-    //   trigger: "#anim-step-2",
-    //   start: "top 30%",
-    //   endTrigger: "#anim-step-2",
-    //   end: "bottom+=100px 50%+=100px",
-    //   onToggle: (self) => {
-    //     console.log("STEP 2", self.isActive);
-    //     setSection2({ ...section2, isActive: self.isActive });
-    //   },
-    //   onUpdate: (self) => {
-    //     setSection2({
-    //       ...section2,
-    //       progress: self.progress,
-    //       direction:
-    //         self.direction as unknown as AnimationSectionState["direction"],
-    //       velocity: self.getVelocity(),
-    //     });
-    //   },
-    // });
 
     createEffect(() => {
-      // if (!section2.isActive && !section1.isActive) {
-      //   return;
-      // }
       const originPoint = new Pt(
         landingPageState.totalWidth / 2 +
           (Math.cos(landingPageState.progress * 8) *
             landingPageState.totalWidth) /
             3,
         landingPageState.screenHeight / 2 +
-          (Math.sin(landingPageState.progress * 8) *
+          (Math.sin(landingPageState.progress * 6) *
             landingPageState.screenHeight) /
             3,
       );
-      // Math.abs(section2.isActive ? landingPageState.screenHeight : 0)
 
-      // const targetPoint = new Pt(
-      //   Math.abs(landingPageState.progress * landingPageState.totalWidth),
-      //   Math.abs(landingPageState.progress * landingPageState.screenHeight),
-      // );
       gsap.to(lineOrigin, {
         x: originPoint.x,
         y: originPoint.y,
         duration: 0.5,
       });
-      // gsap.to(lineTarget, {
-      //   x: targetPoint.x,
-      //   y: targetPoint.y,
-      //   duration: 1,
-      // });
-    }, [section1, section2]);
+
+      gsap.to(rands, {
+        randX1: randX1,
+        randX2: randX2,
+        randY1: randY1,
+        randY2: randY2,
+        duration: 1.5,
+      });
+    });
 
     space.add({
       start: (bound) => {},
       animate: (time, ftime) => {
-        const numPoints = 12;
-        const lineA = [lineOrigin, new Pt(randX1, 0)];
+        const numPoints = 10;
+        const lineA = [lineOrigin, new Pt(rands.randX1, 0)];
         const lineB = [
           lineOrigin,
-          new Pt(randX2, landingPageState.screenHeight),
+          new Pt(rands.randX2, landingPageState.screenHeight),
         ];
-        const lineC = [lineOrigin, new Pt(0, randY1)];
-        const lineD = [lineOrigin, new Pt(landingPageState.totalWidth, randY2)];
+        const lineC = [lineOrigin, new Pt(0, rands.randY1)];
+        const lineD = [
+          lineOrigin,
+          new Pt(landingPageState.totalWidth, rands.randY2),
+        ];
 
         const subPointsA = Line.subpoints(lineA, numPoints);
         const subPointsB = Line.subpoints(lineB, numPoints);
         const subPointsC = Line.subpoints(lineC, numPoints);
         const subPointsD = Line.subpoints(lineD, numPoints);
 
+        const green = [60, 240, 150];
+        const violett = [240, 150, 240];
         for (let i = 0; i < numPoints; i++) {
           space
             .getForm()
-            .stroke(`transparent`)
-            .fill(`rgba(60,240,150,.02)`)
+            .stroke(`rgba(255,255,255, 0.${0})`)
+            .fill(`rgba(${violett.join()},.02)`)
             .polygon([
               subPointsA[i],
               subPointsC[i],
@@ -156,10 +100,47 @@ export const CanvasAnimation: ParentComponent = (props) => {
             ]);
         }
 
-        //
-        // circle
+        const connectAtIndex = (index: number) => {
+          const base = 0.01;
+          space
+            .getForm()
+            .stroke(`rgba(255,255,255, ${base * (index + 1)})`)
+            .line([subPointsA[index], subPointsC[index]]);
+
+          space
+            .getForm()
+            .stroke(`rgba(255,255,255, ${base * (index + 1)})`)
+            .line([subPointsB[index], subPointsC[index]]);
+
+          space
+            .getForm()
+            .stroke(`rgba(255,255,255, ${base * (index + 1)})`)
+            .line([subPointsB[index], subPointsD[index]]);
+
+          space
+            .getForm()
+            .stroke(`rgba(255,255,255, ${base * (index + 1)})`)
+            .line([subPointsC[index], subPointsD[index]]);
+
+          space
+            .getForm()
+            .stroke(`rgba(255,255,255, ${base * (index + 1)})`)
+            .line([subPointsA[index], subPointsB[index]]);
+
+          space
+            .getForm()
+            .stroke(`rgba(255,255,255, ${base * (index + 1)})`)
+            .line([subPointsA[index], subPointsD[index]]);
+        };
+
+        connectAtIndex(0);
+        connectAtIndex(Math.round(numPoints / 2));
+        connectAtIndex(numPoints - 1);
+
+        // space
+        //   .getForm()
         //   .stroke("transparent")
-        //   .fill(green)
+        //   .fill("white")
         //   .circle([lineOrigin, [3, 3]]);
       },
       action: (type, x, y) => {},
