@@ -20,8 +20,6 @@ const initialState: LandingPage = {
   scrollDirection: 1,
 };
 
-// gsap.registerPlugin(ScrollTrigger);
-
 const setupLandingPage = (initialState: LandingPage) => {
   const [landingPageState, setLandingPageState] =
     createStore<LandingPage>(initialState);
@@ -49,10 +47,6 @@ const setupLandingPage = (initialState: LandingPage) => {
   const setVelocity = (scollSpeed: number) => {
     setLandingPageState("velocity", scollSpeed);
   };
-
-  // const percentScrolled = () => {
-  //   return
-  // }
 
   return [
     {

@@ -59,8 +59,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
   const setupScreenResizeObserver = (el: HTMLElement) => {
     new ResizeObserver((args) => {
-      const cr = args[0].contentRect;
-      setScreenHeight(cr.height);
+      setScreenHeight(window.innerHeight);
     }).observe(el);
   };
 
