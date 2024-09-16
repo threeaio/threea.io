@@ -14,8 +14,8 @@
   --color-3a-gray-darkest: #171c1a;
   --color-3a-black: #040505;
 
-  /*--background-rgb: var(--color-3a-paper);*/
-  /*--foreground-rgb: var(--color-3a-black);*/
+  --background-rgb: var(--color-3a-gray-darkest);
+  --foreground-rgb: var(--color-3a-paper);
 }
 
 /*@media (prefers-color-scheme: dark) {*/
@@ -25,10 +25,10 @@
 /*  }*/
 /*}*/
 
-/*body {*/
-/*  background: var(--background-rgb);*/
-/*  color: var(--foreground-rgb);*/
-/*}*/
+body {
+  background: var(--background-rgb);
+  color: var(--foreground-rgb);
+}
 
 svg .logo-main-color {
   fill: var(--color-3a-white);
