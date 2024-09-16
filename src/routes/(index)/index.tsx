@@ -27,8 +27,8 @@ export default function Home() {
         let tl = gsap.timeline({
           scrollTrigger: {
             trigger: container,
-            scrub: true,
-            once: true,
+            scrub: 3,
+            once: false,
             start: "top 60%",
             end: "120% 100% ",
           },

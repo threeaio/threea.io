@@ -17,7 +17,7 @@ module.exports = {
     extend: {
       ...generateGrid(26),
       gridTemplateColumns: {
-        '26': '1rem 1rem repeat(22, minmax(0, 1fr)) 1rem 1rem',
+        '26': '1rem 1rem 1rem repeat(20, minmax(0, 1fr)) 1rem 1rem 1rem',
       },
       fontFamily: {
         display: ['"Cal Sans"', ...defaultTheme.fontFamily.sans],

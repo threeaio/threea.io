@@ -18,8 +18,6 @@ export const Introduction = () => {
         if (context.conditions && context.conditions["isDesktop"]) {
           gsap.to("#hero-graphic", {
             objectPosition: "50% 400px",
-            force3D: true,
-            ease: "power2",
             scrollTrigger: {
               start: "top",
               end: "bottom",
@@ -31,13 +29,11 @@ export const Introduction = () => {
 
         gsap.to("#main-logo", {
           y: 400,
-          force3D: true,
-          ease: "power2",
           scrollTrigger: {
             start: "top 0px",
             end: "bottom 800px",
             invalidateOnRefresh: true,
-            scrub: true,
+            scrub: 0.2,
           },
         });
       },
