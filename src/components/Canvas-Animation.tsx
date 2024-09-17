@@ -41,7 +41,14 @@ export const CanvasAnimation: ParentComponent = (props) => {
 
       const originPoint = new Pt(
         landingPageState.totalWidth / 2 +
-          (Math.cos(landingPageState.progress * 6) *
+          (Math.cos(
+            (landingPageState.progress /
+              ((landingPageState.screenHeight * 2) /
+                (landingPageState.totalContentHeight
+                  ? landingPageState.totalContentHeight
+                  : 1))) *
+              6,
+          ) *
             landingPageState.totalWidth) /
             3,
         landingPageState.progress * landingPageState.screenHeight,
