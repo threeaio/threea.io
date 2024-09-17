@@ -3,7 +3,7 @@ import { onMount, ParentComponent, createEffect, createMemo } from "solid-js";
 import { Bound, CanvasSpace, Line, Num, Pt } from "pts";
 import { gsap } from "gsap";
 
-export const CanvasAnimation: ParentComponent = (props) => {
+export const CanvasAnimation2: ParentComponent = (props) => {
   const [{ landingPageState }] = fromLandingPageState;
   const isMoving = createMemo(() => landingPageState.velocity > -0.02);
   const hasSize = createMemo(
@@ -23,7 +23,7 @@ export const CanvasAnimation: ParentComponent = (props) => {
   };
 
   onMount(() => {
-    const space = new CanvasSpace("#canvas-animation").setup({
+    const space = new CanvasSpace("#canvas-animation-2").setup({
       bgcolor: "transparent",
       retina: true,
       resize: true,
@@ -85,11 +85,11 @@ export const CanvasAnimation: ParentComponent = (props) => {
 
         const green = [60, 240, 150];
         const violett = [240, 150, 240];
-        for (let i = 0; i < numPoints - 1; i++) {
+        for (let i = 0; i < numPoints; i++) {
           space
             .getForm()
             .stroke(`rgba(255,255,255, 0.${0})`)
-            .fill(`rgba(${violett.join()},.02)`)
+            .fill(`rgba(${green.join()},.02)`)
             .polygon([
               subPointsA[i],
               subPointsC[i],
@@ -131,9 +131,9 @@ export const CanvasAnimation: ParentComponent = (props) => {
             .line([subPointsA[index], subPointsD[index]]);
         };
 
-        connectAtIndex(0);
-        connectAtIndex(Math.round(numPoints / 2));
-        connectAtIndex(numPoints - 1);
+        // connectAtIndex(0);
+        // connectAtIndex(Math.round(numPoints / 2));
+        // connectAtIndex(numPoints - 1);
 
         // space
         //   .getForm()
@@ -154,7 +154,7 @@ export const CanvasAnimation: ParentComponent = (props) => {
     <div>
       <canvas
         class="fixed inset-0 pointer-events-none "
-        id="canvas-animation"
+        id="canvas-animation-2"
       ></canvas>
       <div class="relative">{props.children}</div>
     </div>

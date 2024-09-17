@@ -1,26 +1,26 @@
-@property --x {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
+/*@property --x {*/
+/*  syntax: "<percentage>";*/
+/*  inherits: false;*/
+/*  initial-value: 0%;*/
+/*}*/
 
-@property --y {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
+/*@property --y {*/
+/*  syntax: "<angle>";*/
+/*  inherits: false;*/
+/*  initial-value: 0deg;*/
+/*}*/
+
+/*TODO !!!*/
 
 .btn {
   display: inline-block;
   position: relative;
-  /*background: var(--color-3a-gray-darkest);*/
-  background-clip: padding-box; /* !importanté */
-  border: solid 2px var(--color-3a-green); /* !importanté */
   color: var(--color-3a-green);
-  padding-left: 1.5rem;
-  transition: all 0.3s 0.1s;
-  font-family: "Cal Sans", sans-serif;
-  text-transform: uppercase;
+  /*padding-left: 2.8rem;*/
+  @apply pl-8;
+  transition: all 0.3s;
+  /*font-family: "Cal Sans", sans-serif;*/
+  /*text-transform: uppercase;*/
   white-space: nowrap;
 }
 
@@ -28,71 +28,75 @@
   content: " ";
   display: block;
   position: absolute;
-  right: calc(100% - 2.25rem);
+  left: 0;
   top: 50%;
-  width: 0;
-  height: 2px;
+  /*width: 2.3rem;*/
+  @apply w-6;
+  height: 1px;
   background: var(--color-3a-green);
   opacity: 1;
   transform-origin: center right;
   transform: translateY(-50%);
-  transition: all 0.2s 0s;
+  transition: all 0.2s;
 }
 
 .btn::after {
   content: " ";
   display: block;
   position: absolute;
-  left: 1.5rem;
+  left: 1rem;
   top: 50%;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-top: 2px solid var(--color-3a-green);
-  border-right: 2px solid var(--color-3a-green);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-top: 1px solid var(--color-3a-green);
+  border-right: 1px solid var(--color-3a-green);
   transform-origin: top center;
-  transform: scale(0) rotate(45deg) translateY(-50%);
-  opacity: 0;
-  transition: all 0.2s 0.15s;
+  transform: rotate(45deg) translateY(-50%);
+  transition: all 0.2s;
 }
 
 .btn:hover,
 .btn:focus {
-  padding-left: 3rem;
+  /*padding-left: 3.5rem;*/
+  @apply pl-12;
   transition: all 0.3s;
 }
 
 .btn:focus::before,
 .btn:hover::before {
   opacity: 1;
-  width: 1.5rem;
+  @apply w-10;
 }
 
 .btn:focus::after,
 .btn:hover::after {
-  transform: scale(1) rotate(45deg) translateY(-50%);
   opacity: 1;
-  transition: all 0.2s 0.15s;
+  left: 2rem;
+  transition: all 0.2s;
 }
 
 .btn--back {
-  padding-left: 2.7rem;
   color: var(--color-3a-white);
   border-color: var(--color-3a-white);
+  @apply pl-12;
 }
 
 .btn--back:hover {
-  padding-left: 3rem;
+  @apply pl-8;
+  @apply pr-4;
 }
 
 .btn--back::before {
   opacity: 1;
-  width: 1.3rem;
+  /*left: auto;*/
+  /*right: calc(100% - 2.2rem);*/
+  @apply w-10;
   background-color: var(--color-3a-white);
 }
 
 .btn--back::after {
   opacity: 1;
-  left: 1rem;
+  left: 0;
   border-color: var(--color-3a-white);
   transform: scale(1) rotate(225deg) translateY(-50%);
 }
@@ -105,13 +109,14 @@
 }
 
 .btn--back:hover::before {
-  width: 1.5rem;
+  @apply w-6;
 }
 
 .btn--back:hover::after {
-  left: 0.75rem;
-  border-color: var(--color-3a-white);
-  transform: scale(1) rotate(225deg) translateY(-50%);
+  left: 0;
+  /*left: 0.75rem;*/
+  /*border-color: var(--color-3a-white);*/
+  /*transform: scale(1) rotate(225deg) translateY(-50%);*/
 }
 
 /*.btn:before {*/

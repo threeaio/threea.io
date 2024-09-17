@@ -9,11 +9,10 @@ export const Button = (props: {
   isBack?: boolean;
   href?: string;
 }) => {
-  console.log("styles", styles);
   return props.asA ? (
     <a
       href={props.href}
-      class={`py-3 px-6 ${styles.btn} ${props.isBack ? styles["btn--back"] : ""}`}
+      class={` ${styles.btn} ${props.isBack ? styles["btn--back"] : ""}`}
     >
       {props.children}
     </a>

@@ -40,7 +40,8 @@ export const Introduction = () => {
     );
   });
   return (
-    <div class="sm:bg-3a-gray-darkest">
+    <div class="">
+      {/*sm:bg-3a-gray-darkest*/}
       <BleedRight
         Left={
           <div class="flex h-svh flex-col self-end ">
@@ -65,14 +66,15 @@ export const Introduction = () => {
           </div>
         }
         Right={
-          <div class="bg-3a-green h-full w-full">
+          <div class=" h-full w-full">
+            {/*bg-3a-green*/}
             <div class="min-h-max h-full w-full bg-cover mix-blend-multiply">
-              <img
-                id="hero-graphic"
-                alt="Nikolaj Sokolowksi photographing himself"
-                class="object-cover h-full w-full object-top"
-                src="/ich.webp"
-              />
+              {/*<img*/}
+              {/*  id="hero-graphic"*/}
+              {/*  alt="Nikolaj Sokolowksi photographing himself"*/}
+              {/*  class="object-cover h-full w-full object-top"*/}
+              {/*  src="/ich.webp"*/}
+              {/*/>*/}
             </div>
           </div>
         }

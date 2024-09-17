@@ -4,6 +4,7 @@ import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { Footer } from "./content/Footer";
 import { CanvasAnimation } from "~/components/Canvas-Animation";
+import { CanvasAnimation2 } from "~/components/Canvas-Animation-2";
 
 export const LandingPageLayout: ParentComponent = (props) => {
   const [
@@ -23,9 +24,8 @@ export const LandingPageLayout: ParentComponent = (props) => {
   onMount(() => {
     // lenis
     const lenis = new Lenis({
-      syncTouch: false,
+      syncTouch: true,
       autoResize: true,
-      wheelMultiplier: 0.9,
       orientation: "vertical",
       gestureOrientation: "vertical",
     });
@@ -72,8 +72,12 @@ export const LandingPageLayout: ParentComponent = (props) => {
       }}
     >
       <CanvasAnimation>
-        {props.children}
-        <Footer />
+        {/*<CanvasAnimation2>*/}
+        <div class="opacity-100">
+          {props.children}
+          <Footer />
+        </div>
+        {/*</CanvasAnimation2>*/}
       </CanvasAnimation>
     </div>
   );
