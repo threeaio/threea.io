@@ -35,14 +35,14 @@ export default function AntiAgony() {
               <div class="sm:p-4 md:p-8 lg:p-12">
                 <HugeText>
                   <div class="flex items-center mt-6">
-                    <h1 class="text-pretty">Agile Leader</h1>
+                    <h1 class="text-pretty">Agile Leadership</h1>
                   </div>
                 </HugeText>
                 <SmallText>
                   <p class="text-3a-green !mb-6">
-                    I have a special instinct for the solution that fits the
-                    skills and needs of the team on the one hand and is
-                    convincing in terms of results and costs on the other
+                    I have a special feel for solutions that take into account
+                    the skills and needs of the team on the one hand and that
+                    are convincing in terms of results and costs on the other
                   </p>
                   <div class="">
                     <p>

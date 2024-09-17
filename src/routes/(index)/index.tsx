@@ -114,10 +114,10 @@ export default function Home() {
                     <Headline>Agile Leader</Headline>
                     <SmallText class="md:pr-16">
                       <p class="!mb-6">
-                        I have a special feel for solutions that takes into
+                        I have a special feel for solutions that take into
                         account the skills and needs of the team on the one hand
-                        and is convincing in terms of results and costs on the
-                        other
+                        and that are convincing in terms of results and costs on
+                        the other
                       </p>
                       <Button href="/agile-leadership" asA={true}>
                         <span>
