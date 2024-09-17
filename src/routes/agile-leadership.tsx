@@ -73,7 +73,9 @@ export default function AntiAgony() {
         </main>
       </div>
 
-      <Divider />
+      <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+        <Divider />
+      </div>
     </LandingPageLayout>
   );
 }

@@ -1,6 +1,6 @@
 import { fromLandingPageState } from "~/landing-page-state";
 import { onMount, ParentComponent, createEffect, createMemo } from "solid-js";
-import { Bound, CanvasSpace, Line, Num, Pt } from "pts";
+import { Bound, CanvasSpace, Color, Line, Num, Pt } from "pts";
 import { gsap } from "gsap";
 
 export const CanvasAnimation: ParentComponent = (props) => {
@@ -43,7 +43,7 @@ export const CanvasAnimation: ParentComponent = (props) => {
         landingPageState.totalWidth / 2 +
           (Math.cos(
             (landingPageState.progress /
-              ((landingPageState.screenHeight * 2) /
+              ((landingPageState.screenHeight * 4) /
                 (landingPageState.totalContentHeight
                   ? landingPageState.totalContentHeight
                   : 1))) *
@@ -73,7 +73,7 @@ export const CanvasAnimation: ParentComponent = (props) => {
     space.add({
       start: (bound) => {},
       animate: (time, ftime) => {
-        const numPoints = 12;
+        const numPoints = 22;
         const lineA = [lineOrigin, new Pt(rands.randX1, 0)];
         const lineB = [
           lineOrigin,
@@ -91,12 +91,20 @@ export const CanvasAnimation: ParentComponent = (props) => {
         const subPointsD = Line.subpoints(lineD, numPoints);
 
         const green = [60, 240, 150];
-        const violett = [240, 150, 240];
+        const violett = Color.from([240, 150, 240, 1]);
         for (let i = 0; i < numPoints - 1; i++) {
+          const _violett = Color.RGBtoHSB(violett);
+          const hue = (i * 4 + _violett.h) % 360;
+          _violett.h = hue;
+          _violett.s = 5 / (i === 0 ? 1 : i);
+          // _violett.b = 70 / (i === 0 ? 1 : i);
+          // _violett.s = i * 5;
+          // _violett.b = i * 5;
+          const finalColor = Color.HSBtoRGB(_violett);
           space
             .getForm()
-            .stroke(`rgba(255,255,255, 0.${0})`)
-            .fill(`rgba(${violett.join()},.02)`)
+            .stroke(`rgba(255,255,255, ${i * 0.003})`)
+            .fill(`rgba(${finalColor.r},${finalColor.g},${finalColor.b},.01)`)
             .polygon([
               subPointsA[i],
               subPointsC[i],
@@ -138,9 +146,9 @@ export const CanvasAnimation: ParentComponent = (props) => {
             .line([subPointsA[index], subPointsD[index]]);
         };
 
-        connectAtIndex(0);
-        connectAtIndex(Math.round(numPoints / 2));
-        connectAtIndex(numPoints - 1);
+        // connectAtIndex(0);
+        // connectAtIndex(Math.round(numPoints / 2));
+        // connectAtIndex(numPoints - 1);
 
         // space
         //   .getForm()
@@ -153,7 +161,7 @@ export const CanvasAnimation: ParentComponent = (props) => {
         console.log("resize", bound, evt);
       },
     });
-
+    // space.ctx.globalCompositeOperation = "lighter";
     space.play();
   });
 

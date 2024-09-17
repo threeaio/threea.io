@@ -63,7 +63,9 @@ export default function Home() {
             <Introduction />
           </div>
           <div>
-            <Divider />
+            <div class="sm:bg-gradient-to-b from-3a-gray-darkest to-transparent ">
+              <Divider />
+            </div>
             <div ref={(el) => (container = el)}>
               <FullWidth>
                 <HugeText>
@@ -72,8 +74,8 @@ export default function Home() {
                     class="flex items-center py-12 md:py-16 xl:py-20"
                   >
                     <h2 class="text-pretty">
-                      From Experience to Concept{" "}
-                      <span class="text-3a-green">and Back</span>
+                      From Experience to Concept to Code{" "}
+                      <span class="text-3a-green">to Experience</span>
                     </h2>
                   </div>
                 </HugeText>
@@ -131,7 +133,9 @@ export default function Home() {
             </div>
           </div>
         </main>
-        <Divider />
+        <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+          <Divider />
+        </div>
       </div>
     </LandingPageLayout>
   );

@@ -6,7 +6,7 @@ import { FullWidth } from "~/components/layouts/Full-Width";
 export const Footer = () => {
   return (
     <footer id="footer">
-      <div class="min-h-32 p-6 md:px-0">
+      <div class="min-h-32 px-6 md:px-0 sm:bg-3a-gray-darkest">
         <GridIndicator />
         <FullWidth>
           <div class="grid sm:grid-cols-2 xl:grid-cols-3 w-full">
