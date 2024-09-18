@@ -24,7 +24,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
   onMount(() => {
     // lenis
     const lenis = new Lenis({
-      syncTouch: true,
+      syncTouch: false,
       autoResize: true,
       orientation: "vertical",
       gestureOrientation: "vertical",
