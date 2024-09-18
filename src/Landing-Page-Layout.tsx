@@ -4,7 +4,6 @@ import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { Footer } from "./content/Footer";
 import { CanvasAnimation } from "~/components/Canvas-Animation";
-import { CanvasAnimation2 } from "~/components/Canvas-Animation-2";
 
 export const LandingPageLayout: ParentComponent = (props) => {
   const [

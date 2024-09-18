@@ -83,7 +83,7 @@ export default function Home() {
               <FullWidth>
                 <div class="grid grid-cols-3 w-full">
                   {/*Conduct*/}
-                  <div class="item col-span-3 md:col-span-1 py-12">
+                  <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
                     <Headline>Anti-Agony</Headline>
                     <SmallText class="md:pr-16">
                       <p class="!mb-6">
@@ -98,7 +98,7 @@ export default function Home() {
                     </SmallText>
                   </div>
                   {/*Code*/}
-                  <div class="item col-span-3 md:col-span-1 py-12">
+                  <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
                     <Headline>Async Action</Headline>
                     <SmallText class="md:pr-16">
                       <p class="!mb-6">
@@ -112,8 +112,8 @@ export default function Home() {
                     </SmallText>
                   </div>
                   {/*Lead*/}
-                  <div class="item col-span-3 md:col-span-1 py-12">
-                    <Headline>Agile Leader</Headline>
+                  <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
+                    <Headline>Agile Leadership</Headline>
                     <SmallText class="md:pr-16">
                       <p class="!mb-6">
                         I have a special feel for solutions that take into
