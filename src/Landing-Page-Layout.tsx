@@ -4,7 +4,6 @@ import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { Footer } from "./content/Footer";
 import { clientOnly } from "@solidjs/start";
-
 const CanvasAnimation2 = clientOnly(
   () => import("~/components/animation/Canvas-Animation-2"),
 );

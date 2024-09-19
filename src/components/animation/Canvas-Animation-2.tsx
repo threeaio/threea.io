@@ -1,11 +1,5 @@
 import { fromLandingPageState } from "~/landing-page-state";
-import {
-  onMount,
-  ParentComponent,
-  createEffect,
-  createMemo,
-  ParentProps,
-} from "solid-js";
+import { onMount, createEffect, createMemo, ParentProps } from "solid-js";
 import { Bound, CanvasSpace, Color, Line, Num, Pt, PtLikeIterable } from "pts";
 import { gsap } from "gsap";
 import P5 from "p5";
@@ -64,7 +58,6 @@ export default function CanvasAnimation2(props: ParentProps) {
       const subPointsC = Line.subpoints(lineC as PtLikeIterable, numPoints);
       const subPointsD = Line.subpoints(lineD as PtLikeIterable, numPoints);
 
-      const green = [60, 240, 150];
       const violett = Color.from([240, 150, 240, 1]);
       for (let i = 0; i < numPoints - 1; i++) {
         const _violett = Color.RGBtoHSB(violett);
@@ -73,7 +66,7 @@ export default function CanvasAnimation2(props: ParentProps) {
 
         p5.blendMode(p5.ADD);
         p5.colorMode(p5.HSB);
-        p5.stroke(p5.color(100, 0, 100, 0.005 * i));
+        p5.stroke(p5.color(100, 0, 100, 0.003 * i));
 
         p5.fill(p5.color(hue, 90, 100, 0.015));
         // p5.noFill();
