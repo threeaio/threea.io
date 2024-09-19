@@ -3,7 +3,11 @@ import { fromLandingPageState } from "./landing-page-state";
 import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { Footer } from "./content/Footer";
-import { CanvasAnimation } from "~/components/Canvas-Animation";
+import { clientOnly } from "@solidjs/start";
+
+const CanvasAnimation2 = clientOnly(
+  () => import("~/components/animation/Canvas-Animation-2"),
+);
 
 export const LandingPageLayout: ParentComponent = (props) => {
   const [
@@ -70,14 +74,11 @@ export const LandingPageLayout: ParentComponent = (props) => {
         setupContentResizeObserver(el);
       }}
     >
-      <CanvasAnimation>
-        {/*<CanvasAnimation2>*/}
-        <div class="opacity-100">
-          {props.children}
-          <Footer />
-        </div>
-        {/*</CanvasAnimation2>*/}
-      </CanvasAnimation>
+      <CanvasAnimation2 />
+      <div class="relative">
+        {props.children}
+        <Footer />
+      </div>
     </div>
   );
 };

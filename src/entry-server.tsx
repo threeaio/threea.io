@@ -19,6 +19,7 @@ export default createHandler(() => (
         <body>
           <div id="app">{children}</div>
           {scripts}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.min.js" />
         </body>
       </html>
     )}
