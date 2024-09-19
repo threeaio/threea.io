@@ -1,8 +1,8 @@
 import { fromLandingPageState } from "~/landing-page-state";
 import { onMount, createEffect, createMemo, ParentProps } from "solid-js";
-import { Bound, CanvasSpace, Color, Line, Num, Pt, PtLikeIterable } from "pts";
 import { gsap } from "gsap";
 import P5 from "p5";
+import { P5Line, subpoints } from "~/_util";
 
 export default function CanvasAnimation2(props: ParentProps) {
   const [{ landingPageState }] = fromLandingPageState;
@@ -23,7 +23,7 @@ export default function CanvasAnimation2(props: ParentProps) {
     randY2: Math.random() * landingPageState.screenHeight,
   };
 
-  let lineOrigin = new Pt(0, 0);
+  let lineOrigin = new P5.Vector(0, 0);
 
   let animationParent: HTMLDivElement | undefined;
 
@@ -32,8 +32,6 @@ export default function CanvasAnimation2(props: ParentProps) {
       p5.setup = () => {
         const canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
         canvas.parent(ref);
-        // p5.debugMode();
-        // p5.rectMode(p5.CORNER);
       };
     };
 
@@ -42,27 +40,26 @@ export default function CanvasAnimation2(props: ParentProps) {
       p5.clear();
 
       const numPoints = 22;
-      const lineA = [lineOrigin, new Pt(rands.randX1, 0)];
-      const lineB = [
+      const lineA: P5Line = [lineOrigin, new P5.Vector(rands.randX1, 0)];
+      const lineB: P5Line = [
         lineOrigin,
-        new Pt(rands.randX2, landingPageState.screenHeight),
+        new P5.Vector(rands.randX2, landingPageState.screenHeight),
       ];
-      const lineC = [lineOrigin, new Pt(0, rands.randY1)];
-      const lineD = [
+      const lineC: P5Line = [lineOrigin, new P5.Vector(0, rands.randY1)];
+      const lineD: P5Line = [
         lineOrigin,
-        new Pt(landingPageState.totalWidth, rands.randY2),
+        new P5.Vector(landingPageState.totalWidth, rands.randY2),
       ];
 
-      const subPointsA = Line.subpoints(lineA as PtLikeIterable, numPoints);
-      const subPointsB = Line.subpoints(lineB as PtLikeIterable, numPoints);
-      const subPointsC = Line.subpoints(lineC as PtLikeIterable, numPoints);
-      const subPointsD = Line.subpoints(lineD as PtLikeIterable, numPoints);
+      const subPointsA = subpoints(lineA, numPoints);
+      const subPointsB = subpoints(lineB, numPoints);
+      const subPointsC = subpoints(lineC, numPoints);
+      const subPointsD = subpoints(lineD, numPoints);
 
-      const violett = Color.from([240, 150, 240, 1]);
+      const violett = [240, 150, 240, 1];
       for (let i = 0; i < numPoints - 1; i++) {
-        const _violett = Color.RGBtoHSB(violett);
-        const perc = (numPoints / (i + 1)) * 20;
-        const hue = (perc + _violett.h) % 360;
+        const perc = (i / numPoints) * 100;
+        const hue = (perc + p5.hue(violett)) % 360;
 
         p5.blendMode(p5.ADD);
         p5.colorMode(p5.HSB);
@@ -154,7 +151,7 @@ export default function CanvasAnimation2(props: ParentProps) {
         randY2 = Math.random() * landingPageState.screenHeight;
       }
 
-      const originPoint = new Pt(
+      const originPoint = new P5.Vector(
         landingPageState.totalWidth / 2 +
           (Math.cos(
             (landingPageState.progress /
