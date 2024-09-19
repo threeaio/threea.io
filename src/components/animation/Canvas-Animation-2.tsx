@@ -63,7 +63,7 @@ export default function CanvasAnimation2(props: ParentProps) {
 
         p5.blendMode(p5.ADD);
         p5.colorMode(p5.HSB);
-        p5.stroke(p5.color(100, 0, 100, 0.003 * i));
+        p5.stroke(p5.color(100, 0, 100, 0.005 * i));
 
         p5.fill(p5.color(hue, 90, 100, 0.015));
         // p5.noFill();

@@ -66,14 +66,16 @@ export const Introduction = () => {
           </div>
         }
         Right={
-          <div class=" h-full w-full bg-3a-green mix-blend-lighten">
-            <div class="min-h-max h-full w-full bg-cover mix-blend-multiply">
-              <img
-                id="hero-graphic"
-                alt="Nikolaj Sokolowksi photographing himself"
-                class="object-cover h-full w-full object-top"
-                src="/ich.webp"
-              />
+          <div class="bg-3a-gray-darkest h-full">
+            <div class=" h-full w-full  ">
+              <div class="min-h-max h-full w-full bg-cover mix-blend-lighten">
+                <img
+                  id="hero-graphic"
+                  alt="Nikolaj Sokolowksi photographing himself"
+                  class="object-cover h-full w-full object-top opacity-70"
+                  src="/ich.webp"
+                />
+              </div>
             </div>
           </div>
         }
