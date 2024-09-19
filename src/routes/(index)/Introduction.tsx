@@ -66,7 +66,7 @@ export const Introduction = () => {
           </div>
         }
         Right={
-          <div class=" h-full w-full bg-3a-green">
+          <div class=" h-full w-full bg-3a-green mix-blend-lighten">
             <div class="min-h-max h-full w-full bg-cover mix-blend-multiply">
               <img
                 id="hero-graphic"
