@@ -13,6 +13,9 @@ import { Title } from "@solidjs/meta";
 
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { clientOnly } from "@solidjs/start";
+import { AgileAgit } from "~/content/Agile-Agit";
+import { AsyncAction } from "~/content/Async-Action";
+import { AntiAgony } from "~/content/Anti-Agony";
 const CanvasAnimation2 = clientOnly(
   () => import("~/components/animation/Canvas-Animation-2"),
 );
@@ -94,13 +97,10 @@ export default function Home() {
                 <div class="grid grid-cols-3 w-full">
                   {/*Conduct*/}
                   <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
-                    <Headline>Anti-Agony</Headline>
-                    <SmallText class="md:pr-16">
-                      <p class="!mb-6">
-                        Improving daily interactions and creating tools for the
-                        people through thoughtful, human-centred software is
-                        what drives me
-                      </p>
+                    <Headline>{AntiAgony.headline}</Headline>
+                    <SmallText class="md:pr-16 xl:pr-20">
+                      <p class=" !mb-6">{AntiAgony.teaser}</p>
+                      {/*<div class="">{AntiAgony.text}</div>*/}
                       <Button href="/anti-agony" asA={true}>
                         More{" "}
                         <span class="hidden lg:inline">on my Motivation</span>
@@ -109,13 +109,10 @@ export default function Home() {
                   </div>
                   {/*Code*/}
                   <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
-                    <Headline>Async Action</Headline>
-                    <SmallText class="md:pr-16">
-                      <p class="!mb-6">
-                        As a developer, I deliver simple functional
-                        UI-solutions, focused on maintainability, stability and
-                        user-friendliness
-                      </p>
+                    <Headline>{AsyncAction.headline}</Headline>
+                    <SmallText class="md:pr-16 xl:pr-20">
+                      <p class="!mb-6">{AsyncAction.teaser}</p>
+                      {/*<div class="">{AsyncAction.text}</div>*/}
                       <Button href="/async-action" asA={true}>
                         More <span class="hidden lg:inline">on Coding</span>
                       </Button>
@@ -123,18 +120,12 @@ export default function Home() {
                   </div>
                   {/*Lead*/}
                   <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
-                    <Headline>Agile Leadership</Headline>
-                    <SmallText class="md:pr-16">
-                      <p class="!mb-6">
-                        I have a special feel for solutions that take into
-                        account the skills and needs of the team on the one hand
-                        and that are convincing in terms of results and costs on
-                        the other
-                      </p>
+                    <Headline>{AgileAgit.headline}</Headline>
+                    <SmallText class="md:pr-16 xl:pr-20">
+                      <p class="!mb-6">{AgileAgit.teaser}</p>
+                      {/*<div class="">{AgileAgit.text}</div>*/}
                       <Button href="/agile-leadership" asA={true}>
-                        <span>
-                          More <span class="hidden lg:inline">about this</span>
-                        </span>
+                        More <span class="hidden lg:inline">on Agit</span>
                       </Button>
                     </SmallText>
                   </div>
