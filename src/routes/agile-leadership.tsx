@@ -1,25 +1,23 @@
-import { A } from "@solidjs/router";
-import Counter from "~/components/Counter";
-import { GridIndicator } from "~/components/Grid-Indicator";
-import { Introduction } from "~/routes/(index)/Introduction";
 import { Divider } from "~/components/Divider";
-import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/HugeText";
-import { Headline } from "~/components/Headline";
 import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
 import { LandingPageLayout } from "~/Landing-Page-Layout";
-import { BleedLeftHalf } from "~/components/layouts/bleed-left/Bleed-Left-Half";
 import { Title } from "@solidjs/meta";
 import { HeaderSimple } from "~/content/Header-Simple";
 import { BleedRightHalf } from "~/components/layouts/bleed-right/Bleed-Right-Half";
+import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import { clientOnly } from "@solidjs/start";
+const CanvasAnimation2 = clientOnly(
+  () => import("~/components/animation/Canvas-Animation-2"),
+);
 
 export default function AntiAgony() {
   return (
     <LandingPageLayout>
-      <Title>Threea.io - About agile Leadership</Title>
-      <HeaderSimple />
-      <div class="">
+      <Title>Threea.io - Agile Leadership</Title>
+      <CanvasAnimationWrapper animation={<CanvasAnimation2 hue={170} />}>
+        <HeaderSimple />
         <main>
           <BleedRightHalf
             Right={
@@ -71,11 +69,10 @@ export default function AntiAgony() {
             }
           />
         </main>
-      </div>
-
-      <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
-        <Divider />
-      </div>
+        <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+          <Divider />
+        </div>
+      </CanvasAnimationWrapper>
     </LandingPageLayout>
   );
 }

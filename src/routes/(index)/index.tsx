@@ -10,7 +10,12 @@ import { Button } from "~/components/Button";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
 import { Title } from "@solidjs/meta";
-import { CanvasAnimation } from "~/components/Canvas-Animation";
+
+import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import { clientOnly } from "@solidjs/start";
+const CanvasAnimation2 = clientOnly(
+  () => import("~/components/animation/Canvas-Animation-2"),
+);
 
 export default function Home() {
   let container: HTMLElement;
@@ -62,7 +67,12 @@ export default function Home() {
           <div>
             <Introduction />
           </div>
-          <div>
+
+          <CanvasAnimationWrapper
+            start="top bottom-=40%"
+            end="top+=50% top"
+            animation={<CanvasAnimation2 />}
+          >
             <div class="sm:bg-gradient-to-b from-3a-gray-darkest to-transparent ">
               <Divider />
             </div>
@@ -131,11 +141,11 @@ export default function Home() {
                 </div>
               </FullWidth>
             </div>
-          </div>
+            <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+              <Divider />
+            </div>
+          </CanvasAnimationWrapper>
         </main>
-        <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
-          <Divider />
-        </div>
       </div>
     </LandingPageLayout>
   );

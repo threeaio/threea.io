@@ -1,12 +1,9 @@
-import { onMount, ParentComponent } from "solid-js";
+import { createEffect, onMount, ParentComponent } from "solid-js";
 import { fromLandingPageState } from "./landing-page-state";
 import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { Footer } from "./content/Footer";
-import { clientOnly } from "@solidjs/start";
-const CanvasAnimation2 = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
-);
+import { createElementSize } from "@solid-primitives/resize-observer";
 
 export const LandingPageLayout: ParentComponent = (props) => {
   const [
@@ -23,7 +20,16 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
   // GsapBlur();
 
+  let ref: Element | undefined;
+
   onMount(() => {
+    if (ref) {
+      const size = createElementSize(ref);
+      createEffect(() => {
+        setTotalContentHeight(size.height);
+      });
+    }
+
     // lenis
     const lenis = new Lenis({
       syncTouch: false,
@@ -52,32 +58,10 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
   // lenis end
 
-  const setupContentResizeObserver = (el: HTMLElement) => {
-    new ResizeObserver((args) => {
-      const cr = args[0].contentRect;
-      setTotalContentHeight(cr.height);
-      setTotalWidth(cr.width);
-    }).observe(el);
-  };
-
-  const setupScreenResizeObserver = (el: HTMLElement) => {
-    new ResizeObserver((args) => {
-      setScreenHeight(window.innerHeight);
-    }).observe(el);
-  };
-
   return (
-    <div
-      ref={(el) => {
-        setupScreenResizeObserver(el);
-        setupContentResizeObserver(el);
-      }}
-    >
-      <CanvasAnimation2 />
-      <div class="relative">
-        {props.children}
-        <Footer />
-      </div>
+    <div ref={(el) => (ref = el)}>
+      {props.children}
+      <Footer />
     </div>
   );
 };

@@ -10,7 +10,7 @@ export const HeaderSimple = () => {
         <GridIndicator />
         <FullWidth>
           <div class="grid sm:grid-cols-2 xl:grid-cols-3 w-full">
-            <div class="py-4 px-4 md:p-8 flex h-full flex-col justify-center xl:col-span-2">
+            <div class="flex h-full flex-col justify-center xl:col-span-2">
               <div>
                 <a href="/" title="to Homepage">
                   <MainLogo size={"normal"} />
