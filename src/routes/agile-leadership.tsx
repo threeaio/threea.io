@@ -6,8 +6,8 @@ import { AgileAgit } from "~/content/Agile-Agit";
 import { clientOnly } from "@solidjs/start";
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 
-const CanvasAnimation2 = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
+const CanvasAnimationRounded = clientOnly(
+  () => import("~/components/animation/Canvas-Animation-rounded"),
 );
 
 export default function PageAgileLeadership() {
@@ -16,7 +16,7 @@ export default function PageAgileLeadership() {
       <HeaderSimple />
       <MainArticle content={AgileAgit}>
         <CanvasAnimationWrapper
-          animation={<CanvasAnimation2 />}
+          animation={<CanvasAnimationRounded hue={230} />}
         ></CanvasAnimationWrapper>
       </MainArticle>
       <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">

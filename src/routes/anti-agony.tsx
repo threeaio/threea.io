@@ -5,8 +5,8 @@ import { AntiAgony } from "~/content/Anti-Agony";
 import MainArticle from "~/components/Main-Article";
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { clientOnly } from "@solidjs/start";
-const CanvasAnimation2 = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
+const CanvasAnimationRounded = clientOnly(
+  () => import("~/components/animation/Canvas-Animation-rounded"),
 );
 
 export default function PageAntiAgony() {
@@ -22,7 +22,7 @@ export default function PageAntiAgony() {
           {/*  src="/ich.webp"*/}
           {/*/>*/}
           <CanvasAnimationWrapper
-            animation={<CanvasAnimation2 hue={40} />}
+            animation={<CanvasAnimationRounded hue={40} />}
           ></CanvasAnimationWrapper>
         </div>
       </MainArticle>

@@ -16,8 +16,8 @@ import { clientOnly } from "@solidjs/start";
 import { AgileAgit } from "~/content/Agile-Agit";
 import { AsyncAction } from "~/content/Async-Action";
 import { AntiAgony } from "~/content/Anti-Agony";
-const CanvasAnimation2 = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
+const CanvasAnimationRounded = clientOnly(
+  () => import("~/components/animation/Canvas-Animation-rounded"),
 );
 
 export default function Home() {
@@ -74,7 +74,7 @@ export default function Home() {
           <CanvasAnimationWrapper
             start="top bottom-=40%"
             end="top+=50% top"
-            animation={<CanvasAnimation2 />}
+            animation={<CanvasAnimationRounded />}
           >
             <div class="sm:bg-gradient-to-b from-3a-gray-darkest to-transparent ">
               <Divider />

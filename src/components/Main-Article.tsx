@@ -20,7 +20,7 @@ export default function MainArticle(
         Right={
           <div class="relative w-full h-full">
             <div class="absolute inset-0">{props.children}</div>
-            <div class="flex justify-end sm:sticky sm:top-0">
+            <div class="flex justify-end sm:sticky sm:top-0 relative">
               <SubNavigation />
             </div>
           </div>
@@ -35,7 +35,7 @@ export default function MainArticle(
             <SmallText>
               <p class="text-3a-green !mb-6">{props.content.teaser}</p>
               <div class="">{props.content.text}</div>
-              <div class="pt-4">
+              <div class="hidden sm:border-dashed pt-4">
                 <Button isBack={true} href="/" asA={true}>
                   Back
                 </Button>
