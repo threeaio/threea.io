@@ -32,7 +32,10 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
     // lenis
     const lenis = new Lenis({
-      syncTouch: false,
+      syncTouch: true,
+      smoothWheel: true,
+      syncTouchLerp: 0.075,
+      touchInertiaMultiplier: 35,
       autoResize: true,
       orientation: "vertical",
       gestureOrientation: "vertical",
@@ -69,6 +72,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
     gsap.ticker.add((time) => {
       lenis.raf(time * 5000);
     });
+
     //
     gsap.ticker.lagSmoothing(0);
   });
