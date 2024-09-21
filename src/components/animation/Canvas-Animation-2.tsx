@@ -34,7 +34,7 @@ export default function CanvasAnimation2(
     randY2: Math.random() * height(),
   };
 
-  let lineOrigin = new P5.Vector(0, 0);
+  let lineOrigin = new P5.Vector(width() / 2, height() / 2);
 
   let animationParent: HTMLDivElement | undefined;
 
@@ -99,7 +99,7 @@ export default function CanvasAnimation2(
         p5.colorMode(p5.HSB);
         p5.stroke(p5.color(100, 0, 100, 0.01 * i));
 
-        p5.fill(p5.color(hue, 40 + 4 * i, 30, 0.015));
+        p5.fill(p5.color(hue, 20 + 4 * i, 30, 0.015));
         // p5.noFill();
         // p5.push();
         p5.beginShape();

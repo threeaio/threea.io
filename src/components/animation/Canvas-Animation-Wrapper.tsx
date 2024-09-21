@@ -6,6 +6,7 @@ import {
   onCleanup,
   onMount,
   ParentProps,
+  Show,
   useContext,
 } from "solid-js";
 
@@ -90,13 +91,13 @@ export default function CanvasAnimationWrapper(
       }}
     >
       <div
-        class="relative"
+        class="relative h-full w-full"
         ref={(el) => {
           animationParent = el;
           observe(animationParent);
         }}
       >
-        {props.animation}
+        <Show when={width() && height()}>{props.animation}</Show>
         <div class="relative">{props.children}</div>
       </div>
     </AnimationContext.Provider>

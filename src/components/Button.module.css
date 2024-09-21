@@ -6,6 +6,7 @@
 
 .btn {
   @apply text-sm;
+  @apply py-2;
   @apply font-extralight;
   color: var(--button-color);
   transition: all 0.2s;
@@ -20,8 +21,16 @@
   display: inline-block;
   padding-right: var(--button-arrow-left-size);
   content: "→ ";
-  transition: all 0.3s;
   transform: translateX(0);
+}
+.btn::before,
+.btn::after {
+  transition: all 0.3s;
+}
+
+.btn::after {
+  content: "";
+  padding-right: var(--button-arrow-left-size-grown);
 }
 
 .btn--back::before {
@@ -31,4 +40,8 @@
 .btn:hover::before {
   padding-right: var(--button-arrow-left-size-grown);
   transform: translateX(var(--button-arrow-left-size));
+}
+
+.btn:hover::after {
+  padding-right: var(--button-arrow-left-size);
 }

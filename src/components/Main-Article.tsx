@@ -4,24 +4,31 @@ import { HugeText } from "~/components/HugeText";
 import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
 import { ContentType } from "~/content/content-type";
-import { fromLandingPageState } from "~/landing-page-state";
 import SubNavigation from "~/components/Sub-Navigation";
+import { ParentProps } from "solid-js";
+import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 
-export default function MainArticle(props: { content: ContentType }) {
-  const [{ landingPageState }] = fromLandingPageState;
+export default function MainArticle(
+  props: ParentProps & {
+    content: ContentType;
+  },
+) {
   return (
     <main>
       <Title>Threea - {props.content.titleSeo}</Title>
-      <BleedRightHalf
+      <BleedRight
         Right={
-          <div class="grid justify-items-end">
-            <SubNavigation />
+          <div class="relative w-full h-full">
+            <div class="absolute inset-0">{props.children}</div>
+            <div class="flex justify-end sm:sticky sm:top-0">
+              <SubNavigation />
+            </div>
           </div>
         }
         Left={
           <div class="sm:py-4 md:py-8 lg:py-12">
             <HugeText>
-              <div class="flex items-center mt-6">
+              <div class="flex items-center">
                 <h1 class="text-pretty">{props.content.headline}</h1>
               </div>
             </HugeText>
