@@ -1,6 +1,6 @@
 :root {
-  --button-arrow-left-size: theme("spacing.2");
-  --button-arrow-left-size-grown: theme("spacing.5");
+  --button-arrow-left-size: theme("spacing.1");
+  --button-arrow-left-size-grown: theme("spacing.3");
   --button-color: var(--color-3a-paper);
 }
 
