@@ -79,7 +79,7 @@ export default function CanvasAnimation2(
     const draw = () => {
       p5.clear();
 
-      const numPoints = 70;
+      const numPoints = 40;
       const lineA: P5Line = [lineOrigin, new P5.Vector(rands.randX1, 0)];
       const lineB: P5Line = [
         lineOrigin,
@@ -157,13 +157,14 @@ export default function CanvasAnimation2(
 
         p5.blendMode(p5.ADD);
         p5.colorMode(p5.HSB);
-        p5.stroke(p5.color(0, 0, 100, 0.0017 * i));
+        p5.stroke(p5.color(0, 0, 100, 0.0027 * i));
 
         const diff = (i / numPoints) * 110;
         let hue = props.hue || 270;
         hue = (hue - diff) % 360;
 
-        p5.fill(p5.color(hue, 70, 15, 0.0001 * i));
+        // p5.fill(p5.color(hue, 70, 15, 0.0003 * i));
+        p5.fill(p5.color(100, 0, 100, 0));
         // p5.noFill();
         // p5.push();
         p5.beginShape();
