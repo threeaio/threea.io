@@ -47,12 +47,29 @@ export const LandingPageLayout: ParentComponent = (props) => {
       },
     );
 
-    lenis.on("scroll", window.scrollTrigger.update);
+    // window.scrollTrigger.create({
+    //   trigger: "body",
+    //   // start: "top top",
+    //   // end: "bottom bottom",
+    //   scrub: 1,
+    //   onToggle: (self) => {
+    //     // if (!self.isActive) {
+    //     //   setVelocity(0);
+    //     // }
+    //   },
+    //   onUpdate: (self) => {
+    //     setProgress(self.progress);
+    //     setVelocity(self.getVelocity());
+    //     setScrollDirection(self.direction as -1 | 1);
+    //   },
+    // });
 
+    lenis.on("scroll", window.scrollTrigger.update);
+    //
     gsap.ticker.add((time) => {
       lenis.raf(time * 5000);
     });
-
+    //
     gsap.ticker.lagSmoothing(0);
   });
 
