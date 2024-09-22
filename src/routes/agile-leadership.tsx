@@ -5,12 +5,18 @@ import MainArticle from "~/components/Main-Article";
 import { AgileAgit } from "~/content/Agile-Agit";
 import { clientOnly } from "@solidjs/start";
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import { navigationBus } from "~/Navigation-Bus";
+import { onMount } from "solid-js";
 
 const CanvasAnimationRounded = clientOnly(
   () => import("~/components/animation/Canvas-Animation-rounded"),
 );
 
 export default function PageAgileLeadership() {
+  onMount(() => {
+    navigationBus.emit(AgileAgit.titleSeo);
+  });
+
   return (
     <div>
       <HeaderSimple />

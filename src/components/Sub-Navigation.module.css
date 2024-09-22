@@ -9,18 +9,33 @@
 
 .navOuter {
   @apply grid;
-  /*@apply relative;*/
+  @apply relative;
   @apply w-full;
   @apply sm:w-auto;
   @apply sm:fixed;
   @apply top-0;
   @apply right-0;
-  @apply z-10;
+  @apply z-30;
+}
+
+.navOuter.navOuterShow {
+  @apply bg-3a-gray-darkest;
+}
+
+.navInner {
+  @apply w-full;
+  @apply sm:w-auto;
+  @apply flex;
+  @apply flex-col;
+  @apply gap-3;
+  @apply pt-24;
+  /*@apply sm:pt-0;*/
+  @apply pb-8;
 }
 
 .nav {
   @apply grid;
-  @apply bg-3a-gray-darkest;
+  /*@apply bg-3a-gray-darkest;*/
   grid-template-rows: 0fr;
   grid-template-columns: 0fr;
   transition:
@@ -29,46 +44,7 @@
   transition-delay: 0.2s;
 }
 
-.navHead {
-  @apply cursor-pointer;
-  @apply px-4;
-  @apply sm:px-8;
-  @apply py-8;
-  @apply text-3a-green;
-  @apply flex;
-  @apply flex-row;
-  @apply gap-3;
-  @apply items-center;
-  @apply justify-end;
-
-  @apply bg-3a-gray-darkest;
-  transition: all 0s 0.3s;
-}
-
-.navHeadSymbol {
-  @apply flex;
-  @apply flex-col;
-  @apply gap-1;
-}
-
-.navHeadSymbol > span {
-  @apply h-1;
-  @apply w-5;
-  @apply rounded;
-  @apply bg-3a-green;
-}
-
-.navHeadSymbol > span:nth-child(even) {
-  @apply w-4;
-}
-
-.navOuter:hover .navHead {
-  @apply bg-3a-gray-darkest;
-  transition-duration: 0s;
-  transition-delay: 0s;
-}
-
-.navOuter:hover .nav {
+.navOuter.navOuterShow .nav {
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
   transition:
@@ -77,8 +53,69 @@
   transition-delay: 0s;
 }
 
-.navOuter:hover .navHeadSymbol span {
+.navHead {
+  @apply absolute;
+  @apply right-0;
+  @apply w-full;
+  /*@apply sm:relative;*/
+  @apply h-16;
+  @apply cursor-pointer;
+  @apply pl-4;
+  @apply pr-8;
+  @apply sm:px-8;
+  @apply mt-8;
+  @apply text-3a-green;
+  @apply flex;
+  @apply flex-row;
+  @apply gap-3;
+  @apply items-center;
+  @apply justify-between;
+  @apply flex-row-reverse;
+  /*@apply bg-3a-gray-darkest;*/
+  transition: all 0.3s;
+}
+
+.navOuter.navOuterShow .navHead {
+  /*@apply bg-3a-gray-darkest;*/
+  @apply mt-2;
+  @apply sm:mt-8;
+  /*transition-duration: 0s;*/
+  /*transition-delay: 0s;*/
+}
+
+.navHeadSymbol {
+  @apply flex;
+  @apply flex-col;
+  @apply gap-1;
+  transition: all 0.3s;
+}
+
+.navHeadSymbol > span {
+  @apply h-1;
+  @apply w-5;
+  @apply rounded;
+  @apply bg-3a-green;
+  transition: all 0.3s;
+}
+.navHeadSymbol > span:nth-child(even) {
+  @apply w-4;
+}
+
+.navOuter.navOuterShow .navHeadSymbol span {
   @apply bg-3a-white;
+}
+.navOuter:hover .navHeadSymbol span {
+}
+
+.navHeadSymbol + span {
+  @apply opacity-0;
+  @apply transition-opacity;
+  transition-delay: 0s;
+}
+
+.navOuter.navOuterShow .navHeadSymbol + span {
+  @apply opacity-100;
+  transition-delay: 0.35s;
 }
 
 .navOuter nav li {
@@ -89,7 +126,8 @@
     transform 0.3s;
   transition-delay: calc(0.015s * (var(--numItems) - (var(--i))));
 }
-.navOuter:hover nav li {
+
+.navOuter.navOuterShow nav li {
   @apply opacity-100;
   @apply translate-y-0;
   transition-delay: calc(0.4s + 0.055s * var(--i));

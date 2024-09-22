@@ -5,11 +5,16 @@ import { AntiAgony } from "~/content/Anti-Agony";
 import MainArticle from "~/components/Main-Article";
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { clientOnly } from "@solidjs/start";
+import { onMount } from "solid-js";
+import { navigationBus } from "~/Navigation-Bus";
 const CanvasAnimationRounded = clientOnly(
   () => import("~/components/animation/Canvas-Animation-rounded"),
 );
 
 export default function PageAntiAgony() {
+  onMount(() => {
+    navigationBus.emit(AntiAgony.titleSeo);
+  });
   return (
     <div>
       <HeaderSimple />

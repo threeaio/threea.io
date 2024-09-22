@@ -6,7 +6,7 @@ import { FullWidth } from "~/components/layouts/Full-Width";
 export const HeaderSimple = () => {
   return (
     <header id="header">
-      <div class="min-h-32">
+      <div class="min-h-32 mb-24 sm:mb-0">
         <GridIndicator />
         <FullWidth>
           <div class="grid sm:grid-cols-2 xl:grid-cols-3 w-full">

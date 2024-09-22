@@ -843,6 +843,13 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/merge-streams/-/merge-streams-2.3.0.tgz#719df7fb41766bc143369eaa0dd56d8dc87c9958"
   integrity sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==
 
+"@solid-primitives/event-bus@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/event-bus/-/event-bus-1.0.11.tgz#0a4c42d79f588a21c9bf061b6ace1508081d14df"
+  integrity sha512-bSwVA4aI2aNHomSbEroUnisMSyDDXJbrw4U8kFEvrcYdlLrJX5i6QeCFx+vj/zdQQw62KAllrEIyWP8KMpPVnQ==
+  dependencies:
+    "@solid-primitives/utils" "^6.2.3"
+
 "@solid-primitives/event-listener@^2.3.3":
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@solid-primitives/event-listener/-/event-listener-2.3.3.tgz#ab28c8627aa7d6234617867d8b02c80e1b8f0948"
