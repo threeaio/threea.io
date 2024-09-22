@@ -12,7 +12,7 @@ const CanvasAnimationRounded = clientOnly(
 
 export default function PageAgileLeadership() {
   return (
-    <LandingPageLayout>
+    <div>
       <HeaderSimple />
       <MainArticle content={AgileAgit}>
         <CanvasAnimationWrapper
@@ -22,6 +22,6 @@ export default function PageAgileLeadership() {
       <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />
       </div>
-    </LandingPageLayout>
+    </div>
   );
 }

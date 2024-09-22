@@ -1,10 +1,8 @@
 import { Title } from "@solidjs/meta";
-import { BleedRightHalf } from "~/components/layouts/bleed-right/Bleed-Right-Half";
 import { HugeText } from "~/components/HugeText";
 import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
 import { ContentType } from "~/content/content-type";
-import SubNavigation from "~/components/Sub-Navigation";
 import { ParentProps } from "solid-js";
 import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 
@@ -15,14 +13,11 @@ export default function MainArticle(
 ) {
   return (
     <main>
-      <Title>Threea - {props.content.titleSeo}</Title>
+      <Title>Threea - {/*@once*/ props.content.titleSeo}</Title>
       <BleedRight
         Right={
           <div class="relative w-full h-full">
             <div class="absolute inset-0">{props.children}</div>
-            <div class="flex justify-end sm:sticky sm:top-0 relative">
-              <SubNavigation />
-            </div>
           </div>
         }
         Left={

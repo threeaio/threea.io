@@ -11,7 +11,7 @@ const CanvasAnimation2 = clientOnly(
 
 export default function PageAsyncAction() {
   return (
-    <LandingPageLayout>
+    <div>
       <HeaderSimple />
       <MainArticle content={AsyncAction}>
         <CanvasAnimationWrapper
@@ -21,6 +21,6 @@ export default function PageAsyncAction() {
       <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />
       </div>
-    </LandingPageLayout>
+    </div>
   );
 }

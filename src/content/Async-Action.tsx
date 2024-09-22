@@ -1,5 +1,5 @@
 export const AsyncAction = {
-  titleSeo: "About my Motivation",
+  titleSeo: "Me and the Code",
   headline: <>Async Action</>,
   teaser: (
     <>

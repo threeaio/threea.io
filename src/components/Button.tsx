@@ -1,7 +1,5 @@
 import { JSX } from "solid-js";
 import styles from "./Button.module.css";
-import { ChildProps } from "postcss";
-import b from "@studio-freight/lenis";
 
 export const Button = (props: {
   children: JSX.Element;

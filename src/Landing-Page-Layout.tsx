@@ -78,6 +78,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
   return (
     <div ref={(el) => (ref = el)}>
       {props.children}
+
       <Footer />
     </div>
   );

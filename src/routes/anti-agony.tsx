@@ -11,7 +11,7 @@ const CanvasAnimationRounded = clientOnly(
 
 export default function PageAntiAgony() {
   return (
-    <LandingPageLayout>
+    <div>
       <HeaderSimple />
       <MainArticle content={AntiAgony}>
         <div class="min-h-max h-full w-full bg-cover mix-blend-lighten">
@@ -29,6 +29,6 @@ export default function PageAntiAgony() {
       <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />
       </div>
-    </LandingPageLayout>
+    </div>
   );
 }

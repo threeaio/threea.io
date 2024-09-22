@@ -1,0 +1,96 @@
+:root {
+  --i: 0;
+  --numItems: 4;
+}
+
+.nav li {
+  white-space: nowrap;
+}
+
+.navOuter {
+  @apply grid;
+  /*@apply relative;*/
+  @apply w-full;
+  @apply sm:w-auto;
+  @apply sm:fixed;
+  @apply top-0;
+  @apply right-0;
+  @apply z-10;
+}
+
+.nav {
+  @apply grid;
+  @apply bg-3a-gray-darkest;
+  grid-template-rows: 0fr;
+  grid-template-columns: 0fr;
+  transition:
+    grid-template-rows 0.1s ease-out,
+    grid-template-columns 0.1s ease-out;
+  transition-delay: 0.2s;
+}
+
+.navHead {
+  @apply cursor-pointer;
+  @apply px-4;
+  @apply sm:px-8;
+  @apply py-8;
+  @apply text-3a-green;
+  @apply flex;
+  @apply flex-row;
+  @apply gap-3;
+  @apply items-center;
+  @apply justify-end;
+
+  @apply bg-3a-gray-darkest;
+  transition: all 0s 0.3s;
+}
+
+.navHeadSymbol {
+  @apply flex;
+  @apply flex-col;
+  @apply gap-1;
+}
+
+.navHeadSymbol > span {
+  @apply h-1;
+  @apply w-5;
+  @apply rounded;
+  @apply bg-3a-green;
+}
+
+.navHeadSymbol > span:nth-child(even) {
+  @apply w-4;
+}
+
+.navOuter:hover .navHead {
+  @apply bg-3a-gray-darkest;
+  transition-duration: 0s;
+  transition-delay: 0s;
+}
+
+.navOuter:hover .nav {
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  transition:
+    grid-template-rows 0.2s 0.2s ease-out,
+    grid-template-columns 0.6s ease-out;
+  transition-delay: 0s;
+}
+
+.navOuter:hover .navHeadSymbol span {
+  @apply bg-3a-white;
+}
+
+.navOuter nav li {
+  @apply opacity-0;
+  @apply -translate-y-2;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  transition-delay: calc(0.015s * (var(--numItems) - (var(--i))));
+}
+.navOuter:hover nav li {
+  @apply opacity-100;
+  @apply translate-y-0;
+  transition-delay: calc(0.4s + 0.055s * var(--i));
+}

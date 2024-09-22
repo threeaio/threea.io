@@ -62,82 +62,80 @@ export default function Home() {
     );
   });
   return (
-    <LandingPageLayout>
-      <div>
-        <Title>Welcome to Threea.io</Title>
-        <GridIndicator />
-        <main>
-          <div>
-            <Introduction />
-          </div>
+    <div>
+      <Title>Welcome to Threea.io</Title>
+      <GridIndicator />
+      <main>
+        <div>
+          <Introduction />
+        </div>
 
-          <CanvasAnimationWrapper
-            start="top bottom-=40%"
-            end="top+=50% top"
-            animation={<CanvasAnimationRounded />}
-          >
-            <div class="sm:bg-gradient-to-b from-3a-gray-darkest to-transparent ">
-              <Divider />
-            </div>
-            <div ref={(el) => (container = el)}>
-              <FullWidth>
-                <HugeText>
-                  <div
-                    id="big-headline-index"
-                    class="flex items-center py-12 md:py-16 xl:py-20"
-                  >
-                    <h2 class="text-pretty">
-                      From Experience to Concept to Code{" "}
-                      <span class="text-3a-green">to Experience</span>
-                    </h2>
-                  </div>
-                </HugeText>
-              </FullWidth>
-              <FullWidth>
-                <div class="grid grid-cols-3 w-full">
-                  {/*Conduct*/}
-                  <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
-                    <Headline>{AntiAgony.headline}</Headline>
-                    <SmallText class="md:pr-16 xl:pr-20">
-                      <p class=" !mb-6">{AntiAgony.teaser}</p>
-                      {/*<div class="">{AntiAgony.text}</div>*/}
-                      <Button href="/anti-agony" asA={true}>
-                        More{" "}
-                        <span class="hidden lg:inline">on my Motivation</span>
-                      </Button>
-                    </SmallText>
-                  </div>
-                  {/*Code*/}
-                  <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
-                    <Headline>{AsyncAction.headline}</Headline>
-                    <SmallText class="md:pr-16 xl:pr-20">
-                      <p class="!mb-6">{AsyncAction.teaser}</p>
-                      {/*<div class="">{AsyncAction.text}</div>*/}
-                      <Button href="/async-action" asA={true}>
-                        More <span class="hidden lg:inline">on Coding</span>
-                      </Button>
-                    </SmallText>
-                  </div>
-                  {/*Lead*/}
-                  <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
-                    <Headline>{AgileAgit.headline}</Headline>
-                    <SmallText class="md:pr-16 xl:pr-20">
-                      <p class="!mb-6">{AgileAgit.teaser}</p>
-                      {/*<div class="">{AgileAgit.text}</div>*/}
-                      <Button href="/agile-leadership" asA={true}>
-                        More <span class="hidden lg:inline">on Agit</span>
-                      </Button>
-                    </SmallText>
-                  </div>
+        <CanvasAnimationWrapper
+          start="top bottom-=40%"
+          end="top+=50% top"
+          animation={<CanvasAnimationRounded />}
+        >
+          <div class="sm:bg-gradient-to-b from-3a-gray-darkest to-transparent ">
+            <Divider />
+          </div>
+          <div ref={(el) => (container = el)}>
+            <FullWidth>
+              <HugeText>
+                <div
+                  id="big-headline-index"
+                  class="flex items-center py-12 md:py-16 xl:py-20"
+                >
+                  <h2 class="text-pretty">
+                    From Experience to Concept to Code{" "}
+                    <span class="text-3a-green">to Experience</span>
+                  </h2>
                 </div>
-              </FullWidth>
-            </div>
-            <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
-              <Divider />
-            </div>
-          </CanvasAnimationWrapper>
-        </main>
-      </div>
-    </LandingPageLayout>
+              </HugeText>
+            </FullWidth>
+            <FullWidth>
+              <div class="grid grid-cols-3 w-full">
+                {/*Conduct*/}
+                <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
+                  <Headline>{AntiAgony.headline}</Headline>
+                  <SmallText class="md:pr-16 xl:pr-20">
+                    <p class=" !mb-6">{AntiAgony.teaser}</p>
+                    {/*<div class="">{AntiAgony.text}</div>*/}
+                    <Button href="/anti-agony" asA={true}>
+                      More{" "}
+                      <span class="hidden lg:inline">on my Motivation</span>
+                    </Button>
+                  </SmallText>
+                </div>
+                {/*Code*/}
+                <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
+                  <Headline>{AsyncAction.headline}</Headline>
+                  <SmallText class="md:pr-16 xl:pr-20">
+                    <p class="!mb-6">{AsyncAction.teaser}</p>
+                    {/*<div class="">{AsyncAction.text}</div>*/}
+                    <Button href="/async-action" asA={true}>
+                      More <span class="hidden lg:inline">on Coding</span>
+                    </Button>
+                  </SmallText>
+                </div>
+                {/*Lead*/}
+                <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
+                  <Headline>{AgileAgit.headline}</Headline>
+                  <SmallText class="md:pr-16 xl:pr-20">
+                    <p class="!mb-6">{AgileAgit.teaser}</p>
+                    {/*<div class="">{AgileAgit.text}</div>*/}
+                    <Button href="/agile-leadership" asA={true}>
+                      More <span class="hidden lg:inline">on Agit</span>
+                    </Button>
+                  </SmallText>
+                </div>
+              </div>
+            </FullWidth>
+          </div>
+          <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+            <Divider />
+          </div>
+        </CanvasAnimationWrapper>
+      </main>
+    </div>
   );
 }
