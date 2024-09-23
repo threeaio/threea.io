@@ -77,7 +77,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
   return (
     <div
-      class="bg-3a-gray-darkest mx-auto w-full main-layout"
+      class="bg-3a-gray-darkest mx-auto w-full transform-gpu main-layout"
       ref={(el) => (ref = el)}
     >
       {props.children}

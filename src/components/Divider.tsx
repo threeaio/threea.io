@@ -1,5 +1,4 @@
 import { fromLandingPageState } from "~/landing-page-state";
-import { getRandomFloat } from "~/_util";
 
 export const Divider = () => {
   const [{ landingPageState }] = fromLandingPageState;
