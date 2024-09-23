@@ -1,10 +1,18 @@
 :root {
   --i: 0;
+  --is: 0;
   --numItems: 4;
 }
 
 .nav li {
   white-space: nowrap;
+}
+
+body:global(.preview-layout) .navOuter {
+  /*left: 100%;*/
+  /*transform: scale(1.6);*/
+  @apply translate-y-8;
+  @apply -translate-x-8;
 }
 
 .navOuter {
@@ -16,6 +24,10 @@
   @apply top-0;
   @apply right-0;
   @apply z-30;
+
+  @apply translate-y-0;
+  @apply translate-x-0;
+  transition: transform 0.3s;
 }
 
 .navOuter.navOuterShow {
@@ -30,7 +42,7 @@
   @apply gap-3;
   @apply pt-24;
   /*@apply sm:pt-0;*/
-  @apply pb-8;
+  /*@apply pb-8;*/
 }
 
 .nav {
@@ -64,23 +76,21 @@
   @apply pr-8;
   @apply sm:px-8;
   @apply mt-8;
-  @apply text-3a-green;
   @apply flex;
   @apply flex-row;
   @apply gap-3;
   @apply items-center;
   @apply justify-between;
   @apply flex-row-reverse;
+  @apply text-3a-white;
+  @apply text-sm;
   /*@apply bg-3a-gray-darkest;*/
   transition: all 0.3s;
 }
 
 .navOuter.navOuterShow .navHead {
-  /*@apply bg-3a-gray-darkest;*/
   @apply mt-2;
   @apply sm:mt-8;
-  /*transition-duration: 0s;*/
-  /*transition-delay: 0s;*/
 }
 
 .navHeadSymbol {
@@ -91,12 +101,29 @@
 }
 
 .navHeadSymbol > span {
-  @apply h-1;
+  @apply h-0.5;
   @apply w-5;
   @apply rounded;
   @apply bg-3a-green;
-  transition: all 0.3s;
+  transform: scaleX(1);
+  transform-origin: top left;
+  /*transition: all 0.3s calc(var(--i) * 0.3s);*/
+  /*animation: 2s calc(var(--is) * 0.3s) infinite navHeadSymbolHover;*/
 }
+
+.navOuter:not(.navOuterShow) .navHeadSymbol:hover > span {
+  animation: 0.6s calc(var(--is) * 0.1s) infinite navHeadSymbolHover;
+}
+
+@keyframes navHeadSymbolHover {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.8);
+  }
+}
+
 .navHeadSymbol > span:nth-child(even) {
   @apply w-4;
 }

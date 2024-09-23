@@ -9,13 +9,15 @@ import SubNavigation from "~/components/Sub-Navigation";
 
 export default function App() {
   return (
-    <MetaProvider>
-      <LandingPageLayout>
+    <div>
+      <MetaProvider>
         <SubNavigation />
-        <Router root={(props) => <Suspense>{props.children}</Suspense>}>
-          <FileRoutes />
-        </Router>
-      </LandingPageLayout>
-    </MetaProvider>
+        <LandingPageLayout>
+          <Router root={(props) => <Suspense>{props.children}</Suspense>}>
+            <FileRoutes />
+          </Router>
+        </LandingPageLayout>
+      </MetaProvider>
+    </div>
   );
 }

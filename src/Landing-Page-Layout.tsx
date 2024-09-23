@@ -76,9 +76,11 @@ export const LandingPageLayout: ParentComponent = (props) => {
   // lenis end
 
   return (
-    <div ref={(el) => (ref = el)}>
+    <div
+      class="bg-3a-gray-darkest mx-auto w-full main-layout"
+      ref={(el) => (ref = el)}
+    >
       {props.children}
-
       <Footer />
     </div>
   );

@@ -3,8 +3,9 @@ import styles from "./Button.module.css";
 
 export const Button = (props: {
   children: JSX.Element;
-  asA?: boolean;
+  asA?: boolean; // TODO group with href
   isBack?: boolean;
+  handleClick?: Function;
   href?: string;
 }) => {
   return props.asA ? (
@@ -15,6 +16,11 @@ export const Button = (props: {
       {props.children}
     </a>
   ) : (
-    <button class={`py-2 px-4 ${styles.btn}`}>{props.children}</button>
+    <button
+      onClick={() => props.handleClick?.()}
+      class={`py-2 px-4 ${styles.btn}`}
+    >
+      {props.children}
+    </button>
   );
 };

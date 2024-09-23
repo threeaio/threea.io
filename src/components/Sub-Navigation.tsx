@@ -23,14 +23,27 @@ export default function SubNavigation() {
       class={`${styles.navOuter} ${show() ? styles.navOuterShow : ""}`}
       ref={(el) => (ref = el)}
     >
-      <h3 class={`${styles.navHead}`}>
-        <span
-          class={`${styles.navHeadSymbol}`}
-          onPointerUp={() => setShow(!show())}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
+      <h3
+        class={`${styles.navHead}`}
+        onPointerUp={() => {
+          setShow(!show());
+          if (
+            document.querySelector("body")!.classList.contains("preview-layout")
+          ) {
+            document.querySelector("body")!.classList.toggle("preview-layout");
+            setTimeout(() => {
+              window.scrollTrigger.refresh();
+            }, 700);
+
+            window.scrollTo(0, 0);
+          }
+        }}
+      >
+        <span class={`${styles.navHeadSymbol}`}>
+          <span style="--is: 0"></span>
+          <span style="--is: 1"></span>
+          <span style="--is: 2"></span>
+          <span style="--is: 3"></span>
         </span>
         <span>Content</span>
       </h3>
@@ -55,10 +68,29 @@ export default function SubNavigation() {
               </li>
               <li
                 style="--i: 3"
-                class="border-t border-t-3a-gray border-dashed pt-2 mt-2 pl-4 sm:pl-8 pr-20"
+                class="border-t border-t-3a-gray border-dashed py-3 mt-4 pl-4 sm:pl-8 pr-20"
               >
                 <Button isBack={true} href="/" asA={true}>
                   To Homepage
+                </Button>
+              </li>
+              <li
+                style="--i: 4"
+                class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
+              >
+                <Button
+                  handleClick={() => {
+                    document
+                      .querySelector("body")!
+                      .classList.toggle("preview-layout");
+                    setTimeout(() => {
+                      window.scrollTrigger.refresh();
+                    }, 700);
+
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  Alternative View
                 </Button>
               </li>
             </ul>

@@ -7,6 +7,7 @@
 .btn {
   @apply text-sm;
   @apply py-2;
+  @apply px-0;
   @apply font-extralight;
   color: var(--button-color);
   transition: all 0.2s;

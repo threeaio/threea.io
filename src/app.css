@@ -14,7 +14,7 @@
   --color-3a-gray-darkest: #171c1a;
   --color-3a-black: #040505;
 
-  --background-rgb: var(--color-3a-gray-darkest);
+  --background-rgb: var(--color-3a-gray);
   --foreground-rgb: var(--color-3a-paper);
 }
 
@@ -61,4 +61,21 @@ html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
+}
+
+.main-layout {
+  transform-origin: left top;
+  position: relative;
+  left: 0%;
+  transition: all 0.66s;
+}
+body.preview-layout .main-layout {
+  transition: all 0.33s;
+  @apply w-[80%];
+  left: -10%;
+  @apply translate-y-8;
+  @apply translate-x-8;
+  /*@apply -translate-x-[20%];*/
+  @apply shadow-2xl;
+  @apply scale-[.45];
 }
