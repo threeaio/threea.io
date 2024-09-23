@@ -7,6 +7,8 @@ import { clientOnly } from "@solidjs/start";
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { navigationBus } from "~/Navigation-Bus";
 import { onMount } from "solid-js";
+import { AntiAgony } from "~/content/Anti-Agony";
+import { AsyncAction } from "~/content/Async-Action";
 
 const CanvasAnimationRounded = clientOnly(
   () => import("~/components/animation/Canvas-Animation-rounded"),
@@ -14,7 +16,11 @@ const CanvasAnimationRounded = clientOnly(
 
 export default function PageAgileLeadership() {
   onMount(() => {
-    navigationBus.emit(AgileAgit.titleSeo);
+    navigationBus.emit({
+      isHomepage: false,
+      onThisPage: [],
+      relatedToThisPage: [AntiAgony.moreLink, AsyncAction.moreLink],
+    });
   });
 
   return (

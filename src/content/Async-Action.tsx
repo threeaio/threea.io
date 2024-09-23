@@ -1,4 +1,6 @@
-export const AsyncAction = {
+import { ContentType } from "~/content/content-type";
+
+export const AsyncAction: ContentType = {
   titleSeo: "Me and the Code",
   headline: <>Async Action</>,
   teaser: (
@@ -7,6 +9,10 @@ export const AsyncAction = {
       maintainability, stability and user-friendliness
     </>
   ),
+  moreLink: {
+    href: "async-action",
+    title: "More on my Approach on Coding",
+  },
   text: (
     <>
       <p>

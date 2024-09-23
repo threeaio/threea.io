@@ -1,8 +1,8 @@
 import { Button } from "~/components/Button";
-import { createMemo, createSignal, onMount } from "solid-js";
+import { createMemo, createSignal, For, onMount, Show } from "solid-js";
 import { fromLandingPageState } from "~/landing-page-state";
 import styles from "./Sub-Navigation.module.css";
-import { navigationBus } from "~/Navigation-Bus";
+import { navigationBus, NavigationConfiguration } from "~/Navigation-Bus";
 
 export default function SubNavigation() {
   let ref: HTMLDivElement | undefined;
@@ -13,10 +13,15 @@ export default function SubNavigation() {
     landingPageState.progress,
   );
   const [show, setShow] = createSignal(false);
+  const [navigationConfig, setNavigationConfig] =
+    createSignal<NavigationConfiguration>({
+      isHomepage: false,
+      relatedToThisPage: [],
+      onThisPage: [],
+    });
 
-  onMount(() => {
-    navigationBus.listen((a) => console.log("received from bus", a));
-  });
+  navigationBus.listen((a) => setNavigationConfig(a));
+  onMount(() => {});
 
   return (
     <div
@@ -51,31 +56,32 @@ export default function SubNavigation() {
         <nav class="overflow-hidden">
           <div class={`${styles.navInner}`}>
             <ul>
-              <li style="--i: 0" class="pl-4 sm:pl-8 pr-20">
-                <Button href="/anti-agony" asA={true}>
-                  More on my Motivation
-                </Button>
-              </li>
-              <li style="--i: 1" class="pl-4 sm:pl-8 pr-20">
-                <Button href="/async-action" asA={true}>
-                  More on my Approach on Coding
-                </Button>
-              </li>
-              <li style="--i: 2" class="pl-4 sm:pl-8 pr-20">
-                <Button href="/agile-leadership" asA={true}>
-                  About my other Agile Roles
-                </Button>
-              </li>
+              <For each={navigationConfig().relatedToThisPage}>
+                {(item, i) => (
+                  <li
+                    style={`--i:${i()}`}
+                    class={`pl-4 sm:pl-8 pr-20 ${i() === navigationConfig().relatedToThisPage.length - 1 ? "mb-4" : ""}`}
+                  >
+                    <Button href={item.href} asA={true}>
+                      {item.title}
+                    </Button>
+                  </li>
+                )}
+              </For>
+
+              <Show when={!navigationConfig().isHomepage}>
+                <li
+                  style={`--i:${navigationConfig().relatedToThisPage.length}`}
+                  class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
+                >
+                  <Button isBack={true} href="/" asA={true}>
+                    To Homepage
+                  </Button>
+                </li>
+              </Show>
+
               <li
-                style="--i: 3"
-                class="border-t border-t-3a-gray border-dashed py-3 mt-4 pl-4 sm:pl-8 pr-20"
-              >
-                <Button isBack={true} href="/" asA={true}>
-                  To Homepage
-                </Button>
-              </li>
-              <li
-                style="--i: 4"
+                style={`--i:${navigationConfig().relatedToThisPage.length + 1}`}
                 class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
               >
                 <Button

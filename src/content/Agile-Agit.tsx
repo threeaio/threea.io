@@ -1,4 +1,6 @@
-export const AgileAgit = {
+import { ContentType } from "~/content/content-type";
+
+export const AgileAgit: ContentType = {
   titleSeo: "Agile Leadership",
   headline: <>Agile Agit</>,
   teaser: (
@@ -7,6 +9,10 @@ export const AgileAgit = {
       also take into account the skills and needs of the team
     </>
   ),
+  moreLink: {
+    href: "agile-leadership",
+    title: "About my other Agile Roles",
+  },
   text: (
     <>
       <p>

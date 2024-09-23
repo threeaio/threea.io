@@ -1,4 +1,6 @@
-export const AntiAgony = {
+import { ContentType } from "~/content/content-type";
+
+export const AntiAgony: ContentType = {
   titleSeo: "About my Motivation",
   headline: <>Anti Agony</>,
   teaser: (
@@ -7,6 +9,10 @@ export const AntiAgony = {
       thoughtful, human-centred software is what drives me
     </>
   ),
+  moreLink: {
+    href: "anti-agony",
+    title: "More on my Motivation",
+  },
   text: (
     <>
       <p>

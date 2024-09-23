@@ -16,6 +16,7 @@ import { clientOnly } from "@solidjs/start";
 import { AgileAgit } from "~/content/Agile-Agit";
 import { AsyncAction } from "~/content/Async-Action";
 import { AntiAgony } from "~/content/Anti-Agony";
+import { navigationBus } from "~/Navigation-Bus";
 const CanvasAnimationRounded = clientOnly(
   () => import("~/components/animation/Canvas-Animation-rounded"),
 );
@@ -24,6 +25,16 @@ export default function Home() {
   let container: HTMLElement;
 
   onMount(() => {
+    navigationBus.emit({
+      isHomepage: true,
+      onThisPage: [],
+      relatedToThisPage: [
+        AntiAgony.moreLink,
+        AsyncAction.moreLink,
+        AgileAgit.moreLink,
+      ],
+    });
+
     let mm = gsap.matchMedia(),
       breakPoint = 800;
     mm.add(
