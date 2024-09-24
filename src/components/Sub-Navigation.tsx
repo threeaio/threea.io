@@ -1,11 +1,20 @@
 import { Button } from "~/components/Button";
-import { createMemo, createSignal, For, onMount, Show } from "solid-js";
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  For,
+  onMount,
+  Show,
+} from "solid-js";
 import { fromLandingPageState } from "~/landing-page-state";
 import styles from "./Sub-Navigation.module.css";
 import { navigationBus, NavigationConfiguration } from "~/Navigation-Bus";
+import { useHref, useLocation } from "@solidjs/router";
 
 export default function SubNavigation() {
   let ref: HTMLDivElement | undefined;
+  const location = useLocation();
 
   const [{ landingPageState }] = fromLandingPageState;
   const scrolled = createMemo(
@@ -15,7 +24,6 @@ export default function SubNavigation() {
   const [show, setShow] = createSignal(false);
   const [navigationConfig, setNavigationConfig] =
     createSignal<NavigationConfiguration>({
-      isHomepage: false,
       relatedToThisPage: [],
       onThisPage: [],
     });
@@ -60,25 +68,18 @@ export default function SubNavigation() {
                 {(item, i) => (
                   <li
                     style={`--i:${i()}`}
-                    class={`pl-4 sm:pl-8 pr-20 ${i() === navigationConfig().relatedToThisPage.length - 1 ? "mb-4" : ""}`}
+                    class={`pl-4 sm:pl-8 pr-20 ${i() === navigationConfig().relatedToThisPage.length - 1 ? "mb-4" : ""} `}
                   >
-                    <Button href={item.href} asA={true}>
+                    <Button
+                      href={item.href}
+                      asA={true}
+                      active={location.pathname === item.href}
+                    >
                       {item.title}
                     </Button>
                   </li>
                 )}
               </For>
-
-              <Show when={!navigationConfig().isHomepage}>
-                <li
-                  style={`--i:${navigationConfig().relatedToThisPage.length}`}
-                  class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
-                >
-                  <Button isBack={true} href="/" asA={true}>
-                    To Homepage
-                  </Button>
-                </li>
-              </Show>
 
               <li
                 style={`--i:${navigationConfig().relatedToThisPage.length + 1}`}
@@ -99,6 +100,16 @@ export default function SubNavigation() {
                   Alternative View
                 </Button>
               </li>
+              <Show when={location.pathname !== "/"}>
+                <li
+                  style={`--i:${navigationConfig().relatedToThisPage.length}`}
+                  class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
+                >
+                  <Button href="/" asA={true} isBack={true}>
+                    To Homepage
+                  </Button>
+                </li>
+              </Show>
             </ul>
           </div>
         </nav>

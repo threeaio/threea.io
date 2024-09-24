@@ -16,9 +16,12 @@ const CanvasAnimation2 = clientOnly(
 export default function PageAsyncAction() {
   onMount(() => {
     navigationBus.emit({
-      isHomepage: false,
       onThisPage: [],
-      relatedToThisPage: [AntiAgony.moreLink, AgileAgit.moreLink],
+      relatedToThisPage: [
+        AntiAgony.moreLink,
+        AsyncAction.moreLink,
+        AgileAgit.moreLink,
+      ],
     });
   });
   return (

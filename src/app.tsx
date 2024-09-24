@@ -11,12 +11,18 @@ export default function App() {
   return (
     <div>
       <MetaProvider>
-        <SubNavigation />
-        <LandingPageLayout>
-          <Router root={(props) => <Suspense>{props.children}</Suspense>}>
-            <FileRoutes />
-          </Router>
-        </LandingPageLayout>
+        <Router
+          root={(props) => (
+            <div>
+              <SubNavigation />
+              <LandingPageLayout>
+                <Suspense>{props.children}</Suspense>
+              </LandingPageLayout>
+            </div>
+          )}
+        >
+          <FileRoutes />
+        </Router>
       </MetaProvider>
     </div>
   );

@@ -1,5 +1,4 @@
 import { Divider } from "~/components/Divider";
-import { LandingPageLayout } from "~/Landing-Page-Layout";
 import { HeaderSimple } from "~/content/Header-Simple";
 import MainArticle from "~/components/Main-Article";
 import { AgileAgit } from "~/content/Agile-Agit";
@@ -17,9 +16,12 @@ const CanvasAnimationRounded = clientOnly(
 export default function PageAgileLeadership() {
   onMount(() => {
     navigationBus.emit({
-      isHomepage: false,
       onThisPage: [],
-      relatedToThisPage: [AntiAgony.moreLink, AsyncAction.moreLink],
+      relatedToThisPage: [
+        AntiAgony.moreLink,
+        AsyncAction.moreLink,
+        AgileAgit.moreLink,
+      ],
     });
   });
 

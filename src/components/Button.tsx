@@ -3,6 +3,8 @@ import styles from "./Button.module.css";
 
 export const Button = (props: {
   children: JSX.Element;
+  active?: boolean;
+  disabled?: boolean;
   asA?: boolean; // TODO group with href
   isBack?: boolean;
   handleClick?: Function;
@@ -11,7 +13,7 @@ export const Button = (props: {
   return props.asA ? (
     <a
       href={props.href}
-      class={` ${styles.btn} ${props.isBack ? styles["btn--back"] : ""}`}
+      class={` ${styles.btn} ${props.isBack ? styles["btn--back"] : ""} ${props.active && styles["btn--active"]} ${props.disabled && styles["btn--disabled"]}`}
     >
       {props.children}
     </a>

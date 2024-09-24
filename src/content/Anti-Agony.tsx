@@ -10,7 +10,7 @@ export const AntiAgony: ContentType = {
     </>
   ),
   moreLink: {
-    href: "anti-agony",
+    href: "/anti-agony",
     title: "More on my Motivation",
   },
   text: (

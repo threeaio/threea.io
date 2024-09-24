@@ -9,7 +9,6 @@ export type NavigationItem = {
 export type NavigationConfiguration = {
   onThisPage: NavigationItem[];
   relatedToThisPage: NavigationItem[]; // or section-wise?
-  isHomepage: boolean; // or show to homepage link
 };
 
 export let navigationBus: EventBus<NavigationConfiguration>;

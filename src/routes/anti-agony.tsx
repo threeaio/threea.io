@@ -16,9 +16,12 @@ const CanvasAnimationRounded = clientOnly(
 export default function PageAntiAgony() {
   onMount(() => {
     navigationBus.emit({
-      isHomepage: false,
       onThisPage: [],
-      relatedToThisPage: [AsyncAction.moreLink, AgileAgit.moreLink],
+      relatedToThisPage: [
+        AntiAgony.moreLink,
+        AsyncAction.moreLink,
+        AgileAgit.moreLink,
+      ],
     });
   });
   return (

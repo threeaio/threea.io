@@ -10,7 +10,7 @@ export const AsyncAction: ContentType = {
     </>
   ),
   moreLink: {
-    href: "async-action",
+    href: "/async-action",
     title: "More on my Approach on Coding",
   },
   text: (
