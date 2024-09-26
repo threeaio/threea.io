@@ -1,5 +1,4 @@
 import { GridIndicator } from "~/components/Grid-Indicator";
-import { LandingPageLayout } from "~/Landing-Page-Layout";
 import { Divider } from "~/components/Divider";
 import { Introduction } from "~/routes/(index)/Introduction";
 import { FullWidth } from "~/components/layouts/Full-Width";
@@ -18,7 +17,7 @@ import { AsyncAction } from "~/content/Async-Action";
 import { AntiAgony } from "~/content/Anti-Agony";
 import { navigationBus } from "~/Navigation-Bus";
 const CanvasAnimationRounded = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-rounded"),
+  () => import("~/components/animation/Canvas-Animation-swiss-1"),
 );
 
 export default function Home() {
@@ -26,7 +25,6 @@ export default function Home() {
 
   onMount(() => {
     navigationBus.emit({
-      isHomepage: true,
       onThisPage: [],
       relatedToThisPage: [
         AntiAgony.moreLink,
@@ -82,8 +80,8 @@ export default function Home() {
         </div>
 
         <CanvasAnimationWrapper
-          start="top bottom-=40%"
-          end="top+=50% top"
+          start="clamp(top bottom-=40%)"
+          end="clamp(top+=50% top)"
           animation={<CanvasAnimationRounded />}
         >
           <div class="sm:bg-gradient-to-b from-3a-gray-darkest to-transparent ">
@@ -106,7 +104,7 @@ export default function Home() {
             <FullWidth>
               <div class="grid grid-cols-3 w-full">
                 {/*Conduct*/}
-                <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
+                <div class="item col-span-3 md:col-span-1 py-6 md:py-12 ">
                   <Headline>{AntiAgony.headline}</Headline>
                   <SmallText class="md:pr-16 xl:pr-20">
                     <p class=" !mb-6">{AntiAgony.teaser}</p>
@@ -129,7 +127,7 @@ export default function Home() {
                   </SmallText>
                 </div>
                 {/*Lead*/}
-                <div class="item col-span-3 md:col-span-1 py-6 md:py-12">
+                <div class="item col-span-3 md:col-span-1 py-6 md:py-12 ">
                   <Headline>{AgileAgit.headline}</Headline>
                   <SmallText class="md:pr-16 xl:pr-20">
                     <p class="!mb-6">{AgileAgit.teaser}</p>

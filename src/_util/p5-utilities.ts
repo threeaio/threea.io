@@ -8,3 +8,15 @@ export const subpoints = (line: P5Line, num: number): P5.Vector[] => {
   }
   return pts;
 };
+
+export const coordOfCircle = (
+  _p5: P5,
+  center: P5.Vector,
+  angle: number, // respects settings in P5
+  radius: number,
+): P5.Vector => {
+  return new P5.Vector(
+    center.x + _p5.cos(angle) * radius,
+    center.y + _p5.sin(angle) * radius,
+  );
+};

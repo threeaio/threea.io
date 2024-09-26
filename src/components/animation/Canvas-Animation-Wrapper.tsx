@@ -9,7 +9,6 @@ import {
   Show,
   useContext,
 } from "solid-js";
-
 import { createContext } from "solid-js";
 import { makeResizeObserver } from "@solid-primitives/resize-observer";
 import StartEndFunc = ScrollTrigger.StartEndFunc;
@@ -67,8 +66,8 @@ export default function CanvasAnimationWrapper(
     }
     scrollTriggerHere = window.scrollTrigger.create({
       trigger: animationParent,
-      start: props.start || "top top",
-      end: props.end || "bottom bottom-=50%",
+      start: props.start || "clamp(top top)",
+      end: props.end || "clamp(bottom bottom-=50%)",
       // markers: true,
       onToggle: (self) => {
         setActive(self.isActive);
