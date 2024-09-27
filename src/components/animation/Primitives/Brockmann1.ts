@@ -20,7 +20,7 @@ export default class Brockmann1 {
     const radiusOuter = radiusInner + this._props.thickness;
 
     p5.push();
-    p5.stroke(this._props?.color || "white");
+    p5.stroke(this._props?.outlineColor || "white");
     p5.strokeCap(p5.SQUARE);
     p5.noFill();
     p5.strokeWeight(0.5);

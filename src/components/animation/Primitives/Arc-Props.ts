@@ -7,5 +7,6 @@ export type BrockmanProps = {
   radius: number;
   thickness: number;
   numPoints: number;
-  color?: string;
+  outlineColor: [number, number, number, number];
+  fillColor: [number, number, number, number];
 };

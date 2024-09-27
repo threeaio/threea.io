@@ -26,18 +26,20 @@ export const LandingPageLayout: ParentComponent = (props) => {
     if (ref) {
       const size = createElementSize(ref);
       createEffect(() => {
+        console.log("window", window);
+        setScreenHeight(window.screen.availHeight);
         setTotalContentHeight(size.height);
       });
     }
 
     // lenis
-    const lenis = new Lenis({
+    window.lenis = new Lenis({
       autoResize: true,
       orientation: "vertical",
       gestureOrientation: "vertical",
     });
 
-    lenis.on(
+    window.lenis.on(
       "scroll",
       (e: { velocity: number; progress: number; direction: -1 | 1 }) => {
         window.scrollTrigger.update();
@@ -50,7 +52,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
     // lenis.on("scroll", );
     //
     gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
+      window.lenis.raf(time * 1000);
     });
 
     //
@@ -60,10 +62,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
   // lenis end
 
   return (
-    <div
-      class="bg-3a-gray-darkest mx-auto w-full transform-gpu main-layout"
-      ref={(el) => (ref = el)}
-    >
+    <div class="bg-3a-gray-darkest mx-auto w-full" ref={(el) => (ref = el)}>
       {props.children}
       <Footer />
     </div>

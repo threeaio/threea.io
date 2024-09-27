@@ -19,6 +19,8 @@ export const insertInArray = <T>(
   ];
 };
 
+export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
+
 export const getRandomFloat = (min: number, max: number, precision = 2) => {
   const minCeiled = min * Math.pow(10, precision);
   const maxFloored = max * Math.pow(10, precision);
@@ -32,4 +34,16 @@ export const moveInArray = <T>(array: T[], from: number, to: number) => {
   const elm = array[from];
   const withoutElArray = [...array.slice(0, from), ...array.slice(from + 1)];
   return insertInArray(withoutElArray, elm, to);
+};
+
+export const hexToRgb = (hex: string): [number, number, number] => {
+  hex = hex.replace("#", "");
+
+  const bigint = parseInt(hex, 16);
+
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return [r, g, b];
 };

@@ -11,6 +11,8 @@ import { fromLandingPageState } from "~/landing-page-state";
 import styles from "./Sub-Navigation.module.css";
 import { navigationBus, NavigationConfiguration } from "~/Navigation-Bus";
 import { useHref, useLocation } from "@solidjs/router";
+import { gsap } from "gsap";
+import Lenis from "@studio-freight/lenis";
 
 export default function SubNavigation() {
   let ref: HTMLDivElement | undefined;
@@ -83,21 +85,20 @@ export default function SubNavigation() {
 
               <li
                 style={`--i:${navigationConfig().relatedToThisPage.length + 1}`}
-                class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
+                class="hidden border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
               >
                 <Button
                   handleClick={() => {
                     document
                       .querySelector("body")!
                       .classList.toggle("preview-layout");
+                    window.lenis.scrollTo(0, { duration: 0 });
                     setTimeout(() => {
                       window.scrollTrigger.refresh();
                     }, 700);
-
-                    window.scrollTo(0, 0);
                   }}
                 >
-                  Alternative View
+                  Poster-View
                 </Button>
               </li>
               <Show when={location.pathname !== "/"}>

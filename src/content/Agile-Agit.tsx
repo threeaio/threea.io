@@ -11,7 +11,7 @@ export const AgileAgit: ContentType = {
   ),
   moreLink: {
     href: "/agile-leadership",
-    title: "About my other Agile Roles",
+    title: "About me and the Agile Meta",
   },
   text: (
     <>

@@ -3,6 +3,7 @@ import { SmallText } from "~/components/SmallText";
 import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
+import { BleedRightHalf } from "~/components/layouts/bleed-right/Bleed-Right-Half";
 
 export const Introduction = () => {
   onMount(() => {
@@ -42,7 +43,7 @@ export const Introduction = () => {
   return (
     <div class="sm:bg-3a-gray-darkest">
       {/*sm:bg-3a-gray-darkest*/}
-      <BleedRight
+      <BleedRightHalf
         Left={
           <div class="flex h-svh flex-col self-end ">
             <div id="main-logo">

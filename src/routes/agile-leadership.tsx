@@ -33,7 +33,7 @@ export default function PageAgileLeadership() {
           animation={<CanvasAnimationRounded hue={230} />}
         ></CanvasAnimationWrapper>
       </MainArticle>
-      <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+      <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />
       </div>
     </div>

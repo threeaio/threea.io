@@ -40,7 +40,7 @@ export default function PageAntiAgony() {
           ></CanvasAnimationWrapper>
         </div>
       </MainArticle>
-      <div class="sm:bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+      <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />
       </div>
     </div>
