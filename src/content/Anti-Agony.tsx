@@ -2,28 +2,29 @@ import { ContentType } from "~/content/content-type";
 
 export const AntiAgony: ContentType = {
   titleSeo: "About my Motivation",
-  headline: <>Anti Agony</>,
+  headline: <>Anti-Agonie</>,
   teaser: (
     <>
-      Improving daily interactions and creating tools for the people through
-      thoughtful, human-centred software is what drives me
+      Ich verfolge einen Mensch-Zentrierten Ansatz in meiner Arbeit und versuche
+      außerdem Produktionsbedingungen, Verteilung und Umwelt-Impact mitzudenken.
     </>
   ),
   moreLink: {
     href: "/anti-agony",
-    title: "More on my Motivation",
+    title: "Über Mensch und Motivation",
   },
   text: (
     <>
       <p>
-        I adopt a human-centered approach, mindful also of production,
-        distribution, and environmental impact. High-quality design is crucial,
-        especially for applications used daily for hours.
+        Gerade mit dem Fokus auf Anwendungen, die teilweise mehrere Stunden
+        täglich von Menschen genutzt werden (und auch Umwelt „nutzt“) ist eine
+        hochqualitative Gestaltung unumgänglich.
       </p>
       <p>
-        It’s about simplifying processes while making software enjoyable and
-        engaging. My goal is to create software that serves people by being
-        efficient, enjoyable, and human-friendly.
+        Hierbei ist es wichtig, neben der weiteren Optimierung, Vereinfachung
+        von Standardabläufen und der Standardisierung dieser, nicht zu
+        vergessen, dass Software auch Spaß machen darf, und im Grunde muss, um
+        menschengerecht zu sein.
       </p>
     </>
   ),

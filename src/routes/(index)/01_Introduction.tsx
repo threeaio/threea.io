@@ -51,16 +51,23 @@ export const Introduction = () => {
             </div>
             <div class="flex-1 flex">
               <div class="self-end py-16">
-                <SmallText class="pr-12">
-                  <p class="mb-4">
-                    Hello! I'm Nikolaj Sokolowski, a design engineer, Angular
-                    developer, and detail-oriented problem-solver. Not Triple-A,
-                    but threea here.
-                  </p>
-                  <p class="mb-4">
-                    I focus on creating agile concepts and user interfaces. In
-                    the past especially for scalable business applications.
-                  </p>
+                <SmallText>
+                  <div class="grid sm:grid-cols-2 gap-8 mr-8 mb-4">
+                    <div>
+                      <p>
+                        Moi, Moi! Ich bin Nikolaj Sokolowski,
+                        Gestaltungs-Techniker (Design Engineer),
+                        Angular-Entwickler und Feinschliffmensch mit Überblick.
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        Mit threea kehre ich zurück zu meinen Wurzeln als
+                        Mediengestalter und erkunde die Möglichkeiten freier
+                        digitialer Gestaltung.
+                      </p>
+                    </div>
+                  </div>
                 </SmallText>
               </div>
             </div>

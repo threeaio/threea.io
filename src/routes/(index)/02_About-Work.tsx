@@ -32,49 +32,38 @@ export default function AboutWork() {
           scrollTrigger: {
             trigger: container,
             scrub: 3,
-            once: true,
+            // once: true,
             start: "30rem 50%",
-            end: "bottom bottom-=100px",
+            end: "bottom bottom+=100px",
           },
         });
 
         tl.addLabel("heading")
           .from("#big-headline-index", {
-            y: 80,
+            y: 120,
             autoAlpha: 0,
-            duration: 1,
-            delay: 0.4,
+            // delay: 1,
           })
           .from(
             ".headline-item",
             {
               autoAlpha: 0,
-              duration: 2,
               y: 20,
             },
-            ">+=0",
+            "<=+.2",
           )
-          .from(".headline-item", {
-            paddingLeft: "0%",
-            duration: 2,
+          .from(".item", {
+            autoAlpha: 0,
+            stagger: 0.4,
+            y: 40,
           })
-          // .to(
-          //   container,
-          //   {
-          //     position: "static",
-          //   },
-          //   ">-=0",
-          // )
-          .from(
-            ".item",
+          .to(
+            "#big-headline-index",
             {
-              autoAlpha: 0,
-              stagger: 0.4,
-              duration: 1,
-              scale: 0.95,
-              y: 100,
+              // y: 140,
+              // autoAlpha: 0,
             },
-            ">=-0.3",
+            ">-=0.7",
           );
       },
     );
@@ -85,27 +74,41 @@ export default function AboutWork() {
         <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
           <Divider />
         </div>
-        <div class="pb-64 sticky top-0" ref={(el) => (container = el)}>
+        <div class="" ref={(el) => (container = el)}>
+          {/*<div class="h-[500px]">*/}
+          {/*  <div class="sticky top-0">*/}
+          {/*    <FullWidth></FullWidth>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+
           <FullWidth>
-            <HugeText>
-              <div
-                id="big-headline-index"
-                class=" flex items-center py-6 md:py-8 xl:py-12 pt-32 xl:pt-64  "
-              >
-                <h2 class="text-pretty">
-                  From Experience to Concept to Code{" "}
-                  <span class="headline-item text-3a-green inline-block xl:pl-[33.3%] xl:whitespace-nowrap">
-                    to Experience
-                  </span>
-                </h2>
-              </div>
-            </HugeText>
+            <div class="grid grid-cols-1 sm:grid-cols-2">
+              <Headline>
+                <div class="sticky top-0 ">
+                  <div
+                    id="big-headline-index"
+                    class="flex items-center sm:justify-end py-16 md:py-32 xl:py-42 mb-[24rem]  sm:text-right"
+                  >
+                    <h2 class="text-pretty max-w-96">
+                      Aus Erfahrung Für Experience{" "}
+                      <span class="headline-item text-3a-green inline-block ">
+                        Über Arbeit, Code und Konzepte
+                      </span>
+                    </h2>
+                  </div>{" "}
+                </div>
+              </Headline>
+            </div>
           </FullWidth>
+
           <FullWidth>
-            <div class="grid grid-cols-1 max-w-[400px] xl:ml-[33.3%] mt-12 pb-64">
-              <SectionHere content={AntiAgony} />
-              <SectionHere content={AsyncAction} />
-              <SectionHere content={AgileAgit} />
+            <div class="grid grid-cols-1 sm:grid-cols-2">
+              <div></div>
+              <div class="max-w-[400px]  ">
+                <SectionHere content={AntiAgony} />
+                <SectionHere content={AsyncAction} />
+                <SectionHere content={AgileAgit} />
+              </div>
             </div>
           </FullWidth>
         </div>

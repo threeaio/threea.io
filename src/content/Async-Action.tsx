@@ -2,34 +2,30 @@ import { ContentType } from "~/content/content-type";
 
 export const AsyncAction: ContentType = {
   titleSeo: "Me and the Code",
-  headline: <>Async Action</>,
+  headline: <>Asynchrone Aktion</>,
   teaser: (
     <>
-      As a developer, I deliver simple functional UI-solutions, focused on
-      maintainability, stability and user-friendliness
+      Mit über 15 Jahren in der UI-Entwicklung und über 8 Jahren Erfahrung in
+      Typescript, angewendet in größeren Produktentwicklungen im Tourismus,
+      Smarthome- und Ticketing-Bereich, habe ich das nötige Feingefühl für die
+      „vernünftige Lösung“.
     </>
   ),
   moreLink: {
     href: "/async-action",
-    title: "More on my Approach on Coding",
+    title: "Mehr zu Typescripts",
   },
   text: (
     <>
       <p>
-        With over 15 years in web/UI and 8+ years in TypeScript, I've tackled
-        projects in tourism, smart-home, and ticketing.
+        Seit dem Start von Angular 2 2017 setze ich auf „funktionale“, einfache
+        Programmieransätze wie Redux bzw. Ngrx. Jetzt ist es u.a. Zeit für
+        Signals (deshalb u.a. SolidJs für diese Seite). Clevere
+        TypeScript-Lösungen weiß ich von Tag zu Tag mehr zu schätzen.
       </p>
       <p>
-        My journey into functional programming took off with Angular 2 in 2017,
-        leveraging RxJS and NgRx for robust, reactive implementations.
-      </p>
-      <p>
-        Now, I’m delving into Signals, the latest in reactive tech. Beside that
-        I appreciate clever TypeScript solutions more and more.
-      </p>
-      <p>
-        Currently, I use NX in a Mono-Repo setup, but I’m always open to
-        exploring new challenges.
+        Derzeit bin ich in einem Mono-Repo (Modulith) mit NX unterwegs an der
+        Stelle aber für alles offen.
       </p>
     </>
   ),

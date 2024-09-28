@@ -2,11 +2,12 @@ import { ContentType } from "~/content/content-type";
 
 export const AgileAgit: ContentType = {
   titleSeo: "Agile Leadership",
-  headline: <>Agile Agit</>,
+  headline: <>Agile Agitation</>,
   teaser: (
     <>
-      I generate solutions that are convincing in terms of results and costs but
-      also take into account the skills and needs of the team
+      Als Product Owner und Frontend-Lead in den Bereichen Ticketing und
+      Smarthome habe ich nicht nur technisches Know-How eingebracht, sondern
+      Produktentwicklungen auch fachlich stark begleitet.
     </>
   ),
   moreLink: {
@@ -16,19 +17,15 @@ export const AgileAgit: ContentType = {
   text: (
     <>
       <p>
-        In my 1.5 years as a Product Owner in ticketing, I directed both
-        technical execution and strategic growth, emphasizing high-value
-        iterations.
+        Diese Rollen ermöglichten es mir, den gesamten Entwicklungsprozess von
+        der Idee bis zur fertigen Lösung zu beeinflussen und mit einem agilen
+        Team nutzerzentrierte und effiziente Lösungen zu entwickeln.
       </p>
       <p>
-        By understanding user needs, swiftly adapting to changes, and involving
-        the team early, we crafted solutions that were market-focused and
-        efficient to produce.
-      </p>
-      <p>
-        As an Angular coach for a year, I imparted best practices in modern UI
-        development, empowering colleagues to create user-centric, scalable
-        applications.
+        Für ca. ein Jahr war ich außerdem als Angular-Coach tätig, wo ich Ein-
+        und Umsteiger in Best Practices und modernen Ansätzen in der
+        UI-Entwicklung mit Typescript v.a. In Angular, RxJs und NgRx geschult
+        habe.
       </p>
     </>
   ),

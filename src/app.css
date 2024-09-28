@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: Hoves;
+  src: url("/TT Hoves Pro Trial Regular.ttf");
+}
+
+@font-face {
+  font-family: Hoves-Mono;
+  src: url("/TT_Hoves_Pro_Mono_Trial_Thin.ttf");
+}
+
 :root {
   --color-3a-green: #3ef198;
   --color-3a-green-darker: #17ae63;
@@ -28,6 +38,11 @@
 body {
   background: var(--background-rgb);
   color: var(--foreground-rgb);
+  font-variant-numeric: slashed-zero;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  font-variant-alternates: stylistic(alternates);
+  font-feature-settings: "salt" 1;
+  /*font-variant-alternates: character-variant(cv02);*/
 }
 
 svg .logo-main-color {
