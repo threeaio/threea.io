@@ -89,7 +89,7 @@ export default function CanvasAnimationSwiss2(
       p5.clear();
 
       for (let i = 0; i < arcs.length; i++) {
-        arcs[i].setRoundness(1 - p);
+        arcs[i].setRoundness(p);
         arcs[i].draw();
       }
     };

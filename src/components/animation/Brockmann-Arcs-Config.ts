@@ -18,7 +18,7 @@ export const getBrockmannArcSettings = (): ArcSettings => ({
   minArc: 2 * arcSeg,
   arcSeg,
   arcRange: [5, 6, 7, 8, 10, 13, 18, 24],
-  gap: 20,
+  gap: 5,
   sizes: [10, 20, 40, 80, 160, 320, 640, 1280],
   amountOfArcs: 7,
 });

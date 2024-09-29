@@ -1,7 +1,13 @@
 // import { Pt } from "pts";
 
 export const createArrayFromLength = (length: number) => {
-  return [...Array(length).keys()];
+  try {
+    return [...Array(length).keys()];
+  } catch (e) {
+    const em = e + "Given length:" + length;
+    console.error(em);
+    return [];
+  }
 };
 
 export const getObjectKeys = <T extends object>(obj: T) =>
@@ -22,7 +28,10 @@ export const insertInArray = <T>(
 export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
 
 export const normalize = (min: number, max: number, value: number) => {
-  if (max - min === 0) throw new RangeError("max must be a range greater 0");
+  if (max - min === 0)
+    throw new RangeError(
+      "max must be a range greater 0. Gives was max:" + max + " and min" + min,
+    );
   return value / (max - min);
 };
 
