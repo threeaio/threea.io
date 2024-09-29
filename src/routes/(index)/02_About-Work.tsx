@@ -74,7 +74,7 @@ export default function AboutWork() {
         <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
           <Divider />
         </div>
-        <div class="" ref={(el) => (container = el)}>
+        <div class="opacity-0" ref={(el) => (container = el)}>
           {/*<div class="h-[500px]">*/}
           {/*  <div class="sticky top-0">*/}
           {/*    <FullWidth></FullWidth>*/}

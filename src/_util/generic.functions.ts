@@ -21,6 +21,15 @@ export const insertInArray = <T>(
 
 export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
 
+export const normalize = (min: number, max: number, value: number) => {
+  if (max - min === 0) throw new RangeError("max must be a range greater 0");
+  return value / (max - min);
+};
+
+export const calculateArcLength = (radius: number, angle: number) => {
+  return 2 * Math.PI * radius * (angle / 360);
+};
+
 export const getRandomFloat = (min: number, max: number, precision = 2) => {
   const minCeiled = min * Math.pow(10, precision);
   const maxFloored = max * Math.pow(10, precision);

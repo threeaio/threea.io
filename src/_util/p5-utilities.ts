@@ -11,7 +11,7 @@ export const subpoints = (line: P5Line, num: number): P5.Vector[] => {
 
 export const coordOfCircle = (
   _p5: P5,
-  center: P5.Vector,
+  center: { x: number; y: number },
   angle: number, // respects settings in P5
   radius: number,
 ): P5.Vector => {
