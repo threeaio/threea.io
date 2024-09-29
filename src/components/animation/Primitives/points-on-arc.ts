@@ -10,6 +10,17 @@ export type CreatePointsOnArcParams = {
   resolution: number;
 };
 
+export type CreatePointsOnArcParams2 = {
+  p5: P5;
+  center: { x: number; y: number };
+  angleStart: number;
+  angleEnd: number;
+  radius: number;
+  angleToAdd: number;
+  resolution: number;
+  useResolution: boolean;
+};
+
 export const createPointsOnArc = ({
   p5,
   center,
@@ -24,4 +35,31 @@ export const createPointsOnArc = ({
     const circleCoord = coordOfCircle(p5, center, angleHere, radius);
     return new P5.Vector(circleCoord.x, circleCoord.y);
   });
+};
+
+export const createPointsOnArc2 = ({
+  p5,
+  center,
+  angleStart,
+  angleEnd,
+  radius,
+  angleToAdd,
+  useResolution,
+  resolution,
+}: CreatePointsOnArcParams2): P5.Vector[] => {
+  let angleHere = angleStart;
+  const res = [];
+
+  if (useResolution) {
+    for (let i = 0; i < resolution; i++) {
+      res.push(coordOfCircle(p5, center, angleStart + i * angleToAdd, radius));
+    }
+  } else {
+    while (angleHere < angleEnd) {
+      res.push(coordOfCircle(p5, center, angleHere, radius));
+      angleHere += angleToAdd;
+    }
+  }
+
+  return res;
 };

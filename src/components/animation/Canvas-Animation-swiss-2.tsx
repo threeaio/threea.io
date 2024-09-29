@@ -21,6 +21,7 @@ import {
 import { COLORS_3A } from "~/components/animation/COLORS_3A";
 import VerticeArc from "~/components/animation/Primitives/VerticeArc";
 import { getRandomFloat } from "~/_util";
+import VerticeArc3 from "~/components/animation/Primitives/Vertice-Arc-3";
 
 export default function CanvasAnimationSwiss2(
   props: ParentProps & { hue?: number },
@@ -72,7 +73,7 @@ export default function CanvasAnimationSwiss2(
         const arcProps: Arc[] = generateArcs(START_RAD(), brockmannArcSettings);
 
         for (let i = 0; i < brockmannArcSettings.amountOfArcs; i++) {
-          const arc = VerticeArc2(_p5);
+          const arc = VerticeArc3(_p5);
           const propForArc = arcProps[i];
           arc.setArcStartAngle(propForArc.startAngle);
           arc.setArcEndAngle(propForArc.endAngle);

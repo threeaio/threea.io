@@ -1,5 +1,7 @@
 // import { Pt } from "pts";
 
+import P5 from "p5";
+
 export const createArrayFromLength = (length: number) => {
   try {
     return [...Array(length).keys()];
@@ -37,6 +39,14 @@ export const normalize = (min: number, max: number, value: number) => {
 
 export const calculateArcLength = (radius: number, angle: number) => {
   return 2 * Math.PI * radius * (angle / 360);
+};
+
+export const getAngleFromArcLengthInDegrees = (
+  arcLength: number,
+  radius: number,
+): number => {
+  const angleInRadians = arcLength / radius;
+  return angleInRadians * (180 / Math.PI);
 };
 
 export const getRandomFloat = (min: number, max: number, precision = 2) => {
