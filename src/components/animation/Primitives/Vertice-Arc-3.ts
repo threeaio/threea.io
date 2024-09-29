@@ -91,9 +91,16 @@ export default function VerticeArc3(p5: P5) {
     const line = calculateCoordinatesOfStraight();
 
     const RADIUS = scaledCenterRadius();
-    const IS_FULL_IN_CURVE =
-      currentArcLengthLeft() <= finalArcLength() / RESOLUTION;
+
     const SEGEMENT_SIZE = finalArcLength() / RESOLUTION;
+
+    const CURVE_COMPLETE = currentArcLengthLeft() - SEGEMENT_SIZE <= 0;
+    const PERCENT_CURVE_COMPLETE = 1 - currentArcLengthLeft() - SEGEMENT_SIZE;
+
+    const RESOLUTION_LINES = Math.round(
+      (RESOLUTION + 1) * PERCENT_CURVE_COMPLETE,
+    );
+    const RESOLUTION_ARCS = RESOLUTION - RESOLUTION_LINES;
 
     const createVertexForLine = () => {
       let leftHere = 0;
@@ -118,7 +125,7 @@ export default function VerticeArc3(p5: P5) {
 
     const angleEndDiff = arcEndAngle() - currentEndAngle();
 
-    const angleStart = !IS_FULL_IN_CURVE
+    const angleStart = !CURVE_COMPLETE
       ? OFFSET_ANGLES
       : arcStartAngle() + OFFSET_ANGLES - angleEndDiff;
 
@@ -130,10 +137,10 @@ export default function VerticeArc3(p5: P5) {
       angleEnd: currentEndAngle() + OFFSET_ANGLES + additionalAngle,
       angleToAdd: arcInnerAngle() / RESOLUTION,
       resolution: RESOLUTION,
-      useResolution: IS_FULL_IN_CURVE,
+      useResolution: CURVE_COMPLETE,
     });
 
-    return [...(!IS_FULL_IN_CURVE ? lineVertexes : []), ...vertexForArc];
+    return [...(!CURVE_COMPLETE ? lineVertexes : []), ...vertexForArc];
   });
 
   const draw = (): void => {
