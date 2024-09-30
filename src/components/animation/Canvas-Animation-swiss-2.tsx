@@ -5,23 +5,19 @@ import {
   onMount,
   ParentProps,
 } from "solid-js";
-import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { BrockmanProps } from "~/components/animation/Primitives/Arc-Props";
 import { fromLandingPageState } from "~/landing-page-state";
-import VerticeArc2, {
-  VerticeArc2Type,
-} from "~/components/animation/Primitives/Vertice-Arc-2";
 import {
   Arc,
   generateArcs,
   getBrockmannArcSettings,
 } from "~/components/animation/Brockmann-Arcs-Config";
 import { COLORS_3A } from "~/components/animation/COLORS_3A";
-import VerticeArc from "~/components/animation/Primitives/VerticeArc";
-import { getRandomFloat } from "~/_util";
-import VerticeArc3 from "~/components/animation/Primitives/Vertice-Arc-3";
+import VerticeArc, {
+  VerticeArcType,
+} from "~/components/animation/Primitives/Vertice-Arc";
+import { ColorArray } from "~/_util";
 
 export default function CanvasAnimationSwiss2(
   props: ParentProps & { hue?: number },
@@ -45,22 +41,17 @@ export default function CanvasAnimationSwiss2(
     scale: 1,
     rotate: 0,
     radius: 0,
-    outlineColor: [0, 0, 0, 0] as BrockmanProps["outlineColor"],
-    fillColor: [0, 0, 0, 0] as BrockmanProps["outlineColor"],
+    outlineColor: [0, 0, 0, 0] as ColorArray,
+    fillColor: [0, 0, 0, 0] as ColorArray,
   };
 
   const brockmannArcSettings = getBrockmannArcSettings();
 
-  const arcs: VerticeArc2Type[] = [];
+  const arcs: VerticeArcType[] = [];
 
   /**
    * P5 Starts here
    * ==============
-   */
-
-  /**
-   * createSketch
-   * @param ref
    */
   const createSketch = (ref: HTMLDivElement) => {
     const sketch = (_p5: P5) => {
@@ -73,13 +64,14 @@ export default function CanvasAnimationSwiss2(
         const arcProps: Arc[] = generateArcs(START_RAD(), brockmannArcSettings);
 
         for (let i = 0; i < brockmannArcSettings.amountOfArcs; i++) {
-          const arc = VerticeArc3(_p5);
+          const arc = VerticeArc(_p5);
           const propForArc = arcProps[i];
           arc.setArcStartAngle(propForArc.startAngle);
           arc.setArcEndAngle(propForArc.endAngle);
           arc.setRadius(propForArc.radius);
           arc.setThickness(propForArc.thickness);
           arc.setCenter({ x: _p5.width / 2, y: _p5.height / 2 });
+          arc.setDimension({ x: _p5.width, y: _p5.height });
           arcs.push(arc);
         }
       };
@@ -90,7 +82,7 @@ export default function CanvasAnimationSwiss2(
       p5.clear();
 
       for (let i = 0; i < arcs.length; i++) {
-        arcs[i].setRoundness(p);
+        arcs[i].setProgress(p);
         arcs[i].draw();
       }
     };
