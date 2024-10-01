@@ -5,13 +5,63 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: Hoves;
-  src: url("/TT_Hoves_Pro_Regular.woff2") format("woff2");
+  font-family: "Hoves";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/TT_Hoves_Pro_Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hoves";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/TT_Hoves_Pro_Italic.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: Hoves-Mono;
-  src: url("/TT_Hoves_Pro_Mono_Regular.woff2") format("woff2");
+  font-family: "Hoves";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200;
+  src: url("/fonts/TT_Hoves_Pro_Thin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hoves";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200;
+  src: url("/fonts/TT_Hoves_Pro_Thin_Italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Hoves";
+  font-style: normal;
+  font-display: swap;
+  font-weight: bold;
+  src: url("/fonts/TT_Hoves_Pro_DemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hoves";
+  font-style: italic;
+  font-display: swap;
+  font-weight: bold;
+  src: url("/fonts/TT_Hoves_Pro_DemiBold_Italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Hoves-Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/TT_Hoves_Pro_Mono_Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hoves-Mono";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/TT_Hoves_Pro_Mono_Italic.woff2") format("woff2");
 }
 
 :root {

@@ -44,14 +44,6 @@ export default function AboutWork() {
             autoAlpha: 0,
             // delay: 1,
           })
-          // .from(
-          //   ".headline-item",
-          //   {
-          //     autoAlpha: 0,
-          //     y: 20,
-          //   },
-          //   "<=+.2",
-          // )
           .from(".item", {
             autoAlpha: 0,
             stagger: 0.4,
@@ -80,8 +72,7 @@ export default function AboutWork() {
                     class="flex items-center sm:justify-end py-16 md:py-32 xl:py-42 mb-[105rem]  sm:text-right"
                   >
                     <h2 class="text-pretty max-w-[50rem]">
-                      Aus Erfahrung{" "}
-                      <span class="whitespace-nowrap">wird Experience </span>
+                      Aus Erfahrung wird Experience
                       {/*<span class="headline-item text-3a-green inline-block ">*/}
                       {/*  Über Arbeit, Code und Konzepte*/}
                       {/*</span>*/}

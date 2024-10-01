@@ -52,7 +52,7 @@ export const Introduction = () => {
             <div class="flex-1 flex">
               <div class="self-end py-16">
                 <SmallText>
-                  <div class="grid sm:grid-cols-2 gap-8 mr-8 mb-4">
+                  <div class="grid xl:grid-cols-2 gap-8 mr-8 mb-4">
                     <div>
                       <p>
                         Moi, Moi! Ich bin Nikolaj Sokolowski,
