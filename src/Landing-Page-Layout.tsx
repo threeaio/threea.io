@@ -21,7 +21,6 @@ export const LandingPageLayout: ParentComponent = (props) => {
 
   onMount(() => {
     if (target()) {
-      console.log("LandingPageLayout mount", target());
       const size = createElementSize(target() as HTMLElement);
       createEffect(() => {
         setScreenHeight(window.screen.availHeight);

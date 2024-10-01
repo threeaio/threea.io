@@ -47,7 +47,7 @@
   /*@apply sm:transition-[background];*/
   /*@apply sm:transition-[border];*/
   @apply bg-3a-gray-darkest;
-  @apply sm:border;
+  @apply sm:border-[0.5px];
 }
 
 .navInner {

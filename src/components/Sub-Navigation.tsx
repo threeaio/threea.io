@@ -46,7 +46,7 @@ export default function SubNavigation() {
           <span style="--is: 2"></span>
           <span style="--is: 3"></span>
         </span>
-        <span>Content</span>
+        <span>Inhalt</span>
       </h3>
       <div class={`nav`}>
         <nav class="overflow-hidden">
@@ -92,7 +92,7 @@ export default function SubNavigation() {
                 class={`border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20 ${location.pathname === "/" ? "hidden" : ""}`}
               >
                 <Button href="/" asA={true} isBack={true}>
-                  To Homepage
+                  Zur Startseite
                 </Button>
               </li>
             </ul>

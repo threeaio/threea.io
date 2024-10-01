@@ -14,7 +14,7 @@ export default function App() {
         <Router
           root={(props) => (
             <div>
-              <SubNavigation />
+              {/*<SubNavigation />*/}
               <LandingPageLayout>
                 <Suspense>{props.children}</Suspense>
               </LandingPageLayout>

@@ -6,12 +6,12 @@
 
 @font-face {
   font-family: Hoves;
-  src: url("/TT Hoves Pro Trial Regular.ttf");
+  src: url("/TT_Hoves_Pro_Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: Hoves-Mono;
-  src: url("/TT_Hoves_Pro_Mono_Trial_Thin.ttf");
+  src: url("/TT_Hoves_Pro_Mono_Regular.woff2") format("woff2");
 }
 
 :root {
