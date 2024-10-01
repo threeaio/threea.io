@@ -23,12 +23,12 @@ export default function MainArticle(
         Left={
           <div class="sm:py-4 md:py-8 lg:py-12">
             <HugeText>
-              <div class="flex items-center">
+              <div class="flex items-center mb-4">
                 <h1 class="text-pretty">{props.content.headline}</h1>
               </div>
             </HugeText>
             <SmallText>
-              <p class="text-3a-green !mb-6">{props.content.teaser}</p>
+              <p class="!text-3a-paper">{props.content.teaser}</p>
               <div class="">{props.content.text}</div>
               <div class="hidden sm:border-dashed pt-4">
                 <Button isBack={true} href="/" asA={true}>

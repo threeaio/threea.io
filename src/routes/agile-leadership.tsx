@@ -29,9 +29,9 @@ export default function PageAgileLeadership() {
     <div>
       <HeaderSimple />
       <MainArticle content={AgileAgit}>
-        <CanvasAnimationWrapper
-          animation={<CanvasAnimationRounded hue={230} />}
-        ></CanvasAnimationWrapper>
+        {/*<CanvasAnimationWrapper*/}
+        {/*  animation={<CanvasAnimationRounded hue={230} />}*/}
+        {/*></CanvasAnimationWrapper>*/}
       </MainArticle>
       <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />

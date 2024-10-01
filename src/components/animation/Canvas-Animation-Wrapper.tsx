@@ -37,6 +37,7 @@ export default function CanvasAnimationWrapper(
     end?: string | number | StartEndFunc;
   },
 ) {
+  const [target, setTarget] = createSignal<HTMLElement | undefined>();
   const [progress, setProgress] = createSignal(0);
   const [active, setActive] = createSignal(false);
   const [velocity, setVelovity] = createSignal(0);
@@ -52,8 +53,6 @@ export default function CanvasAnimationWrapper(
     setWidth(cr.width);
   }
 
-  let animationParent: HTMLDivElement | undefined;
-
   let scrollTriggerHere: ScrollTrigger | undefined;
   onCleanup(() => {
     if (scrollTriggerHere) {
@@ -61,13 +60,13 @@ export default function CanvasAnimationWrapper(
     }
   });
   onMount(() => {
-    if (!animationParent) {
+    if (!target()) {
       return;
     }
     scrollTriggerHere = window.scrollTrigger.create({
-      trigger: animationParent,
+      trigger: target(),
       start: props.start || "clamp(top top)",
-      end: props.end || "clamp(bottom bottom-=50%)",
+      end: props.end || "clamp(bottom bottom-=10%)",
       // markers: true,
       onToggle: (self) => {
         setActive(self.isActive);
@@ -92,8 +91,8 @@ export default function CanvasAnimationWrapper(
       <div
         class="relative h-full w-full"
         ref={(el) => {
-          animationParent = el;
-          observe(animationParent);
+          setTarget(el);
+          observe(el);
         }}
       >
         <Show when={width() && height()}>{props.animation}</Show>

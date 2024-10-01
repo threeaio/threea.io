@@ -28,9 +28,9 @@ export default function PageAsyncAction() {
     <div>
       <HeaderSimple />
       <MainArticle content={AsyncAction}>
-        <CanvasAnimationWrapper
-          animation={<CanvasAnimation2 hue={240} />}
-        ></CanvasAnimationWrapper>
+        {/*<CanvasAnimationWrapper*/}
+        {/*  animation={<CanvasAnimation2 hue={240} />}*/}
+        {/*></CanvasAnimationWrapper>*/}
       </MainArticle>
       <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
         <Divider />

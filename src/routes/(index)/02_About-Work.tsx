@@ -1,4 +1,4 @@
-import { onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { gsap } from "gsap";
 import { AntiAgony } from "~/content/Anti-Agony";
 import { AsyncAction } from "~/content/Async-Action";
@@ -17,7 +17,7 @@ const ANIMATION = clientOnly(
 );
 
 export default function AboutWork() {
-  let container: HTMLElement;
+  const [target, setTarget] = createSignal<HTMLElement | undefined>();
 
   onMount(() => {
     let mm = gsap.matchMedia(),
@@ -30,7 +30,7 @@ export default function AboutWork() {
       (context) => {
         let tl = gsap.timeline({
           scrollTrigger: {
-            trigger: container,
+            trigger: target(),
             scrub: 3,
             // once: true,
             start: "30rem 50%",
@@ -44,65 +44,56 @@ export default function AboutWork() {
             autoAlpha: 0,
             // delay: 1,
           })
-          .from(
-            ".headline-item",
-            {
-              autoAlpha: 0,
-              y: 20,
-            },
-            "<=+.2",
-          )
+          // .from(
+          //   ".headline-item",
+          //   {
+          //     autoAlpha: 0,
+          //     y: 20,
+          //   },
+          //   "<=+.2",
+          // )
           .from(".item", {
             autoAlpha: 0,
             stagger: 0.4,
             y: 40,
-          })
-          .to(
-            "#big-headline-index",
-            {
-              // y: 140,
-              // autoAlpha: 0,
-            },
-            ">-=0.7",
-          );
+          });
       },
     );
   });
   return (
-    <div>
-      <CanvasAnimationWrapper animation={<ANIMATION />}>
+    <div id="index-about-work">
+      <CanvasAnimationWrapper
+        start={"clamp(top top+=80%)"}
+        end={"clamp(bottom bottom-=100%)"}
+        animation={<ANIMATION />}
+      >
         <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
           <Divider />
         </div>
-        <div class="opacity-0" ref={(el) => (container = el)}>
-          {/*<div class="h-[500px]">*/}
-          {/*  <div class="sticky top-0">*/}
-          {/*    <FullWidth></FullWidth>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
-
+        <div class="" ref={setTarget}>
           <FullWidth>
             <div class="grid grid-cols-1 sm:grid-cols-2">
-              <Headline>
+              <HugeText>
                 <div class="sticky top-0 ">
                   <div
                     id="big-headline-index"
-                    class="flex items-center sm:justify-end py-16 md:py-32 xl:py-42 mb-[24rem]  sm:text-right"
+                    class="flex items-center sm:justify-end py-16 md:py-32 xl:py-42 mb-[105rem]  sm:text-right"
                   >
-                    <h2 class="text-pretty max-w-96">
-                      Aus Erfahrung Für Experience{" "}
-                      <span class="headline-item text-3a-green inline-block ">
-                        Über Arbeit, Code und Konzepte
-                      </span>
+                    <h2 class="text-pretty max-w-[50rem]">
+                      Aus Erfahrung{" "}
+                      <span class="whitespace-nowrap">wird Experience </span>
+                      {/*<span class="headline-item text-3a-green inline-block ">*/}
+                      {/*  Über Arbeit, Code und Konzepte*/}
+                      {/*</span>*/}
                     </h2>
                   </div>{" "}
                 </div>
-              </Headline>
+              </HugeText>
             </div>
           </FullWidth>
 
           <FullWidth>
-            <div class="grid grid-cols-1 sm:grid-cols-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 pb-[24rem]">
               <div></div>
               <div class="max-w-[400px]  ">
                 <SectionHere content={AntiAgony} />
@@ -129,9 +120,9 @@ function SectionHere(props: { content: ContentType }) {
       <SmallText class="md:pr-16 xl:pr-20">
         <p class="!mb-6">{props.content.teaser}</p>
         {/*<div class="">{AgileAgit.text}</div>*/}
-        <Button href={props.content.moreLink.href} asA={true}>
-          {props.content.moreLink.title}
-        </Button>
+        {/*<Button href={props.content.moreLink.href} asA={true}>*/}
+        {/*  {props.content.moreLink.title}*/}
+        {/*</Button>*/}
       </SmallText>
     </div>
   );

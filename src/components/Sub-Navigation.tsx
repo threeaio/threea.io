@@ -1,28 +1,13 @@
 import { Button } from "~/components/Button";
-import {
-  createEffect,
-  createMemo,
-  createSignal,
-  For,
-  onMount,
-  Show,
-} from "solid-js";
-import { fromLandingPageState } from "~/landing-page-state";
-import styles from "./Sub-Navigation.module.css";
+import { createSignal, For, onMount, Show } from "solid-js";
 import { navigationBus, NavigationConfiguration } from "~/Navigation-Bus";
-import { useHref, useLocation } from "@solidjs/router";
-import { gsap } from "gsap";
-import Lenis from "@studio-freight/lenis";
+import { useLocation } from "@solidjs/router";
+import useClickOutside from "solid-click-outside";
 
 export default function SubNavigation() {
-  let ref: HTMLDivElement | undefined;
+  const [target, setTarget] = createSignal<HTMLElement | undefined>();
   const location = useLocation();
 
-  const [{ landingPageState }] = fromLandingPageState;
-  const scrolled = createMemo(
-    () => landingPageState.progress > 0.2,
-    landingPageState.progress,
-  );
   const [show, setShow] = createSignal(false);
   const [navigationConfig, setNavigationConfig] =
     createSignal<NavigationConfiguration>({
@@ -31,15 +16,16 @@ export default function SubNavigation() {
     });
 
   navigationBus.listen((a) => setNavigationConfig(a));
-  onMount(() => {});
+  onMount(() => {
+    useClickOutside(target, () => {
+      setShow(false);
+    });
+  });
 
   return (
-    <div
-      class={`${styles.navOuter} ${show() ? styles.navOuterShow : ""}`}
-      ref={(el) => (ref = el)}
-    >
+    <div class={`navOuter  ${show() ? "navOuterShow" : ""}`} ref={setTarget}>
       <h3
-        class={`${styles.navHead}`}
+        class={`navHead`}
         onPointerUp={() => {
           setShow(!show());
           if (
@@ -54,7 +40,7 @@ export default function SubNavigation() {
           }
         }}
       >
-        <span class={`${styles.navHeadSymbol}`}>
+        <span class={`navHeadSymbol`}>
           <span style="--is: 0"></span>
           <span style="--is: 1"></span>
           <span style="--is: 2"></span>
@@ -62,9 +48,9 @@ export default function SubNavigation() {
         </span>
         <span>Content</span>
       </h3>
-      <div class={`${styles.nav}`}>
+      <div class={`nav`}>
         <nav class="overflow-hidden">
-          <div class={`${styles.navInner}`}>
+          <div class={`navInner`}>
             <ul>
               <For each={navigationConfig().relatedToThisPage}>
                 {(item, i) => (
@@ -83,34 +69,32 @@ export default function SubNavigation() {
                 )}
               </For>
 
+              {/*<li*/}
+              {/*  style={`--i:${navigationConfig().relatedToThisPage.length + 1}`}*/}
+              {/*  class="hidden border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"*/}
+              {/*>*/}
+              {/*  <Button*/}
+              {/*    handleClick={() => {*/}
+              {/*      document*/}
+              {/*        .querySelector("body")!*/}
+              {/*        .classList.toggle("preview-layout");*/}
+              {/*      window.lenis.scrollTo(0, { duration: 0 });*/}
+              {/*      setTimeout(() => {*/}
+              {/*        window.scrollTrigger.refresh();*/}
+              {/*      }, 700);*/}
+              {/*    }}*/}
+              {/*  >*/}
+              {/*    Poster-View*/}
+              {/*  </Button>*/}
+              {/*</li>*/}
               <li
-                style={`--i:${navigationConfig().relatedToThisPage.length + 1}`}
-                class="hidden border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
+                style={`--i:${navigationConfig().relatedToThisPage.length}`}
+                class={`border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20 ${location.pathname === "/" ? "hidden" : ""}`}
               >
-                <Button
-                  handleClick={() => {
-                    document
-                      .querySelector("body")!
-                      .classList.toggle("preview-layout");
-                    window.lenis.scrollTo(0, { duration: 0 });
-                    setTimeout(() => {
-                      window.scrollTrigger.refresh();
-                    }, 700);
-                  }}
-                >
-                  Poster-View
+                <Button href="/" asA={true} isBack={true}>
+                  To Homepage
                 </Button>
               </li>
-              <Show when={location.pathname !== "/"}>
-                <li
-                  style={`--i:${navigationConfig().relatedToThisPage.length}`}
-                  class="border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"
-                >
-                  <Button href="/" asA={true} isBack={true}>
-                    To Homepage
-                  </Button>
-                </li>
-              </Show>
             </ul>
           </div>
         </nav>

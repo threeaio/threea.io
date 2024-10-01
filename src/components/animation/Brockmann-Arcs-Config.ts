@@ -14,11 +14,11 @@ const arcSeg = 90 / 8;
 const MAX_ARC_MULTIPLIER = 2;
 
 export const getBrockmannArcSettings = (): ArcSettings => ({
-  maxArc: arcSeg * 24,
-  minArc: 2 * arcSeg,
+  maxArc: arcSeg * 22,
+  minArc: 0,
   arcSeg,
   arcRange: [5, 6, 7, 8, 10, 13, 18, 24],
-  gap: 5,
+  gap: 2,
   sizes: [10, 20, 40, 80, 160, 320, 640, 1280],
   amountOfArcs: 7,
 });
@@ -39,7 +39,7 @@ export const generateArcs = (
       const { gap, sizes, minArc, arcRange, arcSeg, maxArc } =
         brockmannArcSettings;
 
-      const thickness = sizes[i % sizes.length]; // Use sizes array cyclically
+      const thickness = sizes[i % sizes.length];
 
       const radiusBefore = acc.at(-1)
         ? acc.at(-1)!.radius + acc.at(-1)!.thickness

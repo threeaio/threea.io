@@ -35,9 +35,9 @@ export default function PageAntiAgony() {
           {/*  class="object-cover h-full w-full object-top opacity-70"*/}
           {/*  src="/ich.webp"*/}
           {/*/>*/}
-          <CanvasAnimationWrapper
-            animation={<CanvasAnimationRounded hue={40} />}
-          ></CanvasAnimationWrapper>
+          {/*<CanvasAnimationWrapper*/}
+          {/*  animation={<CanvasAnimationRounded hue={40} />}*/}
+          {/*></CanvasAnimationWrapper>*/}
         </div>
       </MainArticle>
       <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">

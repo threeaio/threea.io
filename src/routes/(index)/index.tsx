@@ -30,21 +30,15 @@ export default function Home() {
           <Introduction />
         </div>
         <AboutWork />
-        {/*<FullWidth>*/}
-        {/*  <HugeText>*/}
-        {/*    <div*/}
-        {/*      id="big-headline-index"*/}
-        {/*      class=" flex items-center py-6 md:py-8 xl:py-12 "*/}
-        {/*    >*/}
-        {/*      <h2 class="text-pretty">*/}
-        {/*        Some Things I did for the Food{" "}*/}
-        {/*        <span class="headline-item text-3a-green ">*/}
-        {/*          Some Things I did for the Fun*/}
-        {/*        </span>*/}
-        {/*      </h2>*/}
-        {/*    </div>*/}
-        {/*  </HugeText>*/}
-        {/*</FullWidth>*/}
+        <FullWidth>
+          <div class="h-screen flex flex-col justify-center text-pretty">
+            <HugeText>
+              <div class="max-w-[72rem]">
+                Dieses ist nicht das Ende, sondern ein Anfang von etwas.
+              </div>
+            </HugeText>
+          </div>
+        </FullWidth>
       </main>
     </div>
   );

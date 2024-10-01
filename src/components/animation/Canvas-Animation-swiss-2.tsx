@@ -17,12 +17,13 @@ import { COLORS_3A } from "~/components/animation/COLORS_3A";
 import VerticeArc, {
   VerticeArcType,
 } from "~/components/animation/Primitives/Vertice-Arc";
-import { ColorArray } from "~/_util";
+import { ColorArray, hexToRgb, lerp, normalize } from "~/_util";
+import { gsap } from "gsap";
 
 export default function CanvasAnimationSwiss2(
   props: ParentProps & { hue?: number },
 ) {
-  const { progress, width } = useAnimationWrapperContext();
+  const { progress, width, height } = useAnimationWrapperContext();
   const [{ landingPageState }] = fromLandingPageState;
 
   const useHeight = createMemo(() => landingPageState.screenHeight); // Memoized screen height
@@ -32,9 +33,9 @@ export default function CanvasAnimationSwiss2(
   let animationParent: HTMLDivElement | undefined;
   let p5Instance: P5 | undefined;
 
-  const COLOR_BG = COLORS_3A.GRAY_DARKEST;
-  const COLOR_OUTLINE = COLORS_3A.PAPER;
-  const COLOR_FILL = COLORS_3A.PAPER;
+  const COLOR_BG = hexToRgb(COLORS_3A.GRAY_DARKEST);
+  const COLOR_OUTLINE = hexToRgb(COLORS_3A.GREEN);
+  const COLOR_FILL = hexToRgb(COLORS_3A.PAPER);
 
   // Proxy objects to allow GSAP-Animation
   const animationProxies = {
@@ -45,9 +46,16 @@ export default function CanvasAnimationSwiss2(
     fillColor: [0, 0, 0, 0] as ColorArray,
   };
 
+  const center = { x: 100, y: 400 };
+
   const brockmannArcSettings = getBrockmannArcSettings();
 
   const arcs: VerticeArcType[] = [];
+
+  createEffect(() => {
+    center.x = (width() / 3) * 2;
+    center.y = useHeight() - (useHeight() / 1.5) * progress();
+  });
 
   /**
    * P5 Starts here
@@ -70,8 +78,10 @@ export default function CanvasAnimationSwiss2(
           arc.setArcEndAngle(propForArc.endAngle);
           arc.setRadius(propForArc.radius);
           arc.setThickness(propForArc.thickness);
-          arc.setCenter({ x: _p5.width / 2, y: _p5.height / 2 });
+          arc.setCenterX(_p5.width);
+          arc.setCenterX(center.y);
           arc.setDimension({ x: _p5.width, y: _p5.height });
+          arc.setStrokeColor(COLOR_OUTLINE);
           arcs.push(arc);
         }
       };
@@ -82,9 +92,22 @@ export default function CanvasAnimationSwiss2(
       p5.clear();
 
       for (let i = 0; i < arcs.length; i++) {
+        const normalizedI = normalize(0, arcs.length, i + 1);
+        arcs[i].setCenterX(center.x);
+        arcs[i].setCenterY(center.y);
+        // Math.min(p + (normalizedI / 2) * p, 1)
         arcs[i].setProgress(p);
         arcs[i].draw();
       }
+      // p5.filter(p5.BLUR, (1 - progress()) * 10);
+
+      // p5.rect(0, 0, width(), height());
+      // p5.fill(
+      //   hexToRgb(COLOR_BG)[0],
+      //   hexToRgb(COLOR_BG)[1],
+      //   hexToRgb(COLOR_BG)[2],
+      //   (1 - progress()) * 255,
+      // );
     };
 
     const p5 = new P5(sketch, ref);

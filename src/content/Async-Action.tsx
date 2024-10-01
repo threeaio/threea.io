@@ -13,7 +13,7 @@ export const AsyncAction: ContentType = {
   ),
   moreLink: {
     href: "/async-action",
-    title: "Mehr zu Typescripts",
+    title: "Mehr zu Typescript",
   },
   text: (
     <>

@@ -3548,6 +3548,11 @@ smob@^1.0.0:
   resolved "https://registry.yarnpkg.com/smob/-/smob-1.5.0.tgz#85d79a1403abf128d24d3ebc1cdc5e1a9548d3ab"
   integrity sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==
 
+solid-click-outside@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/solid-click-outside/-/solid-click-outside-0.0.1.tgz#842fc60c9f1eaad3125a6f75fcf76dc0d6907c1c"
+  integrity sha512-+larR66shuAt4XARz4VY5T9NE6O3ljU0I07IRGe5fUMyajoOZ+vcY1hx9/Z3d/vxwYtCGKp3SwTGQ8oA80JLqg==
+
 solid-js@^1.8.18:
   version "1.8.22"
   resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.8.22.tgz#6df23f8a172eb14395a2984261e5782397d0a74a"

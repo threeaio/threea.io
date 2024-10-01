@@ -13,5 +13,6 @@ export type NavigationConfiguration = {
 
 export let navigationBus: EventBus<NavigationConfiguration>;
 createRoot(() => {
+  console.log("createRoot");
   navigationBus = createEventBus<NavigationConfiguration>();
 });

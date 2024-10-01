@@ -1,4 +1,4 @@
-import { createEffect, onMount, ParentComponent } from "solid-js";
+import { createEffect, createSignal, onMount, ParentComponent } from "solid-js";
 import { fromLandingPageState } from "./landing-page-state";
 import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
@@ -11,22 +11,19 @@ export const LandingPageLayout: ParentComponent = (props) => {
     {
       setTotalContentHeight,
       setScreenHeight,
-      setTotalWidth,
       setProgress,
       setVelocity,
       setScrollDirection,
     },
   ] = fromLandingPageState;
 
-  // GsapBlur();
-
-  let ref: Element | undefined;
+  const [target, setTarget] = createSignal<HTMLElement | undefined>();
 
   onMount(() => {
-    if (ref) {
-      const size = createElementSize(ref);
+    if (target()) {
+      console.log("LandingPageLayout mount", target());
+      const size = createElementSize(target() as HTMLElement);
       createEffect(() => {
-        console.log("window", window);
         setScreenHeight(window.screen.availHeight);
         setTotalContentHeight(size.height);
       });
@@ -62,7 +59,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
   // lenis end
 
   return (
-    <div class="bg-3a-gray-darkest mx-auto w-full" ref={(el) => (ref = el)}>
+    <div class="bg-3a-gray-darkest mx-auto w-full" ref={setTarget}>
       {props.children}
       <Footer />
     </div>

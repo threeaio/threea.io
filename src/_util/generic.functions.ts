@@ -64,7 +64,7 @@ export const moveInArray = <T>(array: T[], from: number, to: number) => {
   return insertInArray(withoutElArray, elm, to);
 };
 
-export const hexToRgb = (hex: string): [number, number, number] => {
+export const hexToRgb = (hex: string): [number, number, number, number] => {
   hex = hex.replace("#", "");
 
   const bigint = parseInt(hex, 16);
@@ -73,5 +73,5 @@ export const hexToRgb = (hex: string): [number, number, number] => {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
 
-  return [r, g, b];
+  return [r, g, b, 255];
 };

@@ -1,5 +1,5 @@
 import { JSX } from "solid-js";
-import styles from "./Button.module.css";
+import { A } from "@solidjs/router";
 
 export const Button = (props: {
   children: JSX.Element;
@@ -11,17 +11,16 @@ export const Button = (props: {
   href?: string;
 }) => {
   return props.asA ? (
-    <a
-      href={props.href}
-      class={` ${styles.btn} ${props.isBack ? styles["btn--back"] : ""} ${props.active && styles["btn--active"]} ${props.disabled && styles["btn--disabled"]}`}
+    <A
+      href={props.href!}
+      end
+      activeClass={"btn--active"}
+      class={`btn  ${props.isBack ? "btn--back" : ""} ${props.disabled === true ? "btn--disabled" : ""}`}
     >
       {props.children}
-    </a>
+    </A>
   ) : (
-    <button
-      onClick={() => props.handleClick?.()}
-      class={`py-2 px-4 ${styles.btn}`}
-    >
+    <button onClick={() => props.handleClick?.()} class={`py-2 px-4 btn`}>
       {props.children}
     </button>
   );

@@ -60,13 +60,6 @@ export const Introduction = () => {
                         Angular-Entwickler und Feinschliffmensch mit Überblick.
                       </p>
                     </div>
-                    <div>
-                      <p>
-                        Mit threea kehre ich zurück zu meinen Wurzeln als
-                        Mediengestalter und erkunde die Möglichkeiten freier
-                        digitialer Gestaltung.
-                      </p>
-                    </div>
                   </div>
                 </SmallText>
               </div>
