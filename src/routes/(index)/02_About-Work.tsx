@@ -7,9 +7,7 @@ import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrap
 import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/HugeText";
-import { Headline } from "~/components/Headline";
 import { SmallText } from "~/components/SmallText";
-import { Button } from "~/components/Button";
 import { clientOnly } from "@solidjs/start";
 import { ContentType } from "~/content/content-type";
 const ANIMATION = clientOnly(
@@ -22,6 +20,9 @@ export default function AboutWork() {
   onMount(() => {
     let mm = gsap.matchMedia(),
       breakPoint = 800;
+    const headline = target()!.querySelector('[data-animate-headline=""]');
+    const items = target()!.querySelectorAll('[data-animate-item=""]');
+
     mm.add(
       {
         isDesktop: `(min-width: ${breakPoint}px) and (prefers-reduced-motion: no-preference)`,
@@ -39,12 +40,12 @@ export default function AboutWork() {
         });
 
         tl.addLabel("heading")
-          .from("#big-headline-index", {
+          .from(headline, {
             y: 120,
             autoAlpha: 0,
             // delay: 1,
           })
-          .from(".item", {
+          .from(items, {
             autoAlpha: 0,
             stagger: 0.4,
             y: 40,
@@ -53,7 +54,7 @@ export default function AboutWork() {
     );
   });
   return (
-    <div id="index-about-work">
+    <div id="INDEX_ABOUT_WORK">
       <CanvasAnimationWrapper
         start={"clamp(top top+=80%)"}
         end={"clamp(bottom bottom-=100%)"}
@@ -67,12 +68,12 @@ export default function AboutWork() {
             <div class="grid grid-cols-1 sm:grid-cols-2">
               <HugeText>
                 <div class="sticky top-0 ">
-                  <div
-                    id="big-headline-index"
-                    class="flex items-center sm:justify-end py-16 md:py-32 xl:py-42 mb-[105rem]  sm:text-right"
-                  >
-                    <h2 class="text-pretty max-w-[50rem]">
-                      Aus Erfahrung wird Experience
+                  <div class="flex items-center sm:justify-end py-16 md:py-32 xl:py-42 mb-[105rem]  sm:text-right">
+                    <h2
+                      data-animate-headline=""
+                      class="text-pretty max-w-[50rem]"
+                    >
+                      Erfahrung und Experience
                       {/*<span class="headline-item text-3a-green inline-block ">*/}
                       {/*  Über Arbeit, Code und Konzepte*/}
                       {/*</span>*/}
@@ -104,7 +105,7 @@ export default function AboutWork() {
 
 function SectionHere(props: { content: ContentType }) {
   return (
-    <div class="item col-span-3 md:col-span-1 py-6  ">
+    <div data-animate-item="" class=" col-span-3 md:col-span-1 py-6  ">
       <SmallText>
         <h2 class="text-3a-green mb-1">{props.content.headline}</h2>
       </SmallText>

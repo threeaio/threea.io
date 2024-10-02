@@ -4,6 +4,7 @@ import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
 import { BleedRightHalf } from "~/components/layouts/bleed-right/Bleed-Right-Half";
+import { Button } from "~/components/Button";
 
 export const Introduction = () => {
   onMount(() => {
@@ -52,13 +53,31 @@ export const Introduction = () => {
             <div class="flex-1 flex">
               <div class="self-end py-16">
                 <SmallText>
-                  <div class="grid xl:grid-cols-2 gap-8 mr-8 mb-4">
+                  <div class="grid xl:grid-cols-2 mr-8 xl:mr-0 mb-4">
                     <div>
                       <p>
-                        Moi, Moi! Ich bin Nikolaj Sokolowski,
+                        Môi, Môi! Ich bin Nikolaj Sokolowski,
                         Gestaltungs-Techniker (Design Engineer),
                         Angular-Entwickler und Feinschliffmensch mit Überblick.
                       </p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div>
+                      <Button
+                        handleClick={() => {
+                          const el: HTMLElement =
+                            document.querySelector("#INDEX_ABOUT_WORK")!;
+                          if (el) {
+                            window.lenis.scrollTo(el, {
+                              duration: 6,
+                              offset: 1800,
+                            });
+                          }
+                        }}
+                      >
+                        Berufliches
+                      </Button>
                     </div>
                   </div>
                 </SmallText>

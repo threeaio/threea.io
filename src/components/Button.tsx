@@ -20,7 +20,10 @@ export const Button = (props: {
       {props.children}
     </A>
   ) : (
-    <button onClick={() => props.handleClick?.()} class={`py-2 px-4 btn`}>
+    <button
+      onClick={() => props.handleClick?.()}
+      class={`btn  ${props.isBack ? "btn--back" : ""} ${props.disabled === true ? "btn--disabled" : ""}`}
+    >
       {props.children}
     </button>
   );

@@ -5,10 +5,15 @@ export const AsyncAction: ContentType = {
   headline: <>Asynchrone Aktion</>,
   teaser: (
     <>
-      Mit über 15 Jahren in der UI-Entwicklung und 8 Jahren Erfahrung in
-      Typescript, angewendet in größeren Produktentwicklungen im Tourismus,
-      Smarthome- und Ticketing-Bereich, habe ich das nötige Feingefühl für die
-      „vernünftige Lösung“.
+      Mit über 15 Jahren Erfahrung in der <abbr title="User Interface">UI</abbr>
+      -Entwicklung und 8 Jahren Arbeit mit{" "}
+      <abbr title="Single Page Application">SPA</abbr>-Frameworks, angewendet in
+      größeren Produktentwicklungen im Tourismus-, Smarthome- und
+      Ticketing-Sektor, habe ich das nötige Feingefühl für die „vernünftige
+      Lösung“.
+      <br />
+      <br /> Der Fokus liegt hier auf reaktiven Ansätzen, Modularität und{" "}
+      <abbr title="Keep it Simple">KISS</abbr>.
     </>
   ),
   moreLink: {

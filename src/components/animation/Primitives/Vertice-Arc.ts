@@ -156,7 +156,7 @@ export default function VerticeArc(p5: P5) {
     p5.push();
 
     p5.strokeWeight(0.5);
-    // p5.stroke(strokeColor());
+
     const c = hexToRgb(COLORS_3A.PAPER);
     p5.noStroke();
     p5.fill(c[0], c[1], c[2], (-0.7 + progress() * 1.4) * 255);

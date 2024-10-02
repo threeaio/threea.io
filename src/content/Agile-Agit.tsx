@@ -9,6 +9,10 @@ export const AgileAgit: ContentType = {
       Als Product Owner und Frontend-Lead in den Bereichen Ticketing und
       Smarthome habe ich nicht nur technisches Know-How eingebracht, sondern
       Produktentwicklungen auch fachlich stark begleitet.
+      <br />
+      <br />
+      Vor der Tätigkeit als <abbr title="Product Owner">PO</abbr> war ich als
+      Coach und Trainer in der internen Weiterbildung tätig.
     </>
   ),
   moreLink: {

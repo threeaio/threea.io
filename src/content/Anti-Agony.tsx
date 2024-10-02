@@ -5,9 +5,12 @@ export const AntiAgony: ContentType = {
   headline: <>Anti-Agonie</>,
   teaser: (
     <>
-      Ich verfolge einen Mensch-Zentrierten Ansatz in meiner Arbeit. Daneben
-      versuche ich Produktions- bzw. Verteilungsbedingungen und Umwelt-Impact
-      mitzudenken.
+      Ich verfolge einen Mensch-Zentrierten Ansatz in meiner Arbeit. Das
+      bedeutet unter anderem, dass ich versuche Produktionsbedingungen und
+      Umwelt-Impact mitzudenken.
+      <br />
+      <br /> Vor allem aber steht es für den Anspruch, dass eine bessere Welt
+      durch gute, sinnvolle Software möglich ist.
     </>
   ),
   moreLink: {

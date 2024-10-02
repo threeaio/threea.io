@@ -28,7 +28,10 @@ export default function MainArticle(
               </div>
             </HugeText>
             <SmallText>
-              <p class="!text-3a-paper">{props.content.teaser}</p>
+              <p class="!text-3a-paper">
+                {" "}
+                <em>{props.content.teaser}</em>
+              </p>
               <div class="">{props.content.text}</div>
               <div class="hidden sm:border-dashed pt-4">
                 <Button isBack={true} href="/" asA={true}>
