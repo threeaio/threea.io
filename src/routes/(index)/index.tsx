@@ -31,15 +31,7 @@ export default function Home() {
           <Introduction />
         </div>
         <AboutWork />
-        <FullWidth>
-          <div class="h-screen flex flex-col justify-center text-pretty">
-            <HugeText>
-              <figure class="max-w-[72rem]">
-                Dieses ist nicht das Ende, sondern ein Anfang von etwas.
-              </figure>
-            </HugeText>
-          </div>
-        </FullWidth>
+
         <FullWidth>
           <div class="py-32 hidden">
             <Headline>

@@ -95,6 +95,16 @@ export default function AboutWork() {
             </div>
           </FullWidth>
         </div>
+
+        <FullWidth>
+          <div class="h-screen flex flex-col justify-center text-pretty">
+            <HugeText>
+              <figure class="max-w-[72rem]">
+                Dieses ist nicht das Ende, sondern ein Anfang von etwas.
+              </figure>
+            </HugeText>
+          </div>
+        </FullWidth>
         <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
           <Divider />
         </div>
