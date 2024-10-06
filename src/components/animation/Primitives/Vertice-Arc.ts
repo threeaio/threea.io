@@ -1,25 +1,29 @@
 import P5 from "p5";
 import { createMemo, createSignal } from "solid-js";
+import * as p5 from "p5";
+import { COLORS_3A } from "~/components/animation/COLORS_3A";
 import {
-  calculateArcLength,
   ColorArray,
-  coordOfCircle,
+  Vector2D,
+  calculateArcLength,
   createArrayFromLength,
   getAngleFromArcLengthInDegrees,
   hexToRgb,
   lerp,
-  Vector2D,
 } from "~/_util";
-import * as p5 from "p5";
-import { COLORS_3A } from "~/components/animation/COLORS_3A";
-
+import { coordOfCircle } from "~/_util-p5";
+export type VerticeArcConfig = {
+  debug: boolean;
+};
 /**
  * VerticeArc creates an animated arc with vertices, allowing customization of its size, "roundness" based on progress, thickness, and color.
  * @param {P5} p5 - Instance of the p5.js library to enable drawing and animation.
+ * @param {VerticeArcConfig} config
  * @returns {VerticeArcType} - The functions for controlling the arc's properties and drawing it on the canvas.
  */
-export default function VerticeArc(p5: P5) {
-  const RESOLUTION: number = 60; // Resolution for vertex generation along the arc
+export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
+  const RESOLUTION_HOR: number = 60; // Resolution for vertex generation along the arc
+  const RESOLUTION_VERT: number = 4; // Resolution for vertex generation along the arc
 
   const TEMP_SCALER: number = 0.8; // This constant is used for temporary scaling
   const OFFSET_ANGLES: number = -90; // Offset for calculating angles from the top, like a clock
@@ -77,7 +81,7 @@ export default function VerticeArc(p5: P5) {
     () => centerY() - scaledInnerRadius(),
   );
   const startPositionX = createMemo<number>(
-    () => dimensions().x / 2 + p5.random(-dimensions().x, dimensions().x),
+    () => dimensions().x / 2 - finalArcLength(), // + config.randomize ? p5.random(-dimensions().x, dimensions().x) : 0,
   );
   const finalPositionX = createMemo<number>(
     () => center().x + calculateArcLength(scaledInnerRadius(), arcStartAngle()),
@@ -104,9 +108,9 @@ export default function VerticeArc(p5: P5) {
       return [];
     }
 
-    const SEGMENT_SIZE = finalArcLength() / RESOLUTION;
+    const SEGMENT_SIZE = finalArcLength() / RESOLUTION_HOR;
 
-    return createArrayFromLength(RESOLUTION + 1).map((i) => {
+    return createArrayFromLength(RESOLUTION_HOR + 1).map((i: number) => {
       const start = currentX() + i * SEGMENT_SIZE;
 
       let top;
@@ -153,53 +157,81 @@ export default function VerticeArc(p5: P5) {
    * Draws the arc with its vertices and circles at each vertex point.
    */
   const draw = (): void => {
-    p5.push();
+    if (!config.debug) {
+      // if (config.fill)
+      p5.push();
+      p5.strokeWeight(0.5);
+      const c = hexToRgb(COLORS_3A.PAPER);
+      p5.noStroke();
 
-    p5.strokeWeight(0.5);
+      const alpha = (-0.7 + progress() * 1.4) * 255;
 
-    const c = hexToRgb(COLORS_3A.PAPER);
-    p5.noStroke();
-    p5.fill(c[0], c[1], c[2], (-0.7 + progress() * 1.4) * 255);
+      p5.fill(c[0], c[1], c[2], 255);
 
-    p5.beginShape();
-    for (let i = 0; i < vertexPoints().length; i++) {
-      dvtx(vertexPoints()[i].top);
-    }
-    const reversed = [...vertexPoints()].reverse();
-    for (let i = 0; i < vertexPoints().length; i++) {
-      dvtx(reversed[i].bottom);
-    }
-    p5.endShape(p5.CLOSE);
-
-    p5.pop();
-
-    p5.push();
-
-    // p5.translate(-10, 0);
-    // p5.scale(1, -1);
-
-    p5.noFill();
-    p5.stroke(
-      strokeColor()[0],
-      strokeColor()[1],
-      strokeColor()[2],
-      (progress() < 0.6 ? 1 - progress() * 1.5 : 0) * 255,
-    );
-    p5.strokeWeight(0.5);
-
-    for (let i = 0; i < vertexPoints().length; i++) {
-      if (i % 4 === 0) {
-        p5.line(
-          vertexPoints()[i].top.x,
-          vertexPoints()[i].top.y,
-          vertexPoints()[i].bottom.x,
-          vertexPoints()[i].bottom.y,
-        );
+      p5.beginShape();
+      for (let i = 0; i < vertexPoints().length; i++) {
+        dvtx(vertexPoints()[i].top);
       }
-    }
-    p5.pop();
+      const reversed = [...vertexPoints()].reverse();
+      for (let i = 0; i < vertexPoints().length; i++) {
+        dvtx(reversed[i].bottom);
+      }
+      p5.endShape(p5.CLOSE);
 
-    // p5.circle(center().x, center().y, 15);
+      p5.pop();
+
+      // if (config.strokes)
+      // p5.push();
+      //
+      // p5.noFill();
+      // p5.stroke(
+      //   strokeColor()[0],
+      //   strokeColor()[1],
+      //   strokeColor()[2],
+      //   (progress() < 0.6 ? 1 - progress() * 1.5 : 0) * 255,
+      // );
+      // p5.strokeWeight(0.5);
+      //
+      // for (let i = 0; i < vertexPoints().length; i++) {
+      //   if (i % 4 === 0) {
+      //     p5.line(
+      //       vertexPoints()[i].top.x,
+      //       vertexPoints()[i].top.y,
+      //       vertexPoints()[i].bottom.x,
+      //       vertexPoints()[i].bottom.y,
+      //     );
+      //   }
+      // }
+      // p5.pop();
+    } else if (config.debug) {
+      p5.push();
+      p5.stroke("red");
+      p5.fill(COLORS_3A.GRAY_DARKEST);
+      p5.strokeWeight(0.5);
+      p5.line(center().x, 0, center().x, p5.height);
+      p5.circle(center().x, center().y, 15);
+      p5.pop();
+
+      p5.push();
+
+      p5.noFill();
+      p5.stroke(strokeColor());
+      p5.strokeWeight(0.5);
+
+      p5.beginShape();
+      for (let i = 0; i < vertexPoints().length; i++) {
+        if (i % 4 === 0) {
+          dvtx(vertexPoints()[i].center);
+        }
+      }
+      p5.endShape();
+      for (let i = 0; i < vertexPoints().length; i++) {
+        if (i % 4 === 0) {
+          p5.circle(vertexPoints()[i].center.x, vertexPoints()[i].center.y, 5);
+        }
+      }
+      p5.pop();
+    }
   };
 
   // Return functions to set various arc properties and the draw function

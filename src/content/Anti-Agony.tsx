@@ -10,7 +10,7 @@ export const AntiAgony: ContentType = {
       Umwelt-Impact mitzudenken.
       <br />
       <br /> Vor allem aber steht es für den Anspruch, dass eine bessere Welt
-      durch gute, sinnvolle Software möglich ist.
+      auch durch gute, sinnvolle Software möglich ist.
     </>
   ),
   moreLink: {

@@ -3,7 +3,7 @@ import { ContentType } from "~/content/content-type";
 export const AgileAgit: ContentType = {
   titleSeo:
     "Agile Agitation - Über meine Rollen im und Gedanken zum agilen Umfeld",
-  headline: <>Agile Agitation</>,
+  headline: <>Agile Agit</>,
   teaser: (
     <>
       Als Product Owner und Frontend-Lead in den Bereichen Ticketing und
@@ -16,8 +16,8 @@ export const AgileAgit: ContentType = {
     </>
   ),
   moreLink: {
-    href: "/agile-leadership",
-    title: "Agile Agitation",
+    href: "/agile-agit",
+    title: "Agile Agit",
   },
   text: (
     <>

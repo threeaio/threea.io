@@ -89,7 +89,7 @@ export default function CanvasAnimationWrapper(
       }}
     >
       <div
-        class="relative h-full w-full"
+        class="relative"
         ref={(el) => {
           setTarget(el);
           observe(el);

@@ -1,7 +1,3 @@
-// import { Pt } from "pts";
-
-import P5 from "p5";
-
 export const createArrayFromLength = (length: number) => {
   try {
     return [...Array(length).keys()];
@@ -35,6 +31,12 @@ export const normalize = (min: number, max: number, value: number) => {
       "max must be a range greater 0. Gives was max:" + max + " and min" + min,
     );
   return value / (max - min);
+};
+
+export const remapT = (t: number, min = 0, max = 1) => {
+  const newT = (t - min) / (max - min);
+  const res = Math.min(Math.max(newT, 0), 1);
+  return res;
 };
 
 export const calculateArcLength = (radius: number, angle: number) => {

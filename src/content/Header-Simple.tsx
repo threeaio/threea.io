@@ -1,11 +1,11 @@
 import { GridIndicator } from "~/components/Grid-Indicator";
 import { MainLogo } from "~/components/Logo";
-import { SmallText } from "~/components/SmallText";
 import { FullWidth } from "~/components/layouts/Full-Width";
+import { JSX } from "solid-js";
 
-export const HeaderSimple = () => {
+export const HeaderSimple = (props: JSX.HTMLAttributes<HTMLElement>) => {
   return (
-    <header id="header">
+    <header id="header" {...props}>
       <div class="min-h-32 mb-24 sm:mb-0">
         <GridIndicator />
         <FullWidth>

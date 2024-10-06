@@ -7,8 +7,8 @@ import {
 } from "solid-js";
 import { gsap } from "gsap";
 import P5 from "p5";
-import { P5Line, subpoints } from "~/_util";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
+import { P5Line, subpoints } from "~/_util-p5";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },

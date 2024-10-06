@@ -9,6 +9,7 @@ export const Button = (props: {
   isBack?: boolean;
   handleClick?: Function;
   href?: string;
+  buttonType?: "button" | "submit" | "reset";
 }) => {
   return props.asA ? (
     <A
@@ -21,6 +22,7 @@ export const Button = (props: {
     </A>
   ) : (
     <button
+      type={props.buttonType || "button"}
       onClick={() => props.handleClick?.()}
       class={`btn  ${props.isBack ? "btn--back" : ""} ${props.disabled === true ? "btn--disabled" : ""}`}
     >

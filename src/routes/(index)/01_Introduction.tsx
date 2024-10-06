@@ -5,6 +5,7 @@ import { onMount } from "solid-js";
 import { gsap } from "gsap";
 import { BleedRightHalf } from "~/components/layouts/bleed-right/Bleed-Right-Half";
 import { Button } from "~/components/Button";
+import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
 
 export const Introduction = () => {
   onMount(() => {
@@ -44,7 +45,7 @@ export const Introduction = () => {
   return (
     <div class="sm:bg-3a-gray-darkest">
       {/*sm:bg-3a-gray-darkest*/}
-      <BleedRightHalf
+      <BleedRightSmall
         Left={
           <div class="flex h-svh flex-col self-end ">
             <div id="main-logo">
@@ -87,15 +88,13 @@ export const Introduction = () => {
         }
         Right={
           <div class="bg-3a-gray-darkest h-full">
-            <div class=" h-full w-full  ">
-              <div class="min-h-max h-full w-full bg-cover mix-blend-lighten">
-                <img
-                  id="hero-graphic"
-                  alt="Nikolaj Sokolowksi photographing himself"
-                  class="object-cover h-full w-full object-top opacity-70"
-                  src="/ich.webp"
-                />
-              </div>
+            <div class="min-h-max h-full w-full mix-blend-lighten">
+              <img
+                id="hero-graphic"
+                alt="Nikolaj Sokolowksi photographing himself"
+                class="object-cover h-full w-full object-top opacity-70"
+                src="/ich.webp"
+              />
             </div>
           </div>
         }

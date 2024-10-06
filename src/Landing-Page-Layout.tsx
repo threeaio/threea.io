@@ -23,7 +23,7 @@ export const LandingPageLayout: ParentComponent = (props) => {
     if (target()) {
       const size = createElementSize(target() as HTMLElement);
       createEffect(() => {
-        setScreenHeight(window.screen.availHeight);
+        setScreenHeight(window.visualViewport?.height || 0);
         setTotalContentHeight(size.height);
       });
     }

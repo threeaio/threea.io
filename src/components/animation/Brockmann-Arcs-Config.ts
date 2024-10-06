@@ -1,6 +1,9 @@
-import { createArrayFromLength, getRandomFloat } from "~/_util";
+import {
+  createArrayFromLength,
+  getRandomFloat,
+} from "~/_util/generic.functions";
 
-type ArcSettings = {
+export type ArcSettings = {
   minArc: number;
   arcSeg: number;
   arcRange: number[];
