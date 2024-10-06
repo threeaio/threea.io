@@ -8,13 +8,18 @@ import { Divider } from "~/components/Divider";
 import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
 import { createSignal, onMount, ParentProps } from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
-import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { clientOnly } from "@solidjs/start";
-import { remapT } from "~/_util/generic.functions";
-import { getBrockmannArcSettings } from "~/components/animation/Brockmann-Arcs-Config";
-const ANIMATION = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-arc-step-1"),
+const ANIMATION_01_IDEA = clientOnly(
+  () => import("~/routes/brockmann-arc/animation-step-1"),
+);
+const ANIMATION_02 = clientOnly(
+  () => import("~/routes/brockmann-arc/animation-step-2"),
+);
+const ANIMATION_03 = clientOnly(
+  () => import("~/routes/brockmann-arc/animation-step-3"),
+);
+const ANIMATION_04 = clientOnly(
+  () => import("~/routes/brockmann-arc/animation-step-4"),
 );
 
 export default function Home() {
@@ -53,6 +58,7 @@ export default function Home() {
               </SmallText>
             </div>
           </HeaderHere>
+
           <BleedRightSmall
             class="h-svh "
             Left={<></>}
@@ -85,101 +91,67 @@ export default function Home() {
               </SmallText>
             </div>
           </HeaderHere>
-          <div class="relative">
-            <CanvasAnimationWrapper
-              start={"clamp(top top+=80%)"}
-              end={"clamp(bottom bottom-=100%)"}
-              animation={
-                <ANIMATION
-                  draw={function (p5, progress, arcs, center) {
-                    // Math.sin(p5.millis() / 800) + 1.2
-                    const p = remapT(progress, 0, 0.5);
-                    for (let i = 0; i < arcs.length; i++) {
-                      arcs[i].setCenterX(center.x);
-                      arcs[i].setCenterY(center.y);
-                      arcs[i].setProgress(p);
-                      arcs[i].draw();
-                    }
-                  }}
-                  getStartRadius={(w, h) => h / 5}
-                  arcSettings={{
-                    ...getBrockmannArcSettings(),
-                    arcRange: [12],
-                    sizes: [60],
-                    amountOfArcs: 1,
-                  }}
-                  arcConfig={{
-                    debug: true,
-                  }}
-                  setCenter={(width, height, progress) => {
-                    return {
-                      x: width / 2 + width / 4,
-                      y: height / 8 + height * progress,
-                    };
-                  }}
-                />
-              }
-            >
-              <BleedRightSmall
-                class="h-svh "
-                Left={<div class="h-svh "></div>}
-                Right={<div class="h-svh "></div>}
-              />
-            </CanvasAnimationWrapper>
+          <div style={"height: 100svh"}>
+            <ANIMATION_01_IDEA />
           </div>
         </div>
 
         {/*////x*/}
-        <HeaderHere title={"Weiteres"} num={"03"}>
-          <div class="h-full">
-            <SmallText class="py-12 pr-12 grid grid-cols-4">
-              <div class="">
-                <p>
-                  Die Brockmann-Wurst ist inspiriert durch, bzw. verwurstet, das
-                  ikonische Beethoven-Plakat von Joseph Müller-Brockmann.{" "}
-                </p>
-              </div>
-            </SmallText>
+        <div>
+          <HeaderHere title={"Weiteres"} num={"03"}>
+            <div class="h-full">
+              <SmallText class="py-12 pr-12 grid grid-cols-4">
+                <div class="">
+                  <p>
+                    Die Brockmann-Wurst ist inspiriert durch, bzw. verwurstet,
+                    das ikonische Beethoven-Plakat von Joseph Müller-Brockmann.{" "}
+                  </p>
+                </div>
+              </SmallText>
+            </div>
+          </HeaderHere>
+          <div style={"height: 200svh"}>
+            <ANIMATION_02 />
           </div>
-        </HeaderHere>
-        <div class="relative">
-          <CanvasAnimationWrapper
-            start={"clamp(top top+=30%)"}
-            end={"clamp(bottom bottom-=100%)"}
-            animation={
-              <ANIMATION
-                draw={function (p5, progress, arcs, center) {
-                  // Math.sin(p5.millis() / 800) + 1.2
-                  const p = progress;
-                  for (let i = 0; i < arcs.length; i++) {
-                    arcs[i].setCenterX(center.x);
-                    arcs[i].setCenterY(center.y);
-                    arcs[i].setProgress(p);
-                    arcs[i].draw();
-                  }
-                }}
-                getStartRadius={(w) => w / 8}
-                arcSettings={{
-                  ...getBrockmannArcSettings(),
-                }}
-                arcConfig={{
-                  debug: false,
-                }}
-                setCenter={(width, height, _progress) => {
-                  return {
-                    x: width / 2 + width / 4,
-                    y: height / 2,
-                  };
-                }}
-              />
-            }
-          >
-            <BleedRightSmall
-              class="h-svh "
-              Left={<div class="h-svh "></div>}
-              Right={<div class="h-svh "></div>}
-            />
-          </CanvasAnimationWrapper>
+        </div>
+        {/*////x*/}
+        <div>
+          <HeaderHere title={"Ergebnis"} num={"04"}>
+            <div class="h-full">
+              <SmallText class="py-12 pr-12 grid grid-cols-4">
+                <div class="">
+                  <p>
+                    Die Brockmann-Wurst ist inspiriert durch, bzw. verwurstet,
+                    das ikonische Beethoven-Plakat von Joseph Müller-Brockmann.{" "}
+                  </p>
+                </div>
+              </SmallText>
+            </div>
+          </HeaderHere>
+          <div style={"height: 200svh"}>
+            <ANIMATION_03 />
+          </div>
+        </div>
+        {/*////x*/}
+        <div>
+          <HeaderHere title={"Variationen"} num={"05"}></HeaderHere>
+          <FullWidth>
+            <div class={"flex flex-row justify-center"}>
+              <div class={"bg-3a-gray-darker p-12 mx-4"}>
+                <div class="h-[80svh] aspect-[1/1.6] mx-auto bg-3a-green">
+                  {/*Der Wrapper kann aktuell nur 100svh, da das Canvas via JS auf diese Höhe gezohgen wird. Konfigurierbar machen!*/}
+                  <ANIMATION_04 />
+                </div>
+              </div>
+
+              <div class={"bg-3a-gray-darker p-12 mx-4"}>
+                <div class="h-[80svh] aspect-[1/1.6] mx-auto bg-3a-green">
+                  {/*Der Wrapper kann aktuell nur 100svh, da das Canvas via JS auf diese Höhe gezohgen wird. Konfigurierbar machen!*/}
+                  <ANIMATION_04 />
+                </div>
+              </div>
+            </div>
+          </FullWidth>
         </div>
       </div>
     </main>
@@ -207,7 +179,7 @@ function HeaderHere(props: { num: string; title: string } & ParentProps) {
       class="group transition-all  py-8   duration-300  sticky top-[-1px] z-10"
     >
       <Headline>
-        <h2 class="relative py-8 pr-8 text-3a-green bg-3a-gray-darkest transition-all  text-[.9em] group-[.is-sticky]:text-[length:inherit] group-[.is-sticky]:inline-block">
+        <h2 class="relative py-8 text-3a-green transition-all  text-[.9em] group-[.is-sticky]:text-[length:inherit] group-[.is-sticky]:inline-block">
           <span
             class={"inline-block pr-4 text-3a-white xl:absolute xl:right-full"}
           >

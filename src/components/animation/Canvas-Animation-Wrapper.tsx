@@ -1,6 +1,7 @@
 import {
   Accessor,
   Context,
+  createRenderEffect,
   createSignal,
   JSX,
   onCleanup,
@@ -53,20 +54,23 @@ export default function CanvasAnimationWrapper(
     setWidth(cr.width);
   }
 
-  let scrollTriggerHere: ScrollTrigger | undefined;
-  onCleanup(() => {
-    if (scrollTriggerHere) {
-      scrollTriggerHere.kill();
-    }
-  });
   onMount(() => {
     if (!target()) {
       return;
     }
-    scrollTriggerHere = window.scrollTrigger.create({
+    if (!height() || !width()) {
+      setHeight(target()?.getBoundingClientRect()?.height || 0);
+      setWidth(target()?.getBoundingClientRect()?.width || 0);
+    }
+
+    if (!height() || !width()) {
+      console.error("ERROR SETTING UP", width(), height());
+    }
+    console.log("SETTING UP target()", target());
+    const scrollTriggerHere = window.scrollTrigger.create({
       trigger: target(),
       start: props.start || "clamp(top top)",
-      end: props.end || "clamp(bottom bottom-=10%)",
+      end: props.end || "clamp(bottom bottom)",
       // markers: true,
       onToggle: (self) => {
         setActive(self.isActive);
@@ -75,6 +79,11 @@ export default function CanvasAnimationWrapper(
         setProgress(self.progress);
         setVelovity(self.getVelocity());
       },
+    });
+    onCleanup(() => {
+      if (scrollTriggerHere) {
+        scrollTriggerHere.kill();
+      }
     });
   });
 
@@ -89,10 +98,11 @@ export default function CanvasAnimationWrapper(
       }}
     >
       <div
-        class="relative"
+        class="relative h-full w-full"
+        id={Math.random() * 10000 + "-animation"}
         ref={(el) => {
-          setTarget(el);
           observe(el);
+          setTarget(el);
         }}
       >
         <Show when={width() && height()}>{props.animation}</Show>

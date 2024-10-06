@@ -16,21 +16,39 @@ export type ArcSettings = {
 const arcSeg = 90 / 8;
 const MAX_ARC_MULTIPLIER = 2;
 
-export const getBrockmannArcSettings = (): ArcSettings => ({
+export const BROCKMAN_ARC_SETTINGS = {
   maxArc: arcSeg * 22,
   minArc: 0,
   arcSeg,
-  arcRange: [5, 6, 7, 8, 10, 13, 18, 24],
+  arcRange: [5, 6, 7, 9, 12, 16, 20, 28],
   gap: 2,
   sizes: [10, 20, 40, 80, 160, 320, 640, 1280],
   amountOfArcs: 7,
-});
+};
 
 export type Arc = {
   radius: number;
   startAngle: number;
   endAngle: number;
   thickness: number;
+};
+
+export const getBrockmannAngles = (
+  brockmannArcSettings: ArcSettings,
+  i: number,
+) => {
+  const { minArc, arcRange, arcSeg, maxArc } = brockmannArcSettings;
+  const startAngle =
+    minArc + Math.floor(getRandomFloat(1, 2 + (i % 4) * 3, 0)) * arcSeg;
+  const endAngle = Math.min(
+    startAngle +
+      arcRange[(i + getRandomFloat(-1, 1, 0)) % arcRange.length] * arcSeg,
+    maxArc * MAX_ARC_MULTIPLIER,
+  );
+  return {
+    startAngle,
+    endAngle,
+  };
 };
 
 export const generateArcs = (
@@ -50,11 +68,9 @@ export const generateArcs = (
       const radius = radiusBefore + gap;
 
       // Calculate start and end arc angles
-      const startAngle =
-        minArc + Math.floor(getRandomFloat(1, 2 + (i % 4) * 3, 0)) * arcSeg;
-      const endAngle = Math.min(
-        startAngle + arcRange[i % arcRange.length] * arcSeg,
-        maxArc * MAX_ARC_MULTIPLIER,
+      const { startAngle, endAngle } = getBrockmannAngles(
+        brockmannArcSettings,
+        i,
       );
 
       return [

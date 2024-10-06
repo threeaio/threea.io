@@ -11,14 +11,14 @@ import { fromLandingPageState } from "~/landing-page-state";
 import {
   Arc,
   generateArcs,
-  getBrockmannArcSettings,
+  BROCKMAN_ARC_SETTINGS,
 } from "~/components/animation/Brockmann-Arcs-Config";
-import { COLORS_3A } from "~/components/animation/COLORS_3A";
 import VerticeArc, {
   VerticeArcType,
 } from "~/components/animation/Primitives/Vertice-Arc";
 import { remapT, ColorArray, hexToRgb, lerp, normalize } from "~/_util";
 import { gsap } from "gsap";
+import { COLORS_3A } from "~/_util-client-only";
 
 export default function CanvasAnimationSwiss2(
   props: ParentProps & { hue?: number },
@@ -48,8 +48,6 @@ export default function CanvasAnimationSwiss2(
 
   const center = { x: 0, y: 0 };
 
-  const brockmannArcSettings = getBrockmannArcSettings();
-
   const arcs: VerticeArcType[] = [];
 
   createEffect(() => {
@@ -68,10 +66,18 @@ export default function CanvasAnimationSwiss2(
         _p5.angleMode(_p5.DEGREES);
         canvas.parent(ref);
 
-        const arcProps: Arc[] = generateArcs(START_RAD(), brockmannArcSettings);
+        const arcProps: Arc[] = generateArcs(
+          START_RAD(),
+          BROCKMAN_ARC_SETTINGS,
+        );
 
-        for (let i = 0; i < brockmannArcSettings.amountOfArcs; i++) {
-          const arc = VerticeArc(_p5, { debug: false });
+        for (let i = 0; i < BROCKMAN_ARC_SETTINGS.amountOfArcs; i++) {
+          const arc = VerticeArc(_p5, {
+            debug: false,
+            fill: { color: COLOR_FILL },
+            stroke: false,
+            randomizeStartPosition: true,
+          });
           const propForArc = arcProps[i];
           arc.setArcStartAngle(propForArc.startAngle);
           arc.setArcEndAngle(propForArc.endAngle);
