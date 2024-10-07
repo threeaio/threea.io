@@ -6,3 +6,5 @@ export interface Dict<T> {
 
 export type Vector2D = { x: number; y: number };
 export type ColorArray = [number, number, number, number];
+export type ArrayElement<ArrayType extends readonly unknown[]> =
+  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;

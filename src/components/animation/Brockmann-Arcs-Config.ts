@@ -18,9 +18,9 @@ const MAX_ARC_MULTIPLIER = 2;
 
 export const BROCKMAN_ARC_SETTINGS = {
   maxArc: arcSeg * 22,
-  minArc: 0,
+  minArc: arcSeg * -3,
   arcSeg,
-  arcRange: [5, 6, 7, 9, 12, 16, 20, 28],
+  arcRange: [5, 6, 7, 8, 10, 12, 15, 18],
   gap: 2,
   sizes: [10, 20, 40, 80, 160, 320, 640, 1280],
   amountOfArcs: 7,
@@ -42,12 +42,25 @@ export const getBrockmannAngles = (
     minArc + Math.floor(getRandomFloat(1, 2 + (i % 4) * 3, 0)) * arcSeg;
   const endAngle = Math.min(
     startAngle +
-      arcRange[(i + getRandomFloat(-1, 1, 0)) % arcRange.length] * arcSeg,
+      arcRange[(i + getRandomFloat(0, 2, 0)) % arcRange.length] * arcSeg,
     maxArc * MAX_ARC_MULTIPLIER,
   );
   return {
-    startAngle,
-    endAngle,
+    startAngle: startAngle + 360,
+    endAngle: endAngle + 360,
+  };
+};
+
+export const getAdditionalBrockmannAngles = (
+  startAngle: number,
+  endAngle: number,
+  i: number,
+) => {
+  const offset = getRandomFloat(3, 5, 0) * arcSeg;
+  const size = endAngle - startAngle;
+  return {
+    startAngleNew: endAngle + offset,
+    endAngleNew: endAngle + offset + size,
   };
 };
 
@@ -73,15 +86,28 @@ export const generateArcs = (
         i,
       );
 
-      return [
-        ...acc,
-        {
-          radius,
-          startAngle,
-          endAngle,
-          thickness,
-        },
-      ];
+      const newItems = [];
+      newItems.push({
+        radius,
+        startAngle,
+        endAngle,
+        thickness,
+      });
+      // if (!(i % 3)) {
+      //   const { startAngleNew, endAngleNew } = getAdditionalBrockmannAngles(
+      //     i,
+      //     startAngle,
+      //     endAngle,
+      //   );
+      //   newItems.push({
+      //     radius,
+      //     startAngle: startAngleNew,
+      //     endAngle: endAngleNew,
+      //     thickness,
+      //   });
+      // }
+
+      return [...acc, ...newItems];
     },
     [] as Arc[],
   );

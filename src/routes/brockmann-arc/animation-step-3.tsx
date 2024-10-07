@@ -18,6 +18,8 @@ export default function BrockmanAnimation03() {
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          bgColor={hexToRgb(COLORS_3A.GRAY_DARKEST)}
+          fadeInOut={true}
           draw={(p5, progress, arcs, center) => {
             const p = remapT(progress, 0, 0.6);
             for (let i = 0; i < arcs.length; i++) {

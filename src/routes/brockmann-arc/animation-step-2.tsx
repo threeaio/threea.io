@@ -18,6 +18,8 @@ export default function BrockmanAnimation02() {
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          bgColor={hexToRgb(COLORS_3A.GRAY_DARKEST)}
+          fadeInOut={true}
           draw={(p5, progress, arcs, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             // console.log("progress STEP 2", progress);

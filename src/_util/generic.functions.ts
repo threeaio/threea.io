@@ -55,8 +55,10 @@ export const getRandomFloat = (min: number, max: number, precision = 2) => {
   const minCeiled = min * Math.pow(10, precision);
   const maxFloored = max * Math.pow(10, precision);
   return (
-    Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled) /
-    Math.pow(10, precision)
+    Math.floor(
+      Math.pow(Math.random(), Math.random()) * (maxFloored - minCeiled) +
+        minCeiled,
+    ) / Math.pow(10, precision)
   ); // The maximum is exclusive and the minimum is inclusive
 };
 

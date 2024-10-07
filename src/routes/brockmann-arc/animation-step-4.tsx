@@ -5,19 +5,23 @@ const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-arc-step-1"),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { hexToRgb, remapT } from "~/_util";
+import { ArrayElement, ColorArray, hexToRgb, remapT } from "~/_util";
 
 /**
  * CLIENT-ONLY !
  */
 
-export default function BrockmanAnimation04() {
+export default function BrockmanAnimation04(props: {
+  bgColor: keyof typeof COLORS_3A;
+}) {
   return (
     <CanvasAnimationWrapper
       start={"clamp(top top+=80%)"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          bgColor={hexToRgb(COLORS_3A[props.bgColor])}
+          fadeInOut={false}
           setCenter={(width, height, progress) => {
             return {
               x: width / 3,
@@ -36,14 +40,14 @@ export default function BrockmanAnimation04() {
           getStartRadius={(w) => w / 3}
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
-            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 4),
+            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 3),
           }}
           arcConfig={{
             debug: false,
-            stroke: {
-              color: hexToRgb(COLORS_3A.GREEN),
+            fill: {
+              color: hexToRgb(COLORS_3A.GRAY_DARKER),
             },
-            fill: false,
+            stroke: false,
             randomizeStartPosition: true,
           }}
         />

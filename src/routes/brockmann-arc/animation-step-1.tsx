@@ -1,7 +1,8 @@
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
-import { remapT } from "~/_util";
+import { hexToRgb, remapT } from "~/_util";
 import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
+import { COLORS_3A } from "~/_util-client-only";
 const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-arc-step-1"),
 );
@@ -17,9 +18,11 @@ export default function BrockmanAnimation01() {
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          bgColor={hexToRgb(COLORS_3A.GRAY_DARKEST)}
+          fadeInOut={true}
           draw={function (p5, progress, arcs, center) {
             // Math.sin(p5.millis() / 800) + 1.2
-            const p = remapT(progress, 0, 0.5);
+            const p = remapT(progress, 0, 0.8);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setCenterX(center.x);
               arcs[i].setCenterY(center.y);
@@ -27,7 +30,7 @@ export default function BrockmanAnimation01() {
               arcs[i].draw();
             }
           }}
-          getStartRadius={(w, h) => h / 5}
+          getStartRadius={(w, h) => w / 10}
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
             arcRange: [12],

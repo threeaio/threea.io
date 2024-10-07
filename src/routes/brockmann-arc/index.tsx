@@ -9,6 +9,8 @@ import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Sm
 import { createSignal, onMount, ParentProps } from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
 import { clientOnly } from "@solidjs/start";
+import { MainLogo } from "~/components/Logo";
+import { Button } from "~/components/Button";
 const ANIMATION_01_IDEA = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-1"),
 );
@@ -30,17 +32,38 @@ export default function Home() {
       <HeaderSimple class="snap-start absolute z-20 w-full" />
 
       <div class="">
-        <FullWidth class="">
-          <div class="h-svh relative flex flex-col justify-center">
-            <HugeText>
-              <h1>Der Brockmann-Arc</h1>
-            </HugeText>
-            <div class="mb-4 text-3a-paper max-w-96">
-              Die Brockmann-Wurst ist inspiriert durch, bzw. verwurstet, das
-              ikonische Beethoven-Plakat von Joseph Müller-Brockmann.{" "}
+        <BleedRightSmall
+          Left={
+            <div class="flex h-svh flex-col justify-end pb-24 ">
+              <HugeText>
+                <h1>Der Brockmann-Arc</h1>
+              </HugeText>
+              <div class="mb-4 text-3a-paper max-w-96">
+                Die Brockmann-Wurst ist inspiriert durch, bzw. verwurstet, das
+                ikonische Beethoven-Plakat von Joseph Müller-Brockmann.{" "}
+              </div>
             </div>
-          </div>
-        </FullWidth>
+          }
+          Right={
+            <div class="bg-3a-gray-darkest h-full">
+              <div class="min-h-max h-full w-full mix-blend-lighten">
+                <ANIMATION_04 bgColor={"GRAY_DARKEST"} />
+              </div>
+            </div>
+          }
+        />
+
+        {/*<FullWidth class="">*/}
+        {/*  <div class="h-svh relative flex flex-col justify-center">*/}
+        {/*    <HugeText>*/}
+        {/*      <h1>Der Brockmann-Arc</h1>*/}
+        {/*    </HugeText>*/}
+        {/*    <div class="mb-4 text-3a-paper max-w-96">*/}
+        {/*      Die Brockmann-Wurst ist inspiriert durch, bzw. verwurstet, das*/}
+        {/*      ikonische Beethoven-Plakat von Joseph Müller-Brockmann.{" "}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</FullWidth>*/}
         <Divider />
 
         {/*////x*/}
@@ -91,7 +114,7 @@ export default function Home() {
               </SmallText>
             </div>
           </HeaderHere>
-          <div style={"height: 100svh"}>
+          <div style={"height: 200svh"}>
             <ANIMATION_01_IDEA />
           </div>
         </div>
@@ -133,21 +156,28 @@ export default function Home() {
           </div>
         </div>
         {/*////x*/}
-        <div>
+        <div class={"mb-24"}>
           <HeaderHere title={"Variationen"} num={"05"}></HeaderHere>
           <FullWidth>
             <div class={"flex flex-row justify-center"}>
-              <div class={"bg-3a-gray-darker p-12 mx-4"}>
-                <div class="h-[80svh] aspect-[1/1.6] mx-auto bg-3a-green">
+              <div class={"bg-3a-gray-darker p-1 mx-1"}>
+                <div class="h-[40svh] 2xl:h-[80svh] aspect-[1/1.6] mx-auto ">
                   {/*Der Wrapper kann aktuell nur 100svh, da das Canvas via JS auf diese Höhe gezohgen wird. Konfigurierbar machen!*/}
-                  <ANIMATION_04 />
+                  <ANIMATION_04 bgColor={"RED"} />
                 </div>
               </div>
 
-              <div class={"bg-3a-gray-darker p-12 mx-4"}>
-                <div class="h-[80svh] aspect-[1/1.6] mx-auto bg-3a-green">
+              <div class={"bg-3a-gray-darker p-1 mx-1"}>
+                <div class="h-[40svh] 2xl:h-[80svh] aspect-[1/1.6] mx-auto ">
                   {/*Der Wrapper kann aktuell nur 100svh, da das Canvas via JS auf diese Höhe gezohgen wird. Konfigurierbar machen!*/}
-                  <ANIMATION_04 />
+                  <ANIMATION_04 bgColor={"GREEN"} />
+                </div>
+              </div>
+
+              <div class={"bg-3a-gray-darker p-1 mx-1"}>
+                <div class="h-[40svh] 2xl:h-[80svh] aspect-[1/1.6] mx-auto ">
+                  {/*Der Wrapper kann aktuell nur 100svh, da das Canvas via JS auf diese Höhe gezohgen wird. Konfigurierbar machen!*/}
+                  <ANIMATION_04 bgColor={"WHITE"} />
                 </div>
               </div>
             </div>

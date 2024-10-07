@@ -56,7 +56,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const [dimensions, setDimension] = createSignal<Vector2D>({ x: 0, y: 0 });
 
   const [arcStartAngle, setArcStartAngle] = createSignal<number>(0);
+  const useStartAngle = createMemo<number>(() => arcStartAngle());
   const [arcEndAngle, setArcEndAngle] = createSignal<number>(0);
+  const useEndAngle = createMemo<number>(() => arcEndAngle());
   const [radius, setRadius] = createSignal<number>(0);
   const [thickness, setThickness] = createSignal<number>(0);
   const [progress, setProgress] = createSignal<number>(0);
@@ -100,7 +102,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
   // Memoized calculations for arc geometry
   const arcInnerAngle = createMemo<number>(
-    () => arcEndAngle() - arcStartAngle(),
+    () => useEndAngle() - useStartAngle(),
   );
   const finalArcLength = createMemo<number>(() =>
     calculateArcLength(scaledInnerRadius(), arcInnerAngle()),
@@ -115,7 +117,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     () => dimensions().x / 2 - finalArcLength() + startOffset(),
   );
   const finalPositionX = createMemo<number>(
-    () => center().x + calculateArcLength(scaledInnerRadius(), arcStartAngle()),
+    () => center().x + calculateArcLength(scaledInnerRadius(), useStartAngle()),
   );
 
   /**
@@ -245,7 +247,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       }
     } else if (config.debug) {
       p5.push();
-      p5.stroke("red");
+      p5.stroke(hexToRgb(COLORS_3A.RED));
       p5.fill(COLORS_3A.GRAY_DARKEST);
       p5.strokeWeight(0.5);
       p5.line(center().x, 0, center().x, p5.height);

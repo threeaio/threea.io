@@ -15,7 +15,6 @@ import {
   generateArcs,
   getBrockmannAngles,
 } from "~/components/animation/Brockmann-Arcs-Config";
-import { COLORS_3A } from "~/_util-client-only";
 import VerticeArc, {
   VerticeArcConfig,
   VerticeArcType,
@@ -25,6 +24,8 @@ import { gsap } from "gsap";
 
 export default function ArcAnimationStep1(
   props: ParentProps & {
+    bgColor: ColorArray;
+    fadeInOut: boolean;
     draw: (
       p5: P5,
       progress: number,
@@ -57,10 +58,6 @@ export default function ArcAnimationStep1(
 
   let p5Instance: P5 | undefined;
 
-  const COLOR_BG = hexToRgb(COLORS_3A.GRAY_DARKEST);
-  const COLOR_OUTLINE = hexToRgb(COLORS_3A.GREEN);
-  const COLOR_FILL = hexToRgb(COLORS_3A.PAPER);
-
   // Proxy objects to allow GSAP-Animation
   const animationProxies = {
     scale: 1,
@@ -91,7 +88,7 @@ export default function ArcAnimationStep1(
 
         const arcProps: Arc[] = generateArcs(START_RAD(), props.arcSettings);
 
-        for (let i = 0; i < props.arcSettings.amountOfArcs; i++) {
+        for (let i = 0; i < arcProps.length; i++) {
           const arc = VerticeArc(_p5, props.arcConfig);
           const propForArc = arcProps[i];
           arc.setArcStartAngle(propForArc.startAngle);
@@ -101,36 +98,38 @@ export default function ArcAnimationStep1(
           arc.setCenterX(_p5.width);
           arc.setCenterX(animationProxies.center.y);
           arc.setDimension({ x: _p5.width, y: _p5.height });
-          arc.setStrokeColor(COLOR_OUTLINE);
           arcs.push(arc);
         }
       };
     };
 
     const draw = () => {
-      p5.background(COLOR_BG);
+      p5.background(props.bgColor);
       props.draw(p5, progress(), arcs, animationProxies.center);
-      p5.push();
-      p5.noStroke();
-      p5.fill(
-        COLOR_BG[0],
-        COLOR_BG[1],
-        COLOR_BG[2],
-        (1 - remapT(progress(), 0, 0.1)) * 255,
-      );
-      p5.rect(0, 0, p5.width, p5.height);
-      p5.pop();
 
-      p5.push();
-      p5.noStroke();
-      p5.fill(
-        COLOR_BG[0],
-        COLOR_BG[1],
-        COLOR_BG[2],
-        remapT(progress(), 0.9, 1) * 255,
-      );
-      p5.rect(0, 0, p5.width, p5.height);
-      p5.pop();
+      if (props.fadeInOut) {
+        p5.push();
+        p5.noStroke();
+        p5.fill(
+          props.bgColor[0],
+          props.bgColor[1],
+          props.bgColor[2],
+          (1 - remapT(progress(), 0, 0.1)) * 255,
+        );
+        p5.rect(0, 0, p5.width, p5.height);
+        p5.pop();
+
+        p5.push();
+        p5.noStroke();
+        p5.fill(
+          props.bgColor[0],
+          props.bgColor[1],
+          props.bgColor[2],
+          remapT(progress(), 0.9, 1) * 255,
+        );
+        p5.rect(0, 0, p5.width, p5.height);
+        p5.pop();
+      }
     };
 
     const p5 = new P5(sketch, ref);
@@ -152,17 +151,20 @@ export default function ArcAnimationStep1(
    * On Mount
    */
 
+  // animate Arcs
   const animateArcs = () => {
     for (let i = 0; i < arcs.length; i++) {
       const current = {
         startAngle: arcs[i].arcStartAngle(),
         endAngle: arcs[i].arcEndAngle(),
       };
-      const { startAngle, endAngle } = getBrockmannAngles(props.arcSettings, i);
+
+      let { startAngle, endAngle } = getBrockmannAngles(props.arcSettings, i);
 
       gsap.to(current, {
         startAngle: startAngle,
         endAngle: endAngle,
+        duration: 0.2,
         onUpdate: (...args) => {
           arcs[i].setArcStartAngle(current.startAngle);
           arcs[i].setArcEndAngle(current.endAngle);
