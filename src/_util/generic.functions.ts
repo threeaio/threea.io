@@ -59,7 +59,7 @@ export const getRandomFloat = (min: number, max: number, precision = 2) => {
       Math.pow(Math.random(), Math.random()) * (maxFloored - minCeiled) +
         minCeiled,
     ) / Math.pow(10, precision)
-  ); // The maximum is exclusive and the minimum is inclusive
+  );
 };
 
 export const moveInArray = <T>(array: T[], from: number, to: number) => {

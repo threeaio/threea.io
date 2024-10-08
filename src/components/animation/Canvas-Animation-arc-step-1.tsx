@@ -91,13 +91,14 @@ export default function ArcAnimationStep1(
         for (let i = 0; i < arcProps.length; i++) {
           const arc = VerticeArc(_p5, props.arcConfig);
           const propForArc = arcProps[i];
-          arc.setArcStartAngle(propForArc.startAngle);
-          arc.setArcEndAngle(propForArc.endAngle);
+          arc.setDimension({ x: _p5.width, y: _p5.height });
+          arc.setCenterX(_p5.width);
+          arc.setCenterY(animationProxies.center.y);
           arc.setRadius(propForArc.radius);
           arc.setThickness(propForArc.thickness);
-          arc.setCenterX(_p5.width);
-          arc.setCenterX(animationProxies.center.y);
-          arc.setDimension({ x: _p5.width, y: _p5.height });
+          arc.setArcStartAngle(propForArc.startAngle);
+          arc.setArcEndAngle(propForArc.endAngle);
+
           arcs.push(arc);
         }
       };
@@ -196,11 +197,9 @@ export default function ArcAnimationStep1(
    * Render
    */
   return (
-    <div class="absolute inset-0 pointer-events-none">
-      <div
-        class="sticky inset-0 pointer-events-none max-h-full"
-        ref={setAnimationParent}
-      ></div>
-    </div>
+    <div
+      class="sticky inset-0 pointer-events-none max-h-full"
+      ref={setAnimationParent}
+    ></div>
   );
 }

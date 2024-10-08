@@ -39,7 +39,7 @@ export const getBrockmannAngles = (
 ) => {
   const { minArc, arcRange, arcSeg, maxArc } = brockmannArcSettings;
   const startAngle =
-    minArc + Math.floor(getRandomFloat(1, 2 + (i % 4) * 3, 0)) * arcSeg;
+    minArc + Math.floor(getRandomFloat(1, 3 + (i % 2) * 3, 0)) * arcSeg;
   const endAngle = Math.min(
     startAngle +
       arcRange[(i + getRandomFloat(0, 2, 0)) % arcRange.length] * arcSeg,

@@ -19,24 +19,14 @@ export type VerticeArcConfig = {
   stroke: { color: ColorArray } | false;
 };
 import { gsap } from "gsap";
-/**
- * VerticeArc creates an animated arc with vertices, allowing customization of its size, "roundness" based on progress, thickness, and color.
- * @param {P5} p5 - Instance of the p5.js library to enable drawing and animation.
- * @param {VerticeArcConfig} config
- * @returns {VerticeArcType} - The functions for controlling the arc's properties and drawing it on the canvas.
- */
+
 export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const RESOLUTION_HOR: number = 60; // Resolution for vertex generation along the arc
   const RESOLUTION_VERT: number = 4; // Resolution for vertex generation along the arc
 
-  const TEMP_SCALER: number = 0.8; // This constant is used for temporary scaling
+  const TEMP_SCALER: number = 1; // This constant is used for temporary scaling
   const OFFSET_ANGLES: number = -90; // Offset for calculating angles from the top, like a clock
 
-  /**
-   * Scales a number by a temporary scale factor.
-   * @param {number} n - The number to be scaled.
-   * @returns {number} - The scaled value.
-   */
   const applyTempScale = (n: number): number => n * TEMP_SCALER;
 
   /**
@@ -64,9 +54,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const [progress, setProgress] = createSignal<number>(0);
 
   const [startOffset, setStartOffset] = createSignal<number>(
-    config.randomizeStartPosition
-      ? p5.random(dimensions().x / -2, dimensions().x / 2)
-      : 0,
+    config.randomizeStartPosition ? p5.random(-2, dimensions().x / 2) : 0,
   );
 
   const animateOffset = () => {
@@ -86,6 +74,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           animateOffset();
         }
       });
+      animateOffset();
     }
   });
 
@@ -132,7 +121,12 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
    * Generates the vertex points for drawing the arc, including the straight and curved sections.
    */
   const vertexPoints = createMemo<
-    { center: P5.Vector; top: P5.Vector; bottom: P5.Vector }[]
+    {
+      center: P5.Vector;
+      top: P5.Vector;
+      bottom: P5.Vector;
+      shadow: P5.Vector | null;
+    }[]
   >(() => {
     if (!finalArcLength()) {
       return [];
@@ -146,6 +140,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       let top;
       let centerLine;
       let bottom;
+      let shadow;
 
       if (start <= center().x) {
         centerLine = p5.createVector(start, linePositionY());
@@ -154,7 +149,10 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           start,
           linePositionY() + scaledThickness() / 2,
         );
+        shadow = null;
       } else {
+        shadow = p5.createVector(start, linePositionY());
+
         const arcLength = start - center().x;
         const angle =
           getAngleFromArcLengthInDegrees(arcLength, scaledInnerRadius()) +
@@ -179,6 +177,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
         top,
         center: centerLine,
         bottom,
+        shadow,
       };
     });
   });
@@ -267,12 +266,42 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
         }
       }
       p5.endShape();
+
+      p5.push();
+      p5.stroke(hexToRgb(COLORS_3A.RED));
+      let shadI = -1;
+      for (let i = 0; i < vertexPoints().length; i++) {
+        if (vertexPoints()[i].shadow && i % 4 === 0) {
+          p5.circle(
+            vertexPoints()[i].shadow!.x,
+            vertexPoints()[i].shadow!.y,
+            5,
+          );
+          shadI = i;
+        }
+      }
+
+      if (shadI > -1) {
+        p5.line(
+          vertexPoints()[shadI].shadow!.x,
+          vertexPoints()[shadI].shadow!.y - 20,
+          center().x,
+          vertexPoints()[shadI].shadow!.y - 20,
+        );
+        p5.line(
+          center().x,
+          center().y,
+          vertexPoints()[shadI].center.x,
+          vertexPoints()[shadI].center.y,
+        );
+      }
+      p5.pop();
+
       for (let i = 0; i < vertexPoints().length; i++) {
         if (i % 4 === 0) {
           p5.circle(vertexPoints()[i].center.x, vertexPoints()[i].center.y, 5);
         }
       }
-      p5.pop();
     }
   };
 

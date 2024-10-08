@@ -12,28 +12,34 @@ import { ParentProps } from "solid-js";
  * CLIENT-ONLY !
  */
 
-export default function BrockmanAnimation04(
+export default function BrockmanAnimation05(
   props: {
     bgColor: keyof typeof COLORS_3A;
+    progress: number;
+    speed: number;
+    ampl: number;
   } & ParentProps,
 ) {
   return (
     <CanvasAnimationWrapper
-      start={"clamp(top top+=80%)"}
-      end={"clamp(bottom bottom-=100%)"}
+      start={"clamp(top top+=120%)"}
+      end={"bottom bottom-=120%"}
       animation={
         <ANIMATION
-          getStartRadius={(w) => w / 4}
+          getStartRadius={(w, h) => h / 3}
           bgColor={hexToRgb(COLORS_3A[props.bgColor])}
           fadeInOut={false}
           setCenter={(width, height, progress) => {
             return {
-              x: width / 3,
+              x: (width / 3) * 2,
               y: (height / 3) * 2,
             };
           }}
           draw={(p5, progress, arcs, center) => {
-            const p = 1;
+            const ms = p5.millis() || 0;
+            const p =
+              props.progress +
+              Math.sin((ms / props.speed) % (Math.PI * 2)) / props.ampl;
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setCenterX(center.x);
               arcs[i].setCenterY(center.y);

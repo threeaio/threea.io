@@ -6,24 +6,26 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { hexToRgb, remapT } from "~/_util";
+import { ParentProps } from "solid-js";
 
 /**
  * CLIENT-ONLY !
  */
 
-export default function BrockmanAnimation02() {
+export default function BrockmanAnimation02(props: ParentProps) {
   return (
     <CanvasAnimationWrapper
       start={"clamp(top top+=80%)"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          getStartRadius={(w, h) => h / 12}
           bgColor={hexToRgb(COLORS_3A.GRAY_DARKEST)}
           fadeInOut={true}
           draw={(p5, progress, arcs, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             // console.log("progress STEP 2", progress);
-            const p = remapT(progress, 0, 0.7);
+            const p = remapT(progress, 0, 0.5);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setCenterX(center.x);
               arcs[i].setCenterY(center.y);
@@ -31,11 +33,10 @@ export default function BrockmanAnimation02() {
               arcs[i].draw();
             }
           }}
-          getStartRadius={(w) => w / 8}
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 6),
-            gap: 8,
+            gap: 6,
           }}
           arcConfig={{
             debug: false,
@@ -53,6 +54,8 @@ export default function BrockmanAnimation02() {
           }}
         />
       }
-    ></CanvasAnimationWrapper>
+    >
+      {props.children}
+    </CanvasAnimationWrapper>
   );
 }

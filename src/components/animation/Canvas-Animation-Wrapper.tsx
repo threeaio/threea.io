@@ -1,6 +1,7 @@
 import {
   Accessor,
   Context,
+  createEffect,
   createRenderEffect,
   createSignal,
   JSX,
@@ -11,8 +12,8 @@ import {
   useContext,
 } from "solid-js";
 import { createContext } from "solid-js";
-import { makeResizeObserver } from "@solid-primitives/resize-observer";
 import StartEndFunc = ScrollTrigger.StartEndFunc;
+import { createElementSize } from "@solid-primitives/resize-observer";
 
 export const AnimationContext: Context<
   | {
@@ -39,36 +40,29 @@ export default function CanvasAnimationWrapper(
   },
 ) {
   const [target, setTarget] = createSignal<HTMLElement | undefined>();
+  const size = createElementSize(target);
   const [progress, setProgress] = createSignal(0);
   const [active, setActive] = createSignal(false);
   const [velocity, setVelovity] = createSignal(0);
   const [width, setWidth] = createSignal(0);
   const [height, setHeight] = createSignal(0);
 
-  const { observe } = makeResizeObserver(setupContentResizeObserver, {
-    box: "content-box",
+  let scrollTriggerHere: ScrollTrigger | undefined;
+  createEffect(() => {
+    setWidth(size.width || 0); // => number | null
+    setHeight(size.height || 0); // => number | null
+    console.log(size.height);
+    if (scrollTriggerHere) {
+      scrollTriggerHere.refresh();
+    }
   });
-  function setupContentResizeObserver(entries: ResizeObserverEntry[]) {
-    const cr = entries[0].contentRect;
-    setHeight(cr.height);
-    setWidth(cr.width);
-  }
 
   onMount(() => {
-    if (!target()) {
-      return;
-    }
-    if (!height() || !width()) {
-      setHeight(target()?.getBoundingClientRect()?.height || 0);
-      setWidth(target()?.getBoundingClientRect()?.width || 0);
-    }
-
-    if (!height() || !width()) {
-      console.error("ERROR SETTING UP", width(), height());
-    }
+    // setTimeout(() => {
     console.log("SETTING UP target()", target());
-    const scrollTriggerHere = window.scrollTrigger.create({
+    scrollTriggerHere = window.scrollTrigger.create({
       trigger: target(),
+      invalidateOnRefresh: true,
       start: props.start || "clamp(top top)",
       end: props.end || "clamp(bottom bottom)",
       // markers: true,
@@ -85,6 +79,19 @@ export default function CanvasAnimationWrapper(
         scrollTriggerHere.kill();
       }
     });
+    // }, 300);
+    // if (!target()) {
+    //   return;
+    // }
+    // if (!height() || !width()) {
+    //   setHeight(target()?.getBoundingClientRect()?.height || 0);
+    //   setWidth(target()?.getBoundingClientRect()?.width || 0);
+    //   console.log("height() || !width()", height(), width());
+    // }
+    //
+    // if (!height() || !width()) {
+    //   console.error("ERROR SETTING UP", width(), height());
+    // }
   });
 
   return (
@@ -98,14 +105,14 @@ export default function CanvasAnimationWrapper(
       }}
     >
       <div
-        class="relative h-full w-full"
         id={Math.random() * 10000 + "-animation"}
-        ref={(el) => {
-          observe(el);
-          setTarget(el);
-        }}
+        class={"h-full w-full"}
+        ref={(el) => setTarget(el)}
       >
-        <Show when={width() && height()}>{props.animation}</Show>
+        <div class="absolute inset-0 pointer-events-none">
+          {/*<Show when={width() && height()}>{props.animation}</Show>*/}
+          {props.animation}
+        </div>
         <div class="relative">{props.children}</div>
       </div>
     </AnimationContext.Provider>
