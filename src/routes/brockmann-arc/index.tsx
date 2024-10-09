@@ -240,8 +240,8 @@ export default function BrockmannArc() {
           <HeaderHere title={"Galerie"} num={"05"} noStick={true}>
             <HeaderDescriptionDefaultHere>
               <p>
-                Alle folgenden Grafiken sind durch Drücken der <Kbd>A</Kbd>
-                -Taste animierbar.
+                Alle folgenden Grafiken lassen sich durch Drücken der{" "}
+                <Kbd>A</Kbd> variieren.
               </p>
             </HeaderDescriptionDefaultHere>
           </HeaderHere>

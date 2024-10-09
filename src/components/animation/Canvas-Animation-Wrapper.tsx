@@ -51,15 +51,12 @@ export default function CanvasAnimationWrapper(
   createEffect(() => {
     setWidth(size.width || 0); // => number | null
     setHeight(size.height || 0); // => number | null
-    console.log(size.height);
     if (scrollTriggerHere) {
       scrollTriggerHere.refresh();
     }
   });
 
   onMount(() => {
-    // setTimeout(() => {
-    console.log("SETTING UP target()", target());
     scrollTriggerHere = window.scrollTrigger.create({
       trigger: target(),
       invalidateOnRefresh: true,
@@ -79,19 +76,6 @@ export default function CanvasAnimationWrapper(
         scrollTriggerHere.kill();
       }
     });
-    // }, 300);
-    // if (!target()) {
-    //   return;
-    // }
-    // if (!height() || !width()) {
-    //   setHeight(target()?.getBoundingClientRect()?.height || 0);
-    //   setWidth(target()?.getBoundingClientRect()?.width || 0);
-    //   console.log("height() || !width()", height(), width());
-    // }
-    //
-    // if (!height() || !width()) {
-    //   console.error("ERROR SETTING UP", width(), height());
-    // }
   });
 
   return (

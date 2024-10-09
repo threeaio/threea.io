@@ -1,4 +1,5 @@
 import { ContentType } from "~/content/content-type";
+import Anf from "~/components/typo/Anf";
 
 export const AsyncAction: ContentType = {
   titleSeo: "Asynchrone Aktion - Reaktivität und Simplizität",
@@ -9,8 +10,8 @@ export const AsyncAction: ContentType = {
       -Entwicklung und 8 Jahren Arbeit mit{" "}
       <abbr title="Single Page Application">SPA</abbr>-Frameworks, angewendet in
       größeren Produktentwicklungen im Tourismus-, Smarthome- und
-      Ticketing-Sektor, habe ich das nötige Feingefühl für die „vernünftige
-      Lösung“.
+      Ticketing-Sektor, habe ich das nötige Feingefühl für die{" "}
+      <Anf>vernünftige Lösung</Anf>.
       <br />
       <br /> Der Fokus liegt hier auf reaktiven Ansätzen, Modularität und{" "}
       <abbr title="Keep it Simple">KISS</abbr>.
