@@ -9,7 +9,6 @@ import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Sm
 import { createSignal, onMount, ParentProps } from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
 import { clientOnly } from "@solidjs/start";
-import b from "@studio-freight/lenis";
 import Kbd from "~/components/typo/Kbd";
 import Anf from "~/components/typo/Anf";
 
@@ -179,8 +178,8 @@ export default function BrockmannArc() {
               <p>
                 So liegen die Winkel selbst auf einem Raster, welches den Kreis
                 in 32 Segmente unterteilt &ndash; also 11.25&deg;. Die{" "}
-                <Anf>Dicke</Anf> der Bögen verdoppelt sich nach außen hin
-                linear.
+                <Anf>Dicke</Anf> der Bögen verdoppelt sich nach außen hin mit
+                jedem Bogen.
               </p>
               <p>
                 Ich habe mich hier entschieden eine leichte Zufälligkeit in den
@@ -218,7 +217,7 @@ export default function BrockmannArc() {
                 Startposition, als auch die Zielwinkel auf neue Werte animieren
               </p>
               <h3>Zwischenfazit</h3>
-              <p>Es gäbe noch einiges zu tun.</p>
+              <p>Es gäbe noch einige Ideen.</p>
               <p>
                 Neben den fehlenden Segmenten, wirkt das <Anf>Einfahren</Anf>{" "}
                 von links und die damit verbundene <Anf>Extra-Umdrehung</Anf>{" "}
