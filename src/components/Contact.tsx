@@ -68,9 +68,6 @@ export default function Contact() {
   return (
     <FullWidth>
       <div class="py-32">
-        {/*<Headline>*/}
-        {/*  <h2 class="mb-12 text-center">Zusammen kommen</h2>*/}
-        {/*</Headline>*/}
         <div class="mx-auto w-1/3 grid grid-cols-3 ">
           <div
             class="flex flex-row justify-center"
@@ -156,9 +153,9 @@ export default function Contact() {
                 isBack={true}
                 handleClick={() => setOpen(false)}
               >
-                Abort
+                Zurück
               </Button>
-              <Button buttonType={"submit"}>Send</Button>
+              <Button buttonType={"submit"}>Senden</Button>
             </div>
           </form>
         </div>

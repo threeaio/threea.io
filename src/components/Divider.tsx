@@ -7,7 +7,7 @@ export const Divider = () => {
       <figcaption class="hidden">
         A Figure dispalying the current Scroll-Progress and Scroll-Speed
       </figcaption>
-      <div class="overflow-x-hidden inline-block p-3 text-sm font-extralight text-3a-green play bg-3a-gray-darker rounded">
+      <div class="overflow-x-hidden inline-block p-3 text-sm font-mono text-3a-green play bg-3a-gray-darker rounded">
         {landingPageState.totalContentHeight.toFixed(2).padStart(6, "0")}{" "}
         <span class="text-3a-white">/// </span>
         {Math.abs(landingPageState.velocity).toFixed(2).padStart(6, "0")}{" "}

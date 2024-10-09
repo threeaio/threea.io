@@ -11,7 +11,7 @@ export const AgileAgit: ContentType = {
       Produktentwicklungen auch fachlich stark begleitet.
       <br />
       <br />
-      Vor der Tätigkeit als <abbr title="Product Owner">PO</abbr> war ich als
+      Neben der Tätigkeit als <abbr title="Product Owner">PO</abbr> war ich als
       Coach und Trainer in der internen Weiterbildung tätig.
     </>
   ),

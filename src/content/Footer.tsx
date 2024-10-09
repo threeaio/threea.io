@@ -19,7 +19,7 @@ export const Footer = () => {
             </div>
 
             <SmallText>
-              <div class="sm:p-4 md:p-8 text-3a-paper">
+              <div class="sm:p-4 md:p-8 text-3a-paper font-mono text-sm">
                 <p class="font-normal  text-3a-white">Impressum</p>
                 <p>
                   Nikolaj Sokolowski
@@ -27,6 +27,9 @@ export const Footer = () => {
                   Am Heidbergbad 30
                   <br />
                   28717 Bremen
+                </p>
+                <p>
+                  <a href={"mailto:nikolaj@threea.io"}>nikolaj@threea.io</a>
                 </p>
                 {/*<div class="">*/}
                 {/*  <svg class="w-6 h-6" viewBox="0 0 24 24">*/}

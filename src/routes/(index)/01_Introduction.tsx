@@ -1,9 +1,7 @@
 import { MainLogo } from "~/components/Logo";
 import { SmallText } from "~/components/SmallText";
-import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
-import { BleedRightHalf } from "~/components/layouts/bleed-right/Bleed-Right-Half";
 import { Button } from "~/components/Button";
 import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
 
@@ -54,16 +52,22 @@ export const Introduction = () => {
             <div class="flex-1 flex">
               <div class="self-end py-16">
                 <SmallText>
-                  <div class="grid xl:grid-cols-2 mr-8 xl:mr-0 mb-4">
+                  <div class="grid xl:grid-cols-2 mr-8 xl:mr-0">
                     <div>
                       <p>
                         Môi, Môi! Ich bin Nikolaj Sokolowski,
                         Gestaltungs-Techniker (Design Engineer),
                         Angular-Entwickler und Feinschliffmensch mit Überblick.
                       </p>
+                      <p>
+                        threea.io ist ein persönliches Projekt, um die Dinge zu
+                        erkunden, die im beruflichen Alltag zu kurz kommen.
+                      </p>
                     </div>
                   </div>
-                  <div class="grid grid-cols-2">
+                </SmallText>
+                <div class="grid xl:grid-cols-2 mr-8 xl:mr-0 mb-4">
+                  <div class="flex justify-start gap-3">
                     <div>
                       <Button
                         handleClick={() => {
@@ -71,17 +75,22 @@ export const Introduction = () => {
                             document.querySelector("#INDEX_ABOUT_WORK")!;
                           if (el) {
                             window.lenis.scrollTo(el, {
-                              duration: 6,
-                              offset: 1800,
+                              duration: 2,
+                              // offset: 1800,
                             });
                           }
                         }}
                       >
-                        Berufliches
+                        Über mich
+                      </Button>
+                    </div>
+                    <div>
+                      <Button asA={true} href={"/brockmann-arc"}>
+                        Ein erster Inhalt
                       </Button>
                     </div>
                   </div>
-                </SmallText>
+                </div>
               </div>
             </div>
           </div>

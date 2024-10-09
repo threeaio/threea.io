@@ -24,7 +24,7 @@ export const MainLogo = (
           />
         </svg>
       </div>
-      <div class="text-3a-white font-light">threea.io</div>
+      <div class="text-3a-white font-mono">threea.io</div>
     </div>
   );
 };

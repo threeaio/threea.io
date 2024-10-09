@@ -11,7 +11,7 @@ import { SmallText } from "~/components/SmallText";
 import { clientOnly } from "@solidjs/start";
 import { ContentType } from "~/content/content-type";
 const ANIMATION = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-swiss-2"),
+  () => import("~/components/animation/Canvas-Animation-2"),
 );
 
 export default function AboutWork() {
@@ -34,7 +34,7 @@ export default function AboutWork() {
             trigger: target(),
             scrub: 3,
             // once: true,
-            start: "30rem 50%",
+            start: "top top-+=90%",
             end: "bottom bottom+=100px",
           },
         });
@@ -54,62 +54,62 @@ export default function AboutWork() {
     );
   });
   return (
-    <div id="INDEX_ABOUT_WORK">
-      {/*<CanvasAnimationWrapper*/}
-      {/*  start={"clamp(top top+=80%)"}*/}
-      {/*  end={"clamp(bottom bottom-=100%)"}*/}
-      {/*  animation={<ANIMATION />}*/}
-      {/*>*/}
-      <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
-        <Divider />
-      </div>
-      <div class="" ref={setTarget}>
-        <FullWidth>
-          <div class="grid grid-cols-1 sm:grid-cols-2">
-            <HugeText>
-              <div class="sticky top-0 ">
-                {/*xl:py-42 mb-[105rem]*/}
-                <div class="flex items-center sm:justify-end py-16 md:py-32   sm:text-right">
-                  <h2
-                    data-animate-headline=""
-                    class="text-pretty max-w-[50rem]"
-                  >
-                    Erfahrung und Experience
-                    {/*<span class="headline-item text-3a-green inline-block ">*/}
-                    {/*  Über Arbeit, Code und Konzepte*/}
-                    {/*</span>*/}
-                  </h2>
-                </div>{" "}
+    <div id="INDEX_ABOUT_WORK" class={"relative"}>
+      <CanvasAnimationWrapper
+        start={"clamp(top top+=80%)"}
+        end={"clamp(bottom bottom-=100%)"}
+        animation={<ANIMATION />}
+      >
+        <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
+          <Divider />
+        </div>
+        <div class="" ref={setTarget}>
+          <FullWidth>
+            <div class="grid grid-cols-1 sm:grid-cols-2">
+              <HugeText>
+                <div class="sticky top-0 ">
+                  {/*xl:py-42 mb-[105rem]*/}
+                  <div class="flex items-center sm:justify-end py-16 md:py-32   sm:text-right">
+                    <h2
+                      data-animate-headline=""
+                      class="text-pretty max-w-[50rem]"
+                    >
+                      Erfahrung und Experience
+                      {/*<span class="headline-item text-3a-green inline-block ">*/}
+                      {/*  Über Arbeit, Code und Konzepte*/}
+                      {/*</span>*/}
+                    </h2>
+                  </div>{" "}
+                </div>
+              </HugeText>
+            </div>
+          </FullWidth>
+
+          <FullWidth>
+            <div class="grid grid-cols-1 sm:grid-cols-2 pb-[24rem]">
+              <div></div>
+              <div class="max-w-[400px]  ">
+                <SectionHere content={AntiAgony} />
+                <SectionHere content={AsyncAction} />
+                <SectionHere content={AgileAgit} />
               </div>
+            </div>
+          </FullWidth>
+        </div>
+
+        <FullWidth>
+          <div class="h-screen flex flex-col justify-center text-pretty">
+            <HugeText>
+              <figure class="max-w-[72rem]">
+                Dieses ist nicht das Ende, sondern ein Anfang von etwas.
+              </figure>
             </HugeText>
           </div>
         </FullWidth>
-
-        <FullWidth>
-          <div class="grid grid-cols-1 sm:grid-cols-2 pb-[24rem]">
-            <div></div>
-            <div class="max-w-[400px]  ">
-              <SectionHere content={AntiAgony} />
-              <SectionHere content={AsyncAction} />
-              <SectionHere content={AgileAgit} />
-            </div>
-          </div>
-        </FullWidth>
-      </div>
-
-      <FullWidth>
-        <div class="h-screen flex flex-col justify-center text-pretty">
-          <HugeText>
-            <figure class="max-w-[72rem]">
-              Dieses ist nicht das Ende, sondern ein Anfang von etwas.
-            </figure>
-          </HugeText>
+        <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
+          <Divider />
         </div>
-      </FullWidth>
-      <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
-        <Divider />
-      </div>
-      {/*</CanvasAnimationWrapper>*/}
+      </CanvasAnimationWrapper>
     </div>
   );
 }

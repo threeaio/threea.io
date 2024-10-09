@@ -5,7 +5,7 @@ export const SmallText = (
 ) => {
   return (
     <div
-      class={`3a-text-small font-extralight text-sm text-3a-white ${props.class ? props.class : ""} ${styles["small-text"]}`}
+      class={`font-normal  text-3a-white ${props.class ? props.class : ""} ${styles["small-text"]}`}
     >
       {props.children}
     </div>

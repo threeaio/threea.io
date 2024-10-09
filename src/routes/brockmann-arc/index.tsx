@@ -10,6 +10,8 @@ import { createSignal, onMount, ParentProps } from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
 import { clientOnly } from "@solidjs/start";
 import b from "@studio-freight/lenis";
+import Kbd from "~/components/typo/Kbd";
+import Anf from "~/components/typo/Anf";
 
 const ANIMATION_00_INTRO = clientOnly(
   () => import("~/routes/brockmann-arc/animation-intro"),
@@ -48,15 +50,15 @@ export default function BrockmannArc() {
               <div>
                 <div class="flex h-svh flex-col justify-end pb-8 2xl:pb-24">
                   <HugeText>
-                    <h1>Brockmanns Beethoven</h1>
+                    <h1 class={"mb-12"}>Brockmanns Beethoven</h1>
                   </HugeText>
-                  <div class={"grid grid-cols-3"}>
+                  <div class={"grid md:grid-cols-2 xl:grid-cols-3 "}>
                     <SmallText>
                       <div class="">
                         <p>
-                          Meine erste Animations-Skizze ;). Ziel hier ist es,
-                          ein paar Grundlagen in der Generierung von Grafik (mit
-                          Canvas bzw. P5.js) zu verinnerlichen.
+                          <strong>Meine erste Animations-Skizze.</strong> Ziel
+                          hier ist es, ein paar Grundlagen in der Generierung
+                          von Grafik (mit Canvas bzw. P5.js) zu verinnerlichen.
                         </p>
                         <p>
                           Natürlich soll am Ende auch etwas <Anf>Schönes</Anf>{" "}
@@ -89,6 +91,7 @@ export default function BrockmannArc() {
                 Inspiriert ist dieser erste Wurf durch{" "}
                 <a
                   href="https://de.wikipedia.org/wiki/Josef_M%C3%BCller-Brockmann"
+                  title={"Zum Wikipedia-Eintrag von Josef Müller-Brockmann"}
                   target={"_blank"}
                 >
                   Josef Müller-Brockmanns
@@ -97,7 +100,7 @@ export default function BrockmannArc() {
               </p>
               <p>
                 Müller-Brockmann wird hier wohl noch häufiger herhalten müssen,
-                als Grundlage einerseits für grafische Arbeiten, aber auch als
+                einerseites als Grundlage für grafische Arbeiten, aber auch als
                 Stichwortgeber für theoretische Gedanken.
               </p>
               <p>
@@ -152,7 +155,7 @@ export default function BrockmannArc() {
                 <Anf>projiziert</Anf>.
               </p>
               <p>
-                Für die Position auf dem Kreis wird die Differenz des Punktes
+                Für die Projektion auf den Kreis wird die Differenz des Punktes
                 zum Mittelpunkt auf der X-Achse berechnet und dieser Wert dann
                 als Bogenmaß verwendet, um den Winkel zu bekommen, welcher
                 wiederum den Punkt auf dem Kreis definiert.
@@ -170,8 +173,8 @@ export default function BrockmannArc() {
           <HeaderHere title={"Weiteres"} num={"03"}>
             <HeaderDescriptionDefaultHere>
               <p>
-                Ohne selbst Lineal und Zirkel anzulegen lassen sich schnell ein
-                paar Parameter zur Geometrie des Plakats finden.
+                Auch ohne selbst Lineal und Zirkel anzulegen, lassen sich
+                schnell ein paar Parameter zur Geometrie des Plakats finden.
               </p>
               <p>
                 So liegen die Winkel selbst auf einem Raster, welches den Kreis
@@ -185,9 +188,9 @@ export default function BrockmannArc() {
                 interessanter zu gestalten.
               </p>
               <p>
-                Leider hatte ich übersehen, dass die Bögen auch links vom
-                Mittelpunktes des Kreises aus <Anf>starten</Anf> können, so dass
-                eine Extra-Drehung eingbaut wurde, um dieses einfach abzubilden.
+                Da die Bögen auch links vom Mittelpunktes des Kreises aus{" "}
+                <Anf>starten</Anf> können, wurde eine Extra-Drehung eingbaut, um
+                dieses einfach abzubilden.
               </p>
               <p>
                 Im Original gibt es außerdem teilweise zwei Segemente für
@@ -211,27 +214,19 @@ export default function BrockmannArc() {
                 Startposition der Bögen verschiebt.
               </p>
               <p>
-                Durch Drücken der{" "}
-                <span class={"text-3a-green"}>
-                  <Anf>a</Anf>-Taste
-                </span>{" "}
-                kannst du sowohl Startposition, als auch die Zielwinkel auf neue
-                Werte animieren
+                Durch Drücken der <Kbd>A</Kbd>-Taste kannst du sowohl
+                Startposition, als auch die Zielwinkel auf neue Werte animieren
               </p>
-              <p>
-                <span class={"text-3a-green"}>Conclusio:</span> Noch bin ich
-                nicht ganz zufrieden, auch wenn sich hier schon ein paar nette
-                Grafiken ergeben, die mich an suprematistische Werke erinnern.
-              </p>
+              <h3>Zwischenfazit</h3>
+              <p>Es gäbe noch einiges zu tun.</p>
               <p>
                 Neben den fehlenden Segmenten, wirkt das <Anf>Einfahren</Anf>{" "}
                 von links und die damit verbundene <Anf>Extra-Umdrehung</Anf>{" "}
                 noch nicht so, wie ich es mir ausgemalt hatte.
               </p>
               <p>
-                Trotzdem ziehe ich hier erstmal einen Schlussstrich und schaue,
-                was sich mit ein paar Parametern aus diesem Teil generieren
-                lässt.
+                Trotzdem lege ich hier erstmal eine Pause ein und schaue, was
+                sich mit ein paar Parametern aus diesem Teil generieren lässt.
               </p>
             </HeaderDescriptionDefaultHere>
           </HeaderHere>
@@ -242,70 +237,35 @@ export default function BrockmannArc() {
         </div>
         {/*////x*/}
         <div class={"mb-24"}>
-          <HeaderHere title={"Galerie"} num={"05"} noStick={true}></HeaderHere>
+          <HeaderHere title={"Galerie"} num={"05"} noStick={true}>
+            <HeaderDescriptionDefaultHere>
+              <p>
+                Alle folgenden Grafiken sind durch Drücken der <Kbd>A</Kbd>
+                -Taste animierbar.
+              </p>
+            </HeaderDescriptionDefaultHere>
+          </HeaderHere>
           <FullWidth>
-            <div class={"grid grid-cols-3 gap-4"}>
+            <div class={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-                <div class="relative aspect-[1/1.6]">
+                <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
                   <ANIMATION_04 bgColor={"RED"} />
-                  <span class="absolute right-2/3 bottom-1/3 text-3a-gray-darker font-display text-right pb-4">
-                    Iggy Pop
-                  </span>
-                  <span class="absolute left-1/3 top-2/3">
-                    <span class={"grid gap-1"}>
-                      <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                    </span>
-                  </span>
+                  <PosterText>Iggy Pop</PosterText>
                 </div>
               </div>
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-                <div class="relative aspect-[1/1.6]">
+                <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
                   <ANIMATION_04 bgColor={"WHITE"} />
-                  <span class="absolute right-2/3 bottom-1/3 text-3a-gray-darker font-display text-right pb-4">
-                    Miles Davis
-                  </span>
-                  <span class="absolute left-1/3 top-2/3">
-                    <span class={"grid gap-1"}>
-                      <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                    </span>
-                  </span>
+                  <PosterText>Miles Davis</PosterText>
                 </div>
               </div>
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-                <div class="relative aspect-[1/1.6]">
+                <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
                   <ANIMATION_04 bgColor={"GREEN"} />
-                  <span class="absolute right-2/3 bottom-1/3 text-3a-gray-darker font-display text-right pb-4">
-                    Ice-Cube
-                  </span>
-                  <span class="absolute left-1/3 top-2/3">
-                    <span class={"grid gap-1"}>
-                      <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-                      <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-                    </span>
-                  </span>
+                  <PosterText>Ice Cube</PosterText>
                 </div>
               </div>
-              <div class={"bg-3a-gray-darker p-2 xl:p-4 col-span-3"}>
+              <div class={"bg-3a-gray-darker p-2 xl:p-4 md:col-span-3"}>
                 <div class="relative aspect-[4.8/1]">
                   <ANIMATION_05
                     bgColor={"RED"}
@@ -313,14 +273,16 @@ export default function BrockmannArc() {
                     speed={2000}
                     ampl={3}
                   />
-                  <span class="absolute right-1/3 bottom-1/3 text-3a-gray-darker font-display text-right leading-tight">
-                    Anti
-                    <br />
-                    Agonie
+                  <span class="absolute right-1/3 bottom-1/3 scale-50 md:scale-75 xl:scale-100">
+                    <PosterTextHeadline>
+                      Anti
+                      <br />
+                      Agonie
+                    </PosterTextHeadline>
                   </span>
                 </div>
               </div>
-              <div class={"bg-3a-gray-darker p-2 xl:p-4 col-span-3"}>
+              <div class={"bg-3a-gray-darker p-2 xl:p-4 md:col-span-3"}>
                 <div class="relative aspect-[4.8/1]">
                   <ANIMATION_05
                     bgColor={"WHITE"}
@@ -328,14 +290,16 @@ export default function BrockmannArc() {
                     speed={4000}
                     ampl={20}
                   />
-                  <span class="absolute right-1/3 bottom-1/3 text-3a-gray-darker font-display text-right leading-tight">
-                    Asynchrone
-                    <br />
-                    Aktion
+                  <span class="absolute right-1/3 bottom-1/3 scale-50 md:scale-75 xl:scale-100">
+                    <PosterTextHeadline>
+                      Asynchrone
+                      <br />
+                      Aktion
+                    </PosterTextHeadline>
                   </span>
                 </div>
               </div>
-              <div class={"bg-3a-gray-darker p-2 xl:p-4 col-span-3"}>
+              <div class={"bg-3a-gray-darker p-2 xl:p-4 md:col-span-3"}>
                 <div class="relative aspect-[4.8/1]">
                   <ANIMATION_05
                     bgColor={"GREEN"}
@@ -343,10 +307,12 @@ export default function BrockmannArc() {
                     speed={2000}
                     ampl={6}
                   />
-                  <span class="absolute right-1/3 bottom-1/3 text-3a-gray-darker font-display text-right leading-tight">
-                    Agile
-                    <br />
-                    Agit
+                  <span class="absolute right-1/3 bottom-1/3 scale-50 md:scale-75 xl:scale-100">
+                    <PosterTextHeadline>
+                      Agile
+                      <br />
+                      Agit
+                    </PosterTextHeadline>
                   </span>
                 </div>
               </div>
@@ -359,6 +325,37 @@ export default function BrockmannArc() {
   );
 }
 
+function PosterTextHeadline(props: ParentProps) {
+  return (
+    <span class="block text-sm 2xl:text-base text-3a-gray-darker font-display text-right !leading-tight lowercase">
+      {props.children}
+    </span>
+  );
+}
+function PosterText(props: ParentProps) {
+  return (
+    <div class="">
+      <span class="absolute origin-bottom-right scale-100 md:scale-75 xl:scale-100 right-2/3 bottom-1/3  pb-4">
+        <PosterTextHeadline>
+          <span class={"whitespace-nowrap"}>{props.children}</span>
+        </PosterTextHeadline>
+      </span>
+      <span class="absolute left-1/3 top-2/3 origin-top-left scale-100 md:scale-75 xl:scale-100">
+        <span class={"grid gap-1"}>
+          <span class={"bg-3a-gray-darker h-1 w-12"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-16"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-12"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-16"}></span>
+          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
+        </span>
+      </span>
+    </div>
+  );
+}
+
 function HeaderDescriptionDefaultHere(props: ParentProps) {
   return (
     <div class="h-full">
@@ -367,10 +364,6 @@ function HeaderDescriptionDefaultHere(props: ParentProps) {
       </SmallText>
     </div>
   );
-}
-
-function Anf(props: ParentProps) {
-  return <>»{props.children}«</>;
 }
 
 function HeaderHere(
@@ -396,7 +389,7 @@ function HeaderHere(
       class={`group transition-all py-8 duration-300 relative z-20 ${!props.noStick ? "md:sticky md:top-[-1px]" : ""}`}
     >
       <Headline>
-        <h2 class="relative py-8 text-3a-green transition-all  text-[.9em] group-[.is-sticky]:text-[length:inherit] group-[.is-sticky]:inline-block">
+        <h2 class="relative  text-3a-green transition-all  text-[.9em] group-[.is-sticky]:text-[length:inherit] group-[.is-sticky]:inline-block">
           <span
             class={"inline-block pr-4 text-3a-white xl:absolute xl:right-full"}
           >

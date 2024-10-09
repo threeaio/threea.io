@@ -8,7 +8,7 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { BEZIER_CIRCLE, P5Line, subpoints } from "~/_util-p5";
+import { BEZIER_CIRCLE, P5Line, subpoints } from "~/_util-client-only";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },
@@ -226,12 +226,5 @@ export default function CanvasAnimation2(
     }
   });
 
-  return (
-    <div>
-      <div
-        class="absolute inset-0 pointer-events-none "
-        ref={(el) => (animationParent = el)}
-      ></div>
-    </div>
-  );
+  return <div class="" ref={(el) => (animationParent = el)}></div>;
 }

@@ -9,14 +9,22 @@ import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
 import { P5Line, subpoints } from "~/_util-client-only";
+import { fromLandingPageState } from "~/landing-page-state";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },
 ) {
   const { progress, active, velocity, width, height } =
     useAnimationWrapperContext();
+  const [{ landingPageState }] = fromLandingPageState;
   const isMoving = createMemo(() => velocity() > -0.02);
   const hasSize = createMemo(() => width() > 0 && height() > 0);
+
+  const useHeight = createMemo(() => {
+    return height() < landingPageState.screenHeight
+      ? height()
+      : landingPageState.screenHeight;
+  }); // Memoized screen height
 
   let randX1 = 0;
   let randX2 = 0;
@@ -32,7 +40,7 @@ export default function CanvasAnimation2(
     randY2: Math.random() * height(),
   };
 
-  let lineOrigin = new P5.Vector(width() / 2, height() / 2);
+  let lineOrigin = new P5.Vector(width() / 2, useHeight() / 2);
 
   let animationParent: HTMLDivElement | undefined;
 
@@ -40,13 +48,13 @@ export default function CanvasAnimation2(
     if (!isMoving() || hasSize()) {
       randX1 = Math.random() * width();
       randX2 = Math.random() * width();
-      randY1 = Math.random() * height();
-      randY2 = Math.random() * height();
+      randY1 = Math.random() * useHeight();
+      randY2 = Math.random() * useHeight();
     }
 
     const originPoint = new P5.Vector(
-      width() / 2 + (Math.cos(progress() * 4) * width()) / 2.5,
-      progress() * height(),
+      width() / 2 + (Math.sin(progress() * 4) * width()) / 2.5,
+      progress() * useHeight(),
     );
 
     gsap.to(lineOrigin, {
@@ -68,7 +76,7 @@ export default function CanvasAnimation2(
   const createSketch = (ref: HTMLDivElement) => {
     const sketch = (_p5: P5) => {
       _p5.setup = () => {
-        const canvas = _p5.createCanvas(width(), height());
+        const canvas = _p5.createCanvas(width(), useHeight());
         canvas.parent(ref);
       };
     };
@@ -95,10 +103,10 @@ export default function CanvasAnimation2(
 
         p5.blendMode(p5.ADD);
         p5.colorMode(p5.HSB);
-        p5.stroke(p5.color(100, 0, 100, 0.01 * i));
+        // p5.stroke(p5.color(100, 0, 100, 0.01 * i));
+        p5.noStroke();
 
-        p5.fill(p5.color(hue, 20 + 4 * i, 30, 0.015));
-        // p5.noFill();
+        p5.fill(p5.color(hue, 20 + 3 * i, 30, 0.015));
         // p5.push();
         p5.beginShape();
 
@@ -114,7 +122,7 @@ export default function CanvasAnimation2(
     const p5 = new P5(sketch, ref);
 
     createEffect(() => {
-      p5.resizeCanvas(width(), height());
+      p5.resizeCanvas(width(), useHeight());
     });
     p5.draw = draw;
     p5Instance = p5;
@@ -132,12 +140,5 @@ export default function CanvasAnimation2(
     }
   });
 
-  return (
-    <div>
-      <div
-        class="absolute inset-0 pointer-events-none "
-        ref={(el) => (animationParent = el)}
-      ></div>
-    </div>
-  );
+  return <div ref={(el) => (animationParent = el)}></div>;
 }

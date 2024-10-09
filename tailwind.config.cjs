@@ -20,8 +20,9 @@ module.exports = {
         '26': '1rem 1rem 1rem repeat(20, minmax(0, 1fr)) 1rem 1rem 1rem',
       },
       fontFamily: {
-        display: ['"Hoves"', ...defaultTheme.fontFamily.sans],
-        sans: ['"Hoves-Mono"', ...defaultTheme.fontFamily.sans],
+        sans: ['"Hoves"', ...defaultTheme.fontFamily.sans],
+        display : ['"Hoves"', ...defaultTheme.fontFamily.sans],
+        mono : ['"Hoves-Mono"', ...defaultTheme.fontFamily.sans],
       },
     },
   },

@@ -110,8 +110,10 @@ export default function CanvasAnimationWrapper(
         ref={(el) => setTarget(el)}
       >
         <div class="absolute inset-0 pointer-events-none">
-          {/*<Show when={width() && height()}>{props.animation}</Show>*/}
-          {props.animation}
+          <div class="sticky inset-0 pointer-events-none">
+            {/*<Show when={width() && height()}>{props.animation}</Show>*/}
+            {props.animation}
+          </div>
         </div>
         <div class="relative">{props.children}</div>
       </div>
