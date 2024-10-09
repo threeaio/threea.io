@@ -241,7 +241,10 @@ export default function BrockmannArc() {
             <HeaderDescriptionDefaultHere>
               <p>
                 Alle folgenden Grafiken lassen sich durch Drücken der{" "}
-                <Kbd>A</Kbd> variieren.
+                <span class={"whitespace-nowrap"}>
+                  <Kbd>A</Kbd>-Taste
+                </span>{" "}
+                variieren.
               </p>
             </HeaderDescriptionDefaultHere>
           </HeaderHere>
@@ -389,7 +392,7 @@ function HeaderHere(
       class={`group transition-all py-8 duration-300 relative z-20 ${!props.noStick ? "md:sticky md:top-[-1px]" : ""}`}
     >
       <Headline>
-        <h2 class="relative  text-3a-green transition-all  text-[.9em] group-[.is-sticky]:text-[length:inherit] group-[.is-sticky]:inline-block">
+        <h2 class="relative  text-3a-green transition-all group-[.is-sticky]:inline-block">
           <span
             class={"inline-block pr-4 text-3a-white xl:absolute xl:right-full"}
           >

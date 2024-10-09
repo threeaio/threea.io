@@ -5,7 +5,11 @@
 }
 
 .btn {
-  @apply text-sm py-2 px-0 font-extralight font-mono;
+  display: inline-block;
+  border: none;
+  border-image: none;
+  appearance: none;
+  @apply !text-sm py-2 px-0  font-mono;
   color: var(--button-color);
   transition: all 0.2s;
   @apply p-1;
