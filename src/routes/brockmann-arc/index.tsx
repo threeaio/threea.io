@@ -121,7 +121,7 @@ export default function BrockmannArc() {
                     class="object-cover h-full w-full max-h-[100svh] opacity-70 mix-blend-lighten"
                     alt="Josef Müller-Brockmann. beethoven poster(1955)"
                     title="JOSEPH MÜLLER-BROCKMANN, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons"
-                    src="/Josef_Müller-Brockmann._beethoven_poster(1955).jpg"
+                    src="/Josef_Müller-Brockmann._beethoven_poster_1955.jpg"
                   />
                 </div>
               </div>
