@@ -14,6 +14,7 @@ import { ParentProps } from "solid-js";
 
 export default function BrockmanAnimation04(
   props: {
+    animateCommand: PointerEvent | MouseEvent | number | undefined;
     bgColor: keyof typeof COLORS_3A;
   } & ParentProps,
 ) {
@@ -23,8 +24,10 @@ export default function BrockmanAnimation04(
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          animateCommand={props.animateCommand}
+          animate={true}
           getStartRadius={(w) => w / 4}
-          bgColor={hexToRgb(COLORS_3A[props.bgColor])}
+          bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={false}
           setCenter={(width, height, progress) => {
             return {
@@ -48,7 +51,7 @@ export default function BrockmanAnimation04(
           arcConfig={{
             debug: false,
             fill: {
-              color: hexToRgb(COLORS_3A.GRAY_DARKER),
+              color: COLORS_3A.GRAY_DARKER,
             },
             stroke: false,
             randomizeStartPosition: true,

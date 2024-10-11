@@ -1,22 +1,18 @@
-import { createSignal, onMount } from "solid-js";
+import { children, createRoot, createSignal, onMount } from "solid-js";
 import { gsap } from "gsap";
 import { AntiAgony } from "~/content/Anti-Agony";
 import { AsyncAction } from "~/content/Async-Action";
 import { AgileAgit } from "~/content/Agile-Agit";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
-import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/HugeText";
 import { SmallText } from "~/components/SmallText";
-import { clientOnly } from "@solidjs/start";
-import { ContentType } from "~/content/content-type";
-const ANIMATION = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
-);
+import { BasicTextContent } from "~/content/content-type";
+import { GridIndicator } from "~/components/Grid-Indicator";
 
 export default function AboutWork() {
   const [target, setTarget] = createSignal<HTMLElement | undefined>();
 
+  // const [asyncAction] = createSignal(AsyncAction);
   onMount(() => {
     let mm = gsap.matchMedia(),
       breakPoint = 800;
@@ -55,77 +51,50 @@ export default function AboutWork() {
   });
   return (
     <div id="INDEX_ABOUT_WORK" class={"relative"}>
-      <CanvasAnimationWrapper
-        start={"clamp(top top+=80%)"}
-        end={"clamp(bottom bottom-=100%)"}
-        animation={<ANIMATION />}
-      >
-        <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
-          <Divider />
-        </div>
-        <div class="" ref={setTarget}>
-          <FullWidth>
-            <div class="grid grid-cols-1 sm:grid-cols-2">
-              <HugeText>
-                <div class="sticky top-0 ">
-                  {/*xl:py-42 mb-[105rem]*/}
-                  <div class="flex items-center sm:justify-end py-16 md:py-32   sm:text-right">
-                    <h2
-                      data-animate-headline=""
-                      class="text-pretty max-w-[50rem]"
-                    >
-                      Erfahrung und Experience
-                      {/*<span class="headline-item text-3a-green inline-block ">*/}
-                      {/*  Über Arbeit, Code und Konzepte*/}
-                      {/*</span>*/}
-                    </h2>
-                  </div>{" "}
-                </div>
-              </HugeText>
-            </div>
-          </FullWidth>
-
-          <FullWidth>
-            <div class="grid grid-cols-1 sm:grid-cols-2 pb-[24rem]">
-              <div></div>
-              <div class="max-w-[400px]  ">
-                <SectionHere content={AntiAgony} />
-                <SectionHere content={AsyncAction} />
-                <SectionHere content={AgileAgit} />
-              </div>
-            </div>
-          </FullWidth>
-        </div>
-
+      <div class="" ref={setTarget}>
         <FullWidth>
-          <div class="h-screen flex flex-col justify-center text-pretty">
+          <div class="grid grid-cols-1 sm:grid-cols-2">
             <HugeText>
-              <figure class="max-w-[72rem]">
-                Dieses ist nicht das Ende, sondern ein Anfang von etwas.
-              </figure>
+              <div class="sticky top-0 ">
+                {/*xl:py-42 mb-[105rem]*/}
+                <div class="flex items-center sm:justify-end py-16 md:py-32   sm:text-right">
+                  <h2
+                    data-animate-headline=""
+                    class="text-pretty max-w-[50rem]"
+                  >
+                    Erfahrung und{" "}
+                    <span class={"text-3a-green"}>Experience</span>
+                  </h2>
+                </div>
+              </div>
             </HugeText>
           </div>
         </FullWidth>
-        <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
-          <Divider />
-        </div>
-      </CanvasAnimationWrapper>
+
+        {/*<GridIndicator />*/}
+        <FullWidth>
+          <div class="grid grid-cols-1 gap-0 sm:grid-cols-6 pb-36">
+            <div class="col-start-4 col-span-2">
+              <SectionHere content={AntiAgony} />
+              <SectionHere content={AsyncAction} />
+              <SectionHere content={AgileAgit} />
+            </div>
+          </div>
+        </FullWidth>
+      </div>
     </div>
   );
 }
 
-function SectionHere(props: { content: ContentType }) {
+function SectionHere(props: { content: BasicTextContent }) {
   return (
-    <div data-animate-item="" class=" col-span-3 md:col-span-1 py-6  ">
-      <SmallText>
-        <h2 class="text-3a-green mb-1">{props.content.headline}</h2>
-      </SmallText>
-      <SmallText class="md:pr-16 xl:pr-20">
-        <p class="!mb-6">{props.content.teaser}</p>
-        {/*<div class="">{AgileAgit.text}</div>*/}
-        {/*<Button href={props.content.moreLink.href} asA={true}>*/}
-        {/*  {props.content.moreLink.title}*/}
-        {/*</Button>*/}
+    <div data-animate-item="" class="mb-24">
+      <SmallText></SmallText>
+      <SmallText class="">
+        <h2 class="font-bold float-left mr-1.5 leading-relaxed text-3a-green align-baseline">
+          {props.content.headline()}
+        </h2>
+        <p>{props.content.teaser()}</p>
       </SmallText>
     </div>
   );

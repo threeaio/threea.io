@@ -4,6 +4,38 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+}
+:root {
+  --color-3a-green: 62 241 152; /*62, 241, 152 */
+  --color-3a-green-darker: 23 174 99;
+  --color-3a-green-lighter: 122 244 185;
+  --color-3a-red: 255 101 138;
+  --color-3a-white: 213 211 210;
+  --color-3a-paper: 134 143 132;
+  --color-3a-gray: 66 73 64;
+  --color-3a-gray-darker: 33 40 39;
+  --color-3a-gray-darkest: 23 28 26;
+  --color-3a-black: 13 16 15;
+  --background-rgb: var(--color-3a-paper);
+  --foreground-rgb: var(--color-3a-gray-darkest);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-rgb: var(--color-3a-gray-darkest);
+    --foreground-rgb: var(--color-3a-paper);
+  }
+}
+
+body {
+  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+  font-variant-numeric: slashed-zero tabular-nums;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  font-variant-alternates: stylistic(alternates);
+  font-feature-settings: "ss01", "ss02", "ss04";
+}
 @font-face {
   font-family: "Hoves";
   font-style: normal;
@@ -62,38 +94,6 @@
   font-display: swap;
   font-weight: 500;
   src: url("/fonts/TT_Hoves_Pro_Mono_Italic.woff2") format("woff2");
-}
-
-:root {
-  --color-3a-green: #3ef198;
-  --color-3a-green-darker: #17ae63;
-  --color-3a-green-lighter: #7af4b9;
-  --color-3a-red: #ff658a;
-  --color-3a-white: #d5d3d2;
-  --color-3a-paper: #868f84;
-  --color-3a-gray: #424940;
-  --color-3a-gray-darker: #212827;
-  --color-3a-gray-darkest: #171c1a;
-  --color-3a-black: #0d100f;
-
-  --background-rgb: var(--color-3a-gray);
-  --foreground-rgb: var(--color-3a-paper);
-}
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --background-rgb: var(--color-3a-gray-darkest);*/
-/*    --foreground-rgb: var(--color-3a-white);*/
-/*  }*/
-/*}*/
-
-body {
-  background: var(--background-rgb);
-  color: var(--foreground-rgb);
-  font-variant-numeric: slashed-zero tabular-nums;
-  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
-  font-variant-alternates: stylistic(alternates);
-  font-feature-settings: "ss01", "ss02", "ss04";
 }
 
 svg .logo-main-color {

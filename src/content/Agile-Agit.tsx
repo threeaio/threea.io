@@ -1,25 +1,27 @@
-import { ContentType } from "~/content/content-type";
+import { BasicTextContent } from "~/content/content-type";
 
-export const AgileAgit: ContentType = {
+export const AgileAgit: BasicTextContent = {
   titleSeo:
     "Agile Agitation - Über meine Rollen im und Gedanken zum agilen Umfeld",
-  headline: <>Agile Agit</>,
-  teaser: (
-    <>
-      Als Product Owner und Frontend-Lead in den Bereichen Ticketing und
-      Smarthome habe ich nicht nur technisches Know-How eingebracht, sondern
-      Produktentwicklungen auch fachlich stark begleitet.
-      <br />
-      <br />
-      Neben der Tätigkeit als <abbr title="Product Owner">PO</abbr> war ich als
-      Coach und Trainer in der internen Weiterbildung tätig.
-    </>
-  ),
   moreLink: {
     href: "/agile-agit",
     title: "Agile Agit",
   },
-  text: (
+  headline: () => <>Agile Agit</>,
+  teaser: () => (
+    <>
+      <p>
+        Als Product Owner und Frontend-Lead in den Bereichen Ticketing und
+        Smarthome habe ich nicht nur technisches Know-How eingebracht, sondern
+        Produktentwicklungen auch fachlich stark begleitet.
+      </p>
+      <p>
+        Neben der Tätigkeit als <abbr title="Product Owner">PO</abbr> war ich
+        als Coach und Trainer in der internen Weiterbildung tätig.
+      </p>
+    </>
+  ),
+  text: () => (
     <>
       <p>
         Diese Rollen ermöglichten es mir, den Entwicklungsprozess von der Idee

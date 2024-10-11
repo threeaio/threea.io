@@ -68,6 +68,14 @@ export const moveInArray = <T>(array: T[], from: number, to: number) => {
   return insertInArray(withoutElArray, elm, to);
 };
 
+export const asColorArray = (
+  colorString: string,
+): [number, number, number, number] => {
+  const splitted = colorString.split(" ").map(Number);
+
+  return [splitted[0], splitted[1], splitted[2], 255];
+};
+
 export const hexToRgb = (hex: string): [number, number, number, number] => {
   hex = hex.replace("#", "");
 

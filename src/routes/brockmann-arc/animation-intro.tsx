@@ -5,7 +5,6 @@ const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-arc-step-1"),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { ArrayElement, ColorArray, hexToRgb, remapT } from "~/_util";
 import { ParentProps } from "solid-js";
 
 /**
@@ -24,7 +23,7 @@ export default function BrockmanAnimationIntro(
       animation={
         <ANIMATION
           getStartRadius={(w) => w / 7}
-          bgColor={hexToRgb(COLORS_3A[props.bgColor])}
+          bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={false}
           setCenter={(width, height, progress) => {
             return {
@@ -44,11 +43,12 @@ export default function BrockmanAnimationIntro(
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 2.6),
+            // gap: 6,
           }}
           arcConfig={{
             debug: false,
             fill: {
-              color: hexToRgb(COLORS_3A.GRAY_DARKER),
+              color: COLORS_3A.GRAY_DARKER,
             },
             stroke: false,
             randomizeStartPosition: true,

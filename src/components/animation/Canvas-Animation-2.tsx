@@ -8,7 +8,7 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { P5Line, subpoints } from "~/_util-client-only";
+import { COLORS_3A, P5Line, subpoints } from "~/_util-client-only";
 import { fromLandingPageState } from "~/landing-page-state";
 
 export default function CanvasAnimation2(
@@ -21,6 +21,7 @@ export default function CanvasAnimation2(
   const hasSize = createMemo(() => width() > 0 && height() > 0);
 
   const useHeight = createMemo(() => {
+    console.log("andingPageState.screenHeight", landingPageState.screenHeight);
     return height() < landingPageState.screenHeight
       ? height()
       : landingPageState.screenHeight;
@@ -36,8 +37,8 @@ export default function CanvasAnimation2(
   const rands = {
     randX1: Math.random() * width(),
     randX2: Math.random() * width(),
-    randY1: Math.random() * height(),
-    randY2: Math.random() * height(),
+    randY1: Math.random() * useHeight(),
+    randY2: Math.random() * useHeight(),
   };
 
   let lineOrigin = new P5.Vector(width() / 2, useHeight() / 2);
@@ -87,7 +88,10 @@ export default function CanvasAnimation2(
 
       const numPoints = 22;
       const lineA: P5Line = [lineOrigin, new P5.Vector(rands.randX1, 0)];
-      const lineB: P5Line = [lineOrigin, new P5.Vector(rands.randX2, height())];
+      const lineB: P5Line = [
+        lineOrigin,
+        new P5.Vector(rands.randX2, useHeight()),
+      ];
       const lineC: P5Line = [lineOrigin, new P5.Vector(0, rands.randY1)];
       const lineD: P5Line = [lineOrigin, new P5.Vector(width(), rands.randY2)];
 
@@ -96,17 +100,23 @@ export default function CanvasAnimation2(
       const subPointsC = subpoints(lineC, numPoints);
       const subPointsD = subpoints(lineD, numPoints);
 
-      let hue = props.hue || 310;
+      // let hue = props.hue || 280;
       for (let i = 0; i < numPoints - 1; i++) {
-        const diff = (i / numPoints) * -6;
-        hue = (hue - diff) % 360;
+        // const diff = (i / numPoints) * -6;
+        // hue = (hue - diff) % 360;
 
-        p5.blendMode(p5.ADD);
-        p5.colorMode(p5.HSB);
-        // p5.stroke(p5.color(100, 0, 100, 0.01 * i));
-        p5.noStroke();
+        // p5.blendMode(p5.ADD);
+        // p5.colorMode(p5.HSB);
+        p5.stroke(
+          COLORS_3A.PAPER[0],
+          COLORS_3A.PAPER[1],
+          COLORS_3A.PAPER[2],
+          3 * i,
+        );
+        // p5.noStroke();
 
-        p5.fill(p5.color(hue, 20 + 3 * i, 30, 0.015));
+        // p5.fill(p5.color(hue, 20 + 3 * i, 30, 0.018));
+        p5.noFill();
         // p5.push();
         p5.beginShape();
 

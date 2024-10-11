@@ -1,23 +1,26 @@
-import { ContentType } from "~/content/content-type";
+import { BasicTextContent } from "~/content/content-type";
 
-export const AntiAgony: ContentType = {
+export const AntiAgony: BasicTextContent = {
   titleSeo: "Anti-Agonie - Über Motivation und Prinzipien",
-  headline: <>Anti-Agonie</>,
-  teaser: (
-    <>
-      Ich verfolge einen Mensch-Zentrierten Ansatz in meiner Arbeit. Das
-      bedeutet unter anderem, dass ich versuche Produktionsbedingungen und
-      Umwelt-Impact mitzudenken.
-      <br />
-      <br /> Vor allem aber steht es für den Anspruch, dass eine bessere Welt
-      auch durch gute, sinnvolle Software möglich ist.
-    </>
-  ),
   moreLink: {
     href: "/anti-agony",
     title: "Anti-Agonie",
   },
-  text: (
+  headline: () => <>Anti-Agonie</>,
+  teaser: () => (
+    <>
+      <p>
+        Ich verfolge einen Mensch-Zentrierten Ansatz in meiner Arbeit. Das
+        bedeutet unter anderem, dass ich versuche Produktionsbedingungen und
+        Umwelt-Impact mitzudenken.
+      </p>
+      <p>
+        Vor allem aber steht es für den Anspruch, dass eine bessere Welt auch
+        durch gute, sinnvolle Software möglich ist.
+      </p>
+    </>
+  ),
+  text: () => (
     <>
       <p>
         Gerade mit dem Fokus auf Anwendungen, die mehrere Stunden täglich von

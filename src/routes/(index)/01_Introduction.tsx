@@ -61,7 +61,8 @@ export const Introduction = () => {
                       </p>
                       <p>
                         threea.io ist ein persönliches Projekt, um die Dinge zu
-                        erkunden, die im beruflichen Alltag zu kurz kommen.
+                        erkunden und zu tun, die im beruflichen Alltag zu kurz
+                        kommen.
                       </p>
                     </div>
                   </div>
@@ -85,8 +86,19 @@ export const Introduction = () => {
                       </Button>
                     </div>
                     <div>
-                      <Button asA={true} href={"/brockmann-arc"}>
-                        Ein erster Inhalt
+                      <Button
+                        handleClick={() => {
+                          const el: HTMLElement =
+                            document.querySelector("#INDEX_BLACKBOOK")!;
+                          if (el) {
+                            window.lenis.scrollTo(el, {
+                              duration: 2,
+                              // offset: 1800,
+                            });
+                          }
+                        }}
+                      >
+                        Zum Blackbook
                       </Button>
                     </div>
                   </div>

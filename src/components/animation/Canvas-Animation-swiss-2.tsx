@@ -16,8 +16,7 @@ import {
 import VerticeArc, {
   VerticeArcType,
 } from "~/components/animation/Primitives/Vertice-Arc";
-import { remapT, ColorArray, hexToRgb, lerp, normalize } from "~/_util";
-import { gsap } from "gsap";
+import { remapT, ColorArray } from "~/_util";
 import { COLORS_3A } from "~/_util-client-only";
 
 export default function CanvasAnimationSwiss2(
@@ -33,9 +32,9 @@ export default function CanvasAnimationSwiss2(
   let animationParent: HTMLDivElement | undefined;
   let p5Instance: P5 | undefined;
 
-  const COLOR_BG = hexToRgb(COLORS_3A.GRAY_DARKEST);
-  const COLOR_OUTLINE = hexToRgb(COLORS_3A.GREEN);
-  const COLOR_FILL = hexToRgb(COLORS_3A.PAPER);
+  const COLOR_BG = COLORS_3A.GRAY_DARKEST;
+  const COLOR_OUTLINE = COLORS_3A.GREEN;
+  const COLOR_FILL = COLORS_3A.PAPER;
 
   // Proxy objects to allow GSAP-Animation
   const animationProxies = {

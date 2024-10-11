@@ -11,7 +11,7 @@ export const BleedRightSmall = (
   const Right = children(() => props.Right);
 
   return (
-    <div class="grid grid-cols-26 w-full">
+    <div class={`grid grid-cols-26 w-full ${props.class}`}>
       <div class="col-span-24 col-start-2 sm:col-start-3 xl:col-start-5 sm:col-span-11 xl:col-span-12">
         {Left()}
       </div>

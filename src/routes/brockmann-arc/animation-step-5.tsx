@@ -18,6 +18,7 @@ export default function BrockmanAnimation05(
     progress: number;
     speed: number;
     ampl: number;
+    animateCommand: PointerEvent | MouseEvent | number | undefined;
   } & ParentProps,
 ) {
   return (
@@ -26,8 +27,10 @@ export default function BrockmanAnimation05(
       end={"bottom bottom-=120%"}
       animation={
         <ANIMATION
+          animateCommand={props.animateCommand}
+          animate={true}
           getStartRadius={(w, h) => h / 3}
-          bgColor={hexToRgb(COLORS_3A[props.bgColor])}
+          bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={false}
           setCenter={(width, height, progress) => {
             return {
@@ -54,7 +57,7 @@ export default function BrockmanAnimation05(
           arcConfig={{
             debug: false,
             fill: {
-              color: hexToRgb(COLORS_3A.GRAY_DARKER),
+              color: COLORS_3A.GRAY_DARKER,
             },
             stroke: false,
             randomizeStartPosition: true,

@@ -5,7 +5,7 @@ const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-arc-step-1"),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { hexToRgb, remapT } from "~/_util";
+import { remapT } from "~/_util";
 import { ParentProps } from "solid-js";
 
 /**
@@ -20,7 +20,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
       animation={
         <ANIMATION
           getStartRadius={(w, h) => h / 12}
-          bgColor={hexToRgb(COLORS_3A.GRAY_DARKEST)}
+          bgColor={COLORS_3A.GRAY_DARKER}
           fadeInOut={true}
           draw={(p5, progress, arcs, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
@@ -41,7 +41,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
           arcConfig={{
             debug: false,
             stroke: {
-              color: hexToRgb(COLORS_3A.GREEN),
+              color: COLORS_3A.GREEN,
             },
             fill: false,
             randomizeStartPosition: false,

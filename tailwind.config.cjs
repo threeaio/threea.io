@@ -5,14 +5,14 @@ module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     colors: {
-      "3a-green": "var(--color-3a-green)",
-      "3a-red": "var(--color-3a-red)",
-      "3a-white": "var(--color-3a-white)",
-      "3a-paper": "var(--color-3a-paper)",
-      "3a-gray": "var(--color-3a-gray)",
-      "3a-gray-darker": "var(--color-3a-gray-darker)",
-      "3a-gray-darkest": "var(--color-3a-gray-darkest)",
-      "3a-black": "var(--color-3a-black)",
+      "3a-green": "rgb(var(--color-3a-green))",
+      "3a-red": "rgb(var(--color-3a-red))",
+      "3a-white": "rgb(var(--color-3a-white))",
+      "3a-paper": "rgb(var(--color-3a-paper))",
+      "3a-gray": "rgb(var(--color-3a-gray))",
+      "3a-gray-darker": "rgb(var(--color-3a-gray-darker))",
+      "3a-gray-darkest": "rgb(var(--color-3a-gray-darkest))",
+      "3a-black": "rgb(var(--color-3a-black))",
     },
     extend: {
       ...generateGrid(26),

@@ -1,7 +1,9 @@
 import {
+  Accessor,
   createEffect,
   createMemo,
   createSignal,
+  on,
   onCleanup,
   onMount,
   ParentProps,
@@ -19,7 +21,7 @@ import VerticeArc, {
   VerticeArcConfig,
   VerticeArcType,
 } from "~/components/animation/Primitives/Vertice-Arc";
-import { ColorArray, hexToRgb, remapT } from "~/_util";
+import { ColorArray, getRandomFloat, remapT } from "~/_util";
 import { gsap } from "gsap";
 
 export default function ArcAnimationStep1(
@@ -40,6 +42,8 @@ export default function ArcAnimationStep1(
     getStartRadius: (width: number, height: number) => number;
     arcSettings: ArcSettings;
     arcConfig: VerticeArcConfig;
+    animate?: boolean;
+    animateCommand?: PointerEvent | MouseEvent | number | undefined;
   },
 ) {
   const { progress, width, height, active } = useAnimationWrapperContext();
@@ -53,6 +57,12 @@ export default function ArcAnimationStep1(
       ? height()
       : landingPageState.screenHeight;
   }); // Memoized screen height
+
+  const useAnimateCommand = createMemo(() => {
+    console.log("props.animate", props.animateCommand);
+    return props.animateCommand || null;
+  });
+
   const hasSize = createMemo(() => width() > 0 && useHeight() > 0); // Check if dimensions are valid
   const START_RAD = createMemo(() => props.getStartRadius(width(), height())); // the smallest radius
 
@@ -151,55 +161,88 @@ export default function ArcAnimationStep1(
   /**
    * On Mount
    */
-
   // animate Arcs
+
   const animateArcs = () => {
     for (let i = 0; i < arcs.length; i++) {
-      const current = {
+      // animate start
+      const currentStartstart = { start: arcs[i].startOffset() };
+      gsap.to(currentStartstart, {
+        start: getRandomFloat(
+          arcs[i].dimensions().x / -2,
+          arcs[i].dimensions().x / 2,
+          0,
+        ),
+        onUpdate: (...args) => {
+          arcs[i].setStartOffset(currentStartstart.start);
+        },
+      });
+
+      // animate angles
+      const currentAngles = {
         startAngle: arcs[i].arcStartAngle(),
         endAngle: arcs[i].arcEndAngle(),
       };
 
       let { startAngle, endAngle } = getBrockmannAngles(props.arcSettings, i);
 
-      gsap.to(current, {
+      gsap.to(currentAngles, {
         startAngle: startAngle,
         endAngle: endAngle,
         duration: 0.2,
         onUpdate: (...args) => {
-          arcs[i].setArcStartAngle(current.startAngle);
-          arcs[i].setArcEndAngle(current.endAngle);
+          arcs[i].setArcStartAngle(currentAngles.startAngle);
+          arcs[i].setArcEndAngle(currentAngles.endAngle);
         },
       });
     }
   };
 
+  createEffect(
+    on(useAnimateCommand, () => {
+      if (useAnimateCommand()) {
+        animateArcs();
+      }
+    }),
+  );
+
   // init P5
   onMount(() => {
     createSketch(animationParent()!); // Create sketch
     onCleanup(() => p5Instance?.remove()); // Clean up P5 instance on unmount
+    if (props.animate) {
+      animateArcs();
+    }
   });
 
   // trigger animation by pressing "a"
-  onMount(() => {
-    if (props.arcConfig.randomizeStartPosition) {
-      const handler = (event: { key: string }) => {
-        if (event.key === "a" && active()) {
-          animateArcs();
-        }
-      };
-      document.addEventListener("keydown", handler);
-      onCleanup(() => document.removeEventListener("keydown", handler));
-    }
-  });
+  // onMount(() => {
+  //   if (props.arcConfig.randomizeStartPosition) {
+  //     const handlerKey = (event: KeyboardEvent) => {
+  //       if (event.key === "a" && active()) {
+  //         animateArcs();
+  //       }
+  //     };
+  //     const handlerPointer = (event: PointerEvent) => {
+  //       if (active()) {
+  //         animateArcs();
+  //       }
+  //     };
+  //     document.addEventListener("keydown", handlerKey);
+  //     if (animationParent()) {
+  //       animationParent()!.addEventListener("pointerdown", handlerPointer);
+  //     }
+  //     onCleanup(() => {
+  //       document.removeEventListener("keydown", handlerKey);
+  //       document.removeEventListener("pointerdown", handlerPointer);
+  //     });
+  //   }
+  // });
 
   /**
    * Render
    */
   return (
-    <div
-      class="sticky inset-0 pointer-events-none max-h-full"
-      ref={setAnimationParent}
-    ></div>
+    <div class="sticky inset-0 max-h-full " ref={setAnimationParent}></div>
   );
 }

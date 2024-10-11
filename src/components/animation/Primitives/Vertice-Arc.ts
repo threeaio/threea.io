@@ -8,7 +8,6 @@ import {
   calculateArcLength,
   createArrayFromLength,
   getAngleFromArcLengthInDegrees,
-  hexToRgb,
   lerp,
 } from "~/_util";
 import { coordOfCircle } from "~/_util-client-only";
@@ -57,26 +56,26 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     config.randomizeStartPosition ? p5.random(-2, dimensions().x / 2) : 0,
   );
 
-  const animateOffset = () => {
-    const start = { start: startOffset() };
-    gsap.to(start, {
-      start: p5.random(dimensions().x / -2, dimensions().x / 2),
-      onUpdate: (...args) => {
-        setStartOffset(start.start);
-      },
-    });
-  };
-
-  onMount(() => {
-    if (config.randomizeStartPosition) {
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "a") {
-          animateOffset();
-        }
-      });
-      animateOffset();
-    }
-  });
+  // const animateOffset = () => {
+  //   const start = { start: startOffset() };
+  //   gsap.to(start, {
+  //     start: p5.random(dimensions().x / -2, dimensions().x / 2),
+  //     onUpdate: (...args) => {
+  //       setStartOffset(start.start);
+  //     },
+  //   });
+  // };
+  //
+  // onMount(() => {
+  //   if (config.randomizeStartPosition) {
+  //     document.addEventListener("keydown", (event) => {
+  //       if (event.key === "a") {
+  //         animateOffset();
+  //       }
+  //     });
+  //     animateOffset();
+  //   }
+  // });
 
   // Memoized values for scaled radius and thickness
   const center = createMemo<Vector2D>(() => ({
@@ -246,7 +245,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       }
     } else if (config.debug) {
       p5.push();
-      p5.stroke(hexToRgb(COLORS_3A.RED));
+      p5.stroke(COLORS_3A.RED);
       p5.fill(COLORS_3A.GRAY_DARKEST);
       p5.strokeWeight(0.5);
       p5.line(center().x, 0, center().x, p5.height);
@@ -268,7 +267,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       p5.endShape();
 
       p5.push();
-      p5.stroke(hexToRgb(COLORS_3A.RED));
+      p5.stroke(COLORS_3A.RED);
       let shadI = -1;
       for (let i = 0; i < vertexPoints().length; i++) {
         if (vertexPoints()[i].shadow && i % 4 === 0) {
@@ -319,6 +318,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     setCenterY,
     setDimension,
     setStrokeColor,
+    dimensions,
+    setStartOffset,
+    startOffset,
   };
 }
 

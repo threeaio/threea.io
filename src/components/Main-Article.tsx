@@ -2,13 +2,13 @@ import { Title } from "@solidjs/meta";
 import { HugeText } from "~/components/HugeText";
 import { SmallText } from "~/components/SmallText";
 import { Button } from "~/components/Button";
-import { ContentType } from "~/content/content-type";
+import { BasicTextContent } from "~/content/content-type";
 import { ParentProps } from "solid-js";
 import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 
 export default function MainArticle(
   props: ParentProps & {
-    content: ContentType;
+    content: BasicTextContent;
   },
 ) {
   return (

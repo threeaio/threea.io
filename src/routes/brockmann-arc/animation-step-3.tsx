@@ -6,21 +6,27 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { hexToRgb, remapT } from "~/_util";
-import { ParentProps } from "solid-js";
+import { Accessor, createEffect, ParentProps } from "solid-js";
 
 /**
  * CLIENT-ONLY !
  */
 
-export default function BrockmanAnimation03(props: ParentProps) {
+export default function BrockmanAnimation03(
+  props: {
+    animateCommand: PointerEvent | MouseEvent | number | undefined;
+  } & ParentProps,
+) {
   return (
     <CanvasAnimationWrapper
       start={"clamp(top top+=80%)"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
+          animateCommand={props.animateCommand}
+          animate={true}
           getStartRadius={(w, h) => h / 12}
-          bgColor={hexToRgb(COLORS_3A.GRAY_DARKEST)}
+          bgColor={COLORS_3A.GRAY_DARKEST}
           fadeInOut={true}
           draw={(_p5, progress, arcs, center) => {
             const p = remapT(progress, 0, 0.6);
@@ -39,7 +45,7 @@ export default function BrockmanAnimation03(props: ParentProps) {
             debug: false,
             stroke: false,
             fill: {
-              color: hexToRgb(COLORS_3A.PAPER),
+              color: COLORS_3A.PAPER,
             },
             randomizeStartPosition: true,
           }}
