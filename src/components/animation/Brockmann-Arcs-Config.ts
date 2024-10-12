@@ -13,14 +13,14 @@ export type ArcSettings = {
   amountOfArcs: number;
 };
 
-const arcSeg = 90 / 8;
+const ARC_SEG_SITE = 90 / 8;
 const MAX_ARC_MULTIPLIER = 2;
 
 export const BROCKMAN_ARC_SETTINGS = {
-  maxArc: arcSeg * 22,
-  minArc: arcSeg * -3,
-  arcSeg,
-  arcRange: [5, 6, 7, 8, 10, 12, 15, 18],
+  maxArc: ARC_SEG_SITE * 22,
+  minArc: ARC_SEG_SITE * -4,
+  arcSeg: ARC_SEG_SITE,
+  arcRange: [5, 6, 7, 9, 12, 16, 21, 27],
   gap: 2,
   sizes: [10, 20, 40, 80, 160, 320, 640, 1280],
   amountOfArcs: 7,
@@ -56,7 +56,7 @@ export const getAdditionalBrockmannAngles = (
   endAngle: number,
   i: number,
 ) => {
-  const offset = getRandomFloat(3, 5, 0) * arcSeg;
+  const offset = getRandomFloat(3, 5, 0) * ARC_SEG_SITE;
   const size = endAngle - startAngle;
   return {
     startAngleNew: endAngle + offset,

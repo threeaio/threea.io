@@ -5,7 +5,7 @@ const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-arc-step-1"),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { ParentProps } from "solid-js";
+import { createSignal, onMount, ParentProps } from "solid-js";
 
 /**
  * CLIENT-ONLY !
@@ -16,19 +16,31 @@ export default function BrockmanAnimationIntro(
     bgColor: keyof typeof COLORS_3A;
   } & ParentProps,
 ) {
+  const [positionX, setPositionX] = createSignal(0);
+
+  onMount(() => {
+    const firstLayoutOnPage = document.querySelector(
+      '[data-name="Layout/FullWidth"] > *',
+    );
+    const left = firstLayoutOnPage?.getBoundingClientRect()?.left || 0;
+    const width = firstLayoutOnPage?.getBoundingClientRect()?.width || 0;
+    const _positionX = left + (width / 3) * 2;
+    setPositionX(_positionX);
+  });
+
   return (
     <CanvasAnimationWrapper
       start={"clamp(top top+=80%)"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(w) => w / 7}
+          getStartRadius={(w) => w / 5}
           bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={false}
-          setCenter={(width, height, progress) => {
+          setCenter={(_width, height, progress) => {
             return {
-              x: (width / 3) * 2,
-              y: height / 2,
+              x: positionX() || (_width / 3) * 2,
+              y: (height / 3) * 2,
             };
           }}
           draw={(p5, progress, arcs, center) => {
@@ -42,7 +54,7 @@ export default function BrockmanAnimationIntro(
           }}
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
-            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 2.6),
+            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 1.5),
             // gap: 6,
           }}
           arcConfig={{

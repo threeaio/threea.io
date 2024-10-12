@@ -133,11 +133,6 @@ export default function BrockmannArc() {
     ),
   };
 
-  onMount(() => {
-    window.lenis.scrollTo(0, {
-      immediate: true,
-    });
-  });
   return (
     <main>
       <Title>Threea - Brockmanns Beethoven</Title>
@@ -152,27 +147,36 @@ export default function BrockmannArc() {
           <div class="relative">
             <FullWidth>
               <div>
-                <div class="flex h-svh flex-col justify-end pb-8 2xl:pb-24">
+                <div class="flex h-svh flex-col justify-end pb-8 md:pb-12 xl:pb-20 2xl:pb-24 ">
                   <HugeText>
-                    <h1 class={"mb-12"}>Brockmanns Beethoven</h1>
-                  </HugeText>
-                  <div class={"grid md:grid-cols-2 xl:grid-cols-2 "}>
-                    <SmallText>
-                      <div class="font-mono ">
-                        <p>
-                          Ziel hier ist es, ein paar Grundlagen in der
-                          Generierung von Grafik (mit Canvas bzw. P5.js) zu
-                          verinnerlichen und nebenbei etwas <Anf>Schönes</Anf>{" "}
-                          zu erstellen
-                        </p>
-                        {/*<p>*/}
-                        {/*  Natürlich soll am Ende auch etwas <Anf>Schönes</Anf>{" "}*/}
-                        {/*  dabei herauskommen. Jedoch ohne den genauen Zweck*/}
-                        {/*  hierfür schon zu kennen.*/}
-                        {/*</p>*/}
-                        <p>Das Projekt wird fortlaufend aktualisiert.</p>
+                    <div class={"grid  md:grid-cols-3"}>
+                      <div class={"md:col-span-2 md:text-right"}>
+                        <h1 class={"mb-12"}>
+                          Brockmanns
+                          <br /> Beethoven
+                        </h1>
                       </div>
-                    </SmallText>
+                    </div>
+                  </HugeText>
+                  <div class={"grid md:grid-cols-3 "}>
+                    <div class={"md:col-start-3"}>
+                      <SmallText>
+                        <div class="font-mono text-sm xl:w-1/2">
+                          <p>
+                            Ziel hier ist es, ein paar Grundlagen in der
+                            Generierung von Grafik (mit Canvas bzw. P5.js) zu
+                            verinnerlichen und nebenbei etwas <Anf>Schönes</Anf>{" "}
+                            zu erstellen
+                          </p>
+                          {/*<p>*/}
+                          {/*  Natürlich soll am Ende auch etwas <Anf>Schönes</Anf>{" "}*/}
+                          {/*  dabei herauskommen. Jedoch ohne den genauen Zweck*/}
+                          {/*  hierfür schon zu kennen.*/}
+                          {/*</p>*/}
+                          <p>Das Projekt wird fortlaufend aktualisiert.</p>
+                        </div>
+                      </SmallText>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -188,11 +192,11 @@ export default function BrockmannArc() {
         <div class={"relative py-32"}>
           <RotatedPageBg rotateClass={"rotate-2"} />
           <BleedRightSmall
-            class="h-svh relative"
+            class="relative"
             Left={
               <HeaderHere addLayout={false} title="Inspiration" num="01">
                 <HeaderDescriptionDefaultHere
-                  class={"grid grid-cols-2 xl:grid-cols-2"}
+                  class={"grid grid-cols-1 pr-8 xl:grid-cols-2 xl:pr-0"}
                 >
                   <p>
                     Inspiriert ist dieser erste Wurf durch{" "}
@@ -219,15 +223,13 @@ export default function BrockmannArc() {
               </HeaderHere>
             }
             Right={
-              <div class="bg-3a-gray-darkest h-full">
-                <div class="h-full w-full mix-blend-lighten">
-                  <img
-                    class="object-cover h-full w-full max-h-[100svh] opacity-70 mix-blend-lighten"
-                    alt="Josef Müller-Brockmann. beethoven poster(1955)"
-                    title="JOSEPH MÜLLER-BROCKMANN, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons"
-                    src="/Josef_Müller-Brockmann._beethoven_poster_1955.jpg"
-                  />
-                </div>
+              <div class="w-full mix-blend-lighten">
+                <img
+                  class="object-contain w-full max-h-[100svh] opacity-70 mix-blend-lighten"
+                  alt="Josef Müller-Brockmann. beethoven poster(1955)"
+                  title="JOSEPH MÜLLER-BROCKMANN, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons"
+                  src="/Josef_Müller-Brockmann._beethoven_poster_1955.jpg"
+                />
               </div>
             }
           />

@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/HugeText";
 import { SmallText } from "~/components/SmallText";
+import { A } from "@solidjs/router";
 
 export default function BlackBook() {
   const [target, setTarget] = createSignal<HTMLElement | undefined>();
@@ -77,11 +78,15 @@ export default function BlackBook() {
 
 function BlackBookItem() {
   return (
-    <li>
-      <a
+    <li data-animate-item="">
+      <A
         class="block bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group "
-        data-animate-item=""
         href="/brockmann-arc"
+        onClick={() =>
+          window.lenis.scrollTo(0, {
+            immediate: true,
+          })
+        }
       >
         <div class={"grid grid-cols-26 items-baseline"}>
           <div class={"col-span-2 md:col-span-4 p-3 2xl:px-3 2xl:text-right"}>
@@ -105,7 +110,7 @@ function BlackBookItem() {
         <div class="absolute right-12 transition top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-4">
           <span class={"text-4xl font-mono text-3a-green"}>→</span>
         </div>
-      </a>
+      </A>
     </li>
   );
 }
