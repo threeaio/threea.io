@@ -14,7 +14,12 @@ import { ParentProps } from "solid-js";
 
 export default function BrockmanAnimation04(
   props: {
-    animateCommand: PointerEvent | MouseEvent | number | undefined;
+    animateCommand:
+      | PointerEvent
+      | MouseEvent
+      | KeyboardEvent
+      | number
+      | undefined;
     bgColor: keyof typeof COLORS_3A;
   } & ParentProps,
 ) {

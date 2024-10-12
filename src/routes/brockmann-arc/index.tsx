@@ -6,7 +6,7 @@ import { Headline } from "~/components/Headline";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { Divider } from "~/components/Divider";
 import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
-import { createSignal, JSX, onMount, ParentProps } from "solid-js";
+import { createSignal, JSX, onCleanup, onMount, ParentProps } from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
 import { clientOnly } from "@solidjs/start";
 import Kbd from "~/components/typo/Kbd";
@@ -41,8 +41,19 @@ interface AnimatedSubSection {
 
 export default function BrockmannArc() {
   const [animateClick, setAnimateClick] = createSignal<
-    PointerEvent | undefined
+    PointerEvent | MouseEvent | KeyboardEvent | undefined
   >();
+  onMount(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.key === "A" || event.key === "a") {
+        setAnimateClick(event);
+      }
+    };
+    document.addEventListener("keydown", listener);
+    onCleanup(() => {
+      document.removeEventListener("keydown", listener);
+    });
+  });
   const step1: AnimatedSubSection = {
     title: "Idee zur Animation",
     num: "01",
@@ -241,23 +252,26 @@ export default function BrockmannArc() {
 
         {/*////x*/}
         <div class={"mb-24"}>
+          <ControllerHere>
+            <div class="flex flex-row justify-center">
+              <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-2xl font-mono text-sm">
+                <button
+                  class={"py-1.5 px-3 text-3a-green"}
+                  onClick={setAnimateClick}
+                >
+                  Klicke hier oder drücke <Kbd>A</Kbd> für Variationen
+                </button>
+              </div>
+            </div>
+          </ControllerHere>
           <HeaderHere
             addLayout={true}
             title={"Galerie"}
             num={"05"}
             noStick={true}
-          >
-            <HeaderDescriptionDefaultHere>
-              {/*<p>*/}
-              {/*  Alle folgenden Grafiken lassen sich durch Drücken der{" "}*/}
-              {/*  <span class={"whitespace-nowrap"}>*/}
-              {/*    <Kbd>A</Kbd>-Taste*/}
-              {/*  </span>{" "}*/}
-              {/*  variieren.*/}
-              {/*</p>*/}
-            </HeaderDescriptionDefaultHere>
-          </HeaderHere>
-          <FullWidth>
+          ></HeaderHere>
+
+          <FullWidth class={"mt-12"}>
             <div class={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
@@ -426,6 +440,35 @@ function HeaderDescriptionDefaultHere(
       <SmallText class="py-12">
         <div class="">{props.children}</div>
       </SmallText>
+    </div>
+  );
+}
+
+function ControllerHere(props: ParentProps) {
+  const [targets, setTargets] = createSignal<HTMLElement[]>([]);
+
+  onMount(() => {
+    createIntersectionObserver(
+      targets,
+      (entries) => {
+        entries.forEach((e) => {
+          e.target.classList.toggle("is-sticky", e.boundingClientRect.y < 0);
+        });
+      },
+      { threshold: [1] },
+    );
+  });
+
+  return (
+    <div
+      ref={(el) => setTargets((list) => [...list, el])}
+      class={`group transition-all duration-300 z-30 sticky top-[-1px]`}
+    >
+      <div
+        class={`absolute w-full  pt-4 left-0 transition opacity-0 group-[.is-sticky]:opacity-100  `}
+      >
+        {props.children}
+      </div>
     </div>
   );
 }

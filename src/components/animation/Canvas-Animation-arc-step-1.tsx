@@ -43,7 +43,12 @@ export default function ArcAnimationStep1(
     arcSettings: ArcSettings;
     arcConfig: VerticeArcConfig;
     animate?: boolean;
-    animateCommand?: PointerEvent | MouseEvent | number | undefined;
+    animateCommand?:
+      | PointerEvent
+      | MouseEvent
+      | KeyboardEvent
+      | number
+      | undefined;
   },
 ) {
   const { progress, width, height, active } = useAnimationWrapperContext();

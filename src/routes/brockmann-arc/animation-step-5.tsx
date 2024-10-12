@@ -18,7 +18,12 @@ export default function BrockmanAnimation05(
     progress: number;
     speed: number;
     ampl: number;
-    animateCommand: PointerEvent | MouseEvent | number | undefined;
+    animateCommand:
+      | PointerEvent
+      | MouseEvent
+      | KeyboardEvent
+      | number
+      | undefined;
   } & ParentProps,
 ) {
   return (
