@@ -173,7 +173,7 @@ export default function BrockmannArc() {
                   <div class={"grid md:grid-cols-3 "}>
                     <div class={"md:col-start-3"}>
                       <SmallText>
-                        <div class="font-mono text-sm xl:w-1/2">
+                        <div class="text-sm xl:w-1/2">
                           <p>
                             Ziel hier ist es, ein paar Grundlagen in der
                             Generierung von Grafik (mit Canvas bzw. P5.js) zu
@@ -247,15 +247,15 @@ export default function BrockmannArc() {
           />
         </div>
 
-        <FullAnimatedBg content={step1} withRotatedBg={false} />
-        <FullAnimatedBg content={step2} withRotatedBg={"-rotate-2"} />
-        <FullAnimatedBg content={step3} withRotatedBg={false} />
+        {/*<FullAnimatedBg content={step1} withRotatedBg={false} />*/}
+        {/*<FullAnimatedBg content={step2} withRotatedBg={"-rotate-2"} />*/}
+        {/*<FullAnimatedBg content={step3} withRotatedBg={false} />*/}
 
         {/*////x*/}
         <div class={"mb-24"}>
           <ControllerHere>
             <div class="flex flex-row justify-center">
-              <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-2xl font-mono text-sm">
+              <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-3a-black/30 shadow-lg font-mono text-sm">
                 <button class={"p-3 text-3a-green"} onClick={setAnimateClick}>
                   Klicke hier oder drücke <Kbd>A</Kbd> für Variationen
                 </button>
@@ -300,7 +300,7 @@ export default function BrockmannArc() {
               </div>
               <div
                 class={
-                  "bg-3a-gray-darker p-2 xl:p-4 md:col-start-2 md:col-span-1"
+                  "bg-3a-gray-darker p-2 xl:p-32 md:col-start-2 md:col-span-2"
                 }
               >
                 <div class="relative aspect-[1/1]">
@@ -323,7 +323,7 @@ export default function BrockmannArc() {
               </div>
               <div
                 class={
-                  "bg-3a-gray-darker p-2 xl:p-4 md:col-start-2 md:col-span-1"
+                  "bg-3a-gray-darker p-2 xl:p-32 md:col-start-1 md:col-span-2"
                 }
               >
                 <div class="relative aspect-[1/1]">
@@ -353,7 +353,7 @@ export default function BrockmannArc() {
               </div>
               <div
                 class={
-                  "bg-3a-gray-darker p-2 xl:p-4 md:col-start-2 md:col-span-1"
+                  "bg-3a-gray-darker p-2 xl:p-32 md:col-start-2 md:col-span-2"
                 }
               >
                 <div class="relative aspect-[1/1]">
@@ -405,15 +405,15 @@ function PosterText(props: ParentProps) {
         </PosterTextHeadline>
       </span>
       <span class="absolute left-1/3 top-2/3 origin-top-left scale-100 md:scale-75 xl:scale-100">
-        <span class={"grid gap-1"}>
-          <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-12"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-16"}></span>
-          <span class={"bg-3a-gray-darker h-1 w-9"}></span>
+        <span class={"grid gap-1 mix-blend-multiply opacity-20"}>
+          <span class={"bg-3a-black h-1 w-12"}></span>
+          <span class={"bg-3a-black h-1 w-9"}></span>
+          <span class={"bg-3a-black h-1 w-16"}></span>
+          <span class={"bg-3a-black h-1 w-9"}></span>
+          <span class={"bg-3a-black h-1 w-12"}></span>
+          <span class={"bg-3a-black h-1 w-9"}></span>
+          <span class={"bg-3a-black h-1 w-16"}></span>
+          <span class={"bg-3a-black h-1 w-9"}></span>
         </span>
       </span>
     </>
@@ -487,10 +487,10 @@ function ControllerHere(props: ParentProps) {
   return (
     <div
       ref={(el) => setTargets((list) => [...list, el])}
-      class={`group transition-all duration-300 z-30 sticky top-[-1px]`}
+      class={`group transition-all duration-600 z-30 sticky top-[-1px]`}
     >
       <div
-        class={`absolute w-full  pt-4 left-0 transition opacity-0 group-[.is-sticky]:opacity-100  `}
+        class={`absolute w-full  pt-4 left-0 transition scale-75 opacity-0 group-[.is-sticky]:opacity-100 group-[.is-sticky]:scale-100  `}
       >
         {props.children}
       </div>

@@ -131,9 +131,13 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       return [];
     }
 
-    const SEGMENT_SIZE = finalArcLength() / RESOLUTION_HOR;
+    const USE_RESOLUTION = Math.max(
+      Math.round(RESOLUTION_HOR * (dimensions().x / 1400)),
+      60,
+    );
+    const SEGMENT_SIZE = finalArcLength() / USE_RESOLUTION;
 
-    return createArrayFromLength(RESOLUTION_HOR + 1).map((i: number) => {
+    return createArrayFromLength(USE_RESOLUTION + 1).map((i: number) => {
       const start = currentX() + i * SEGMENT_SIZE;
 
       let top;

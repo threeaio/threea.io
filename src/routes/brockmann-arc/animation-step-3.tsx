@@ -34,7 +34,7 @@ export default function BrockmanAnimation03(
           bgColor={COLORS_3A.GRAY_DARKEST}
           fadeInOut={true}
           draw={(_p5, progress, arcs, center) => {
-            const p = remapT(progress, 0, 0.6);
+            const p = remapT(progress, 0, 0.7);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setCenterX(center.x);
               arcs[i].setCenterY(center.y);
@@ -44,6 +44,7 @@ export default function BrockmanAnimation03(
           }}
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
+            arcRange: [5, 6, 7, 9, 11, 14, 17, 21],
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 6),
           }}
           arcConfig={{
