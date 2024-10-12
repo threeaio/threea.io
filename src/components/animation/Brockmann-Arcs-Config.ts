@@ -3,15 +3,15 @@ import {
   getRandomFloat,
 } from "~/_util/generic.functions";
 
-export type ArcSettings = {
-  minArc: number;
-  arcSeg: number;
-  arcRange: number[];
-  maxArc: number;
-  gap: number;
-  sizes: number[];
-  amountOfArcs: number;
-};
+// export type ArcSettings = {
+//   minArc: number;
+//   arcSeg: number;
+//   arcRange: number[];
+//   maxArc: number;
+//   gap: number;
+//   sizes: number[];
+//   amountOfArcs: number;
+// };
 
 const ARC_SEG_SITE = 90 / 8;
 const MAX_ARC_MULTIPLIER = 2;
@@ -21,10 +21,12 @@ export const BROCKMAN_ARC_SETTINGS = {
   minArc: ARC_SEG_SITE * -4,
   arcSeg: ARC_SEG_SITE,
   arcRange: [5, 6, 7, 9, 12, 16, 21, 27],
+  amountOfArcs: 7,
   gap: 2,
   sizes: [10, 20, 40, 80, 160, 320, 640, 1280],
-  amountOfArcs: 7,
 };
+
+export type ArcSettings = typeof BROCKMAN_ARC_SETTINGS;
 
 export type Arc = {
   radius: number;

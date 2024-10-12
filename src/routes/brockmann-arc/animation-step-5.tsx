@@ -1,5 +1,8 @@
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
-import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/Brockmann-Arcs-Config";
+import {
+  ArcSettings,
+  BROCKMAN_ARC_SETTINGS,
+} from "~/components/animation/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
 const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-arc-step-1"),
@@ -18,6 +21,7 @@ export default function BrockmanAnimation05(
     progress: number;
     speed: number;
     ampl: number;
+    arcSettingsPartial: Partial<ArcSettings>;
     animateCommand:
       | PointerEvent
       | MouseEvent
@@ -26,15 +30,16 @@ export default function BrockmanAnimation05(
       | undefined;
   } & ParentProps,
 ) {
+  console.log("props.arcSettingsPartial", props.arcSettingsPartial);
   return (
     <CanvasAnimationWrapper
-      start={"clamp(top top+=120%)"}
-      end={"bottom bottom-=120%"}
+      start={"clamp(top top+=50%)"}
+      end={"bottom bottom-=50%"}
       animation={
         <ANIMATION
           animateCommand={props.animateCommand}
           animate={true}
-          getStartRadius={(w, h) => h / 3}
+          getStartRadius={(w, h) => h / 5}
           bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={false}
           setCenter={(width, height, progress) => {
@@ -45,9 +50,10 @@ export default function BrockmanAnimation05(
           }}
           draw={(p5, progress, arcs, center) => {
             const ms = p5.millis() || 0;
-            const p =
-              props.progress +
-              Math.sin((ms / props.speed) % (Math.PI * 2)) / props.ampl;
+            // const p =
+            //   props.progress +
+            //   Math.sin((ms / props.speed) % (Math.PI * 2)) / props.ampl;
+            const p = props.progress;
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setCenterX(center.x);
               arcs[i].setCenterY(center.y);
@@ -58,6 +64,7 @@ export default function BrockmanAnimation05(
           arcSettings={{
             ...BROCKMAN_ARC_SETTINGS,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 3),
+            ...props.arcSettingsPartial,
           }}
           arcConfig={{
             debug: false,

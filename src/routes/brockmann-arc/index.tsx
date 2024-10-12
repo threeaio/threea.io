@@ -11,6 +11,7 @@ import { createIntersectionObserver } from "@solid-primitives/intersection-obser
 import { clientOnly } from "@solidjs/start";
 import Kbd from "~/components/typo/Kbd";
 import Anf from "~/components/typo/Anf";
+import { createArrayFromLength } from "~/_util";
 
 const ANIMATION_00_INTRO = clientOnly(
   () => import("~/routes/brockmann-arc/animation-intro"),
@@ -255,10 +256,7 @@ export default function BrockmannArc() {
           <ControllerHere>
             <div class="flex flex-row justify-center">
               <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-2xl font-mono text-sm">
-                <button
-                  class={"py-1.5 px-3 text-3a-green"}
-                  onClick={setAnimateClick}
-                >
+                <button class={"p-3 text-3a-green"} onClick={setAnimateClick}>
                   Klicke hier oder drücke <Kbd>A</Kbd> für Variationen
                 </button>
               </div>
@@ -300,16 +298,21 @@ export default function BrockmannArc() {
                   <PosterText>Ice Cube</PosterText>
                 </div>
               </div>
-              <div class={"bg-3a-gray-darker p-2 xl:p-4 md:col-span-3"}>
-                <div class="relative aspect-[3.2/1]">
+              <div
+                class={
+                  "bg-3a-gray-darker p-2 xl:p-4 md:col-start-2 md:col-span-1"
+                }
+              >
+                <div class="relative aspect-[1/1]">
                   <ANIMATION_05
-                    bgColor={"RED"}
+                    bgColor={"WHITE"}
                     progress={0.2}
                     speed={2000}
                     ampl={3}
                     animateCommand={animateClick()}
+                    arcSettingsPartial={{}}
                   />
-                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-50 md:scale-75 xl:scale-100">
+                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
                     <PosterTextHeadline>
                       Anti
                       <br />
@@ -318,16 +321,28 @@ export default function BrockmannArc() {
                   </span>
                 </div>
               </div>
-              <div class={"bg-3a-gray-darker p-2 xl:p-4 md:col-span-3"}>
-                <div class="relative aspect-[3.2/1]">
+              <div
+                class={
+                  "bg-3a-gray-darker p-2 xl:p-4 md:col-start-2 md:col-span-1"
+                }
+              >
+                <div class="relative aspect-[1/1]">
                   <ANIMATION_05
                     bgColor={"WHITE"}
-                    progress={0.5}
+                    progress={0.24}
                     speed={4000}
                     ampl={20}
                     animateCommand={animateClick()}
+                    arcSettingsPartial={{
+                      amountOfArcs: 12,
+                      gap: 1,
+                      arcRange: createArrayFromLength(12).map((i) => i * 1.5),
+                      sizes: createArrayFromLength(12).map(
+                        (i) => Math.pow(i, i) * 0.5,
+                      ),
+                    }}
                   />
-                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-50 md:scale-75 xl:scale-100">
+                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
                     <PosterTextHeadline>
                       Asynchrone
                       <br />
@@ -336,16 +351,26 @@ export default function BrockmannArc() {
                   </span>
                 </div>
               </div>
-              <div class={"bg-3a-gray-darker p-2 xl:p-4 md:col-span-3"}>
-                <div class="relative aspect-[3.2/1]">
+              <div
+                class={
+                  "bg-3a-gray-darker p-2 xl:p-4 md:col-start-2 md:col-span-1"
+                }
+              >
+                <div class="relative aspect-[1/1]">
                   <ANIMATION_05
-                    bgColor={"GREEN"}
+                    bgColor={"WHITE"}
                     progress={0.1}
                     speed={2000}
-                    ampl={6}
+                    ampl={2}
                     animateCommand={animateClick()}
+                    arcSettingsPartial={{
+                      amountOfArcs: 28,
+                      gap: 1,
+                      arcRange: createArrayFromLength(28).map((i) => 4),
+                      sizes: createArrayFromLength(28).map((i) => 10),
+                    }}
                   />
-                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-50 md:scale-75 xl:scale-100">
+                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
                     <PosterTextHeadline>
                       Agile
                       <br />

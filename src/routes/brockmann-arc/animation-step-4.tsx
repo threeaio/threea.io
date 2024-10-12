@@ -25,8 +25,8 @@ export default function BrockmanAnimation04(
 ) {
   return (
     <CanvasAnimationWrapper
-      start={"clamp(top top+=80%)"}
-      end={"clamp(bottom bottom-=100%)"}
+      start={"clamp(top top+=50%)"}
+      end={"clamp(bottom bottom-=50%)"}
       animation={
         <ANIMATION
           animateCommand={props.animateCommand}

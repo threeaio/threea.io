@@ -205,7 +205,7 @@ export default function ArcAnimationStep1(
 
   createEffect(
     on(useAnimateCommand, () => {
-      if (useAnimateCommand()) {
+      if (useAnimateCommand() && active()) {
         animateArcs();
       }
     }),
