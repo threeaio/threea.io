@@ -314,7 +314,7 @@ export default function BrockmannArc() {
               {/*Cover 1*/}
               <div
                 class={
-                  "bg-3a-gray-darker p-2 xl:p-32 md:col-start-2 md:col-span-2"
+                  "bg-3a-gray-darker p-2 xl:p-12 2xl:p-32 md:col-start-2 md:col-span-2"
                 }
               >
                 <div class="relative aspect-[1/1]">
@@ -339,7 +339,7 @@ export default function BrockmannArc() {
               {/*Cover 2*/}
               <div
                 class={
-                  "bg-3a-gray-darker p-2 xl:p-32 md:col-start-1 md:col-span-2"
+                  "bg-3a-gray-darker p-2 xl:p-12 2xl:p-32 md:col-start-1 md:col-span-2"
                 }
               >
                 <div class="relative aspect-[1/1]">
@@ -371,7 +371,7 @@ export default function BrockmannArc() {
               {/*Cover 3*/}
               <div
                 class={
-                  "bg-3a-gray-darker p-2 xl:p-32 md:col-start-2 md:col-span-2"
+                  "bg-3a-gray-darker p-2 xl:p-12 2xl:p-32 md:col-start-2 md:col-span-2"
                 }
               >
                 <div class="relative aspect-[1/1]">
