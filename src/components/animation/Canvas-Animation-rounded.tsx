@@ -8,7 +8,8 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { BEZIER_CIRCLE, Simple2DLine, subpoints } from "~/_util-client-only";
+import { subpoints } from "~/_util-client-only";
+import { BEZIER_CIRCLE, Simple2DLine } from "~/_util";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },

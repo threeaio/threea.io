@@ -8,8 +8,9 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { COLORS_3A, Simple2DLine, subpoints } from "~/_util-client-only";
+import { COLORS_3A, subpoints } from "~/_util-client-only";
 import { fromLandingPageState } from "~/landing-page-state";
+import { Simple2DLine } from "~/_util";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },
