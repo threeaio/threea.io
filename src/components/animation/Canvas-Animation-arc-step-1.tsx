@@ -1,5 +1,6 @@
 import {
   Accessor,
+  batch,
   createEffect,
   createMemo,
   createSignal,
@@ -170,41 +171,43 @@ export default function ArcAnimationStep1(
   /**
    * On Mount
    */
+
   // animate Arcs
-
+  let timoutsHere: Array<string | number | NodeJS.Timeout | undefined> = [];
   const animateArcs = () => {
+    timoutsHere.forEach(clearTimeout);
+    timoutsHere = [];
     for (let i = 0; i < arcs.length; i++) {
-      // animate start
-      const currentStartstart = { start: arcs[i].startOffset() };
-      gsap.to(currentStartstart, {
-        start: getRandomFloat(
-          arcs[i].dimensions().x / -2,
-          arcs[i].dimensions().x / 2,
-          0,
-        ),
-        duration: 0.75,
-        onUpdate: (...args) => {
-          arcs[i].setStartOffset(currentStartstart.start);
-        },
-      });
-
-      // animate angles
-      const currentAngles = {
+      const animatePartial = {
+        start: arcs[i].startOffset(),
         startAngle: arcs[i].arcStartAngle(),
         endAngle: arcs[i].arcEndAngle(),
       };
 
       let { startAngle, endAngle } = getBrockmannAngles(props.arcSettings, i);
 
-      gsap.to(currentAngles, {
-        startAngle: startAngle,
-        endAngle: endAngle,
-        duration: 0.75,
-        onUpdate: (...args) => {
-          arcs[i].setArcStartAngle(currentAngles.startAngle);
-          arcs[i].setArcEndAngle(currentAngles.endAngle);
-        },
-      });
+      timoutsHere.push(
+        setTimeout(() => {
+          gsap.to(animatePartial, {
+            start: getRandomFloat(
+              arcs[i].dimensions().x / -2,
+              arcs[i].dimensions().x / 2,
+              0,
+            ),
+            startAngle: startAngle,
+            endAngle: endAngle,
+            ease: "sine",
+            duration: 0.5,
+            onUpdate: (...args) => {
+              batch(() => {
+                arcs[i].setStartOffset(animatePartial.start);
+                arcs[i].setArcStartAngle(animatePartial.startAngle);
+                arcs[i].setArcEndAngle(animatePartial.endAngle);
+              });
+            },
+          });
+        }, i * 30),
+      );
     }
   };
 

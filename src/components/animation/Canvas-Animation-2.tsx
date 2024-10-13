@@ -8,9 +8,9 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { COLORS_3A, subpoints } from "~/_util-client-only";
+import { COLORS_3A } from "~/_util-client-only";
 import { fromLandingPageState } from "~/landing-page-state";
-import { Simple2DLine } from "~/_util";
+import { Simple2DLine, subpoints } from "~/_util";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },
@@ -124,10 +124,10 @@ export default function CanvasAnimation2(
         // p5.push();
         p5.beginShape();
 
-        p5.vertex(subPointsA[i].x, subPointsA[i].y);
-        p5.vertex(subPointsC[i].x, subPointsC[i].y);
-        p5.vertex(subPointsB[i].x, subPointsB[i].y);
-        p5.vertex(subPointsD[i].x, subPointsD[i].y);
+        p5.vertex(...subPointsA[i].tuple);
+        p5.vertex(...subPointsC[i].tuple);
+        p5.vertex(...subPointsB[i].tuple);
+        p5.vertex(...subPointsD[i].tuple);
         p5.endShape(p5.CLOSE);
         // p5.pop();
       }

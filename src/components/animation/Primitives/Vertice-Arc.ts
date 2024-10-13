@@ -101,9 +101,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
    */
   const vertexPoints = createMemo<
     {
-      center: Simple2D;
       top: Simple2D;
       bottom: Simple2D;
+      center: Simple2D | null;
       shadow: Simple2D | null;
     }[]
   >(() => {
@@ -139,18 +139,39 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           getAngleFromArcLengthInDegrees(arcLength, scaledInnerRadius()) +
           OFFSET_ANGLES;
 
-        centerLine = coordOfCircle(p5, center(), angle, scaledInnerRadius());
-        top = coordOfCircle(
-          p5,
-          center(),
-          angle,
-          scaledInnerRadius() + scaledThickness() / 2,
+        const sinHere = p5.sin(angle);
+        const cosHere = p5.cos(angle);
+
+        centerLine =
+          config.stroke || config.debug
+            ? coordOfCircle(p5, center(), angle, scaledInnerRadius())
+            : null;
+
+        // top = coordOfCircle(
+        //   p5,
+        //   center(),
+        //   angle,
+        //   scaledInnerRadius() + scaledThickness() / 2,
+        // );
+
+        // bottom = coordOfCircle(
+        //   p5,
+        //   center(),
+        //   angle,
+        //   scaledInnerRadius() - scaledThickness() / 2,
+        // );
+
+        const rOuter = scaledInnerRadius() + scaledThickness() / 2;
+        const rInner = scaledInnerRadius() - scaledThickness() / 2;
+
+        top = createSimple2D(
+          center().x + cosHere * rOuter,
+          center().y + sinHere * rOuter,
         );
-        bottom = coordOfCircle(
-          p5,
-          center(),
-          angle,
-          scaledInnerRadius() - scaledThickness() / 2,
+
+        bottom = createSimple2D(
+          center().x + cosHere * rInner,
+          center().y + sinHere * rInner,
         );
       }
 
@@ -205,10 +226,10 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
         /// center
         for (let i = 0; i < vertexPoints().length - 1; i++) {
           p5.line(
-            vertexPoints()[i].center.x,
-            vertexPoints()[i].center.y,
-            vertexPoints()[i + 1].center.x,
-            vertexPoints()[i + 1].center.y,
+            vertexPoints()[i].center!.x,
+            vertexPoints()[i].center!.y,
+            vertexPoints()[i + 1].center!.x,
+            vertexPoints()[i + 1].center!.y,
           );
         }
 
@@ -243,7 +264,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       p5.beginShape();
       for (let i = 0; i < vertexPoints().length; i++) {
         if (i % 4 === 0) {
-          dvtx(vertexPoints()[i].center);
+          dvtx(vertexPoints()[i].center!);
         }
       }
       p5.endShape();
@@ -272,15 +293,19 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
         p5.line(
           center().x,
           center().y,
-          vertexPoints()[shadI].center.x,
-          vertexPoints()[shadI].center.y,
+          vertexPoints()[shadI].center!.x,
+          vertexPoints()[shadI].center!.y,
         );
       }
       p5.pop();
 
       for (let i = 0; i < vertexPoints().length; i++) {
         if (i % 4 === 0) {
-          p5.circle(vertexPoints()[i].center.x, vertexPoints()[i].center.y, 5);
+          p5.circle(
+            vertexPoints()[i].center!.x,
+            vertexPoints()[i].center!.y,
+            5,
+          );
         }
       }
     }

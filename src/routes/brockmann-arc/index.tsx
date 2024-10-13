@@ -11,7 +11,7 @@ import { createIntersectionObserver } from "@solid-primitives/intersection-obser
 import { clientOnly } from "@solidjs/start";
 import Kbd from "~/components/typo/Kbd";
 import Anf from "~/components/typo/Anf";
-import { createArrayFromLength } from "~/_util";
+import { createArrayFromLength, reMap } from "~/_util";
 
 const ANIMATION_00_INTRO = clientOnly(
   () => import("~/routes/brockmann-arc/animation-intro"),
@@ -199,7 +199,7 @@ export default function BrockmannArc() {
           </div>
         </div>
 
-        {/*////x*/}
+        {/* Inspiration */}
 
         <div class={"relative py-32"}>
           <RotatedPageBg rotateClass={"rotate-2"} />
@@ -247,9 +247,11 @@ export default function BrockmannArc() {
           />
         </div>
 
-        {/*<FullAnimatedBg content={step1} withRotatedBg={false} />*/}
-        {/*<FullAnimatedBg content={step2} withRotatedBg={"-rotate-2"} />*/}
-        {/*<FullAnimatedBg content={step3} withRotatedBg={false} />*/}
+        {/* Inspiration Ende */}
+
+        <FullAnimatedBg content={step1} withRotatedBg={false} />
+        <FullAnimatedBg content={step2} withRotatedBg={"-rotate-2"} />
+        <FullAnimatedBg content={step3} withRotatedBg={false} />
 
         {/*////x*/}
         <div class={"mb-24"}>
@@ -271,6 +273,7 @@ export default function BrockmannArc() {
 
           <FullWidth class={"mt-12"}>
             <div class={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
+              {/*Poster 1*/}
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
                   <ANIMATION_04
@@ -281,6 +284,8 @@ export default function BrockmannArc() {
                   <PosterText>Iggy Pop</PosterText>
                 </div>
               </div>
+
+              {/*Poster 2*/}
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
                   <ANIMATION_04
@@ -292,6 +297,8 @@ export default function BrockmannArc() {
                   <PosterText>Miles Davis</PosterText>
                 </div>
               </div>
+
+              {/*Poster 3*/}
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
                   <ANIMATION_04
@@ -303,6 +310,8 @@ export default function BrockmannArc() {
                   <PosterText>Ice Cube</PosterText>
                 </div>
               </div>
+
+              {/*Cover 1*/}
               <div
                 class={
                   "bg-3a-gray-darker p-2 xl:p-32 md:col-start-2 md:col-span-2"
@@ -327,6 +336,7 @@ export default function BrockmannArc() {
                   </span>
                 </div>
               </div>
+              {/*Cover 2*/}
               <div
                 class={
                   "bg-3a-gray-darker p-2 xl:p-32 md:col-start-1 md:col-span-2"
@@ -358,6 +368,7 @@ export default function BrockmannArc() {
                   </span>
                 </div>
               </div>
+              {/*Cover 3*/}
               <div
                 class={
                   "bg-3a-gray-darker p-2 xl:p-32 md:col-start-2 md:col-span-2"
@@ -365,17 +376,19 @@ export default function BrockmannArc() {
               >
                 <div class="relative aspect-[1/1]">
                   <ANIMATION_05
-                    animateBpm={30}
+                    animateBpm={7.5}
                     bgColor={"WHITE"}
-                    progress={0.4}
+                    progress={0.3}
                     speed={2000}
                     ampl={2}
                     animateCommand={animateClick()}
                     arcSettingsPartial={{
-                      amountOfArcs: 12,
-                      gap: 24,
-                      arcRange: createArrayFromLength(50).map((i) => 24),
-                      sizes: createArrayFromLength(50).map((i) => 3),
+                      amountOfArcs: 50,
+                      gap: 2,
+                      arcRange: createArrayFromLength(50).map((i) =>
+                        reMap(0, 50, 4, 32, i),
+                      ),
+                      sizes: createArrayFromLength(50).map((i) => 6),
                     }}
                   />
                   <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">

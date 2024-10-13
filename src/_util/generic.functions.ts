@@ -1,4 +1,9 @@
-import { Simple2D, Simple2DTuple } from "~/_util/types";
+import {
+  Simple2D,
+  Simple2DAndTuple,
+  Simple2DLine,
+  Simple2DTuple,
+} from "~/_util/types";
 
 export const createArrayFromLength = (length: number) => {
   try {
@@ -10,10 +15,7 @@ export const createArrayFromLength = (length: number) => {
   }
 };
 
-export const createSimple2D = (
-  x: number,
-  y: number,
-): Simple2D & { tuple: Simple2DTuple } => ({
+export const createSimple2D = (x: number, y: number): Simple2DAndTuple => ({
   x,
   y,
   tuple: [x, y],
@@ -34,8 +36,6 @@ export const insertInArray = <T>(
   ];
 };
 
-export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
-
 export const normalize = (min: number, max: number, value: number) => {
   if (max - min === 0)
     throw new RangeError(
@@ -44,14 +44,32 @@ export const normalize = (min: number, max: number, value: number) => {
   return value / (max - min);
 };
 
-export const remapT = (t: number, min = 0, max = 1) => {
-  const newT = (t - min) / (max - min);
-  const res = Math.min(Math.max(newT, 0), 1);
-  return res;
+export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
+
+export const reMap = (
+  origMin: number,
+  origMax: number,
+  targetMin: number,
+  targetMax: number,
+  num: number,
+) => {
+  const tInOrig = normalize(origMin, origMax, num);
+  return lerp(targetMin, targetMax, tInOrig);
 };
 
+export const remapT = (t: number, min = 0, max = 1) => {
+  if (max - min === 0)
+    throw new RangeError(
+      "max must be a range greater 0. Gives was max:" + max + " and min" + min,
+    );
+  const newT = (t - min) / (max - min);
+  return Math.min(Math.max(newT, 0), 1);
+};
+
+const PI = Math.trunc(Math.PI * 1000) / 1000;
+
 export const calculateArcLength = (radius: number, angle: number) => {
-  return 2 * Math.PI * radius * (angle / 360);
+  return 2 * PI * radius * (angle / 360);
 };
 
 export const getAngleFromArcLengthInDegrees = (
@@ -59,18 +77,32 @@ export const getAngleFromArcLengthInDegrees = (
   radius: number,
 ): number => {
   const angleInRadians = arcLength / radius;
-  return angleInRadians * (180 / Math.PI);
+  return angleInRadians * (180 / PI);
 };
 
 export const getRandomFloat = (min: number, max: number, precision = 2) => {
   const minCeiled = min * Math.pow(10, precision);
   const maxFloored = max * Math.pow(10, precision);
   return (
-    Math.floor(
-      Math.pow(Math.random(), Math.random()) * (maxFloored - minCeiled) +
-        minCeiled,
-    ) / Math.pow(10, precision)
+    Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled) /
+    Math.pow(10, precision)
   );
+};
+
+export const subpoints = (
+  line: Simple2DLine,
+  num: number,
+): Simple2DAndTuple[] => {
+  let pts: Simple2DAndTuple[] = [];
+  for (let i = 1; i <= num; i++) {
+    pts.push(
+      createSimple2D(
+        lerp(line[0].x, line[1].x, i / (num + 1)),
+        lerp(line[0].y, line[1].y, i / (num + 1)),
+      ),
+    );
+  }
+  return pts;
 };
 
 export const moveInArray = <T>(array: T[], from: number, to: number) => {

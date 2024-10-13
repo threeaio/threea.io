@@ -6,7 +6,7 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { ArrayElement, ColorArray, hexToRgb, remapT } from "~/_util";
-import { ParentProps } from "solid-js";
+import { batch, ParentProps } from "solid-js";
 
 /**
  * CLIENT-ONLY !
@@ -47,9 +47,11 @@ export default function BrockmanAnimation04(
           draw={(p5, progress, arcs, center) => {
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
-              arcs[i].setCenterX(center.x);
-              arcs[i].setCenterY(center.y);
-              arcs[i].setProgress(p);
+              batch(() => {
+                arcs[i].setCenterX(center.x);
+                arcs[i].setCenterY(center.y);
+                arcs[i].setProgress(p);
+              });
               arcs[i].draw();
             }
           }}

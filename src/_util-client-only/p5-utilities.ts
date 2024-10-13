@@ -1,13 +1,11 @@
 import P5 from "p5";
-import { Simple2DLine } from "./p5-types";
-
-export const subpoints = (line: Simple2DLine, num: number): P5.Vector[] => {
-  let pts: P5.Vector[] = [];
-  for (let i = 1; i <= num; i++) {
-    pts.push(P5.Vector.lerp(line[0], line[1], i / (num + 1)));
-  }
-  return pts;
-};
+import {
+  Simple2DLine,
+  lerp,
+  Simple2D,
+  createSimple2D,
+  Simple2DAndTuple,
+} from "~/_util";
 
 export const coordOfCircle = (
   _p5: P5,
