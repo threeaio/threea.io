@@ -376,19 +376,19 @@ export default function BrockmannArc() {
               >
                 <div class="relative aspect-[1/1]">
                   <ANIMATION_05
-                    animateBpm={7.5}
+                    animateBpm={15}
                     bgColor={"WHITE"}
-                    progress={0.3}
+                    progress={0.26}
                     speed={2000}
                     ampl={2}
                     animateCommand={animateClick()}
                     arcSettingsPartial={{
-                      amountOfArcs: 50,
-                      gap: 2,
-                      arcRange: createArrayFromLength(50).map((i) =>
-                        reMap(0, 50, 4, 32, i),
+                      amountOfArcs: 18,
+                      gap: 20,
+                      arcRange: createArrayFromLength(18).map((i) =>
+                        reMap(0, 18, 4, 32, i),
                       ),
-                      sizes: createArrayFromLength(50).map((i) => 6),
+                      sizes: createArrayFromLength(18).map((i) => 1.6),
                     }}
                   />
                   <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
