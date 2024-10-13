@@ -43,6 +43,8 @@ export default function ArcAnimationStep1(
     arcSettings: ArcSettings;
     arcConfig: VerticeArcConfig;
     animate?: boolean;
+    animateBpm?: number;
+    animateOffsetMs?: number;
     animateCommand?:
       | PointerEvent
       | MouseEvent
@@ -64,7 +66,6 @@ export default function ArcAnimationStep1(
   }); // Memoized screen height
 
   const useAnimateCommand = createMemo(() => {
-    console.log("props.animate", props.animateCommand);
     return props.animateCommand || null;
   });
 
@@ -121,6 +122,7 @@ export default function ArcAnimationStep1(
 
     const draw = () => {
       p5.background(props.bgColor);
+
       props.draw(p5, progress(), arcs, animationProxies.center);
 
       if (props.fadeInOut) {
@@ -149,9 +151,11 @@ export default function ArcAnimationStep1(
     };
 
     const p5 = new P5(sketch, ref);
+
     createEffect(() => {
       p5.resizeCanvas(width(), useHeight());
     });
+
     createEffect(() => {
       if (active() && !p5.isLooping()) {
         p5.loop();
@@ -178,6 +182,7 @@ export default function ArcAnimationStep1(
           arcs[i].dimensions().x / 2,
           0,
         ),
+        duration: 0.75,
         onUpdate: (...args) => {
           arcs[i].setStartOffset(currentStartstart.start);
         },
@@ -194,7 +199,7 @@ export default function ArcAnimationStep1(
       gsap.to(currentAngles, {
         startAngle: startAngle,
         endAngle: endAngle,
-        duration: 0.2,
+        duration: 0.75,
         onUpdate: (...args) => {
           arcs[i].setArcStartAngle(currentAngles.startAngle);
           arcs[i].setArcEndAngle(currentAngles.endAngle);
@@ -203,11 +208,33 @@ export default function ArcAnimationStep1(
     }
   };
 
+  let animationTimeoutRecursion: string | number | NodeJS.Timeout | undefined;
+
+  const recursiveAnimate = () => {
+    if (props.animateBpm && active()) {
+      animateArcs();
+    }
+
+    if (props.animateBpm) {
+      const interval = 1000 / (props.animateBpm! / 60);
+      const animationTimeoutRecursion = setTimeout(
+        () => recursiveAnimate(),
+        interval,
+      ); //500ms => 120bpm
+    }
+  };
+
+  onCleanup(() => {
+    if (animationTimeoutRecursion) {
+      clearTimeout(animationTimeoutRecursion);
+    }
+  });
+
   createEffect(
     on(useAnimateCommand, () => {
-      if (useAnimateCommand() && active()) {
-        animateArcs();
-      }
+      // if (useAnimateCommand() && active()) {
+      //   animateArcs();
+      // }
     }),
   );
 
@@ -218,31 +245,12 @@ export default function ArcAnimationStep1(
     if (props.animate) {
       animateArcs();
     }
+    if (props.animateBpm) {
+      setTimeout(() => {
+        recursiveAnimate();
+      }, props.animateOffsetMs || 0);
+    }
   });
-
-  // trigger animation by pressing "a"
-  // onMount(() => {
-  //   if (props.arcConfig.randomizeStartPosition) {
-  //     const handlerKey = (event: KeyboardEvent) => {
-  //       if (event.key === "a" && active()) {
-  //         animateArcs();
-  //       }
-  //     };
-  //     const handlerPointer = (event: PointerEvent) => {
-  //       if (active()) {
-  //         animateArcs();
-  //       }
-  //     };
-  //     document.addEventListener("keydown", handlerKey);
-  //     if (animationParent()) {
-  //       animationParent()!.addEventListener("pointerdown", handlerPointer);
-  //     }
-  //     onCleanup(() => {
-  //       document.removeEventListener("keydown", handlerKey);
-  //       document.removeEventListener("pointerdown", handlerPointer);
-  //     });
-  //   }
-  // });
 
   /**
    * Render

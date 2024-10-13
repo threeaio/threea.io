@@ -275,6 +275,7 @@ export default function BrockmannArc() {
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
                   <ANIMATION_04
                     bgColor={"RED"}
+                    animateBpm={15}
                     animateCommand={animateClick()}
                   />
                   <PosterText>Iggy Pop</PosterText>
@@ -284,6 +285,8 @@ export default function BrockmannArc() {
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
                   <ANIMATION_04
                     bgColor={"WHITE"}
+                    animateOffsetMs={100}
+                    animateBpm={30}
                     animateCommand={animateClick()}
                   />
                   <PosterText>Miles Davis</PosterText>
@@ -292,6 +295,8 @@ export default function BrockmannArc() {
               <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
                 <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
                   <ANIMATION_04
+                    animateOffsetMs={200}
+                    animateBpm={15}
                     bgColor={"GREEN"}
                     animateCommand={animateClick()}
                   />
@@ -305,6 +310,7 @@ export default function BrockmannArc() {
               >
                 <div class="relative aspect-[1/1]">
                   <ANIMATION_05
+                    animateBpm={30}
                     bgColor={"WHITE"}
                     progress={0.2}
                     speed={2000}
@@ -328,6 +334,7 @@ export default function BrockmannArc() {
               >
                 <div class="relative aspect-[1/1]">
                   <ANIMATION_05
+                    animateBpm={30}
                     bgColor={"WHITE"}
                     progress={0.24}
                     speed={4000}
@@ -358,6 +365,7 @@ export default function BrockmannArc() {
               >
                 <div class="relative aspect-[1/1]">
                   <ANIMATION_05
+                    animateBpm={30}
                     bgColor={"WHITE"}
                     progress={0.1}
                     speed={2000}

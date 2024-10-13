@@ -22,6 +22,7 @@ export default function BrockmanAnimation05(
     speed: number;
     ampl: number;
     arcSettingsPartial: Partial<ArcSettings>;
+    animateBpm?: number;
     animateCommand:
       | PointerEvent
       | MouseEvent
@@ -30,7 +31,6 @@ export default function BrockmanAnimation05(
       | undefined;
   } & ParentProps,
 ) {
-  console.log("props.arcSettingsPartial", props.arcSettingsPartial);
   return (
     <CanvasAnimationWrapper
       start={"clamp(top top+=50%)"}
@@ -38,6 +38,7 @@ export default function BrockmanAnimation05(
       animation={
         <ANIMATION
           animateCommand={props.animateCommand}
+          animateBpm={props.animateBpm}
           animate={true}
           getStartRadius={(w, h) => h / 5}
           bgColor={COLORS_3A[props.bgColor]}

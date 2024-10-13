@@ -1,8 +1,8 @@
 export const createArrayFromLength = (length: number) => {
   try {
-    return [...Array(length).keys()];
+    return Array.from({ length }).map((_, i) => i);
   } catch (e) {
-    const em = e + "Given length:" + length;
+    const em = e + " Given length:" + length;
     console.error(em);
     return [];
   }

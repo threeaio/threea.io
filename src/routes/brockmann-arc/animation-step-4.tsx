@@ -14,6 +14,8 @@ import { ParentProps } from "solid-js";
 
 export default function BrockmanAnimation04(
   props: {
+    animateBpm?: number;
+    animateOffsetMs?: number;
     animateCommand:
       | PointerEvent
       | MouseEvent
@@ -30,7 +32,9 @@ export default function BrockmanAnimation04(
       animation={
         <ANIMATION
           animateCommand={props.animateCommand}
+          animateOffsetMs={props.animateOffsetMs}
           animate={true}
+          animateBpm={props.animateBpm}
           getStartRadius={(w) => w / 4}
           bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={false}
@@ -59,6 +63,7 @@ export default function BrockmanAnimation04(
               color: COLORS_3A.GRAY_DARKER,
             },
             stroke: false,
+
             randomizeStartPosition: true,
           }}
         />

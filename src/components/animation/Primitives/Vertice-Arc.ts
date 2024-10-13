@@ -52,30 +52,10 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const [thickness, setThickness] = createSignal<number>(0);
   const [progress, setProgress] = createSignal<number>(0);
 
+  // no need for signal here
   const [startOffset, setStartOffset] = createSignal<number>(
     config.randomizeStartPosition ? p5.random(-2, dimensions().x / 2) : 0,
   );
-
-  // const animateOffset = () => {
-  //   const start = { start: startOffset() };
-  //   gsap.to(start, {
-  //     start: p5.random(dimensions().x / -2, dimensions().x / 2),
-  //     onUpdate: (...args) => {
-  //       setStartOffset(start.start);
-  //     },
-  //   });
-  // };
-  //
-  // onMount(() => {
-  //   if (config.randomizeStartPosition) {
-  //     document.addEventListener("keydown", (event) => {
-  //       if (event.key === "a") {
-  //         animateOffset();
-  //       }
-  //     });
-  //     animateOffset();
-  //   }
-  // });
 
   // Memoized values for scaled radius and thickness
   const center = createMemo<Vector2D>(() => ({
@@ -133,8 +113,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
     const USE_RESOLUTION = Math.max(
       Math.round(RESOLUTION_HOR * (dimensions().x / 1400)),
-      60,
+      40,
     );
+
     const SEGMENT_SIZE = finalArcLength() / USE_RESOLUTION;
 
     return createArrayFromLength(USE_RESOLUTION + 1).map((i: number) => {
