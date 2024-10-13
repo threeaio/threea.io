@@ -378,7 +378,7 @@ export default function BrockmannArc() {
                   <ANIMATION_05
                     animateBpm={15}
                     bgColor={"WHITE"}
-                    progress={0.26}
+                    progress={0.27}
                     speed={2000}
                     ampl={2}
                     animateCommand={animateClick()}
