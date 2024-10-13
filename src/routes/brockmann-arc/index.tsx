@@ -253,15 +253,15 @@ export default function BrockmannArc() {
 
         {/*////x*/}
         <div class={"mb-24"}>
-          <ControllerHere>
-            <div class="flex flex-row justify-center">
-              <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-3a-black/30 shadow-lg font-mono text-sm">
-                <button class={"p-3 text-3a-green"} onClick={setAnimateClick}>
-                  Klicke hier oder drücke <Kbd>A</Kbd> für Variationen
-                </button>
-              </div>
-            </div>
-          </ControllerHere>
+          {/*<ControllerHere>*/}
+          {/*  <div class="flex flex-row justify-center">*/}
+          {/*    <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-3a-black/30 shadow-lg font-mono text-sm">*/}
+          {/*      <button class={"p-3 text-3a-green"} onClick={setAnimateClick}>*/}
+          {/*        Klicke hier oder drücke <Kbd>A</Kbd> für Variationen*/}
+          {/*      </button>*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*</ControllerHere>*/}
           <HeaderHere
             addLayout={true}
             title={"Galerie"}
@@ -367,15 +367,15 @@ export default function BrockmannArc() {
                   <ANIMATION_05
                     animateBpm={30}
                     bgColor={"WHITE"}
-                    progress={0.1}
+                    progress={0.4}
                     speed={2000}
                     ampl={2}
                     animateCommand={animateClick()}
                     arcSettingsPartial={{
-                      amountOfArcs: 28,
-                      gap: 1,
-                      arcRange: createArrayFromLength(28).map((i) => 4),
-                      sizes: createArrayFromLength(28).map((i) => 10),
+                      amountOfArcs: 12,
+                      gap: 24,
+                      arcRange: createArrayFromLength(50).map((i) => 24),
+                      sizes: createArrayFromLength(50).map((i) => 3),
                     }}
                   />
                   <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">

@@ -8,7 +8,7 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { BEZIER_CIRCLE, P5Line, subpoints } from "~/_util-client-only";
+import { BEZIER_CIRCLE, Simple2DLine, subpoints } from "~/_util-client-only";
 
 export default function CanvasAnimation2(
   props: ParentProps & { hue?: number },
@@ -81,13 +81,13 @@ export default function CanvasAnimation2(
     const draw = () => {
       p5.clear();
 
-      const lineA: P5Line = [lineOrigin, new P5.Vector(rands.randX1, 0)];
-      const lineB: P5Line = [
+      const lineA: Simple2DLine = [lineOrigin, new P5.Vector(rands.randX1, 0)];
+      const lineB: Simple2DLine = [
         lineOrigin,
         new P5.Vector(rands.randX2, height() - 40),
       ];
-      const lineC: P5Line = [lineOrigin, new P5.Vector(0, rands.randY1)];
-      const lineD: P5Line = [
+      const lineC: Simple2DLine = [lineOrigin, new P5.Vector(0, rands.randY1)];
+      const lineD: Simple2DLine = [
         lineOrigin,
         new P5.Vector(width() - 40, rands.randY2),
       ];

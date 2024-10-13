@@ -8,7 +8,7 @@ import {
 import { gsap } from "gsap";
 import P5 from "p5";
 import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
-import { COLORS_3A, P5Line, subpoints } from "~/_util-client-only";
+import { COLORS_3A, Simple2DLine, subpoints } from "~/_util-client-only";
 import { fromLandingPageState } from "~/landing-page-state";
 
 export default function CanvasAnimation2(
@@ -87,13 +87,16 @@ export default function CanvasAnimation2(
       p5.clear();
 
       const numPoints = 22;
-      const lineA: P5Line = [lineOrigin, new P5.Vector(rands.randX1, 0)];
-      const lineB: P5Line = [
+      const lineA: Simple2DLine = [lineOrigin, new P5.Vector(rands.randX1, 0)];
+      const lineB: Simple2DLine = [
         lineOrigin,
         new P5.Vector(rands.randX2, useHeight()),
       ];
-      const lineC: P5Line = [lineOrigin, new P5.Vector(0, rands.randY1)];
-      const lineD: P5Line = [lineOrigin, new P5.Vector(width(), rands.randY2)];
+      const lineC: Simple2DLine = [lineOrigin, new P5.Vector(0, rands.randY1)];
+      const lineD: Simple2DLine = [
+        lineOrigin,
+        new P5.Vector(width(), rands.randY2),
+      ];
 
       const subPointsA = subpoints(lineA, numPoints);
       const subPointsB = subpoints(lineB, numPoints);

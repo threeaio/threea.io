@@ -1,14 +1,15 @@
 import P5 from "p5";
-import { createMemo, createSignal, onMount } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
 import * as p5 from "p5";
 import { COLORS_3A } from "~/_util-client-only";
 import {
   ColorArray,
-  Vector2D,
+  Simple2D,
   calculateArcLength,
   createArrayFromLength,
   getAngleFromArcLengthInDegrees,
   lerp,
+  createSimple2D,
 } from "~/_util";
 import { coordOfCircle } from "~/_util-client-only";
 export type VerticeArcConfig = {
@@ -17,10 +18,9 @@ export type VerticeArcConfig = {
   fill: { color: ColorArray } | false;
   stroke: { color: ColorArray } | false;
 };
-import { gsap } from "gsap";
 
 export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
-  const RESOLUTION_HOR: number = 60; // Resolution for vertex generation along the arc
+  const RESOLUTION_MIN: number = 60; // Resolution for vertex generation along the arc
   const RESOLUTION_VERT: number = 4; // Resolution for vertex generation along the arc
 
   const TEMP_SCALER: number = 1; // This constant is used for temporary scaling
@@ -30,10 +30,10 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
   /**
    * Draws a vertex at the given coordinates.
-   * @param {Vector2D} p - The position vector where the vertex should be drawn.
+   * @param {Simple2D} p - The position vector where the vertex should be drawn.
    * @returns {p5} - The p5 vertex function.
    */
-  const dvtx = (p: Vector2D): p5 => p5.vertex(p.x, p.y);
+  const dvtx = (p: Simple2D): p5 => p5.vertex(p.x, p.y);
 
   // Signals for arc properties
   const [strokeColor, setStrokeColor] = createSignal<ColorArray>([
@@ -42,7 +42,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   // const [center, setCenter] = createSignal<Vector2D>({ x: 0, y: 0 });
   const [centerX, setCenterX] = createSignal<number>(0);
   const [centerY, setCenterY] = createSignal<number>(0);
-  const [dimensions, setDimension] = createSignal<Vector2D>({ x: 0, y: 0 });
+  const [dimensions, setDimension] = createSignal<Simple2D>({ x: 0, y: 0 });
 
   const [arcStartAngle, setArcStartAngle] = createSignal<number>(0);
   const useStartAngle = createMemo<number>(() => arcStartAngle());
@@ -58,7 +58,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   );
 
   // Memoized values for scaled radius and thickness
-  const center = createMemo<Vector2D>(() => ({
+  const center = createMemo<Simple2D>(() => ({
     x: centerX(),
     y: centerY(),
   }));
@@ -101,10 +101,10 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
    */
   const vertexPoints = createMemo<
     {
-      center: P5.Vector;
-      top: P5.Vector;
-      bottom: P5.Vector;
-      shadow: P5.Vector | null;
+      center: Simple2D;
+      top: Simple2D;
+      bottom: Simple2D;
+      shadow: Simple2D | null;
     }[]
   >(() => {
     if (!finalArcLength()) {
@@ -112,8 +112,8 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     }
 
     const USE_RESOLUTION = Math.max(
-      Math.round(RESOLUTION_HOR * (dimensions().x / 1400)),
-      40,
+      Math.round(RESOLUTION_MIN * (dimensions().x / 1400)),
+      RESOLUTION_MIN,
     );
 
     const SEGMENT_SIZE = finalArcLength() / USE_RESOLUTION;
@@ -127,15 +127,12 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       let shadow;
 
       if (start <= center().x) {
-        centerLine = p5.createVector(start, linePositionY());
-        top = p5.createVector(start, linePositionY() - scaledThickness() / 2);
-        bottom = p5.createVector(
-          start,
-          linePositionY() + scaledThickness() / 2,
-        );
+        centerLine = createSimple2D(start, linePositionY());
+        top = createSimple2D(start, linePositionY() - scaledThickness() / 2);
+        bottom = createSimple2D(start, linePositionY() + scaledThickness() / 2);
         shadow = null;
       } else {
-        shadow = p5.createVector(start, linePositionY());
+        shadow = createSimple2D(start, linePositionY());
 
         const arcLength = start - center().x;
         const angle =

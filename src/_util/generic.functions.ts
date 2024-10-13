@@ -1,3 +1,5 @@
+import { Simple2D, Simple2DTuple } from "~/_util/types";
+
 export const createArrayFromLength = (length: number) => {
   try {
     return Array.from({ length }).map((_, i) => i);
@@ -7,6 +9,15 @@ export const createArrayFromLength = (length: number) => {
     return [];
   }
 };
+
+export const createSimple2D = (
+  x: number,
+  y: number,
+): Simple2D & { tuple: Simple2DTuple } => ({
+  x,
+  y,
+  tuple: [x, y],
+});
 
 export const getObjectKeys = <T extends object>(obj: T) =>
   Object.keys(obj) as Array<keyof T>;
