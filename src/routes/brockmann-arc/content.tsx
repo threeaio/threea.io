@@ -44,9 +44,39 @@ export const intro = {
   ),
 };
 
+export const inspiration = {
+  title: "Inspiration",
+  num: "01",
+  text: () => (
+    <>
+      <p>
+        Inspiriert ist dieser erste Wurf durch{" "}
+        <a
+          href="https://de.wikipedia.org/wiki/Josef_M%C3%BCller-Brockmann"
+          title={"Zum Wikipedia-Eintrag von Josef Müller-Brockmann"}
+          target={"_blank"}
+        >
+          Josef Müller-Brockmanns
+        </a>{" "}
+        Beethoven-Plakat von 1955.
+      </p>
+      <p>
+        Müller-Brockmann wird hier wohl noch häufiger herhalten müssen,
+        einerseites als Grundlage für grafische Arbeiten, aber auch als
+        Stichwortgeber für theoretische Gedanken.
+      </p>
+      <p>
+        Der humanistische Anspruch spiegelt sich in seinen Arbeiten ebenso
+        wieder, wie die Erkenntnis, dass Ästhetik auch mathematischen
+        Gesetzmäßigkeiten folgt.
+      </p>
+    </>
+  ),
+};
+
 export const step1: AnimatedSubSection = {
   title: "Idee zur Animation",
-  num: "01",
+  num: "02",
   animation: () => <ANIMATION_01_IDEA />,
   description: () => (
     <>
@@ -74,7 +104,7 @@ export const step1: AnimatedSubSection = {
 
 export const step2: AnimatedSubSection = {
   title: "Weiteres",
-  num: "02",
+  num: "03",
   animation: () => <ANIMATION_02 />,
   description: () => (
     <>
@@ -103,7 +133,7 @@ export const step2: AnimatedSubSection = {
 
 export const step3: AnimatedSubSection = {
   title: "Zwischenergebnis",
-  num: "03",
+  num: "04",
   animation: (trigger) => (
     <ANIMATION_03 animateCommand={trigger && trigger()} />
   ),
@@ -134,4 +164,9 @@ export const step3: AnimatedSubSection = {
       {/*</p>*/}
     </>
   ),
+};
+
+export const gallery = {
+  title: "Galerie",
+  num: "05",
 };

@@ -15,10 +15,11 @@ import {
 } from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
 import { clientOnly } from "@solidjs/start";
-import Anf from "~/components/typo/Anf";
 import { AnimationTrigger, createArrayFromLength, reMap } from "~/_util";
 import {
   AnimatedSubSection,
+  gallery,
+  inspiration,
   intro,
   step1,
   step2,
@@ -91,33 +92,17 @@ export default function BrockmannArc() {
           <BleedRightSmall
             class="relative"
             Left={
-              <HeaderHere addLayout={false} title="Inspiration" num="01">
+              <StickyStepDescription
+                addLayout={false}
+                title={inspiration.title}
+                num={inspiration.num}
+              >
                 <HeaderDescriptionDefaultHere
                   class={"grid grid-cols-1 pr-8 xl:grid-cols-2 xl:pr-0"}
                 >
-                  <p>
-                    Inspiriert ist dieser erste Wurf durch{" "}
-                    <a
-                      href="https://de.wikipedia.org/wiki/Josef_M%C3%BCller-Brockmann"
-                      title={"Zum Wikipedia-Eintrag von Josef Müller-Brockmann"}
-                      target={"_blank"}
-                    >
-                      Josef Müller-Brockmanns
-                    </a>{" "}
-                    Beethoven-Plakat von 1955.
-                  </p>
-                  <p>
-                    Müller-Brockmann wird hier wohl noch häufiger herhalten
-                    müssen, einerseites als Grundlage für grafische Arbeiten,
-                    aber auch als Stichwortgeber für theoretische Gedanken.
-                  </p>
-                  <p>
-                    Der humanistische Anspruch spiegelt sich in seinen Arbeiten
-                    ebenso wieder, wie die Erkenntnis, dass Ästhetik auch
-                    mathematischen Gesetzmäßigkeiten folgt.
-                  </p>
+                  {inspiration.text()}
                 </HeaderDescriptionDefaultHere>
-              </HeaderHere>
+              </StickyStepDescription>
             }
             Right={
               <div class="w-full mix-blend-lighten">
@@ -153,148 +138,152 @@ export default function BrockmannArc() {
           {/*    </div>*/}
           {/*  </div>*/}
           {/*</ControllerHere>*/}
-          <HeaderHere
+          <StickyStepDescription
             addLayout={true}
-            title={"Galerie"}
-            num={"05"}
+            title={gallery.title}
+            num={gallery.num}
             noStick={true}
-          ></HeaderHere>
+          ></StickyStepDescription>
 
           <FullWidth class={"mt-12"}>
             <div class={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
               {/*Poster 1*/}
-              <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-                <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
-                  <ANIMATION_04
-                    bgColor={"RED"}
-                    animateBpm={15}
-                    animateCommand={animateClick()}
-                  />
-                  <PosterContentBeethoven>Iggy Pop</PosterContentBeethoven>
-                </div>
-              </div>
+              <AnimationAsPoster>
+                <ANIMATION_04
+                  bgColor={"RED"}
+                  animateBpm={15}
+                  animateCommand={animateClick()}
+                />
+                <PosterContentBeethoven>Iggy Pop</PosterContentBeethoven>
+              </AnimationAsPoster>
 
               {/*Poster 2*/}
-              <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-                <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
-                  <ANIMATION_04
-                    bgColor={"WHITE"}
-                    animateOffsetMs={100}
-                    animateBpm={30}
-                    animateCommand={animateClick()}
-                  />
-                  <PosterContentBeethoven>Miles Davis</PosterContentBeethoven>
-                </div>
-              </div>
+              <AnimationAsPoster>
+                <ANIMATION_04
+                  bgColor={"WHITE"}
+                  animateOffsetMs={100}
+                  animateBpm={30}
+                  animateCommand={animateClick()}
+                />
+                <PosterContentBeethoven>Miles Davis</PosterContentBeethoven>
+              </AnimationAsPoster>
 
               {/*Poster 3*/}
-              <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-                <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto">
-                  <ANIMATION_04
-                    animateOffsetMs={200}
-                    animateBpm={15}
-                    bgColor={"GREEN"}
-                    animateCommand={animateClick()}
-                  />
-                  <PosterContentBeethoven>Ice Cube</PosterContentBeethoven>
-                </div>
-              </div>
+              <AnimationAsPoster>
+                <ANIMATION_04
+                  animateOffsetMs={200}
+                  animateBpm={15}
+                  bgColor={"GREEN"}
+                  animateCommand={animateClick()}
+                />
+                <PosterContentBeethoven>Ice Cube</PosterContentBeethoven>
+              </AnimationAsPoster>
 
               {/*Cover 1*/}
-              <div
-                class={
-                  "bg-3a-gray-darker p-2 xl:p-12 2xl:p-32 md:col-start-2 md:col-span-2"
-                }
-              >
-                <div class="relative aspect-[1/1]">
-                  <ANIMATION_05
-                    animateBpm={30}
-                    bgColor={"WHITE"}
-                    progress={0.2}
-                    speed={2000}
-                    ampl={3}
-                    animateCommand={animateClick()}
-                    arcSettingsPartial={{}}
-                  />
-                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
-                    <PosterTextHeadline>
-                      Anti
-                      <br />
-                      Agonie
-                    </PosterTextHeadline>
-                  </span>
-                </div>
-              </div>
+              <AnimationAsSquare right={true}>
+                <ANIMATION_05
+                  animateBpm={30}
+                  bgColor={"WHITE"}
+                  progress={0.2}
+                  speed={2000}
+                  ampl={3}
+                  animateCommand={animateClick()}
+                  arcSettingsPartial={{}}
+                />
+                <AnimationTypoForSquare>
+                  <PosterTextHeadline>
+                    Anti
+                    <br />
+                    Agonie
+                  </PosterTextHeadline>
+                </AnimationTypoForSquare>
+              </AnimationAsSquare>
               {/*Cover 2*/}
-              <div
-                class={
-                  "bg-3a-gray-darker p-2 xl:p-12 2xl:p-32 md:col-start-1 md:col-span-2"
-                }
-              >
-                <div class="relative aspect-[1/1]">
-                  <ANIMATION_05
-                    animateBpm={30}
-                    bgColor={"WHITE"}
-                    progress={0.24}
-                    speed={4000}
-                    ampl={20}
-                    animateCommand={animateClick()}
-                    arcSettingsPartial={{
-                      amountOfArcs: 12,
-                      gap: 1,
-                      arcRange: createArrayFromLength(12).map((i) => i * 1.5),
-                      sizes: createArrayFromLength(12).map(
-                        (i) => Math.pow(i, i) * 0.5,
-                      ),
-                    }}
-                  />
-                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
-                    <PosterTextHeadline>
-                      Asynchrone
-                      <br />
-                      Aktion
-                    </PosterTextHeadline>
-                  </span>
-                </div>
-              </div>
+              <AnimationAsSquare>
+                <ANIMATION_05
+                  animateBpm={30}
+                  bgColor={"WHITE"}
+                  progress={0.24}
+                  speed={4000}
+                  ampl={20}
+                  animateCommand={animateClick()}
+                  arcSettingsPartial={{
+                    amountOfArcs: 12,
+                    gap: 1,
+                    arcRange: createArrayFromLength(12).map((i) => i * 1.5),
+                    sizes: createArrayFromLength(12).map(
+                      (i) => Math.pow(i, i) * 0.5,
+                    ),
+                  }}
+                />
+                <AnimationTypoForSquare>
+                  <PosterTextHeadline>
+                    Asynchrone
+                    <br />
+                    Aktion
+                  </PosterTextHeadline>
+                </AnimationTypoForSquare>
+              </AnimationAsSquare>
               {/*Cover 3*/}
-              <div
-                class={
-                  "bg-3a-gray-darker p-2 xl:p-12 2xl:p-32 md:col-start-2 md:col-span-2"
-                }
-              >
-                <div class="relative aspect-[1/1]">
-                  <ANIMATION_05
-                    animateBpm={15}
-                    bgColor={"WHITE"}
-                    progress={0.27}
-                    speed={2000}
-                    ampl={2}
-                    animateCommand={animateClick()}
-                    arcSettingsPartial={{
-                      amountOfArcs: 18,
-                      gap: 20,
-                      arcRange: createArrayFromLength(18).map((i) =>
-                        reMap(0, 18, 4, 32, i),
-                      ),
-                      sizes: createArrayFromLength(18).map((i) => 1.6),
-                    }}
-                  />
-                  <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
-                    <PosterTextHeadline>
-                      Agile
-                      <br />
-                      Agit
-                    </PosterTextHeadline>
-                  </span>
-                </div>
-              </div>
+              <AnimationAsSquare right={true}>
+                <ANIMATION_05
+                  animateBpm={30}
+                  bgColor={"WHITE"}
+                  progress={0.27}
+                  speed={2000}
+                  ampl={2}
+                  animateCommand={animateClick()}
+                  arcSettingsPartial={{
+                    amountOfArcs: 18,
+                    gap: 20,
+                    arcRange: createArrayFromLength(18).map((i) =>
+                      reMap(0, 18, 4, 32, i),
+                    ),
+                    sizes: createArrayFromLength(18).map((i) => 1.6),
+                  }}
+                />
+                <AnimationTypoForSquare>
+                  <PosterTextHeadline>
+                    Agile
+                    <br />
+                    Agit
+                  </PosterTextHeadline>
+                </AnimationTypoForSquare>
+              </AnimationAsSquare>
             </div>
           </FullWidth>
         </div>
       </div>
       <Divider />
     </main>
+  );
+}
+
+function AnimationAsPoster(props: ParentProps) {
+  return (
+    <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
+      <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
+        {props.children}
+      </div>
+    </div>
+  );
+}
+
+function AnimationAsSquare(props: ParentProps & { right?: true }) {
+  return (
+    <div
+      class={`bg-3a-gray-darker p-2 xl:p-12 2xl:p-32  md:col-span-2 ${props.right && "md:col-start-2"}`}
+    >
+      <div class="relative aspect-[1/1]">{props.children}</div>
+    </div>
+  );
+}
+
+function AnimationTypoForSquare(props: ParentProps) {
+  return (
+    <span class="absolute origin-bottom-right right-1/3 bottom-1/3 scale-75 xl:scale-100">
+      {props.children}
+    </span>
   );
 }
 
@@ -319,7 +308,7 @@ function FullAnimatedBg(props: {
         <RotatedPageBg rotateClass={props.withRotatedBg} />
       )}
       <div class={"relative"}>
-        <HeaderHere
+        <StickyStepDescription
           addLayout={true}
           title={props.content.title}
           num={props.content.num}
@@ -329,7 +318,7 @@ function FullAnimatedBg(props: {
           >
             {props.content.description()}
           </HeaderDescriptionDefaultHere>
-        </HeaderHere>
+        </StickyStepDescription>
         <div style={"height: 200svh"}>
           {props.content.animation(props.animationTrigger)}
         </div>
@@ -379,7 +368,7 @@ function ControllerHere(props: ParentProps) {
   );
 }
 
-function HeaderHere(
+function StickyStepDescription(
   props: {
     num: string;
     title: string;
@@ -417,11 +406,13 @@ function HeaderHere(
     </>
   );
 
+  const wrapperClasses = `group transition-all py-8 duration-300 relative z-20 ${!props.noStick ? "md:sticky md:top-[-1px]" : ""}`;
+
   if (props.addLayout) {
     return (
       <FullWidth
         ref={(el) => setTargets((list) => [...list, el])}
-        class={`group transition-all py-8 duration-300 relative z-20 ${!props.noStick ? "md:sticky md:top-[-1px]" : ""}`}
+        class={wrapperClasses}
       >
         {content}
       </FullWidth>
@@ -430,7 +421,7 @@ function HeaderHere(
     return (
       <div
         ref={(el) => setTargets((list) => [...list, el])}
-        class={`group transition-all py-8 duration-300 relative z-20 ${!props.noStick ? "md:sticky md:top-[-1px]" : ""}`}
+        class={wrapperClasses}
       >
         {content}
       </div>

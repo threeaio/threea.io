@@ -31,7 +31,7 @@ export default function Privacy() {
           </p>
 
           <p>
-            <strong>Nikolaj Sokolwoski</strong>
+            <strong>Nikolaj Sokolowski</strong>
             <br />
             Am Heidbergbad 30
             <br />
