@@ -39,7 +39,7 @@ export default function BrockmannArc() {
   const [animateClick, setAnimateClick] = createSignal<AnimationTrigger>();
   onMount(() => {
     const listener = (event: KeyboardEvent) => {
-      if (event.key === "A" || event.key === "a") {
+      if (event.key.toUpperCase() === "A") {
         setAnimateClick(event);
       }
     };

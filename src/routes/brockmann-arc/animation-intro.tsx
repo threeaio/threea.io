@@ -39,11 +39,12 @@ export default function BrockmanAnimationIntro(
         <ANIMATION
           getStartRadius={(w) => w / 5}
           bgColor={COLORS_3A[props.bgColor]}
+          forceContentHeight={true}
           fadeInOut={false}
           setCenter={(_width, height, progress) => {
             return {
               x: positionX() || (_width / 3) * 2,
-              y: (height / 3) * 2,
+              y: height / 2,
             };
           }}
           draw={(p5, progress, arcs, center) => {

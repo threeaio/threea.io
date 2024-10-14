@@ -29,6 +29,7 @@ export default function ArcAnimationStep1(
   props: ParentProps & {
     bgColor: ColorArray;
     fadeInOut: boolean;
+    forceContentHeight?: true;
     draw: (
       p5: P5,
       progress: number,
@@ -61,6 +62,9 @@ export default function ArcAnimationStep1(
     HTMLElement | undefined
   >();
   const useHeight = createMemo(() => {
+    if (props.forceContentHeight) {
+      return height();
+    }
     return height() < landingPageState.screenHeight
       ? height()
       : landingPageState.screenHeight;

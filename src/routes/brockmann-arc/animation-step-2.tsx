@@ -28,7 +28,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
           draw={(p5, progress, arcs, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             // console.log("progress STEP 2", progress);
-            const p = remapT(progress, 0, 0.8);
+            const p = remapT(progress, 0, 0.7);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setCenterX(center.x);
               arcs[i].setCenterY(center.y);
