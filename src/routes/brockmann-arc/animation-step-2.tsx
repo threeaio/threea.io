@@ -43,6 +43,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
           }}
           arcConfig={{
             debug: false,
+            bgColor: COLORS_3A.GRAY_DARKER,
             stroke: {
               color: COLORS_3A.GREEN,
             },

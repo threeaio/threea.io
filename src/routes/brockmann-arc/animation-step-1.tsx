@@ -43,6 +43,7 @@ export default function BrockmanAnimation01(props: ParentProps) {
             amountOfArcs: 1,
           }}
           arcConfig={{
+            bgColor: COLORS_3A.GRAY_DARKEST,
             debug: true,
             fill: false,
             stroke: false,

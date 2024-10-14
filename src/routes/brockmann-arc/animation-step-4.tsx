@@ -63,6 +63,7 @@ export default function BrockmanAnimation04(
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 3),
           }}
           arcConfig={{
+            bgColor: COLORS_3A[props.bgColor],
             debug: false,
             fill: {
               color: COLORS_3A.GRAY_DARKER,

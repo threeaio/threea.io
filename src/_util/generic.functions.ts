@@ -44,6 +44,10 @@ export const normalize = (min: number, max: number, value: number) => {
   return value / (max - min);
 };
 
+export const clamp = (min: number, max: number, value: number) => {
+  return Math.min(Math.max(min, max), value);
+};
+
 export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
 
 export const reMap = (
@@ -53,7 +57,8 @@ export const reMap = (
   targetMax: number,
   num: number,
 ) => {
-  const tInOrig = normalize(origMin, origMax, num);
+  const numClamped = clamp(origMin, origMax, num);
+  const tInOrig = normalize(origMin, origMax, numClamped);
   return lerp(targetMin, targetMax, tInOrig);
 };
 
@@ -78,6 +83,17 @@ export const getAngleFromArcLengthInDegrees = (
 ): number => {
   const angleInRadians = arcLength / radius;
   return angleInRadians * (180 / PI);
+};
+
+export const allPointsOutsideViewport = (
+  width: number,
+  height: number,
+  points: Simple2D[],
+): boolean => {
+  // Check if each point is outside the viewport
+  return points.every((point) => {
+    return point.x < 0 || point.x > width || point.y < 0 || point.y > height;
+  });
 };
 
 export const getRandomFloat = (min: number, max: number, precision = 2) => {

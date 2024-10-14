@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { createMemo, createSignal } from "solid-js";
+import { createEffect, createMemo, createSignal } from "solid-js";
 import * as p5 from "p5";
 import { COLORS_3A } from "~/_util-client-only";
 import {
@@ -10,11 +10,15 @@ import {
   getAngleFromArcLengthInDegrees,
   lerp,
   createSimple2D,
+  reMap,
+  allPointsOutsideViewport,
+  clamp,
 } from "~/_util";
 import { coordOfCircle } from "~/_util-client-only";
 export type VerticeArcConfig = {
   debug: boolean;
   randomizeStartPosition: boolean;
+  bgColor: ColorArray;
   fill: { color: ColorArray } | false;
   stroke: { color: ColorArray } | false;
 };
@@ -87,228 +91,392 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const finalPositionX = createMemo<number>(
     () => center().x + calculateArcLength(scaledInnerRadius(), useStartAngle()),
   );
-
-  /**
-   * Linearly interpolates the X position along the arc based on progress.
-   * @returns {number} - The current X position.
-   */
   const currentX = createMemo<number>(() =>
     lerp(startPositionX(), finalPositionX(), progress()),
   );
 
+  const USE_RESOLUTION = createMemo(() => {
+    return Math.round(reMap(50, 2000, 10, 90, finalArcLength()));
+  });
+
+  const USE_RESOLUTION_VERT = createMemo(() => {
+    // console.log("scaledThickness()", scaledThickness());
+    return Math.round(reMap(0, 200, 1, 8, scaledThickness()));
+  });
+
   /**
    * Generates the vertex points for drawing the arc, including the straight and curved sections.
    */
-  const vertexPoints = createMemo<
-    {
-      top: Simple2D;
-      bottom: Simple2D;
-      center: Simple2D | null;
-      shadow: Simple2D | null;
-    }[]
-  >(() => {
-    if (!finalArcLength()) {
+  // const vertexPoints = createMemo<
+  //   {
+  //     top: Simple2D;
+  //     bottom: Simple2D;
+  //     center: Simple2D | null;
+  //     shadow: Simple2D | null;
+  //   }[]
+  // >(() => {
+  //   if (!finalArcLength()) {
+  //     return [];
+  //   }
+  //
+  //   const USE_RESOLUTION = Math.max(
+  //     Math.round(RESOLUTION_MIN * (dimensions().x / 1400)),
+  //     RESOLUTION_MIN,
+  //   );
+  //
+  //   const SEGMENT_SIZE = finalArcLength() / USE_RESOLUTION;
+  //
+  //   return createArrayFromLength(USE_RESOLUTION + 1).map((i: number) => {
+  //     const start = currentX() + i * SEGMENT_SIZE;
+  //
+  //     let top;
+  //     let centerLine;
+  //     let bottom;
+  //     let shadow;
+  //
+  //     if (start <= center().x) {
+  //       centerLine = createSimple2D(start, linePositionY());
+  //       top = createSimple2D(start, linePositionY() - scaledThickness() / 2);
+  //       bottom = createSimple2D(start, linePositionY() + scaledThickness() / 2);
+  //       shadow = null;
+  //     } else {
+  //       shadow = createSimple2D(start, linePositionY());
+  //
+  //       const arcLength = start - center().x;
+  //       const angle =
+  //         getAngleFromArcLengthInDegrees(arcLength, scaledInnerRadius()) +
+  //         OFFSET_ANGLES;
+  //
+  //       const sinHere = p5.sin(angle);
+  //       const cosHere = p5.cos(angle);
+  //
+  //       centerLine =
+  //         config.stroke || config.debug
+  //           ? coordOfCircle(p5, center(), angle, scaledInnerRadius())
+  //           : null;
+  //
+  //       // top = coordOfCircle(
+  //       //   p5,
+  //       //   center(),
+  //       //   angle,
+  //       //   scaledInnerRadius() + scaledThickness() / 2,
+  //       // );
+  //
+  //       // bottom = coordOfCircle(
+  //       //   p5,
+  //       //   center(),
+  //       //   angle,
+  //       //   scaledInnerRadius() - scaledThickness() / 2,
+  //       // );
+  //
+  //       const rOuter = scaledInnerRadius() + scaledThickness() / 2;
+  //       const rInner = scaledInnerRadius() - scaledThickness() / 2;
+  //
+  //       top = createSimple2D(
+  //         center().x + cosHere * rOuter,
+  //         center().y + sinHere * rOuter,
+  //       );
+  //
+  //       bottom = createSimple2D(
+  //         center().x + cosHere * rInner,
+  //         center().y + sinHere * rInner,
+  //       );
+  //     }
+  //
+  //     return {
+  //       top,
+  //       center: centerLine,
+  //       bottom,
+  //       shadow,
+  //     };
+  //   });
+  // });
+
+  const vertexGrid = createMemo<Simple2D[][]>(() => {
+    const finalArc = finalArcLength();
+    if (!finalArc) {
       return [];
     }
 
-    const USE_RESOLUTION = Math.max(
-      Math.round(RESOLUTION_MIN * (dimensions().x / 1400)),
-      RESOLUTION_MIN,
+    const scaledThicknessVal = scaledThickness();
+    const centerX = center().x;
+    const scaledInnerRad = scaledInnerRadius();
+    const useResolution = USE_RESOLUTION();
+    const useResolutionVert = USE_RESOLUTION_VERT();
+
+    const colSize = scaledThicknessVal / useResolutionVert;
+    const rowSize = finalArc / useResolution;
+
+    const startX = currentX();
+    const startY = linePositionY() + scaledThicknessVal / 2;
+
+    const res: Simple2D[][] = Array.from(
+      { length: useResolution + 1 },
+      () => [],
     );
 
-    const SEGMENT_SIZE = finalArcLength() / USE_RESOLUTION;
+    for (let row = 0; row <= useResolution; row++) {
+      const offsetRow = row * rowSize;
+      const rowPosLinear = offsetRow + startX;
+      const arcLength = rowPosLinear - centerX;
+      const angle =
+        rowPosLinear > centerX
+          ? getAngleFromArcLengthInDegrees(arcLength, scaledInnerRad) +
+            OFFSET_ANGLES
+          : 0;
 
-    return createArrayFromLength(USE_RESOLUTION + 1).map((i: number) => {
-      const start = currentX() + i * SEGMENT_SIZE;
+      for (let col = 0; col <= useResolutionVert; col++) {
+        const offsetCol = col * colSize;
+        const colPosLinear = startY - offsetCol;
+        const colPosAsRadius =
+          scaledInnerRad - scaledThicknessVal / 2 + offsetCol;
 
-      let top;
-      let centerLine;
-      let bottom;
-      let shadow;
-
-      if (start <= center().x) {
-        centerLine = createSimple2D(start, linePositionY());
-        top = createSimple2D(start, linePositionY() - scaledThickness() / 2);
-        bottom = createSimple2D(start, linePositionY() + scaledThickness() / 2);
-        shadow = null;
-      } else {
-        shadow = createSimple2D(start, linePositionY());
-
-        const arcLength = start - center().x;
-        const angle =
-          getAngleFromArcLengthInDegrees(arcLength, scaledInnerRadius()) +
-          OFFSET_ANGLES;
-
-        const sinHere = p5.sin(angle);
-        const cosHere = p5.cos(angle);
-
-        centerLine =
-          config.stroke || config.debug
-            ? coordOfCircle(p5, center(), angle, scaledInnerRadius())
-            : null;
-
-        // top = coordOfCircle(
-        //   p5,
-        //   center(),
-        //   angle,
-        //   scaledInnerRadius() + scaledThickness() / 2,
-        // );
-
-        // bottom = coordOfCircle(
-        //   p5,
-        //   center(),
-        //   angle,
-        //   scaledInnerRadius() - scaledThickness() / 2,
-        // );
-
-        const rOuter = scaledInnerRadius() + scaledThickness() / 2;
-        const rInner = scaledInnerRadius() - scaledThickness() / 2;
-
-        top = createSimple2D(
-          center().x + cosHere * rOuter,
-          center().y + sinHere * rOuter,
-        );
-
-        bottom = createSimple2D(
-          center().x + cosHere * rInner,
-          center().y + sinHere * rInner,
-        );
+        if (rowPosLinear <= centerX) {
+          res[row][col] = createSimple2D(rowPosLinear, colPosLinear);
+        } else {
+          res[row][col] = coordOfCircle(p5, center(), angle, colPosAsRadius);
+        }
       }
+    }
 
-      return {
-        top,
-        center: centerLine,
-        bottom,
-        shadow,
-      };
-    });
+    return res;
+  });
+
+  const vertexGridCells = createMemo<
+    {
+      row: number;
+      col: number;
+      points: [Simple2D, Simple2D, Simple2D, Simple2D];
+    }[]
+  >(() => {
+    const grid = vertexGrid();
+    const cells: {
+      row: number;
+      col: number;
+      points: [Simple2D, Simple2D, Simple2D, Simple2D];
+    }[] = [];
+    for (let row = 0; row < grid.length - 1; row++) {
+      for (let col = 0; col < grid[row].length - 1; col++) {
+        const cellLeftTop = grid[row][col];
+        const cellRightTop = grid[row][col + 1];
+        const cellLeftBottom = grid[row + 1][col];
+        const cellRightBottom = grid[row + 1][col + 1];
+        const points = [
+          cellLeftTop,
+          cellRightTop,
+          cellRightBottom,
+          cellLeftBottom,
+        ] as [Simple2D, Simple2D, Simple2D, Simple2D];
+        if (!allPointsOutsideViewport(dimensions().x, dimensions().y, points)) {
+          cells.push({
+            row,
+            col,
+            points,
+          });
+        }
+      }
+    }
+    return cells;
   });
 
   /**
    * Draws the arcs
    */
   const draw = (): void => {
-    if (!config.debug) {
+    // const grid = vertexGrid();
+    //
+    // for (let row = 0; row < grid.length; row++) {
+    //   for (let col = 0; col < grid[row].length; col++) {
+    //     p5.strokeWeight(0.5);
+    //     p5.stroke("red");
+    //     p5.noFill();
+    //     p5.circle(grid[row][col].x, grid[row][col].y, 3);
+    //   }
+    // }
+
+    const cells = vertexGridCells();
+
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i];
+
+      p5.push();
+
       if (config.fill) {
-        p5.push();
-        p5.strokeWeight(0.5);
-        p5.noStroke();
-        p5.fill(config.fill.color);
-        p5.beginShape();
-        for (let i = 0; i < vertexPoints().length; i++) {
-          dvtx(vertexPoints()[i].top);
-        }
-        const reversed = [...vertexPoints()].reverse();
-        for (let i = 0; i < vertexPoints().length; i++) {
-          dvtx(reversed[i].bottom);
-        }
-        p5.endShape(p5.CLOSE);
-        p5.pop();
+        // p5.noStroke();
+        // p5.stroke([
+        //   config.fill.color[0],
+        //   config.fill.color[1],
+        //   config.fill.color[2],
+        //   cell.row * 5,
+        // ]);
+        const t1 = 1 - cell.row / USE_RESOLUTION();
+        const t2 = 1 - cell.col / USE_RESOLUTION_VERT();
+        const t = 0;
+        p5.strokeWeight(1);
+        p5.stroke([
+          lerp(config.fill.color[0], config.bgColor[0], t),
+          lerp(config.fill.color[1], config.bgColor[1], t),
+          lerp(config.fill.color[2], config.bgColor[2], t),
+          255,
+        ]);
+        p5.fill([
+          lerp(config.fill.color[0], config.bgColor[0], t),
+          lerp(config.fill.color[1], config.bgColor[1], t),
+          lerp(config.fill.color[2], config.bgColor[2], t),
+          255,
+        ]);
       }
-
       if (config.stroke) {
-        p5.push();
         p5.noFill();
-        p5.stroke(config.stroke.color);
         p5.strokeWeight(0.5);
-
-        p5.beginShape();
-        /// outline
-        for (let i = 0; i < vertexPoints().length; i++) {
-          dvtx(vertexPoints()[i].top);
-        }
-        const reversed = [...vertexPoints()].reverse();
-        for (let i = 0; i < vertexPoints().length; i++) {
-          dvtx(reversed[i].bottom);
-        }
-        p5.endShape(p5.CLOSE);
-
-        /// center
-        for (let i = 0; i < vertexPoints().length - 1; i++) {
-          p5.line(
-            vertexPoints()[i].center!.x,
-            vertexPoints()[i].center!.y,
-            vertexPoints()[i + 1].center!.x,
-            vertexPoints()[i + 1].center!.y,
-          );
-        }
-
-        /// verticals
-        for (let i = 0; i < vertexPoints().length; i++) {
-          if (i % 4 === 0) {
-            p5.line(
-              vertexPoints()[i].top.x,
-              vertexPoints()[i].top.y,
-              vertexPoints()[i].bottom.x,
-              vertexPoints()[i].bottom.y,
-            );
-          }
-        }
-        p5.pop();
+        p5.stroke([
+          config.stroke.color[0],
+          config.stroke.color[1],
+          config.stroke.color[2],
+          cell.row * 5,
+        ]);
       }
-    } else if (config.debug) {
-      p5.push();
-      p5.stroke(COLORS_3A.RED);
-      p5.fill(COLORS_3A.GRAY_DARKEST);
-      p5.strokeWeight(0.5);
-      p5.line(center().x, 0, center().x, p5.height);
-      p5.circle(center().x, center().y, 15);
-      p5.pop();
-
-      p5.push();
-
-      p5.noFill();
-      p5.stroke(strokeColor());
-      p5.strokeWeight(0.5);
 
       p5.beginShape();
-      for (let i = 0; i < vertexPoints().length; i++) {
-        if (i % 4 === 0) {
-          dvtx(vertexPoints()[i].center!);
-        }
-      }
-      p5.endShape();
-
-      p5.push();
-      p5.stroke(COLORS_3A.RED);
-      let shadI = -1;
-      for (let i = 0; i < vertexPoints().length; i++) {
-        if (vertexPoints()[i].shadow && i % 4 === 0) {
-          p5.circle(
-            vertexPoints()[i].shadow!.x,
-            vertexPoints()[i].shadow!.y,
-            5,
-          );
-          shadI = i;
-        }
-      }
-
-      if (shadI > -1) {
-        p5.line(
-          vertexPoints()[shadI].shadow!.x,
-          vertexPoints()[shadI].shadow!.y - 20,
-          center().x,
-          vertexPoints()[shadI].shadow!.y - 20,
-        );
-        p5.line(
-          center().x,
-          center().y,
-          vertexPoints()[shadI].center!.x,
-          vertexPoints()[shadI].center!.y,
-        );
-      }
+      dvtx(cell.points[0]);
+      dvtx(cell.points[1]);
+      dvtx(cell.points[2]);
+      dvtx(cell.points[3]);
+      dvtx(cell.points[0]);
+      p5.endShape(p5.CLOSE);
       p5.pop();
-
-      for (let i = 0; i < vertexPoints().length; i++) {
-        if (i % 4 === 0) {
-          p5.circle(
-            vertexPoints()[i].center!.x,
-            vertexPoints()[i].center!.y,
-            5,
-          );
-        }
-      }
+      // dvtx(cell[3]);
+      // dvtx(cell[0]);
     }
+
+    // p5.text(p5.frameRate(), 20, 20);
+    // p5.text(USE_RESOLUTION_VERT(), 400 + USE_RESOLUTION_VERT() * 10, 20);
+
+    // p5.updatePixels();
+
+    // p5.image(buffer, -p5.width / 2, -p5.height / 2);
+
+    // if (!config.debug) {
+    //   if (config.fill) {
+    //     p5.push();
+    //     p5.strokeWeight(0.5);
+    //     p5.noStroke();
+    //     p5.fill(config.fill.color);
+    //     p5.beginShape();
+    //     for (let i = 0; i < vertexPoints().length; i++) {
+    //       dvtx(vertexPoints()[i].top);
+    //     }
+    //     const reversed = [...vertexPoints()].reverse();
+    //     for (let i = 0; i < vertexPoints().length; i++) {
+    //       dvtx(reversed[i].bottom);
+    //     }
+    //     p5.endShape(p5.CLOSE);
+    //     p5.pop();
+    //   }
+    //
+    //   if (config.stroke) {
+    //     p5.push();
+    //     p5.noFill();
+    //     p5.stroke(config.stroke.color);
+    //     p5.strokeWeight(0.5);
+    //
+    //     p5.beginShape();
+    //     /// outline
+    //     for (let i = 0; i < vertexPoints().length; i++) {
+    //       dvtx(vertexPoints()[i].top);
+    //     }
+    //     const reversed = [...vertexPoints()].reverse();
+    //     for (let i = 0; i < vertexPoints().length; i++) {
+    //       dvtx(reversed[i].bottom);
+    //     }
+    //     p5.endShape(p5.CLOSE);
+    //
+    //     /// center
+    //     for (let i = 0; i < vertexPoints().length - 1; i++) {
+    //       p5.line(
+    //         vertexPoints()[i].center!.x,
+    //         vertexPoints()[i].center!.y,
+    //         vertexPoints()[i + 1].center!.x,
+    //         vertexPoints()[i + 1].center!.y,
+    //       );
+    //     }
+    //
+    //     /// verticals
+    //     for (let i = 0; i < vertexPoints().length; i++) {
+    //       if (i % 4 === 0) {
+    //         p5.line(
+    //           vertexPoints()[i].top.x,
+    //           vertexPoints()[i].top.y,
+    //           vertexPoints()[i].bottom.x,
+    //           vertexPoints()[i].bottom.y,
+    //         );
+    //       }
+    //     }
+    //     p5.pop();
+    //   }
+    // } else if (config.debug) {
+    //   p5.push();
+    //   p5.stroke(COLORS_3A.RED);
+    //   p5.fill(COLORS_3A.GRAY_DARKEST);
+    //   p5.strokeWeight(0.5);
+    //   p5.line(center().x, 0, center().x, p5.height);
+    //   p5.circle(center().x, center().y, 15);
+    //   p5.pop();
+    //
+    //   p5.push();
+    //
+    //   p5.noFill();
+    //   p5.stroke(strokeColor());
+    //   p5.strokeWeight(0.5);
+    //
+    //   p5.beginShape();
+    //   for (let i = 0; i < vertexPoints().length; i++) {
+    //     if (i % 4 === 0) {
+    //       dvtx(vertexPoints()[i].center!);
+    //     }
+    //   }
+    //   p5.endShape();
+    //
+    //   p5.push();
+    //   p5.stroke(COLORS_3A.RED);
+    //   let shadI = -1;
+    //   for (let i = 0; i < vertexPoints().length; i++) {
+    //     if (vertexPoints()[i].shadow && i % 4 === 0) {
+    //       p5.circle(
+    //         vertexPoints()[i].shadow!.x,
+    //         vertexPoints()[i].shadow!.y,
+    //         5,
+    //       );
+    //       shadI = i;
+    //     }
+    //   }
+    //
+    //   if (shadI > -1) {
+    //     p5.line(
+    //       vertexPoints()[shadI].shadow!.x,
+    //       vertexPoints()[shadI].shadow!.y - 20,
+    //       center().x,
+    //       vertexPoints()[shadI].shadow!.y - 20,
+    //     );
+    //     p5.line(
+    //       center().x,
+    //       center().y,
+    //       vertexPoints()[shadI].center!.x,
+    //       vertexPoints()[shadI].center!.y,
+    //     );
+    //   }
+    //   p5.pop();
+    //
+    //   for (let i = 0; i < vertexPoints().length; i++) {
+    //     if (i % 4 === 0) {
+    //       p5.circle(
+    //         vertexPoints()[i].center!.x,
+    //         vertexPoints()[i].center!.y,
+    //         5,
+    //       );
+    //     }
+    //   }
+    // }
   };
 
   // Return functions to set various arc properties and the draw function

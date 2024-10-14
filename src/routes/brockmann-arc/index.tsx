@@ -209,7 +209,7 @@ export default function BrockmannArc() {
                   animateCommand={animateClick()}
                   arcSettingsPartial={{
                     amountOfArcs: 12,
-                    gap: 1,
+                    gap: 3,
                     arcRange: createArrayFromLength(12).map((i) => i * 1.5),
                     sizes: createArrayFromLength(12).map(
                       (i) => Math.pow(i, i) * 0.5,

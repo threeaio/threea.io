@@ -75,6 +75,7 @@ export default function BrockmanAnimation05(
           }}
           arcConfig={{
             debug: false,
+            bgColor: COLORS_3A[props.bgColor],
             fill: {
               color: COLORS_3A.GRAY_DARKER,
             },

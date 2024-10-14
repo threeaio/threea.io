@@ -103,7 +103,8 @@ export default function ArcAnimationStep1(
   const createSketch = (ref: HTMLElement) => {
     const sketch = (_p5: P5) => {
       _p5.setup = () => {
-        const canvas = _p5.createCanvas(width(), useHeight());
+        const canvas = _p5.createCanvas(width(), useHeight(), _p5.P2D);
+        // _p5.noSmooth();
         _p5.angleMode(_p5.DEGREES);
         canvas.parent(ref);
 
