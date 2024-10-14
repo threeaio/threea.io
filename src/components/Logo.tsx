@@ -3,7 +3,7 @@ export const MainLogo = (
 ) => {
   return (
     <div class="flex items-center gap-8 py-8">
-      <div class={props.size === "normal" ? "w-16 h-16" : "w-12 h-12"}>
+      <div class={props.size === "normal" ? "w-14 h-14" : "w-12 h-12"}>
         <svg viewBox="321.25 213.5 301 301" class="fill-3a-white w-full h-full">
           <polygon points="479.248 305.75 455.248 305.75 416.752 410.75 440.752 410.75 479.248 305.75" />
           <polygon

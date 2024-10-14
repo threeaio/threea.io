@@ -3,7 +3,6 @@ import { HeaderSimple } from "~/content/Header-Simple";
 import MainArticle from "~/components/Main-Article";
 import { AgileAgit } from "~/content/Agile-Agit";
 import { clientOnly } from "@solidjs/start";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { navigationBus } from "~/Navigation-Bus";
 import { onMount } from "solid-js";
 import { AntiAgony } from "~/content/Anti-Agony";

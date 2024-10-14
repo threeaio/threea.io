@@ -1,10 +1,8 @@
 import { Divider } from "~/components/Divider";
-import { LandingPageLayout } from "~/Landing-Page-Layout";
 import { HeaderSimple } from "~/content/Header-Simple";
 import { clientOnly } from "@solidjs/start";
 import MainArticle from "~/components/Main-Article";
 import { AsyncAction } from "~/content/Async-Action";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { onMount } from "solid-js";
 import { navigationBus } from "~/Navigation-Bus";
 import { AgileAgit } from "~/content/Agile-Agit";

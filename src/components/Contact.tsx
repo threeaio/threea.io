@@ -1,12 +1,12 @@
-import EmailIcon from "~/components/Email-Icon";
+import EmailIcon from "~/components/icons/Email-Icon";
 import { FullWidth } from "~/components/layouts/Full-Width";
-import Instagram from "~/components/Instagram";
-import LinkedIn from "~/components/Linked-In";
+import Instagram from "~/components/icons/Instagram";
+import LinkedIn from "~/components/icons/Linked-In";
 import sgMail from "@sendgrid/mail";
 import { createSignal } from "solid-js";
 import { Portal } from "solid-js/web";
 import { Button } from "~/components/Button";
-import { Headline } from "~/components/Headline";
+import { Headline } from "~/components/typo/Headline";
 import { useForm } from "~/components/Validation";
 import { createStore } from "solid-js/store";
 

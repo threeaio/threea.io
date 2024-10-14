@@ -17,11 +17,11 @@ import {
   ArcSettings,
   generateArcs,
   getBrockmannAngles,
-} from "~/components/animation/Brockmann-Arcs-Config";
+} from "~/components/animation/brockmann-beethoven/Brockmann-Arcs-Config";
 import VerticeArc, {
   VerticeArcConfig,
   VerticeArcType,
-} from "~/components/animation/Primitives/Vertice-Arc";
+} from "~/components/animation/brockmann-beethoven/Primitives/Vertice-Arc";
 import { ColorArray, getRandomFloat, remapT } from "~/_util";
 import { gsap } from "gsap";
 

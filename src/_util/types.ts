@@ -12,3 +12,9 @@ export type Simple2DLine = [Simple2D, Simple2D];
 export type ColorArray = [number, number, number, number];
 export type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+export type AnimationTrigger =
+  | PointerEvent
+  | MouseEvent
+  | KeyboardEvent
+  | number
+  | undefined;

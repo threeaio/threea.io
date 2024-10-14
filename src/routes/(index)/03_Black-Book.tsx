@@ -1,8 +1,8 @@
 import { createSignal, onMount } from "solid-js";
 import { gsap } from "gsap";
 import { FullWidth } from "~/components/layouts/Full-Width";
-import { HugeText } from "~/components/HugeText";
-import { SmallText } from "~/components/SmallText";
+import { HugeText } from "~/components/typo/HugeText";
+import { SmallText } from "~/components/typo/SmallText";
 import { A } from "@solidjs/router";
 
 export default function BlackBook() {

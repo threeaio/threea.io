@@ -1,9 +1,8 @@
-import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 import { Title } from "@solidjs/meta";
 import { HeaderSimple } from "~/content/Header-Simple";
 import { FullWidth } from "~/components/layouts/Full-Width";
-import { SmallText } from "~/components/SmallText";
-import { Headline } from "~/components/Headline";
+import { SmallText } from "~/components/typo/SmallText";
+import { Headline } from "~/components/typo/Headline";
 
 export default function Privacy() {
   return (

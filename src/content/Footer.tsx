@@ -1,6 +1,6 @@
 import { GridIndicator } from "~/components/Grid-Indicator";
 import { MainLogo } from "~/components/Logo";
-import { SmallText } from "~/components/SmallText";
+import { SmallText } from "~/components/typo/SmallText";
 import { FullWidth } from "~/components/layouts/Full-Width";
 
 export const Footer = () => {

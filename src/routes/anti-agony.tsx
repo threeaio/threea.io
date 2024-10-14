@@ -1,9 +1,7 @@
 import { Divider } from "~/components/Divider";
-import { LandingPageLayout } from "~/Landing-Page-Layout";
 import { HeaderSimple } from "~/content/Header-Simple";
 import { AntiAgony } from "~/content/Anti-Agony";
 import MainArticle from "~/components/Main-Article";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { clientOnly } from "@solidjs/start";
 import { onMount } from "solid-js";
 import { navigationBus } from "~/Navigation-Bus";

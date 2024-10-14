@@ -1,9 +1,7 @@
 import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 import { Title } from "@solidjs/meta";
-import { HugeText } from "~/components/HugeText";
-import { SmallText } from "~/components/SmallText";
+import { HugeText } from "~/components/typo/HugeText";
 import { HeaderSimple } from "~/content/Header-Simple";
-import { Headline } from "~/components/Headline";
 import { FullWidth } from "~/components/layouts/Full-Width";
 
 export default function Home() {

@@ -1,11 +1,14 @@
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
-import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/Brockmann-Arcs-Config";
+import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/brockmann-beethoven/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
 const ANIMATION = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-arc-step-1"),
+  () =>
+    import(
+      "~/components/animation/brockmann-beethoven/Canvas-Animation-arc-step-1"
+    ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { hexToRgb, remapT } from "~/_util";
+import { AnimationTrigger, hexToRgb, remapT } from "~/_util";
 import { Accessor, createEffect, ParentProps } from "solid-js";
 
 /**
@@ -14,12 +17,7 @@ import { Accessor, createEffect, ParentProps } from "solid-js";
 
 export default function BrockmanAnimation03(
   props: {
-    animateCommand:
-      | PointerEvent
-      | MouseEvent
-      | KeyboardEvent
-      | number
-      | undefined;
+    animateCommand: AnimationTrigger;
   } & ParentProps,
 ) {
   return (

@@ -1,31 +1,32 @@
 import { Title } from "@solidjs/meta";
-import { HugeText } from "~/components/HugeText";
-import { SmallText } from "~/components/SmallText";
+import { HugeText } from "~/components/typo/HugeText";
+import { SmallText } from "~/components/typo/SmallText";
 import { HeaderSimple } from "~/content/Header-Simple";
-import { Headline } from "~/components/Headline";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { Divider } from "~/components/Divider";
 import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
-import { createSignal, JSX, onCleanup, onMount, ParentProps } from "solid-js";
+import {
+  Accessor,
+  createSignal,
+  JSX,
+  onCleanup,
+  onMount,
+  ParentProps,
+} from "solid-js";
 import { createIntersectionObserver } from "@solid-primitives/intersection-observer";
 import { clientOnly } from "@solidjs/start";
-import Kbd from "~/components/typo/Kbd";
 import Anf from "~/components/typo/Anf";
-import { createArrayFromLength, reMap } from "~/_util";
+import { AnimationTrigger, createArrayFromLength, reMap } from "~/_util";
+import {
+  AnimatedSubSection,
+  intro,
+  step1,
+  step2,
+  step3,
+} from "~/routes/brockmann-arc/content";
+import { PosterTextHeadline } from "~/components/animation-html-additions/Poster-Headline";
+import { PosterContentBeethoven } from "~/components/animation-html-additions/Poster-Content";
 
-const ANIMATION_00_INTRO = clientOnly(
-  () => import("~/routes/brockmann-arc/animation-intro"),
-);
-
-const ANIMATION_01_IDEA = clientOnly(
-  () => import("~/routes/brockmann-arc/animation-step-1"),
-);
-const ANIMATION_02 = clientOnly(
-  () => import("~/routes/brockmann-arc/animation-step-2"),
-);
-const ANIMATION_03 = clientOnly(
-  () => import("~/routes/brockmann-arc/animation-step-3"),
-);
 const ANIMATION_04 = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-4"),
 );
@@ -33,17 +34,8 @@ const ANIMATION_05 = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-5"),
 );
 
-interface AnimatedSubSection {
-  num: string;
-  title: string;
-  description: () => JSX.Element;
-  animation: () => JSX.Element;
-}
-
 export default function BrockmannArc() {
-  const [animateClick, setAnimateClick] = createSignal<
-    PointerEvent | MouseEvent | KeyboardEvent | undefined
-  >();
+  const [animateClick, setAnimateClick] = createSignal<AnimationTrigger>();
   onMount(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.key === "A" || event.key === "a") {
@@ -55,95 +47,6 @@ export default function BrockmannArc() {
       document.removeEventListener("keydown", listener);
     });
   });
-  const step1: AnimatedSubSection = {
-    title: "Idee zur Animation",
-    num: "01",
-    animation: () => <ANIMATION_01_IDEA />,
-    description: () => (
-      <>
-        <p>
-          Nach einigem Probieren und Aufrischen meines 9.
-          Klasse-Trigonometrie-Wissens habe ich entschieden, dass die Bögen als
-          Rechtecke an einer Position außerhalb der Grafik starten und sich
-          dann, in einer fließenden Bewegung, an ihre Zielposition im{" "}
-          <Anf>Kreis</Anf> bewegen sollten.
-        </p>
-        <p>
-          Grundlage der Umsetzung ist dann, dass ich von der Länge der Bögen an
-          der Zielposition als <Anf>Strecke</Anf> ausgehe und anhand einer fixen
-          Auflösung Punkte auf dieser zeichne. Diese <Anf>Strecke</Anf> wird
-          dann Anhand eines Animationsparameters verschoben.
-        </p>
-        <p>
-          Je nachdem, ob einer dieser Punkte an dem Mittelpunkt des Kreises
-          vorbei ist oder nicht, werden die Koordination dieses Punktes entweder
-          an ihrer Position belassen oder auf den Kreis <Anf>projiziert</Anf>.
-        </p>
-      </>
-    ),
-  };
-
-  const step2: AnimatedSubSection = {
-    title: "Weiteres",
-    num: "02",
-    animation: () => <ANIMATION_02 />,
-    description: () => (
-      <>
-        <p>
-          Auch ohne selbst Lineal und Zirkel anzulegen, lassen sich schnell ein
-          paar Parameter zur Geometrie des Plakats finden.
-        </p>
-        <p>
-          So liegen die Winkel selbst auf einem Raster, welches den Kreis in 32
-          Segmente unterteilt &ndash; also 11.25&deg;. Die <Anf>Dicke</Anf> der
-          Bögen verdoppelt sich nach außen hin mit jedem Bogen.
-        </p>
-        <p>
-          Ich habe mich hier entschieden eine leichte Zufälligkeit in den Start-
-          und End-Winkel einzubauen, um das Ganze ein wenig interessanter zu
-          gestalten.
-        </p>
-        <p>
-          Da die Bögen auch links vom Mittelpunktes des Kreises aus{" "}
-          <Anf>starten</Anf> können, wurde eine Extra-Drehung eingbaut, um
-          dieses einfach abzubilden.
-        </p>
-      </>
-    ),
-  };
-
-  const step3: AnimatedSubSection = {
-    title: "Zwischenergebnis",
-    num: "03",
-    animation: () => <ANIMATION_03 animateCommand={animateClick()} />,
-    description: () => (
-      <>
-        <p>
-          Hier ist ein weiterer Zufallsparameter eingabaut, der die
-          Startposition der Bögen verschiebt.
-        </p>
-        {/*<p>*/}
-        {/*  Durch Drücken der <Kbd>A</Kbd>-Taste kannst du sowohl Startposition,*/}
-        {/*  als auch die Zielwinkel auf neue Werte animieren*/}
-        {/*</p>*/}
-        {/*<h3>Zwischenfazit</h3>*/}
-        <p>
-          Es gäbe noch einige weitere Ideen. Trotzdem lege ich hier erstmal eine
-          Pause ein und schaue, was sich mit ein paar Parametern aus diesem Teil
-          generieren lässt.
-        </p>
-        {/*<p>*/}
-        {/*  Neben den fehlenden Segmenten, wirkt das <Anf>Einfahren</Anf> von*/}
-        {/*  links und die damit verbundene <Anf>Extra-Umdrehung</Anf> noch nicht*/}
-        {/*  so, wie ich es mir ausgemalt hatte.*/}
-        {/*</p>*/}
-        {/*<p>*/}
-        {/*  Trotzdem lege ich hier erstmal eine Pause ein und schaue, was sich mit*/}
-        {/*  ein paar Parametern aus diesem Teil generieren lässt.*/}
-        {/*</p>*/}
-      </>
-    ),
-  };
 
   return (
     <main>
@@ -153,9 +56,7 @@ export default function BrockmannArc() {
 
       <div class="">
         <div class="relative">
-          <div class="absolute inset-0">
-            <ANIMATION_00_INTRO bgColor={"GRAY_DARKEST"}></ANIMATION_00_INTRO>
-          </div>
+          <div class="absolute inset-0">{intro.animation()}</div>
           <div class="relative">
             <FullWidth>
               <div>
@@ -163,30 +64,14 @@ export default function BrockmannArc() {
                   <HugeText>
                     <div class={"grid  md:grid-cols-3"}>
                       <div class={"md:col-span-2 md:text-right"}>
-                        <h1 class={"mb-12"}>
-                          Brockmanns
-                          <br /> Beethoven
-                        </h1>
+                        <h1 class={"mb-12"}>{intro.headline()}</h1>
                       </div>
                     </div>
                   </HugeText>
                   <div class={"grid md:grid-cols-3 "}>
                     <div class={"md:col-start-3"}>
                       <SmallText>
-                        <div class="text-sm xl:w-1/2">
-                          <p>
-                            Ziel hier ist es, ein paar Grundlagen in der
-                            Generierung von Grafik (mit Canvas bzw. P5.js) zu
-                            verinnerlichen und nebenbei etwas <Anf>Schönes</Anf>{" "}
-                            zu erstellen
-                          </p>
-                          {/*<p>*/}
-                          {/*  Natürlich soll am Ende auch etwas <Anf>Schönes</Anf>{" "}*/}
-                          {/*  dabei herauskommen. Jedoch ohne den genauen Zweck*/}
-                          {/*  hierfür schon zu kennen.*/}
-                          {/*</p>*/}
-                          <p>Das Projekt wird fortlaufend aktualisiert.</p>
-                        </div>
+                        <div class="text-sm xl:w-1/2">{intro.text()}</div>
                       </SmallText>
                     </div>
                   </div>
@@ -251,7 +136,11 @@ export default function BrockmannArc() {
 
         <FullAnimatedBg content={step1} withRotatedBg={false} />
         <FullAnimatedBg content={step2} withRotatedBg={"-rotate-2"} />
-        <FullAnimatedBg content={step3} withRotatedBg={false} />
+        <FullAnimatedBg
+          content={step3}
+          withRotatedBg={false}
+          animationTrigger={animateClick}
+        />
 
         {/*////x*/}
         <div class={"mb-24"}>
@@ -281,7 +170,7 @@ export default function BrockmannArc() {
                     animateBpm={15}
                     animateCommand={animateClick()}
                   />
-                  <PosterText>Iggy Pop</PosterText>
+                  <PosterContentBeethoven>Iggy Pop</PosterContentBeethoven>
                 </div>
               </div>
 
@@ -294,7 +183,7 @@ export default function BrockmannArc() {
                     animateBpm={30}
                     animateCommand={animateClick()}
                   />
-                  <PosterText>Miles Davis</PosterText>
+                  <PosterContentBeethoven>Miles Davis</PosterContentBeethoven>
                 </div>
               </div>
 
@@ -307,7 +196,7 @@ export default function BrockmannArc() {
                     bgColor={"GREEN"}
                     animateCommand={animateClick()}
                   />
-                  <PosterText>Ice Cube</PosterText>
+                  <PosterContentBeethoven>Ice Cube</PosterContentBeethoven>
                 </div>
               </div>
 
@@ -409,38 +298,6 @@ export default function BrockmannArc() {
   );
 }
 
-function PosterTextHeadline(props: ParentProps) {
-  return (
-    <span class="block text-sm 2xl:text-base text-3a-gray-darker font-display text-right !leading-tight lowercase">
-      {props.children}
-    </span>
-  );
-}
-function PosterText(props: ParentProps) {
-  // return <></>;
-  return (
-    <>
-      <span class="absolute origin-bottom-right scale-100 md:scale-75 xl:scale-100 right-2/3 bottom-1/3  pb-4">
-        <PosterTextHeadline>
-          <span class={"whitespace-nowrap"}>{props.children}</span>
-        </PosterTextHeadline>
-      </span>
-      <span class="absolute left-1/3 top-2/3 origin-top-left scale-100 md:scale-75 xl:scale-100">
-        <span class={"grid gap-1 mix-blend-multiply opacity-20"}>
-          <span class={"bg-3a-black h-1 w-12"}></span>
-          <span class={"bg-3a-black h-1 w-9"}></span>
-          <span class={"bg-3a-black h-1 w-16"}></span>
-          <span class={"bg-3a-black h-1 w-9"}></span>
-          <span class={"bg-3a-black h-1 w-12"}></span>
-          <span class={"bg-3a-black h-1 w-9"}></span>
-          <span class={"bg-3a-black h-1 w-16"}></span>
-          <span class={"bg-3a-black h-1 w-9"}></span>
-        </span>
-      </span>
-    </>
-  );
-}
-
 function RotatedPageBg(props: { rotateClass: string }) {
   return (
     <div class={"absolute inset-0 overflow-hidden"}>
@@ -454,6 +311,7 @@ function RotatedPageBg(props: { rotateClass: string }) {
 function FullAnimatedBg(props: {
   content: AnimatedSubSection;
   withRotatedBg: false | string;
+  animationTrigger?: Accessor<AnimationTrigger>;
 }) {
   return (
     <div class={`relative ${!!props.withRotatedBg && "py-24"}`}>
@@ -472,7 +330,9 @@ function FullAnimatedBg(props: {
             {props.content.description()}
           </HeaderDescriptionDefaultHere>
         </HeaderHere>
-        <div style={"height: 200svh"}>{props.content.animation()}</div>
+        <div style={"height: 200svh"}>
+          {props.content.animation(props.animationTrigger)}
+        </div>
       </div>
     </div>
   );

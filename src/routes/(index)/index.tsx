@@ -12,7 +12,7 @@ import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrap
 import { clientOnly } from "@solidjs/start";
 import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
-import { HugeText } from "~/components/HugeText";
+import { HugeText } from "~/components/typo/HugeText";
 const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-2"),
 );

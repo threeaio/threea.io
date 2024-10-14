@@ -1,5 +1,5 @@
 import { MainLogo } from "~/components/Logo";
-import { SmallText } from "~/components/SmallText";
+import { SmallText } from "~/components/typo/SmallText";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
 import { Button } from "~/components/Button";

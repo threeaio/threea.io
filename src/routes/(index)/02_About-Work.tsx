@@ -4,10 +4,9 @@ import { AntiAgony } from "~/content/Anti-Agony";
 import { AsyncAction } from "~/content/Async-Action";
 import { AgileAgit } from "~/content/Agile-Agit";
 import { FullWidth } from "~/components/layouts/Full-Width";
-import { HugeText } from "~/components/HugeText";
-import { SmallText } from "~/components/SmallText";
+import { HugeText } from "~/components/typo/HugeText";
+import { SmallText } from "~/components/typo/SmallText";
 import { BasicTextContent } from "~/content/content-type";
-import { GridIndicator } from "~/components/Grid-Indicator";
 
 export default function AboutWork() {
   const [target, setTarget] = createSignal<HTMLElement | undefined>();
