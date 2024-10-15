@@ -3,6 +3,7 @@ import { A } from "@solidjs/router";
 
 export const Button = (props: {
   children: JSX.Element;
+  target?: string;
   active?: boolean;
   disabled?: boolean;
   asA?: boolean; // TODO group with href
@@ -23,7 +24,18 @@ export const Button = (props: {
   ) : (
     <button
       type={props.buttonType || "button"}
-      onClick={() => props.handleClick?.()}
+      onClick={() => {
+        props.handleClick?.();
+
+        if (props.target) {
+          const el: HTMLElement | null = document.querySelector(props.target);
+          if (el) {
+            window.lenis.scrollTo(el, {
+              duration: 2,
+            });
+          }
+        }
+      }}
       class={`btn  ${props.isBack ? "btn--back" : ""} ${props.disabled === true ? "btn--disabled" : ""}`}
     >
       {props.children}

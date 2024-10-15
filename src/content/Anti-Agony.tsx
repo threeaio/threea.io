@@ -3,7 +3,7 @@ import { BasicTextContent } from "~/content/content-type";
 export const AntiAgony: BasicTextContent = {
   titleSeo: "Anti-Agonie - Über Motivation und Prinzipien",
   moreLink: {
-    href: "/anti-agony",
+    linkProps: { type: "link", href: "/anti-agony" },
     title: "Anti-Agonie",
   },
   headline: () => <>Anti-Agonie</>,

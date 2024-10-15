@@ -24,7 +24,8 @@
   @apply top-0;
   @apply right-0;
   @apply z-30;
-  /*@apply sm:rounded-lg;*/
+  @apply sm:rounded-xl;
+  @apply sm:shadow-2xl;
 
   @apply sm:-translate-x-5;
   @apply sm:translate-y-5;
@@ -33,7 +34,7 @@
   @apply m-0;
   @apply sm:border-0;
   @apply sm:border-3a-green;
-  @apply max-sm:bg-3a-gray-darkest;
+  @apply max-sm:bg-3a-black;
   /*@apply sm:bg-auto;*/
   /*@apply border-opacity-0;*/
   transform-origin: 2rem 0%;
@@ -46,8 +47,8 @@
   @apply sm:transition-[transform_background_border];
   /*@apply sm:transition-[background];*/
   /*@apply sm:transition-[border];*/
-  @apply bg-3a-gray-darkest;
-  @apply sm:border-[0.5px];
+  @apply bg-3a-black;
+  /*@apply sm:border-[0.5px];*/
 }
 
 .navInner {

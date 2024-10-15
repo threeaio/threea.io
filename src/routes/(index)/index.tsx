@@ -20,7 +20,24 @@ const ANIMATION = clientOnly(
 export default function Home() {
   onMount(() => {
     navigationBus.emit({
-      onThisPage: [],
+      onThisPage: [
+        {
+          linkProps: { type: "anchor", target: "#INDEX_START" },
+          title: "Oben",
+        },
+        {
+          linkProps: { type: "anchor", target: "#INDEX_ABOUT_WORK" },
+          title: "Über mich",
+        },
+        {
+          linkProps: { type: "anchor", target: "#INDEX_BLACKBOOK" },
+          title: "Blackbook",
+        },
+        {
+          linkProps: { type: "anchor", target: "#INDEX_THE_END" },
+          title: "Ende",
+        },
+      ],
       relatedToThisPage: [
         AntiAgony.moreLink,
         AsyncAction.moreLink,
@@ -33,7 +50,7 @@ export default function Home() {
       <Title>Welcome to Threea.io</Title>
       <GridIndicator />
       <main>
-        <div>
+        <div id={"INDEX_START"}>
           <Introduction />
         </div>
         <div class={"relative"}>
@@ -50,7 +67,10 @@ export default function Home() {
             <BlackBook />
             <Divider />
             <FullWidth>
-              <div class="h-screen flex flex-col justify-center text-pretty">
+              <div
+                id={"INDEX_THE_END"}
+                class="h-screen flex flex-col justify-center text-pretty"
+              >
                 <HugeText>
                   <figure class="max-w-[72rem]">
                     Dieses ist nicht das Ende, sondern ein Anfang von etwas.

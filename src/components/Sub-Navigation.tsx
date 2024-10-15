@@ -28,16 +28,16 @@ export default function SubNavigation() {
         class={`navHead`}
         onPointerUp={() => {
           setShow(!show());
-          if (
-            document.querySelector("body")!.classList.contains("preview-layout")
-          ) {
-            document.querySelector("body")!.classList.toggle("preview-layout");
-            setTimeout(() => {
-              window.scrollTrigger.refresh();
-            }, 700);
-
-            window.scrollTo(0, 0);
-          }
+          // if (
+          //   document.querySelector("body")!.classList.contains("preview-layout")
+          // ) {
+          //   document.querySelector("body")!.classList.toggle("preview-layout");
+          //   setTimeout(() => {
+          //     window.scrollTrigger.refresh();
+          //   }, 700);
+          //
+          //   window.scrollTo(0, 0);
+          // }
         }}
       >
         <span class={`navHeadSymbol`}>
@@ -51,51 +51,81 @@ export default function SubNavigation() {
       <div class={`nav`}>
         <nav class="overflow-hidden">
           <div class={`navInner`}>
-            <ul>
-              <For each={navigationConfig().relatedToThisPage}>
-                {(item, i) => (
-                  <li
-                    style={`--i:${i()}`}
-                    class={`pl-4 sm:pl-8 pr-20 ${i() === navigationConfig().relatedToThisPage.length - 1 ? "mb-4" : ""} `}
-                  >
-                    <Button
-                      href={item.href}
-                      asA={true}
-                      active={location.pathname === item.href}
+            <Show when={navigationConfig().onThisPage.length}>
+              <h4 class="class={`px-4 sm:px-8">Diese Seite</h4>
+              <ul>
+                <For each={navigationConfig().onThisPage}>
+                  {(item, i) => (
+                    <li
+                      style={`--i:${i()}`}
+                      class={`pl-4 sm:pl-8 pr-20 ${i() === navigationConfig().onThisPage.length - 1 ? "mb-4" : ""} `}
                     >
-                      {item.title}
-                    </Button>
-                  </li>
-                )}
-              </For>
+                      {item.linkProps.type === "link" && (
+                        <Button
+                          href={item.linkProps.href}
+                          asA={true}
+                          active={location.pathname === item.linkProps.href}
+                        >
+                          {item.title}
+                        </Button>
+                      )}
+                      {item.linkProps.type === "anchor" && (
+                        <Button target={item.linkProps.target}>
+                          {item.title}
+                        </Button>
+                      )}
+                    </li>
+                  )}
+                </For>
 
-              {/*<li*/}
-              {/*  style={`--i:${navigationConfig().relatedToThisPage.length + 1}`}*/}
-              {/*  class="hidden border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20"*/}
-              {/*>*/}
-              {/*  <Button*/}
-              {/*    handleClick={() => {*/}
-              {/*      document*/}
-              {/*        .querySelector("body")!*/}
-              {/*        .classList.toggle("preview-layout");*/}
-              {/*      window.lenis.scrollTo(0, { duration: 0 });*/}
-              {/*      setTimeout(() => {*/}
-              {/*        window.scrollTrigger.refresh();*/}
-              {/*      }, 700);*/}
-              {/*    }}*/}
-              {/*  >*/}
-              {/*    Poster-View*/}
-              {/*  </Button>*/}
-              {/*</li>*/}
-              <li
-                style={`--i:${navigationConfig().relatedToThisPage.length}`}
-                class={`border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20 ${location.pathname === "/" ? "hidden" : ""}`}
-              >
-                <Button href="/" asA={true} isBack={true}>
-                  Zur Startseite
-                </Button>
-              </li>
-            </ul>
+                <li
+                  style={`--i:${navigationConfig().relatedToThisPage.length}`}
+                  class={`border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20 ${location.pathname === "/" ? "hidden" : ""}`}
+                >
+                  <Button href="/" asA={true} isBack={true}>
+                    Zur Startseite
+                  </Button>
+                </li>
+              </ul>
+            </Show>
+
+            <Show when={navigationConfig().relatedToThisPage.length}>
+              <h4 class="class={`px-4 sm:px-8">Weitere Seiten</h4>
+              <ul>
+                <For each={navigationConfig().relatedToThisPage}>
+                  {(item, i) => (
+                    <li
+                      style={`--i:${i()}`}
+                      class={`pl-4 sm:pl-8 pr-20 ${i() === navigationConfig().relatedToThisPage.length - 1 ? "mb-4" : ""} `}
+                    >
+                      {item.linkProps.type === "link" && (
+                        <Button
+                          href={item.linkProps.href}
+                          asA={true}
+                          active={location.pathname === item.linkProps.href}
+                        >
+                          {item.title}
+                        </Button>
+                      )}
+                      {item.linkProps.type === "anchor" && (
+                        <Button target={item.linkProps.target}>
+                          {item.title}
+                        </Button>
+                      )}
+                    </li>
+                  )}
+                </For>
+
+                <li
+                  style={`--i:${navigationConfig().relatedToThisPage.length}`}
+                  class={`border-t border-t-3a-gray border-dashed py-3 pl-4 sm:pl-8 pr-20 ${location.pathname === "/" ? "hidden" : ""}`}
+                >
+                  <Button href="/" asA={true} isBack={true}>
+                    Zur Startseite
+                  </Button>
+                </li>
+              </ul>
+            </Show>
           </div>
         </nav>
       </div>

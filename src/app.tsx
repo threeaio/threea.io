@@ -4,6 +4,7 @@ import { Suspense } from "solid-js";
 import "./app.css";
 import { MetaProvider } from "@solidjs/meta";
 import { LandingPageLayout } from "~/Landing-Page-Layout";
+import SubNavigation from "~/components/Sub-Navigation";
 
 export default function App() {
   return (
@@ -12,7 +13,7 @@ export default function App() {
         <Router
           root={(props) => (
             <div>
-              {/*<SubNavigation />*/}
+              <SubNavigation />
               <LandingPageLayout>
                 <Suspense>{props.children}</Suspense>
               </LandingPageLayout>

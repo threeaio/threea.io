@@ -4,7 +4,7 @@ export const AgileAgit: BasicTextContent = {
   titleSeo:
     "Agile Agitation - Über meine Rollen im und Gedanken zum agilen Umfeld",
   moreLink: {
-    href: "/agile-agit",
+    linkProps: { type: "link", href: "/agile-agit" },
     title: "Agile Agit",
   },
   headline: () => <>Agile Agit</>,

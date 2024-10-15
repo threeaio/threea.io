@@ -4,7 +4,7 @@ import Anf from "~/components/typo/Anf";
 export const AsyncAction: BasicTextContent = {
   titleSeo: "Asynchrone Aktion - Reaktivität und Simplizität",
   moreLink: {
-    href: "/async-action",
+    linkProps: { type: "link", href: "/async-action" },
     title: "Asynchrone Aktion",
   },
   headline: () => <>Asynchrone Aktion</>,
