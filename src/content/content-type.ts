@@ -1,5 +1,5 @@
 import { JSX } from "solid-js";
-import { NavigationItem } from "~/Navigation-Bus";
+import { NavigationItem } from "~/Navigation-Context";
 
 export interface BasicTextContent {
   titleSeo: string;

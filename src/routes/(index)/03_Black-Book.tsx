@@ -2,7 +2,6 @@ import { createSignal, onMount } from "solid-js";
 import { gsap } from "gsap";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/typo/HugeText";
-import { SmallText } from "~/components/typo/SmallText";
 import { A } from "@solidjs/router";
 
 export default function BlackBook() {
@@ -82,11 +81,21 @@ function BlackBookItem() {
       <A
         class="block bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group "
         href="/brockmann-arc"
-        onClick={() =>
-          window.lenis.scrollTo(0, {
-            immediate: true,
-          })
-        }
+        onClick={(e) => {
+          const page = document.querySelector("#PAGE_3a")!;
+          gsap.to(page, {
+            opacity: 0,
+            onComplete: () => {
+              window.lenis.scrollTo(0, {
+                immediate: true,
+              });
+              window.location.href = "/brockmann-arc";
+            },
+          });
+
+          e.preventDefault();
+          return false;
+        }}
       >
         <div class={"grid grid-cols-26 items-baseline"}>
           <div class={"col-span-2 md:col-span-4 p-3 2xl:px-3 2xl:text-right"}>

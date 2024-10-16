@@ -4,7 +4,7 @@ import { AntiAgony } from "~/content/Anti-Agony";
 import MainArticle from "~/components/Main-Article";
 import { clientOnly } from "@solidjs/start";
 import { onMount } from "solid-js";
-import { navigationBus } from "~/Navigation-Bus";
+import { navigationContext } from "~/Navigation-Context";
 import { AsyncAction } from "~/content/Async-Action";
 import { AgileAgit } from "~/content/Agile-Agit";
 const CanvasAnimationRounded = clientOnly(
@@ -13,7 +13,7 @@ const CanvasAnimationRounded = clientOnly(
 
 export default function PageAntiAgony() {
   onMount(() => {
-    navigationBus.emit({
+    navigationContext.emit({
       onThisPage: [],
       relatedToThisPage: [
         AntiAgony.moreLink,

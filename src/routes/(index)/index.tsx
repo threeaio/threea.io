@@ -3,48 +3,60 @@ import { Introduction } from "~/routes/(index)/01_Introduction";
 import AboutWork from "~/routes/(index)/02_About-Work";
 import { onMount } from "solid-js";
 import { Title } from "@solidjs/meta";
-import { AgileAgit } from "~/content/Agile-Agit";
-import { AsyncAction } from "~/content/Async-Action";
-import { AntiAgony } from "~/content/Anti-Agony";
-import { navigationBus } from "~/Navigation-Bus";
 import BlackBook from "~/routes/(index)/03_Black-Book";
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
 import { clientOnly } from "@solidjs/start";
 import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/typo/HugeText";
+import {
+  NavigationConfiguration,
+  useNavigationContext,
+} from "~/Navigation-Context";
 const ANIMATION = clientOnly(
   () => import("~/components/animation/Canvas-Animation-2"),
 );
-
+import { gsap } from "gsap";
 export default function Home() {
+  const [_, { setOnThisPage, setPages }] = useNavigationContext();
+  // onMount(() => {
+  const navItems: NavigationConfiguration = {
+    onThisPage: [
+      {
+        linkProps: { type: "anchor", target: "#INDEX_START" },
+        title: "Anfang",
+      },
+      {
+        linkProps: { type: "anchor", target: "#INDEX_ABOUT_WORK" },
+        title: "Über mich",
+      },
+      {
+        linkProps: { type: "anchor", target: "#INDEX_BLACKBOOK" },
+        title: "Blackbook",
+      },
+      {
+        linkProps: { type: "anchor", target: "#INDEX_THE_END" },
+        title: "Ende",
+      },
+    ],
+    pages: [
+      {
+        linkProps: { type: "link", href: "/brockmann-arc" },
+        title: "Brockmanns Beethoven",
+      },
+    ],
+  };
+
   onMount(() => {
-    navigationBus.emit({
-      onThisPage: [
-        {
-          linkProps: { type: "anchor", target: "#INDEX_START" },
-          title: "Oben",
-        },
-        {
-          linkProps: { type: "anchor", target: "#INDEX_ABOUT_WORK" },
-          title: "Über mich",
-        },
-        {
-          linkProps: { type: "anchor", target: "#INDEX_BLACKBOOK" },
-          title: "Blackbook",
-        },
-        {
-          linkProps: { type: "anchor", target: "#INDEX_THE_END" },
-          title: "Ende",
-        },
-      ],
-      relatedToThisPage: [
-        AntiAgony.moreLink,
-        AsyncAction.moreLink,
-        AgileAgit.moreLink,
-      ],
+    setPages(navItems.pages);
+    setOnThisPage(navItems.onThisPage);
+
+    const page = document.querySelector("#PAGE_3a")!;
+    gsap.to(page, {
+      opacity: 1,
     });
   });
+
   return (
     <div>
       <Title>Welcome to Threea.io</Title>

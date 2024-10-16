@@ -30,8 +30,8 @@ export default function BrockmanAnimation04(
 ) {
   return (
     <CanvasAnimationWrapper
-      start={"clamp(top top+=50%)"}
-      end={"clamp(bottom bottom-=50%)"}
+      start={"clamp(top top+=90%)"}
+      end={"clamp(bottom bottom-=90%)"}
       animation={
         <ANIMATION
           animateCommand={props.animateCommand}
@@ -40,7 +40,7 @@ export default function BrockmanAnimation04(
           animateBpm={props.animateBpm}
           getStartRadius={(w) => w / 4}
           bgColor={COLORS_3A[props.bgColor]}
-          fadeInOut={false}
+          fadeInOut={true}
           setCenter={(width, height, progress) => {
             return {
               x: width / 3,

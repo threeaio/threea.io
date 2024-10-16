@@ -33,7 +33,7 @@ export default function BrockmanAnimationIntro(
 
   return (
     <CanvasAnimationWrapper
-      start={"clamp(top top+=80%)"}
+      start={"top top+=80%"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION

@@ -4,7 +4,7 @@ import { clientOnly } from "@solidjs/start";
 import MainArticle from "~/components/Main-Article";
 import { AsyncAction } from "~/content/Async-Action";
 import { onMount } from "solid-js";
-import { navigationBus } from "~/Navigation-Bus";
+import { navigationContext } from "~/Navigation-Context";
 import { AgileAgit } from "~/content/Agile-Agit";
 import { AntiAgony } from "~/content/Anti-Agony";
 const CanvasAnimation2 = clientOnly(
@@ -13,7 +13,7 @@ const CanvasAnimation2 = clientOnly(
 
 export default function PageAsyncAction() {
   onMount(() => {
-    navigationBus.emit({
+    navigationContext.emit({
       onThisPage: [],
       relatedToThisPage: [
         AntiAgony.moreLink,

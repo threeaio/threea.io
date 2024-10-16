@@ -20,7 +20,7 @@
   @apply relative;
   @apply w-full;
   @apply sm:w-auto;
-  @apply sm:fixed;
+  @apply fixed;
   @apply top-0;
   @apply right-0;
   @apply z-30;
@@ -65,9 +65,9 @@
   grid-template-rows: 0fr;
   grid-template-columns: 0fr;
   transition:
-    grid-template-rows 0.4s ease-out,
-    grid-template-columns 0.2s ease-out;
-  transition-delay: 0.2s;
+    grid-template-rows 0.2s ease-out,
+    grid-template-columns 0.1s ease-out;
+  /*transition-delay: 0.2s;*/
 }
 
 .navOuter.navOuterShow .nav {
@@ -99,13 +99,14 @@
   @apply flex-row-reverse;
   @apply text-3a-white;
   @apply text-sm;
+  @apply font-bold;
   /*@apply bg-3a-gray-darkest;*/
   transition: all 0.3s;
 }
 
 .navOuter.navOuterShow .navHead {
   /*@apply mt-2;*/
-  @apply sm:mt-0;
+  /*@apply sm:mt-0;*/
 }
 
 .navHeadSymbol {
@@ -159,10 +160,11 @@
 .navOuter.navOuterShow .navHeadSymbol + span {
   @apply opacity-100;
   @apply blur-0;
-  transition-delay: 0.35s;
+  transition-delay: 0.25s;
 }
 
-.navOuter nav li {
+.navOuter nav li,
+.nav-section-heading {
   @apply opacity-0;
   @apply -translate-y-2;
   @apply blur-xl;
@@ -172,7 +174,8 @@
   transition-delay: calc(0.015s * (var(--numItems) - (var(--i))));
 }
 
-.navOuter.navOuterShow nav li {
+.navOuter.navOuterShow nav li,
+.navOuter.navOuterShow .nav-section-heading {
   @apply blur-0;
   @apply opacity-100;
   @apply translate-y-0;

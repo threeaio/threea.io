@@ -261,6 +261,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       // dvtx(cell[0]);
     }
 
+    // p5.fill("red");
     // p5.text(p5.frameRate(), 20, 20);
     // p5.text(USE_RESOLUTION_VERT(), 400 + USE_RESOLUTION_VERT() * 10, 20);
 

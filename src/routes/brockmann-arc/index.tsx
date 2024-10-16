@@ -27,6 +27,12 @@ import {
 } from "~/routes/brockmann-arc/content";
 import { PosterTextHeadline } from "~/components/animation-html-additions/Poster-Headline";
 import { PosterContentBeethoven } from "~/components/animation-html-additions/Poster-Content";
+import {
+  useNavigationContext,
+  NavigationConfiguration,
+} from "~/Navigation-Context";
+import { gsap } from "gsap";
+import { useNavigate } from "@solidjs/router";
 
 const ANIMATION_04 = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-4"),
@@ -37,6 +43,7 @@ const ANIMATION_05 = clientOnly(
 
 export default function BrockmannArc() {
   const [animateClick, setAnimateClick] = createSignal<AnimationTrigger>();
+  const [_, { setOnThisPage, setPages }] = useNavigationContext();
   onMount(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.key.toUpperCase() === "A") {
@@ -49,13 +56,58 @@ export default function BrockmannArc() {
     });
   });
 
+  const navItems: NavigationConfiguration = {
+    onThisPage: [
+      {
+        linkProps: { type: "anchor", target: "#BROCKMANN_TOP" },
+        title: "Oben",
+      },
+      {
+        linkProps: { type: "anchor", target: "#BROCKMANN_01" },
+        title: "Inspiration",
+      },
+      {
+        linkProps: { type: "anchor", target: "#BROCKMANN_02" },
+        title: "Idee zur Animation",
+      },
+      {
+        linkProps: { type: "anchor", target: "#BROCKMANN_03" },
+        title: "Weiteres",
+      },
+      {
+        linkProps: { type: "anchor", target: "#BROCKMANN_04" },
+        title: "Ergebnis + Zwischenfazit",
+      },
+      {
+        linkProps: { type: "anchor", target: "#BROCKMANN_GALLERY" },
+        title: "Gallerie",
+      },
+    ],
+    pages: [
+      {
+        linkProps: { type: "link", href: "/brockmann-arc" },
+        title: "Brockmanns Beethoven",
+      },
+    ],
+  };
+
+  onMount(() => {
+    setPages(navItems.pages);
+    setOnThisPage(navItems.onThisPage);
+    const page = document.querySelector("#PAGE_3a")!;
+    gsap.to(page, {
+      opacity: 1,
+      delay: 0.5,
+    });
+  });
+
   return (
     <main>
       <Title>Threea - Brockmanns Beethoven</Title>
 
       <HeaderSimple class="snap-start absolute z-20 w-full" />
 
-      <div class="">
+      <div class="" id={"BROCKMANN_TOP"}>
         <div class="relative">
           <div class="absolute inset-0">{intro.animation()}</div>
           <div class="relative">
@@ -87,7 +139,7 @@ export default function BrockmannArc() {
 
         {/* Inspiration */}
 
-        <div class={"relative py-32"}>
+        <div class={"relative py-32"} id={"BROCKMANN_01"}>
           <RotatedPageBg rotateClass={"rotate-2"} />
           <BleedRightSmall
             class="relative"
@@ -128,7 +180,7 @@ export default function BrockmannArc() {
         />
 
         {/*////x*/}
-        <div class={"mb-24"}>
+        <div class={"mb-24"} id={"BROCKMANN_GALLERY"}>
           {/*<ControllerHere>*/}
           {/*  <div class="flex flex-row justify-center">*/}
           {/*    <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-3a-black/30 shadow-lg font-mono text-sm">*/}
@@ -303,7 +355,10 @@ function FullAnimatedBg(props: {
   animationTrigger?: Accessor<AnimationTrigger>;
 }) {
   return (
-    <div class={`relative ${!!props.withRotatedBg && "py-24"}`}>
+    <div
+      class={`relative ${!!props.withRotatedBg && "py-24"}`}
+      id={`BROCKMANN_${props.content.num}`}
+    >
       {!!props.withRotatedBg && (
         <RotatedPageBg rotateClass={props.withRotatedBg} />
       )}

@@ -95,7 +95,7 @@ export default function CanvasAnimationWrapper(
       >
         <div class="absolute inset-0 ">
           <div class="sticky inset-0 ">
-            {/*<Show when={width() && height()}>{props.animation}</Show>*/}
+            {/*<Show when={activet()}>{props.animation}</Show>*/}
             {props.animation}
           </div>
         </div>

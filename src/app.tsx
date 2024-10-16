@@ -5,6 +5,7 @@ import "./app.css";
 import { MetaProvider } from "@solidjs/meta";
 import { LandingPageLayout } from "~/Landing-Page-Layout";
 import SubNavigation from "~/components/Sub-Navigation";
+import { NavigationProvider } from "~/Navigation-Context";
 
 export default function App() {
   return (
@@ -12,12 +13,14 @@ export default function App() {
       <MetaProvider>
         <Router
           root={(props) => (
-            <div>
+            <NavigationProvider>
               <SubNavigation />
-              <LandingPageLayout>
-                <Suspense>{props.children}</Suspense>
-              </LandingPageLayout>
-            </div>
+              <div id={"PAGE_3a"} class={"opacity-0"}>
+                <LandingPageLayout>
+                  <Suspense>{props.children}</Suspense>
+                </LandingPageLayout>
+              </div>
+            </NavigationProvider>
           )}
         >
           <FileRoutes />

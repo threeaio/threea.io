@@ -1,5 +1,5 @@
 import { JSX } from "solid-js";
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 
 export const Button = (props: {
   children: JSX.Element;
@@ -8,7 +8,9 @@ export const Button = (props: {
   disabled?: boolean;
   asA?: boolean; // TODO group with href
   isBack?: boolean;
-  handleClick?: Function;
+  handleClick?: (
+    e: MouseEvent & { currentTarget: Element; target: Element },
+  ) => void;
   href?: string;
   buttonType?: "button" | "submit" | "reset";
 }) => {
@@ -17,6 +19,9 @@ export const Button = (props: {
       href={props.href!}
       end
       activeClass={"btn--active"}
+      onClick={(e) => {
+        props.handleClick?.(e);
+      }}
       class={`btn  ${props.isBack ? "btn--back" : ""} ${props.disabled === true ? "btn--disabled" : ""}`}
     >
       {props.children}
@@ -24,14 +29,14 @@ export const Button = (props: {
   ) : (
     <button
       type={props.buttonType || "button"}
-      onClick={() => {
-        props.handleClick?.();
+      onClick={(e) => {
+        props.handleClick?.(e);
 
         if (props.target) {
           const el: HTMLElement | null = document.querySelector(props.target);
           if (el) {
             window.lenis.scrollTo(el, {
-              duration: 2,
+              duration: 3,
             });
           }
         }

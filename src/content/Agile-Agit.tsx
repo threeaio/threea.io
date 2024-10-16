@@ -17,7 +17,7 @@ export const AgileAgit: BasicTextContent = {
       </p>
       <p>
         Neben der Tätigkeit als <abbr title="Product Owner">PO</abbr> war ich
-        als Coach und Trainer in der internen Weiterbildung tätig.
+        als Trainer in der internen Weiterbildung tätig.
       </p>
     </>
   ),
