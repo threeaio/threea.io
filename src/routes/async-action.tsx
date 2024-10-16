@@ -4,24 +4,12 @@ import { clientOnly } from "@solidjs/start";
 import MainArticle from "~/components/Main-Article";
 import { AsyncAction } from "~/content/Async-Action";
 import { onMount } from "solid-js";
-import { navigationContext } from "~/Navigation-Context";
-import { AgileAgit } from "~/content/Agile-Agit";
-import { AntiAgony } from "~/content/Anti-Agony";
 const CanvasAnimation2 = clientOnly(
   () => import("~/components/animation/Canvas-Animation-2"),
 );
 
 export default function PageAsyncAction() {
-  onMount(() => {
-    navigationContext.emit({
-      onThisPage: [],
-      relatedToThisPage: [
-        AntiAgony.moreLink,
-        AsyncAction.moreLink,
-        AgileAgit.moreLink,
-      ],
-    });
-  });
+  onMount(() => {});
   return (
     <div>
       <HeaderSimple />

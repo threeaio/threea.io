@@ -4,24 +4,12 @@ import { AntiAgony } from "~/content/Anti-Agony";
 import MainArticle from "~/components/Main-Article";
 import { clientOnly } from "@solidjs/start";
 import { onMount } from "solid-js";
-import { navigationContext } from "~/Navigation-Context";
-import { AsyncAction } from "~/content/Async-Action";
-import { AgileAgit } from "~/content/Agile-Agit";
 const CanvasAnimationRounded = clientOnly(
   () => import("~/components/animation/Canvas-Animation-rounded"),
 );
 
 export default function PageAntiAgony() {
-  onMount(() => {
-    navigationContext.emit({
-      onThisPage: [],
-      relatedToThisPage: [
-        AntiAgony.moreLink,
-        AsyncAction.moreLink,
-        AgileAgit.moreLink,
-      ],
-    });
-  });
+  onMount(() => {});
   return (
     <div>
       <HeaderSimple />
