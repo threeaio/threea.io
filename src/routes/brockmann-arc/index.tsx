@@ -32,7 +32,6 @@ import {
   NavigationConfiguration,
 } from "~/Navigation-Context";
 import { gsap } from "gsap";
-import { useNavigate } from "@solidjs/router";
 
 const ANIMATION_04 = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-4"),
@@ -60,7 +59,7 @@ export default function BrockmannArc() {
     onThisPage: [
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_TOP" },
-        title: "Oben",
+        title: "Anfang",
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_01" },
@@ -72,7 +71,7 @@ export default function BrockmannArc() {
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_03" },
-        title: "Weiteres",
+        title: "Weiteres aus dem Plakat",
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_04" },
