@@ -1,9 +1,10 @@
 import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
-import { remapT } from "~/_util";
+import { clamp, reMap, remapT } from "~/_util";
 import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/brockmann-beethoven/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
 import { COLORS_3A } from "~/_util-client-only";
 import { ParentProps } from "solid-js";
+import { TW_BREAKPOINTS } from "~/_contants/contants";
 
 const ANIMATION = clientOnly(
   () =>
@@ -19,14 +20,14 @@ const ANIMATION = clientOnly(
 export default function BrockmanAnimation01(props: ParentProps) {
   return (
     <CanvasAnimationWrapper
-      start={"clamp(top top+=80%)"}
+      start={"clamp(top top+=0%)"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(w, h) => w / 12}
+          getStartRadius={(width, height) => Math.max(width / 12, 120)}
           bgColor={COLORS_3A.GRAY_DARKEST}
           fadeInOut={true}
-          draw={function (p5, progress, arcs, center) {
+          draw={(p5, progress, arcs, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             const p = remapT(progress, 0, 0.6);
             for (let i = 0; i < arcs.length; i++) {
@@ -36,12 +37,18 @@ export default function BrockmanAnimation01(props: ParentProps) {
               arcs[i].draw();
             }
           }}
-          arcSettings={{
+          // arcSettings={{
+          //   ...BROCKMAN_ARC_SETTINGS,
+          //   arcRange: [12],
+          //   sizes: [60],
+          //   amountOfArcs: 1,
+          // }}
+          arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
             arcRange: [12],
             sizes: [60],
             amountOfArcs: 1,
-          }}
+          })}
           arcConfig={{
             bgColor: COLORS_3A.GRAY_DARKEST,
             debug: true,
@@ -51,7 +58,7 @@ export default function BrockmanAnimation01(props: ParentProps) {
           }}
           setCenter={(width, height, progress) => {
             return {
-              x: width / 2 + width / 4,
+              x: width > TW_BREAKPOINTS.md ? width * 0.75 : width / 2,
               y: height / 2,
             };
           }}

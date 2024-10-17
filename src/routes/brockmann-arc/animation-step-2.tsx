@@ -8,8 +8,9 @@ const ANIMATION = clientOnly(
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { remapT } from "~/_util";
+import { reMap, remapT } from "~/_util";
 import { ParentProps } from "solid-js";
+import { TW_BREAKPOINTS } from "~/_contants/contants";
 
 /**
  * CLIENT-ONLY !
@@ -22,7 +23,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(w, h) => h / 12}
+          getStartRadius={(width, height) => Math.max(width / 12, 70)}
           bgColor={COLORS_3A.GRAY_DARKER}
           fadeInOut={true}
           draw={(p5, progress, arcs, center) => {
@@ -36,11 +37,18 @@ export default function BrockmanAnimation02(props: ParentProps) {
               arcs[i].draw();
             }
           }}
-          arcSettings={{
+          // arcSettings={{
+          //   ...BROCKMAN_ARC_SETTINGS,
+          //   sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / s / reMap(300, 1600, 8, 4, width)),
+          //   gap: 6,
+          // }},
+          arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
-            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 6),
-            gap: 6,
-          }}
+            arcRange: [5, 6, 7, 9, 11, 14, 17, 21],
+            sizes: BROCKMAN_ARC_SETTINGS.sizes.map(
+              (s) => s / reMap(300, 1600, 8, 6, width),
+            ),
+          })}
           arcConfig={{
             debug: false,
             bgColor: COLORS_3A.GRAY_DARKER,
@@ -52,7 +60,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
           }}
           setCenter={(width, height, progress) => {
             return {
-              x: width / 2 + width / 4,
+              x: width > TW_BREAKPOINTS.md ? width * 0.75 : width / 2,
               y: height / 2,
             };
           }}

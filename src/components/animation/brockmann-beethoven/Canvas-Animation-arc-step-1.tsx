@@ -35,6 +35,7 @@ export default function ArcAnimationStep1(
       progress: number,
       arcs: VerticeArcType[],
       center: { x: number; y: number },
+      dims: { x: number; y: number },
     ) => void;
     setCenter: (
       width: number,
@@ -42,7 +43,7 @@ export default function ArcAnimationStep1(
       progress: number,
     ) => { x: number; y: number };
     getStartRadius: (width: number, height: number) => number;
-    arcSettings: ArcSettings;
+    arcSettings: (width: number, height: number) => ArcSettings;
     arcConfig: VerticeArcConfig;
     animate?: boolean;
     animateBpm?: number;
@@ -92,6 +93,7 @@ export default function ArcAnimationStep1(
 
   createEffect(() => {
     const newCenter = props.setCenter(width(), useHeight(), progress());
+    console.log("newCenter", newCenter);
     animationProxies.center.x = newCenter.x;
     animationProxies.center.y = newCenter.y;
   });
@@ -108,13 +110,17 @@ export default function ArcAnimationStep1(
         _p5.angleMode(_p5.DEGREES);
         canvas.parent(ref);
 
-        const arcProps: Arc[] = generateArcs(START_RAD(), props.arcSettings);
+        const arcProps: Arc[] = generateArcs(
+          START_RAD(),
+          props.arcSettings(width(), useHeight()),
+        );
 
         for (let i = 0; i < arcProps.length; i++) {
           const arc = VerticeArc(_p5, props.arcConfig);
           const propForArc = arcProps[i];
-          arc.setDimension({ x: _p5.width, y: _p5.height });
-          arc.setCenterX(_p5.width);
+          arc.setCvsWidth(_p5.width);
+          arc.setCvsHeight(_p5.height);
+          arc.setCenterX(animationProxies.center.x);
           arc.setCenterY(animationProxies.center.y);
           arc.setRadius(propForArc.radius);
           arc.setThickness(propForArc.thickness);
@@ -129,7 +135,17 @@ export default function ArcAnimationStep1(
     const draw = () => {
       p5.background(props.bgColor);
 
-      props.draw(p5, progress(), arcs, animationProxies.center);
+      for (let i = 0; i < arcs.length; i++) {
+        arcs[i].setCvsWidth(p5.width);
+        arcs[i].setCvsHeight(p5.height);
+        arcs[i].setCenterX(animationProxies.center.x);
+        arcs[i].setCenterY(animationProxies.center.y);
+      }
+
+      props.draw(p5, progress(), arcs, animationProxies.center, {
+        x: p5.width,
+        y: p5.height,
+      });
 
       if (props.fadeInOut) {
         p5.push();
@@ -178,10 +194,10 @@ export default function ArcAnimationStep1(
    */
 
   // animate Arcs
-  let timoutsHere: Array<string | number | NodeJS.Timeout | undefined> = [];
-  const animateArcs = () => {
-    timoutsHere.forEach(clearTimeout);
-    timoutsHere = [];
+  let timeoutsHere: Array<string | number | NodeJS.Timeout | undefined> = [];
+  const animateArcs = (p5: P5) => {
+    timeoutsHere.forEach(clearTimeout);
+    timeoutsHere = [];
     for (let i = 0; i < arcs.length; i++) {
       const animatePartial = {
         start: arcs[i].startOffset(),
@@ -189,16 +205,15 @@ export default function ArcAnimationStep1(
         endAngle: arcs[i].arcEndAngle(),
       };
 
-      let { startAngle, endAngle } = getBrockmannAngles(props.arcSettings, i);
+      let { startAngle, endAngle } = getBrockmannAngles(
+        props.arcSettings(width(), useHeight()),
+        i,
+      );
 
-      timoutsHere.push(
+      timeoutsHere.push(
         setTimeout(() => {
           gsap.to(animatePartial, {
-            start: getRandomFloat(
-              arcs[i].dimensions().x / -2,
-              arcs[i].dimensions().x / 2,
-              0,
-            ),
+            start: getRandomFloat(p5.width / -2, p5.width / 2, 0),
             startAngle: startAngle,
             endAngle: endAngle,
             ease: "sine",
@@ -218,15 +233,15 @@ export default function ArcAnimationStep1(
 
   let animationTimeoutRecursion: string | number | NodeJS.Timeout | undefined;
 
-  const recursiveAnimate = () => {
+  const recursiveAnimate = (p5: P5) => {
     if (props.animateBpm && active()) {
-      animateArcs();
+      animateArcs(p5);
     }
 
-    if (props.animateBpm) {
+    if (props.animateBpm && p5Instance) {
       const interval = 1000 / (props.animateBpm! / 60);
       const animationTimeoutRecursion = setTimeout(
-        () => recursiveAnimate(),
+        () => recursiveAnimate(p5Instance!),
         interval,
       ); //500ms => 120bpm
     }
@@ -250,12 +265,12 @@ export default function ArcAnimationStep1(
   onMount(() => {
     createSketch(animationParent()!); // Create sketch
     onCleanup(() => p5Instance?.remove()); // Clean up P5 instance on unmount
-    if (props.animate) {
-      animateArcs();
+    if (props.animate && p5Instance) {
+      animateArcs(p5Instance);
     }
-    if (props.animateBpm) {
+    if (props.animateBpm && p5Instance) {
       setTimeout(() => {
-        recursiveAnimate();
+        recursiveAnimate(p5Instance!);
       }, props.animateOffsetMs || 0);
     }
   });
@@ -264,6 +279,9 @@ export default function ArcAnimationStep1(
    * Render
    */
   return (
-    <div class="sticky inset-0 max-h-full " ref={setAnimationParent}></div>
+    <div
+      class="relative md:sticky inset-0 max-h-full "
+      ref={setAnimationParent}
+    ></div>
   );
 }

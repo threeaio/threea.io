@@ -1,4 +1,10 @@
-import { asColorArray } from "~/_util";
+const asColorArray = (
+  colorString: string,
+): [number, number, number, number] => {
+  const splitted = colorString.split(" ").map(Number);
+
+  return [splitted[0], splitted[1], splitted[2], 255];
+};
 
 const style = getComputedStyle(document.body);
 const GRAY_DARKEST = asColorArray(

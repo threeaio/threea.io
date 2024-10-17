@@ -46,7 +46,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   // const [center, setCenter] = createSignal<Vector2D>({ x: 0, y: 0 });
   const [centerX, setCenterX] = createSignal<number>(0);
   const [centerY, setCenterY] = createSignal<number>(0);
-  const [dimensions, setDimension] = createSignal<Simple2D>({ x: 0, y: 0 });
+  const [cvsWidth, setCvsWidth] = createSignal<number>(0);
+  const [cvsHeight, setCvsHeight] = createSignal<number>(0);
+  // const [dimensions, setDimension] = createSignal<Simple2D>({ x: 0, y: 0 });
 
   const [arcStartAngle, setArcStartAngle] = createSignal<number>(0);
   const useStartAngle = createMemo<number>(() => arcStartAngle());
@@ -58,14 +60,14 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
   // no need for signal here
   const [startOffset, setStartOffset] = createSignal<number>(
-    config.randomizeStartPosition ? p5.random(-2, dimensions().x / 2) : 0,
+    config.randomizeStartPosition ? p5.random(-2, cvsWidth() / 2) : 0,
   );
 
   // Memoized values for scaled radius and thickness
-  const center = createMemo<Simple2D>(() => ({
-    x: centerX(),
-    y: centerY(),
-  }));
+  // const center = createMemo<Simple2D>(() => ({
+  //   x: centerX(),
+  //   y: centerY(),
+  // }));
   const scaledRadius = createMemo<number>(() => applyTempScale(radius()));
   const scaledThickness = createMemo<number>(() => applyTempScale(thickness()));
   const scaledInnerRadius = createMemo<number>(
@@ -86,10 +88,10 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   );
 
   const startPositionX = createMemo<number>(
-    () => dimensions().x / 2 - finalArcLength() + startOffset(),
+    () => cvsWidth() / 2 - finalArcLength() + startOffset(),
   );
   const finalPositionX = createMemo<number>(
-    () => center().x + calculateArcLength(scaledInnerRadius(), useStartAngle()),
+    () => centerX() + calculateArcLength(scaledInnerRadius(), useStartAngle()),
   );
   const currentX = createMemo<number>(() =>
     lerp(startPositionX(), finalPositionX(), progress()),
@@ -111,7 +113,8 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     }
 
     const scaledThicknessVal = scaledThickness();
-    const centerX = center().x;
+    const _centerX = centerX();
+    const _centerY = centerY();
     const scaledInnerRad = scaledInnerRadius();
     const useResolution = USE_RESOLUTION();
     const useResolutionVert = USE_RESOLUTION_VERT();
@@ -130,9 +133,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     for (let row = 0; row <= useResolution; row++) {
       const offsetRow = row * rowSize;
       const rowPosLinear = offsetRow + startX;
-      const arcLength = rowPosLinear - centerX;
+      const arcLength = rowPosLinear - _centerX;
       const angle =
-        rowPosLinear > centerX
+        rowPosLinear > _centerX
           ? getAngleFromArcLengthInDegrees(arcLength, scaledInnerRad) +
             OFFSET_ANGLES
           : 0;
@@ -143,10 +146,15 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
         const colPosAsRadius =
           scaledInnerRad - scaledThicknessVal / 2 + offsetCol;
 
-        if (rowPosLinear <= centerX) {
+        if (rowPosLinear <= _centerX) {
           res[row][col] = createSimple2D(rowPosLinear, colPosLinear);
         } else {
-          res[row][col] = coordOfCircle(p5, center(), angle, colPosAsRadius);
+          res[row][col] = coordOfCircle(
+            p5,
+            { x: _centerX, y: _centerY },
+            angle,
+            colPosAsRadius,
+          );
         }
       }
     }
@@ -179,7 +187,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           cellRightBottom,
           cellLeftBottom,
         ] as [Simple2D, Simple2D, Simple2D, Simple2D];
-        if (!allPointsOutsideViewport(dimensions().x, dimensions().y, points)) {
+        if (!allPointsOutsideViewport(cvsWidth(), cvsHeight(), points)) {
           cells.push({
             row,
             col,
@@ -404,9 +412,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     setProgress,
     setCenterX,
     setCenterY,
-    setDimension,
+    setCvsWidth,
+    setCvsHeight,
     setStrokeColor,
-    dimensions,
     setStartOffset,
     startOffset,
   };

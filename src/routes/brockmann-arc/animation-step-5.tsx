@@ -11,13 +11,7 @@ const ANIMATION = clientOnly(
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import {
-  AnimationTrigger,
-  ArrayElement,
-  ColorArray,
-  hexToRgb,
-  remapT,
-} from "~/_util";
+import { AnimationTrigger, reMap } from "~/_util";
 import { batch, ParentProps } from "solid-js";
 
 /**
@@ -68,11 +62,11 @@ export default function BrockmanAnimation05(
               arcs[i].draw();
             }
           }}
-          arcSettings={{
+          arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 3),
             ...props.arcSettingsPartial,
-          }}
+          })}
           arcConfig={{
             debug: false,
             bgColor: COLORS_3A[props.bgColor],

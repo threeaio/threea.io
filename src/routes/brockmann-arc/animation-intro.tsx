@@ -9,6 +9,8 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { createSignal, onMount, ParentProps } from "solid-js";
+import { TW_BREAKPOINTS } from "~/_contants/contants";
+import { reMap } from "~/_util";
 
 /**
  * CLIENT-ONLY !
@@ -37,30 +39,42 @@ export default function BrockmanAnimationIntro(
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(w) => w / 5}
+          getStartRadius={(width) => Math.max(width / 5, 80)}
           bgColor={COLORS_3A[props.bgColor]}
           forceContentHeight={true}
           fadeInOut={false}
-          setCenter={(_width, height, progress) => {
+          setCenter={(width, height, progress) => {
             return {
-              x: positionX() || (_width / 3) * 2,
-              y: height / 2,
+              x:
+                width > TW_BREAKPOINTS.md
+                  ? positionX() || (width / 3) * 2
+                  : width / 2,
+              y: width > TW_BREAKPOINTS.md ? height / 2 : height / 2.5,
             };
           }}
-          draw={(p5, progress, arcs, center) => {
+          draw={(p5, progress, arcs, center, dims) => {
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
-              arcs[i].setCenterX(center.x);
-              arcs[i].setCenterY(center.y);
+              // arcs[i].setCvsWidth(dims.x);
+              // arcs[i].setCvsHeight(dims.y);
+              // arcs[i].setCenterX(center.x);
+              // arcs[i].setCenterY(center.y);
               arcs[i].setProgress(p);
               arcs[i].draw();
             }
           }}
-          arcSettings={{
+          // arcSettings={{
+          //   ...BROCKMAN_ARC_SETTINGS,
+          //   sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 1.5),
+          //   gap: 3,
+          // }}
+          arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
-            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 1.5),
+            sizes: BROCKMAN_ARC_SETTINGS.sizes.map(
+              (s) => s / reMap(300, 1600, 6, 1.5, width),
+            ),
             gap: 3,
-          }}
+          })}
           arcConfig={{
             debug: false,
             bgColor: COLORS_3A[props.bgColor],

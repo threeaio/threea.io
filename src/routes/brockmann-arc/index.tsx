@@ -369,12 +369,12 @@ function FullAnimatedBg(props: {
           num={props.content.num}
         >
           <HeaderDescriptionDefaultHere
-            class={"grid grid-cols-2 xl:grid-cols-3"}
+            class={"grid md:grid-cols-2 xl:grid-cols-3 pr-8"}
           >
             {props.content.description()}
           </HeaderDescriptionDefaultHere>
         </StickyStepDescription>
-        <div style={"height: 200svh"}>
+        <div style={"height: 200svh"} class={"relative md:static"}>
           {props.content.animation(props.animationTrigger)}
         </div>
       </div>

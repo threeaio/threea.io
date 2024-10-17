@@ -58,6 +58,7 @@
   @apply flex-col;
   @apply gap-3;
   @apply pt-24;
+  @apply pb-4;
 }
 
 .nav {
