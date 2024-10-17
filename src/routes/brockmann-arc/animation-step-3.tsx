@@ -35,8 +35,6 @@ export default function BrockmanAnimation03(
           draw={(_p5, progress, arcs, center) => {
             const p = remapT(progress, 0, 0.7);
             for (let i = 0; i < arcs.length; i++) {
-              arcs[i].setCenterX(center.x);
-              arcs[i].setCenterY(center.y);
               arcs[i].setProgress(p);
               arcs[i].draw();
             }

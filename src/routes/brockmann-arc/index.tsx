@@ -240,7 +240,7 @@ export default function BrockmannArc() {
                   speed={2000}
                   ampl={3}
                   animateCommand={animateClick()}
-                  arcSettingsPartial={{}}
+                  arcSettingsPartial={{ amountOfArcs: 7 }}
                 />
                 <AnimationTypoForSquare>
                   <PosterTextHeadline>
@@ -260,7 +260,7 @@ export default function BrockmannArc() {
                   ampl={20}
                   animateCommand={animateClick()}
                   arcSettingsPartial={{
-                    amountOfArcs: 12,
+                    amountOfArcs: 5,
                     gap: 3,
                     arcRange: createArrayFromLength(12).map((i) => i * 1.5),
                     sizes: createArrayFromLength(12).map(

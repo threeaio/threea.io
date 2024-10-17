@@ -8,9 +8,10 @@ const ANIMATION = clientOnly(
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { createSignal, onMount, ParentProps } from "solid-js";
+import { createEffect, createSignal, onMount, ParentProps } from "solid-js";
 import { TW_BREAKPOINTS } from "~/_contants/contants";
 import { reMap } from "~/_util";
+import { createElementSize } from "@solid-primitives/resize-observer";
 
 /**
  * CLIENT-ONLY !
@@ -27,10 +28,16 @@ export default function BrockmanAnimationIntro(
     const firstLayoutOnPage = document.querySelector(
       '[data-name="Layout/FullWidth"] > *',
     );
-    const left = firstLayoutOnPage?.getBoundingClientRect()?.left || 0;
-    const width = firstLayoutOnPage?.getBoundingClientRect()?.width || 0;
-    const _positionX = left + (width / 3) * 2;
-    setPositionX(_positionX);
+    if (firstLayoutOnPage) {
+      const size = createElementSize(firstLayoutOnPage);
+
+      createEffect(() => {
+        const width = size.width;
+        const left = firstLayoutOnPage?.getBoundingClientRect()?.left || 0;
+        const _positionX = left + (width / 3) * 2;
+        setPositionX(_positionX);
+      });
+    }
   });
 
   return (
@@ -55,10 +62,6 @@ export default function BrockmanAnimationIntro(
           draw={(p5, progress, arcs, center, dims) => {
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
-              // arcs[i].setCvsWidth(dims.x);
-              // arcs[i].setCvsHeight(dims.y);
-              // arcs[i].setCenterX(center.x);
-              // arcs[i].setCenterY(center.y);
               arcs[i].setProgress(p);
               arcs[i].draw();
             }
@@ -71,7 +74,7 @@ export default function BrockmanAnimationIntro(
           arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map(
-              (s) => s / reMap(300, 1600, 6, 1.5, width),
+              (s) => s / reMap(300, 1600, 6, 3, width),
             ),
             gap: 3,
           })}

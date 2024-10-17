@@ -11,7 +11,7 @@ import {
   lerp,
   createSimple2D,
   reMap,
-  allPointsOutsideViewport,
+  isShapeOutsideViewport,
   clamp,
 } from "~/_util";
 import { coordOfCircle } from "~/_util-client-only";
@@ -187,7 +187,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           cellRightBottom,
           cellLeftBottom,
         ] as [Simple2D, Simple2D, Simple2D, Simple2D];
-        if (!allPointsOutsideViewport(cvsWidth(), cvsHeight(), points)) {
+        if (!isShapeOutsideViewport(cvsWidth(), cvsHeight(), points)) {
           cells.push({
             row,
             col,

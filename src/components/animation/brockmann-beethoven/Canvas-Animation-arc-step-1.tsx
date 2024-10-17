@@ -136,10 +136,12 @@ export default function ArcAnimationStep1(
       p5.background(props.bgColor);
 
       for (let i = 0; i < arcs.length; i++) {
-        arcs[i].setCvsWidth(p5.width);
-        arcs[i].setCvsHeight(p5.height);
-        arcs[i].setCenterX(animationProxies.center.x);
-        arcs[i].setCenterY(animationProxies.center.y);
+        batch(() => {
+          arcs[i].setCvsWidth(p5.width);
+          arcs[i].setCvsHeight(p5.height);
+          arcs[i].setCenterX(animationProxies.center.x);
+          arcs[i].setCenterY(animationProxies.center.y);
+        });
       }
 
       props.draw(p5, progress(), arcs, animationProxies.center, {

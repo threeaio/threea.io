@@ -31,8 +31,6 @@ export default function BrockmanAnimation02(props: ParentProps) {
             // console.log("progress STEP 2", progress);
             const p = remapT(progress, 0, 0.7);
             for (let i = 0; i < arcs.length; i++) {
-              arcs[i].setCenterX(center.x);
-              arcs[i].setCenterY(center.y);
               arcs[i].setProgress(p);
               arcs[i].draw();
             }

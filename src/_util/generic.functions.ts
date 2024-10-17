@@ -76,14 +76,88 @@ export const createSimpleLine = (
   end: Simple2D,
 ): Simple2DLine => [start, end];
 
-export const allPointsOutsideViewport = (
+// Funktion zum Berechnen der Schnittpunkte zwischen zwei Linien
+function linesIntersect(line1: Simple2DLine, line2: Simple2DLine): boolean {
+  const [p1, p2] = line1;
+  const [q1, q2] = line2;
+
+  const cross = (a: Simple2D, b: Simple2D) => a.x * b.y - a.y * b.x;
+
+  const subtract = (a: Simple2D, b: Simple2D) => ({
+    x: a.x - b.x,
+    y: a.y - b.y,
+  });
+
+  const r = subtract(p2, p1);
+  const s = subtract(q2, q1);
+  const rxs = cross(r, s);
+  const qpxr = cross(subtract(q1, p1), r);
+
+  if (rxs === 0 && qpxr === 0) {
+    // Linien sind kollinear
+    return false;
+  }
+
+  if (rxs === 0 && qpxr !== 0) {
+    // Linien sind parallel und nicht überschneidend
+    return false;
+  }
+
+  const t = cross(subtract(q1, p1), s) / rxs;
+  const u = cross(subtract(q1, p1), r) / rxs;
+
+  return t >= 0 && t <= 1 && u >= 0 && u <= 1;
+}
+
+// Funktion zum Überprüfen, ob die Form außerhalb des Viewports ist
+export const isShapeOutsideViewport = (
   width: number,
   height: number,
-  points: Simple2D[],
+  pointsOfShape: Simple2D[],
 ): boolean => {
-  return points.every((point) => {
-    return point.x < 0 || point.x > width || point.y < 0 || point.y > height;
+  // Prüfen, ob Punkte innerhalb Viewports sind
+  const someInside = pointsOfShape.some((point) => {
+    return (
+      (point.x >= 0 && point.x <= width) || (point.y >= 0 && point.y <= height)
+    );
   });
+
+  if (someInside) {
+    return false;
+  }
+
+  // Viewport-Kanten
+  const viewportEdges = [
+    [
+      { x: 0, y: 0 },
+      { x: width, y: 0 },
+    ], // obere Kante
+    [
+      { x: width, y: 0 },
+      { x: width, y: height },
+    ], // rechte Kante
+    [
+      { x: width, y: height },
+      { x: 0, y: height },
+    ], // untere Kante
+    [
+      { x: 0, y: height },
+      { x: 0, y: 0 },
+    ], // linke Kante
+  ];
+
+  // Prüfen, ob eine Kante der Form den Viewport schneidet
+  for (let i = 0; i < pointsOfShape.length; i++) {
+    const p1 = pointsOfShape[i];
+    const p2 = pointsOfShape[(i + 1) % pointsOfShape.length]; // nächste Kante (schließt die Form)
+
+    for (const [q1, q2] of viewportEdges) {
+      if (linesIntersect(createSimpleLine(p1, p2), createSimpleLine(q1, q2))) {
+        return false; // Form schneidet Viewport, also ist sie sichtbar
+      }
+    }
+  }
+  return true;
 };
 
 export const subpoints = (

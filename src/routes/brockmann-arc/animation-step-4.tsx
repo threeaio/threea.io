@@ -51,8 +51,6 @@ export default function BrockmanAnimation04(
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
               batch(() => {
-                arcs[i].setCenterX(center.x);
-                arcs[i].setCenterY(center.y);
                 arcs[i].setProgress(p);
               });
               arcs[i].draw();
