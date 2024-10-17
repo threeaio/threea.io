@@ -111,14 +111,15 @@ function linesIntersect(line1: Simple2DLine, line2: Simple2DLine): boolean {
 
 // Funktion zum Überprüfen, ob die Form außerhalb des Viewports ist
 export const isShapeOutsideViewport = (
-  width: number,
-  height: number,
+  widthOfRect: number,
+  heightOfRect: number,
   pointsOfShape: Simple2D[],
 ): boolean => {
   // Prüfen, ob Punkte innerhalb Viewports sind
   const someInside = pointsOfShape.some((point) => {
     return (
-      (point.x >= 0 && point.x <= width) || (point.y >= 0 && point.y <= height)
+      (point.x >= 0 && point.x <= widthOfRect) ||
+      (point.y >= 0 && point.y <= heightOfRect)
     );
   });
 
@@ -130,18 +131,18 @@ export const isShapeOutsideViewport = (
   const viewportEdges = [
     [
       { x: 0, y: 0 },
-      { x: width, y: 0 },
+      { x: widthOfRect, y: 0 },
     ], // obere Kante
     [
-      { x: width, y: 0 },
-      { x: width, y: height },
+      { x: widthOfRect, y: 0 },
+      { x: widthOfRect, y: heightOfRect },
     ], // rechte Kante
     [
-      { x: width, y: height },
-      { x: 0, y: height },
+      { x: widthOfRect, y: heightOfRect },
+      { x: 0, y: heightOfRect },
     ], // untere Kante
     [
-      { x: 0, y: height },
+      { x: 0, y: heightOfRect },
       { x: 0, y: 0 },
     ], // linke Kante
   ];
