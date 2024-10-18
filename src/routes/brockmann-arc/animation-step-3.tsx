@@ -29,10 +29,10 @@ export default function BrockmanAnimation03(
         <ANIMATION
           animateCommand={props.animateCommand}
           animate={true}
-          getStartRadius={(width, height) => Math.max(width / 12, 70)}
+          setStartRadius={(width, height) => Math.max(width / 12, 70)}
           bgColor={COLORS_3A.GRAY_DARKEST}
           fadeInOut={true}
-          draw={(_p5, progress, arcs, center) => {
+          draw={(_p5, arcs, progress, center) => {
             const p = remapT(progress, 0, 0.7);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);

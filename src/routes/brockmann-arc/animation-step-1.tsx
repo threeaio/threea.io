@@ -24,10 +24,10 @@ export default function BrockmanAnimation01(props: ParentProps) {
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(width, height) => Math.max(width / 12, 120)}
+          setStartRadius={(width, height) => Math.max(width / 12, 120)}
           bgColor={COLORS_3A.GRAY_DARKEST}
           fadeInOut={true}
-          draw={(p5, progress, arcs, center) => {
+          draw={(_p5, arcs, progress, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             const p = remapT(progress, 0, 0.6);
             for (let i = 0; i < arcs.length; i++) {

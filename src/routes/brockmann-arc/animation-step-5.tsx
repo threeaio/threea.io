@@ -38,7 +38,7 @@ export default function BrockmanAnimation05(
           animateCommand={props.animateCommand}
           animateBpm={props.animateBpm}
           animate={true}
-          getStartRadius={(w, h) => h / 5}
+          setStartRadius={(w, h) => h / 5}
           bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={true}
           setCenter={(width, height, progress) => {
@@ -47,7 +47,7 @@ export default function BrockmanAnimation05(
               y: (height / 3) * 2,
             };
           }}
-          draw={(p5, progress, arcs, center) => {
+          draw={(p5, arcs, progress, center) => {
             const ms = p5.millis() || 0;
             // const p =
             //   props.progress +

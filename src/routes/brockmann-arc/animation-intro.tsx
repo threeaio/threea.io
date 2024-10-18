@@ -46,7 +46,7 @@ export default function BrockmanAnimationIntro(
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(width) => Math.max(width / 5, 80)}
+          setStartRadius={(width) => Math.max(width / 5, 80)}
           bgColor={COLORS_3A[props.bgColor]}
           forceContentHeight={true}
           fadeInOut={false}
@@ -59,7 +59,7 @@ export default function BrockmanAnimationIntro(
               y: width > TW_BREAKPOINTS.md ? height / 2 : height / 2.5,
             };
           }}
-          draw={(p5, progress, arcs, center, dims) => {
+          draw={(p5, arcs, progress, center, dims) => {
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);

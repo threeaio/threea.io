@@ -1,18 +1,15 @@
 import P5 from "p5";
-import { createEffect, createMemo, createSignal } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
 import * as p5 from "p5";
-import { COLORS_3A } from "~/_util-client-only";
 import {
   ColorArray,
   Simple2D,
   calculateArcLength,
-  createArrayFromLength,
   getAngleFromArcLengthInDegrees,
   lerp,
   createSimple2D,
   reMap,
   isShapeOutsideViewport,
-  clamp,
 } from "~/_util";
 import { coordOfCircle } from "~/_util-client-only";
 export type VerticeArcConfig = {

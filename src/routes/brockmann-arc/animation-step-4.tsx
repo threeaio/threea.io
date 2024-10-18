@@ -38,7 +38,7 @@ export default function BrockmanAnimation04(
           animateOffsetMs={props.animateOffsetMs}
           animate={true}
           animateBpm={props.animateBpm}
-          getStartRadius={(w) => w / 4}
+          setStartRadius={(w) => w / 4}
           bgColor={COLORS_3A[props.bgColor]}
           fadeInOut={true}
           setCenter={(width, height, progress) => {
@@ -47,7 +47,7 @@ export default function BrockmanAnimation04(
               y: (height / 3) * 2,
             };
           }}
-          draw={(p5, progress, arcs, center) => {
+          draw={(p5, arcs, progress, center) => {
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
               batch(() => {
