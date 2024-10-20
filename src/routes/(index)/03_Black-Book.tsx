@@ -79,7 +79,7 @@ function BlackBookItem() {
   return (
     <li data-animate-item="">
       <A
-        class="block bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group "
+        class="block transition bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group hover:bg-3a-gray-darker/100"
         href="/brockmann-arc"
         onClick={(e) => {
           const page = document.querySelector("#PAGE_3a")!;
@@ -104,9 +104,9 @@ function BlackBookItem() {
           <div class={"text-3a-green col-span-8 md:col-span-6 p-3 "}>
             <div class="">Animation</div>
           </div>
-          <div class={"col-span-14 xl:col-span-6 p-3"}>
+          <div class={"col-span-13 xl:col-span-6 p-3"}>
             <div class={"text-sm "}>
-              <h3 class="font-bold float-left mr-1.5  text-3a-green align-baseline">
+              <h3 class="font-bold sm:float-left mr-1.5  text-3a-green align-baseline">
                 Brockmanns Beethoven
               </h3>
               <p>

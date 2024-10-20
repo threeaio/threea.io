@@ -1,4 +1,4 @@
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
 import {
   ArcSettings,
   BROCKMAN_ARC_SETTINGS,
@@ -7,7 +7,7 @@ import { clientOnly } from "@solidjs/start";
 const ANIMATION = clientOnly(
   () =>
     import(
-      "~/components/animation/brockmann-beethoven/Canvas-Animation-arc-step-1"
+      "~/components/animation/brockmann-beethoven/Brockmann-Scene-Wrapper"
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
@@ -30,7 +30,7 @@ export default function BrockmanAnimation05(
   } & ParentProps,
 ) {
   return (
-    <CanvasAnimationWrapper
+    <CanvasScrollAnimationWrapper
       start={"clamp(top top+=90%)"}
       end={"clamp(bottom bottom-=90%)"}
       animation={
@@ -78,6 +78,6 @@ export default function BrockmanAnimation05(
       }
     >
       {props.children}
-    </CanvasAnimationWrapper>
+    </CanvasScrollAnimationWrapper>
   );
 }

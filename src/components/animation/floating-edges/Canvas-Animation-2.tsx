@@ -7,7 +7,7 @@ import {
 } from "solid-js";
 import { gsap } from "gsap";
 import P5 from "p5";
-import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
+import { useAnimationWrapperContext } from "~/components/animation/CanvasScrollAnimationWrapper";
 import { COLORS_3A } from "~/_util-client-only";
 import { fromLandingPageState } from "~/landing-page-state";
 import { Simple2DLine, subpoints } from "~/_util";

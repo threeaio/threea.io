@@ -12,6 +12,7 @@ import {
   isShapeOutsideViewport,
 } from "~/_util";
 import { coordOfCircle } from "~/_util-client-only";
+import { dvtx } from "~/components/animation/animation-drawables";
 export type VerticeArcConfig = {
   debug: boolean;
   randomizeStartPosition: boolean;
@@ -29,12 +30,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
   const applyTempScale = (n: number): number => n * TEMP_SCALER;
 
-  /**
-   * Draws a vertex at the given coordinates.
-   * @param {Simple2D} p - The position vector where the vertex should be drawn.
-   * @returns {p5} - The p5 vertex function.
-   */
-  const dvtx = (p: Simple2D): p5 => p5.vertex(p.x, p.y);
+  // const dvtx = (p: Simple2D): p5 => p5.vertex(p.x, p.y);
 
   // Signals for arc properties
   const [strokeColor, setStrokeColor] = createSignal<ColorArray>([
@@ -255,11 +251,11 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       }
 
       p5.beginShape();
-      dvtx(cell.points[0]);
-      dvtx(cell.points[1]);
-      dvtx(cell.points[2]);
-      dvtx(cell.points[3]);
-      dvtx(cell.points[0]);
+      dvtx(p5, cell.points[0]);
+      dvtx(p5, cell.points[1]);
+      dvtx(p5, cell.points[2]);
+      dvtx(p5, cell.points[3]);
+      dvtx(p5, cell.points[0]);
       p5.endShape(p5.CLOSE);
       p5.pop();
       // dvtx(cell[3]);

@@ -4,7 +4,7 @@ import AboutWork from "~/routes/(index)/02_About-Work";
 import { onMount } from "solid-js";
 import { Title } from "@solidjs/meta";
 import BlackBook from "~/routes/(index)/03_Black-Book";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
 import { clientOnly } from "@solidjs/start";
 import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
@@ -14,7 +14,11 @@ import {
   useNavigationContext,
 } from "~/Navigation-Context";
 const ANIMATION = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
+  () => import("~/components/animation/floating-edges/Canvas-Animation-2"),
+);
+const CanvasAnimationRotatedCube = clientOnly(
+  () =>
+    import("~/components/animation/stacked-cube/Canvas-Animation-Rotated-Cube"),
 );
 import { gsap } from "gsap";
 export default function Home() {
@@ -66,7 +70,7 @@ export default function Home() {
           <Introduction />
         </div>
         <div class={"relative"}>
-          <CanvasAnimationWrapper
+          <CanvasScrollAnimationWrapper
             start={"clamp(top top+=80%)"}
             end={"clamp(bottom bottom-=100%)"}
             animation={<ANIMATION />}
@@ -74,6 +78,27 @@ export default function Home() {
             <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
               <Divider />
             </div>
+            <div class={`bg-3a-gray-darker h-[200svh]`}>
+              <div class="relative h-full w-full">
+                <CanvasScrollAnimationWrapper
+                  animation={CanvasAnimationRotatedCube({
+                    bgColor: [0, 0, 0, 0],
+                    fadeInOut: false,
+                    setCenter(
+                      width: number,
+                      height: number,
+                      progress: number,
+                    ): { x: number; y: number } {
+                      return { x: width / 2, y: height / 2 };
+                    },
+                    setStartRadius(width: number, height: number): number {
+                      return width / 4;
+                    },
+                  })}
+                />
+              </div>
+            </div>
+
             <AboutWork />
             <Divider />
             <BlackBook />
@@ -93,7 +118,7 @@ export default function Home() {
             <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
               <Divider />
             </div>
-          </CanvasAnimationWrapper>
+          </CanvasScrollAnimationWrapper>
         </div>
 
         {/*<Contact />*/}

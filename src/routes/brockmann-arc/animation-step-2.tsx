@@ -1,16 +1,16 @@
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
 import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/brockmann-beethoven/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
 const ANIMATION = clientOnly(
   () =>
     import(
-      "~/components/animation/brockmann-beethoven/Canvas-Animation-arc-step-1"
+      "~/components/animation/brockmann-beethoven/Brockmann-Scene-Wrapper"
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { reMap, remapT } from "~/_util";
 import { ParentProps } from "solid-js";
-import { TW_BREAKPOINTS } from "~/_contants/contants";
+import { TW_BREAKPOINTS } from "~/_constants/constants";
 
 /**
  * CLIENT-ONLY !
@@ -18,7 +18,7 @@ import { TW_BREAKPOINTS } from "~/_contants/contants";
 
 export default function BrockmanAnimation02(props: ParentProps) {
   return (
-    <CanvasAnimationWrapper
+    <CanvasScrollAnimationWrapper
       start={"clamp(top top+=80%)"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
@@ -66,6 +66,6 @@ export default function BrockmanAnimation02(props: ParentProps) {
       }
     >
       {props.children}
-    </CanvasAnimationWrapper>
+    </CanvasScrollAnimationWrapper>
   );
 }

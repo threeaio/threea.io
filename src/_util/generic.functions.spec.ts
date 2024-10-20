@@ -1,8 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { isShapeOutsideViewport, reMap } from "~/_util/generic.functions";
+import {
+  clamp,
+  isShapeOutsideViewport,
+  reMap,
+} from "~/_util/generic.functions";
 import { Simple2D } from "~/_util/types";
 
 describe("Generic Functions", () => {
+  describe("clamp", () => {
+    it("return clamped value", () => {
+      expect(clamp(0.2, 0.3, 0)).toBe(0.2);
+    });
+  });
+
   describe("reMap - maps a value from one range to another", () => {
     it("should remap to a new range - simple min", () => {
       expect(reMap(0, 100, 50, 80, 0)).toBe(50);
@@ -27,6 +37,13 @@ describe("Generic Functions", () => {
     });
     it("should handle reversed ranges - mid", () => {
       expect(reMap(0, 100, 1000, 0, 75)).toBe(250);
+    });
+
+    it("should handle special case", () => {
+      expect(reMap(0.2, 0.3, 0, 1, 0)).toBe(0);
+      expect(reMap(0.2, 0.3, 0, 1, 0.2)).toBe(0);
+      expect(reMap(0.2, 0.3, 0, 1, 0.25)).toBe(0.5);
+      expect(reMap(0.2, 0.3, 0, 1, 0.3)).toBe(1);
     });
   });
 

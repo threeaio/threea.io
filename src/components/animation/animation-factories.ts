@@ -16,6 +16,21 @@ export const useHeightMemo = (
   });
 };
 
+export const useSetCenterMemo = (
+  props: AnimatedSceneProps,
+  width: Accessor<number>,
+  height: Accessor<number>,
+  progress: Accessor<number>,
+) => {
+  return createMemo(() => {
+    const c = props.setCenter(width(), height(), progress());
+    return c;
+  });
+};
+
+/*
+USELESS IN THIS FORM UNTIL IT IS USED IN DRAW!
+ */
 export const useSetCenterEffect = (
   props: AnimatedSceneProps,
   width: Accessor<number>,

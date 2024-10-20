@@ -32,7 +32,7 @@ export const useAnimationWrapperContext = () => {
   return context;
 };
 
-export default function CanvasAnimationWrapper(
+export default function CanvasScrollAnimationWrapper(
   props: ParentProps & {
     animation: JSX.Element;
     start?: string | number | StartEndFunc;

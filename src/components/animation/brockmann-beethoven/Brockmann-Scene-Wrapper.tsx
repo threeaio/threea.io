@@ -9,7 +9,7 @@ import {
   ParentProps,
 } from "solid-js";
 import P5 from "p5";
-import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
+import { useAnimationWrapperContext } from "~/components/animation/CanvasScrollAnimationWrapper";
 import { fromLandingPageState } from "~/landing-page-state";
 import {
   Arc,
@@ -36,7 +36,7 @@ import {
   useSetCenterEffect,
 } from "~/components/animation/animation-factories";
 
-export default function ArcAnimationStep1(
+export default function BrockmannSceneWrapper(
   props: ParentProps &
     AnimatedSceneProps &
     DrawCallbackProp<VerticeArcType> & {

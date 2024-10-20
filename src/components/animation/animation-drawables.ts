@@ -1,5 +1,9 @@
 import P5 from "p5";
-import { ColorArray, remapT } from "~/_util";
+import { ColorArray, remapT, Simple2D } from "~/_util";
+
+export const dvtx = (p5: P5, p: Simple2D) => {
+  p5.vertex(p.x, p.y);
+};
 
 export function fadeInout(p5: P5, bgColor: ColorArray, progress: number) {
   p5.push();
