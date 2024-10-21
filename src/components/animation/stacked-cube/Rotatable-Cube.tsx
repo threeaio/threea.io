@@ -21,6 +21,7 @@ import {
 } from "~/components/animation/animation-factories";
 import {
   clamp,
+  ColorArray,
   createArrayFromLength,
   createSimple2D,
   getPointOnEllipse,
@@ -29,36 +30,27 @@ import {
 } from "~/_util";
 import { COLORS_3A } from "~/_util-client-only";
 
-export default function CanvasAnimationRotatedCube(
-  props: ParentProps & AnimatedSceneProps,
-) {
-  const { progress, width, height, active } = useAnimationWrapperContext();
+export type RotatableCubeConfig = {
+  debug?: boolean;
+  fill: { color: ColorArray } | false;
+  stroke: { color: ColorArray } | false;
+};
 
-  const [{ landingPageState }] = fromLandingPageState;
+export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
+  const [centerX, setCenterX] = createSignal<number>(0);
+  const [centerY, setCenterY] = createSignal<number>(0);
+  const [cvsWidth, setCvsWidth] = createSignal<number>(0);
+  const [cvsHeight, setCvsHeight] = createSignal<number>(0);
 
-  const [animationParent, setAnimationParent] = createSignal<
-    HTMLElement | undefined
-  >();
+  // const animationProxies: AnimationProxies = createAnimationProxies();
 
-  const [p5InstanceSig, setP5InstanceSig] = createSignal<P5 | undefined>();
-
-  // let p5Instance: P5 | undefined;
-  //
-  const useHeight = useHeightMemo(props, height, landingPageState.screenHeight);
-
-  const useAnimateCommand = createMemo(() => {
-    return props.animateCommand || null;
-  });
-
-  const center = useSetCenterMemo(props, width, useHeight, progress);
-
-  const RAD_X = createMemo(() => width() / 2);
-  const RAD_Y = createMemo(() => width() / 6);
+  const RAD_X = createMemo(() => cvsWidth() / 2);
+  const RAD_Y = createMemo(() => cvsWidth() / 6);
   const [PADDING] = createSignal(100);
   const [AMOUNT_ITEMS] = createSignal(4);
 
   const HEIGHT_OF_ELEMENTS = createMemo(() => {
-    return (useHeight() - 2 * PADDING() - 2 * RAD_Y()) / AMOUNT_ITEMS();
+    return (cvsHeight() - 2 * PADDING() - 2 * RAD_Y()) / AMOUNT_ITEMS();
     // return reMap(0.2, 1, 3, 10, progress());
   });
 
@@ -69,7 +61,7 @@ export default function CanvasAnimationRotatedCube(
    */
   const getTopBottomOfForm = createMemo(() => {
     const FORM_CENTER = {
-      x: center().x,
+      x: centerX(),
       y: RAD_Y(),
     };
 
@@ -78,7 +70,8 @@ export default function CanvasAnimationRotatedCube(
     const CIRCLE = 2 * Math.PI;
     const CIRCLE_STEP = CIRCLE / AMOUNT_EDGES;
 
-    const norm = 1 / AMOUNT_ITEMS();
+    const I_STEP = 1 / AMOUNT_ITEMS();
+    const PROGRESS = Math.cos(p5Millis() / 500) % Math.PI;
 
     return createArrayFromLength(AMOUNT_ITEMS())
       .map((i) => {
@@ -96,12 +89,10 @@ export default function CanvasAnimationRotatedCube(
 
         const overlapBy = 1 / (AMOUNT_ITEMS() * 20);
 
-        const iFrom = Math.max(i * norm - i * overlapBy, 0);
-        const iTo = Math.min((i + 1) * norm + i * overlapBy, 1);
+        const iFrom = Math.max(i * I_STEP - i * overlapBy, 0);
+        const iTo = Math.min((i + 1) * I_STEP + i * overlapBy, 1);
 
-        const useProgress = Math.cos(p5Millis() / 500) % Math.PI;
-
-        const mapped = reMap(iFrom, iTo, 0, 1, useProgress);
+        const mapped = reMap(iFrom, iTo, 0, 1, PROGRESS);
         const myRotationProgress =
           mapped + rand1 * mapped + rand2 * (1 - mapped);
 
@@ -149,95 +140,48 @@ export default function CanvasAnimationRotatedCube(
     });
   });
 
-  /**
-   * Create Sketch
-   */
-  const createSketch = (ref: HTMLElement) => {
-    const sketch = (_p5: P5) => {
-      _p5.setup = () => {
-        const canvas = _p5.createCanvas(width(), useHeight(), _p5.P2D);
-        // _p5.noSmooth();
-        _p5.angleMode(_p5.DEGREES);
-        canvas.parent(ref);
-      };
-    };
+  const draw = () => {
+    setp5Millis(p5.millis());
 
-    const draw = () => {
-      setp5Millis(p5.millis());
+    const planes = getTopBottomOfForm();
+    const connectors = getConnectors();
+    // const vex
 
-      p5.clear();
-      p5.background(COLORS_3A.PAPER);
+    p5.push();
+    p5.stroke(COLORS_3A.WHITE);
+    p5.strokeWeight(0.5);
+    // p5.noStroke();
+    // p5.noFill();
+    // p5.strokeWeight(0.5);
+    // p5.fill(COLORS_3A.PAPER);
 
-      const planes = getTopBottomOfForm();
-      const connectors = getConnectors();
-      // const vex
+    for (let i = 0; i < planes.length; i++) {
+      p5.push();
+      p5.stroke(COLORS_3A.PAPER);
+      p5.fill(COLORS_3A.GRAY_DARKEST);
+      p5.beginShape();
+      for (let j = 0; j < planes[i].length; j++) {
+        dvtx(p5, planes[i][j]);
+      }
+      p5.endShape(p5.CLOSE);
+      p5.pop();
 
       p5.push();
-      p5.stroke(COLORS_3A.WHITE);
-      p5.strokeWeight(0.5);
-      // p5.noStroke();
-      // p5.noFill();
-      // p5.strokeWeight(0.5);
-      // p5.fill(COLORS_3A.PAPER);
+      p5.stroke(COLORS_3A.GRAY_DARKEST);
+      p5.fill(COLORS_3A.PAPER);
 
-      for (let i = 0; i < planes.length; i++) {
-        p5.push();
-        p5.stroke(COLORS_3A.PAPER);
-        p5.fill(COLORS_3A.GRAY_DARKEST);
+      for (let j = 0; j < connectors[i].length; j++) {
         p5.beginShape();
-        for (let j = 0; j < planes[i].length; j++) {
-          dvtx(p5, planes[i][j]);
-        }
+        dvtx(p5, connectors[i][j][0]);
+        dvtx(p5, connectors[i][j][1]);
+        dvtx(p5, connectors[i][j][2]);
+        dvtx(p5, connectors[i][j][3]);
         p5.endShape(p5.CLOSE);
-        p5.pop();
-
-        p5.push();
-        p5.stroke(COLORS_3A.GRAY_DARKEST);
-        p5.fill(COLORS_3A.PAPER);
-
-        for (let j = 0; j < connectors[i].length; j++) {
-          p5.beginShape();
-          dvtx(p5, connectors[i][j][0]);
-          dvtx(p5, connectors[i][j][1]);
-          dvtx(p5, connectors[i][j][2]);
-          dvtx(p5, connectors[i][j][3]);
-          p5.endShape(p5.CLOSE);
-        }
-
-        p5.pop();
       }
 
       p5.pop();
+    }
 
-      if (props.fadeInOut) {
-        fadeInout(p5, props.bgColor, progress());
-      }
-    };
-
-    const p5 = new P5(sketch, ref);
-
-    useP5Effects(p5, width, useHeight, active);
-
-    p5.draw = draw;
-
-    setP5InstanceSig(p5);
+    p5.pop();
   };
-
-  /**
-   * Init P5
-   */
-  onMount(() => {
-    createSketch(animationParent()!); // Create sketch
-    onCleanup(() => {
-      p5InstanceSig()?.remove();
-      setP5InstanceSig(undefined);
-    }); // Clean up P5 instance on unmount
-  });
-
-  /**
-   * Render
-   */
-  return (
-    <div class="sticky inset-0 max-h-full " ref={setAnimationParent}></div>
-  );
 }

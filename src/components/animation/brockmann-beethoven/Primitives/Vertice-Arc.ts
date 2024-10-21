@@ -33,15 +33,12 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   // const dvtx = (p: Simple2D): p5 => p5.vertex(p.x, p.y);
 
   // Signals for arc properties
-  const [strokeColor, setStrokeColor] = createSignal<ColorArray>([
-    255, 255, 255, 255,
-  ]);
   // const [center, setCenter] = createSignal<Vector2D>({ x: 0, y: 0 });
+  // const [dimensions, setDimension] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [centerX, setCenterX] = createSignal<number>(0);
   const [centerY, setCenterY] = createSignal<number>(0);
   const [cvsWidth, setCvsWidth] = createSignal<number>(0);
   const [cvsHeight, setCvsHeight] = createSignal<number>(0);
-  // const [dimensions, setDimension] = createSignal<Simple2D>({ x: 0, y: 0 });
 
   const [arcStartAngle, setArcStartAngle] = createSignal<number>(0);
   const useStartAngle = createMemo<number>(() => arcStartAngle());
@@ -51,23 +48,16 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const [thickness, setThickness] = createSignal<number>(0);
   const [progress, setProgress] = createSignal<number>(0);
 
-  // no need for signal here
   const [startOffset, setStartOffset] = createSignal<number>(
     config.randomizeStartPosition ? p5.random(-2, cvsWidth() / 2) : 0,
   );
 
-  // Memoized values for scaled radius and thickness
-  // const center = createMemo<Simple2D>(() => ({
-  //   x: centerX(),
-  //   y: centerY(),
-  // }));
   const scaledRadius = createMemo<number>(() => applyTempScale(radius()));
   const scaledThickness = createMemo<number>(() => applyTempScale(thickness()));
   const scaledInnerRadius = createMemo<number>(
     () => scaledRadius() + scaledThickness() / 2,
   );
 
-  // Memoized calculations for arc geometry
   const arcInnerAngle = createMemo<number>(
     () => useEndAngle() - useStartAngle(),
   );
@@ -407,7 +397,6 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     setCenterY,
     setCvsWidth,
     setCvsHeight,
-    setStrokeColor,
     setStartOffset,
     startOffset,
   };

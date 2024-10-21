@@ -16,10 +16,7 @@ import {
 const ANIMATION = clientOnly(
   () => import("~/components/animation/floating-edges/Canvas-Animation-2"),
 );
-const CanvasAnimationRotatedCube = clientOnly(
-  () =>
-    import("~/components/animation/stacked-cube/Canvas-Animation-Rotated-Cube"),
-);
+
 import { gsap } from "gsap";
 export default function Home() {
   const [_, { setOnThisPage, setPages }] = useNavigationContext();
@@ -78,27 +75,6 @@ export default function Home() {
             <div class="bg-gradient-to-b from-3a-gray-darkest to-transparent ">
               <Divider />
             </div>
-            <div class={`bg-3a-gray-darker h-[200svh]`}>
-              <div class="relative h-full w-full">
-                <CanvasScrollAnimationWrapper
-                  animation={CanvasAnimationRotatedCube({
-                    bgColor: [0, 0, 0, 0],
-                    fadeInOut: false,
-                    setCenter(
-                      width: number,
-                      height: number,
-                      progress: number,
-                    ): { x: number; y: number } {
-                      return { x: width / 2, y: height / 2 };
-                    },
-                    setStartRadius(width: number, height: number): number {
-                      return width / 4;
-                    },
-                  })}
-                />
-              </div>
-            </div>
-
             <AboutWork />
             <Divider />
             <BlackBook />

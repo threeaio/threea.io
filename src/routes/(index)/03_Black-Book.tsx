@@ -79,7 +79,7 @@ function BlackBookItem() {
   return (
     <li data-animate-item="">
       <A
-        class="block transition bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group hover:bg-3a-gray-darker/100"
+        class="block transition bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group hover:bg-3a-gray-darker/60"
         href="/brockmann-arc"
         onClick={(e) => {
           const page = document.querySelector("#PAGE_3a")!;
