@@ -21,29 +21,31 @@ import VerticeArc, {
   VerticeArcConfig,
   VerticeArcType,
 } from "~/components/animation/brockmann-beethoven/Primitives/Vertice-Arc";
-import { ColorArray, getRandomFloat } from "~/_util";
+import { ColorArray, getRandomFloat, Simple2D } from "~/_util";
 import { gsap } from "gsap";
 import {
   AnimatedSceneProps,
   DrawCallbackProp,
+  SetStartRadius,
 } from "~/components/animation/animation-types";
 import { fadeInout } from "~/components/animation/animation-drawables";
 import {
-  AnimationProxies,
-  createAnimationProxies,
   useHeightMemo,
   useP5Effects,
-  useSetCenterEffect,
+  useSetCenterMemo,
 } from "~/components/animation/animation-factories";
 
 export default function BrockmannSceneWrapper(
   props: ParentProps &
     AnimatedSceneProps &
     DrawCallbackProp<VerticeArcType> & {
+      setStartRadius: SetStartRadius;
       arcSettings: (width: number, height: number) => ArcSettings;
       arcConfig: VerticeArcConfig;
     },
 ) {
+  let p5Instance: P5 | undefined;
+
   const { progress, width, height, active } = useAnimationWrapperContext();
 
   const [{ landingPageState }] = fromLandingPageState;
@@ -57,18 +59,15 @@ export default function BrockmannSceneWrapper(
     return props.animateCommand || null;
   });
 
-  const hasSize = createMemo(() => width() > 0 && useHeight() > 0); // Check if dimensions are valid
+  const center = useSetCenterMemo(props, width, useHeight, progress);
+  const dimensions = createMemo<Simple2D>(() => ({
+    x: width(),
+    y: useHeight(),
+  }));
 
   const START_RAD = createMemo(() => props.setStartRadius(width(), height())); // the smallest radius
 
-  let p5Instance: P5 | undefined;
-
-  // Proxy objects to allow GSAP-Animation
-  const animationProxies: AnimationProxies = createAnimationProxies();
-
   const arcs: VerticeArcType[] = [];
-
-  useSetCenterEffect(props, width, useHeight, progress, animationProxies);
 
   /**
    * Create Sketch
@@ -90,10 +89,8 @@ export default function BrockmannSceneWrapper(
           const arc = VerticeArc(_p5, props.arcConfig);
           const propForArc = arcProps[i];
           batch(() => {
-            arc.setCvsWidth(_p5.width);
-            arc.setCvsHeight(_p5.height);
-            arc.setCenterX(animationProxies.center.x);
-            arc.setCenterY(animationProxies.center.y);
+            arc.setDimensions(dimensions());
+            arc.setCenter(center());
             arc.setRadius(propForArc.radius);
             arc.setThickness(propForArc.thickness);
             arc.setArcStartAngle(propForArc.startAngle);
@@ -110,17 +107,12 @@ export default function BrockmannSceneWrapper(
 
       for (let i = 0; i < arcs.length; i++) {
         batch(() => {
-          arcs[i].setCvsWidth(p5.width);
-          arcs[i].setCvsHeight(p5.height);
-          arcs[i].setCenterX(animationProxies.center.x);
-          arcs[i].setCenterY(animationProxies.center.y);
+          arcs[i].setDimensions(dimensions());
+          arcs[i].setCenter(center());
         });
       }
 
-      props.draw(p5, arcs, progress(), animationProxies.center, {
-        x: p5.width,
-        y: p5.height,
-      });
+      props.draw(p5, arcs, progress(), center(), dimensions());
 
       if (props.fadeInOut) {
         fadeInout(p5, props.bgColor, progress());

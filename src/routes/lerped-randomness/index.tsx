@@ -1,17 +1,16 @@
-import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 import { Title } from "@solidjs/meta";
 import { HeaderSimple } from "~/content/Header-Simple";
-import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
-import { clientOnly } from "@solidjs/start";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/typo/HugeText";
 import { onMount } from "solid-js";
 import { gsap } from "gsap";
 import { Divider } from "~/components/Divider";
-const CanvasAnimationRotatedCube = clientOnly(
-  () =>
-    import("~/components/animation/stacked-cube/Canvas-Animation-Rotated-Cube"),
+import { clientOnly } from "@solidjs/start";
+
+const ANIMATION = clientOnly(
+  () => import("~/routes/lerped-randomness/cube-animation-1"),
 );
+
 export default function LerpedRandomness() {
   onMount(() => {
     // setPages(navItems.pages);
@@ -31,37 +30,20 @@ export default function LerpedRandomness() {
 
       <FullWidth class="">
         <div class="h-svh relative flex flex-col justify-center">
-          <div class="mb-4 text-3a-green">Über threea.io</div>
+          <div class="mb-4 text-3a-green">
+            Bewegungs-Sammlung &ndash; Animationen und Dinge ohne weiteren Zweck
+          </div>
           <HugeText>
-            <h1 class="mb-4">
-              Mein Raum für kreatives Arbeiten und Einladung zur Kollaboration
-            </h1>
+            <h1 class="mb-4">Lerped Randomness</h1>
           </HugeText>
         </div>
       </FullWidth>
       <Divider />
-      <div class={`bg-3a-paper p-2 xl:p-24 2xl:p-32 `}>
+      <div class={` p-2 xl:p-24 2xl:p-32 `}>
         <div class="relative ">
-          <div class={` w-[800px] relative aspect-[1/1] mx-auto `}>
-            <div class="relative h-full w-full">
-              <CanvasScrollAnimationWrapper
-                start={"clamp(top top+=80%)"}
-                end={"clamp(bottom bottom-=100%)"}
-                animation={CanvasAnimationRotatedCube({
-                  bgColor: [0, 0, 0, 0],
-                  fadeInOut: false,
-                  setCenter(
-                    width: number,
-                    height: number,
-                    progress: number,
-                  ): { x: number; y: number } {
-                    return { x: width / 2, y: height / 2 };
-                  },
-                  setStartRadius(width: number, height: number): number {
-                    return width / 4;
-                  },
-                })}
-              />
+          <div class={` w-1/2 h-[400svh] relative  mx-auto `}>
+            <div class="relative h-full w-full ">
+              <ANIMATION bgColor="PAPER" />
             </div>
           </div>
         </div>

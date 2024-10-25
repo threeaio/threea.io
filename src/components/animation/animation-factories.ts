@@ -1,6 +1,5 @@
 import { AnimatedSceneProps } from "~/components/animation/animation-types";
 import { Accessor, createEffect, createMemo } from "solid-js";
-import { ColorArray } from "~/_util";
 import P5 from "p5";
 
 export const useHeightMemo = (
@@ -23,25 +22,7 @@ export const useSetCenterMemo = (
   progress: Accessor<number>,
 ) => {
   return createMemo(() => {
-    const c = props.setCenter(width(), height(), progress());
-    return c;
-  });
-};
-
-/*
-USELESS IN THIS FORM UNTIL IT IS USED IN DRAW!
- */
-export const useSetCenterEffect = (
-  props: AnimatedSceneProps,
-  width: Accessor<number>,
-  height: Accessor<number>,
-  progress: Accessor<number>,
-  animationProxies: AnimationProxies,
-) => {
-  createEffect(() => {
-    const newCenter = props.setCenter(width(), height(), progress());
-    animationProxies.center.x = newCenter.x;
-    animationProxies.center.y = newCenter.y;
+    return props.setCenter(width(), height(), progress());
   });
 };
 
@@ -63,13 +44,3 @@ export const useP5Effects = (
     }
   });
 };
-
-export const createAnimationProxies = () => ({
-  scale: 1,
-  rotate: 0,
-  outlineColor: [0, 0, 0, 0] as ColorArray,
-  fillColor: [0, 0, 0, 0] as ColorArray,
-  center: { x: 0, y: 0 },
-});
-
-export type AnimationProxies = ReturnType<typeof createAnimationProxies>;

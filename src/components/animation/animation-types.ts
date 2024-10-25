@@ -1,6 +1,5 @@
 import P5 from "p5";
 import { ColorArray } from "~/_util";
-import { VerticeArcType } from "~/components/animation/brockmann-beethoven/Primitives/Vertice-Arc";
 
 export type DrawCallback<T> = (
   p5: P5,
@@ -27,7 +26,6 @@ export type AnimatedSceneProps = {
   fadeInOut: boolean;
   forceContentHeight?: true;
   setCenter: SetCenterCallback;
-  setStartRadius: SetStartRadius;
   animate?: boolean;
   animateBpm?: number;
   animateOffsetMs?: number;

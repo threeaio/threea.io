@@ -1,6 +1,5 @@
 import P5 from "p5";
 import { createMemo, createSignal } from "solid-js";
-import * as p5 from "p5";
 import {
   ColorArray,
   Simple2D,
@@ -22,23 +21,11 @@ export type VerticeArcConfig = {
 };
 
 export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
-  const RESOLUTION_MIN: number = 60; // Resolution for vertex generation along the arc
-  const RESOLUTION_VERT: number = 4; // Resolution for vertex generation along the arc
-
-  const TEMP_SCALER: number = 1; // This constant is used for temporary scaling
   const OFFSET_ANGLES: number = -90; // Offset for calculating angles from the top, like a clock
 
-  const applyTempScale = (n: number): number => n * TEMP_SCALER;
-
-  // const dvtx = (p: Simple2D): p5 => p5.vertex(p.x, p.y);
-
-  // Signals for arc properties
-  // const [center, setCenter] = createSignal<Vector2D>({ x: 0, y: 0 });
-  // const [dimensions, setDimension] = createSignal<Simple2D>({ x: 0, y: 0 });
-  const [centerX, setCenterX] = createSignal<number>(0);
-  const [centerY, setCenterY] = createSignal<number>(0);
-  const [cvsWidth, setCvsWidth] = createSignal<number>(0);
-  const [cvsHeight, setCvsHeight] = createSignal<number>(0);
+  const [progress, setProgress] = createSignal<number>(0);
+  const [center, setCenter] = createSignal<Simple2D>({ x: 0, y: 0 });
+  const [dimension, setDimensions] = createSignal<Simple2D>({ x: 0, y: 0 });
 
   const [arcStartAngle, setArcStartAngle] = createSignal<number>(0);
   const useStartAngle = createMemo<number>(() => arcStartAngle());
@@ -46,14 +33,13 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   const useEndAngle = createMemo<number>(() => arcEndAngle());
   const [radius, setRadius] = createSignal<number>(0);
   const [thickness, setThickness] = createSignal<number>(0);
-  const [progress, setProgress] = createSignal<number>(0);
 
   const [startOffset, setStartOffset] = createSignal<number>(
-    config.randomizeStartPosition ? p5.random(-2, cvsWidth() / 2) : 0,
+    config.randomizeStartPosition ? p5.random(-2, dimension().x / 2) : 0,
   );
 
-  const scaledRadius = createMemo<number>(() => applyTempScale(radius()));
-  const scaledThickness = createMemo<number>(() => applyTempScale(thickness()));
+  const scaledRadius = createMemo<number>(() => radius());
+  const scaledThickness = createMemo<number>(() => thickness());
   const scaledInnerRadius = createMemo<number>(
     () => scaledRadius() + scaledThickness() / 2,
   );
@@ -67,14 +53,14 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
   // Position calculations
   const linePositionY = createMemo<number>(
-    () => centerY() - scaledInnerRadius(),
+    () => center().y - scaledInnerRadius(),
   );
 
   const startPositionX = createMemo<number>(
-    () => cvsWidth() / 2 - finalArcLength() + startOffset(),
+    () => dimension().x / 2 - finalArcLength() + startOffset(),
   );
   const finalPositionX = createMemo<number>(
-    () => centerX() + calculateArcLength(scaledInnerRadius(), useStartAngle()),
+    () => center().x + calculateArcLength(scaledInnerRadius(), useStartAngle()),
   );
   const currentX = createMemo<number>(() =>
     lerp(startPositionX(), finalPositionX(), progress()),
@@ -85,10 +71,12 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   });
 
   const USE_RESOLUTION_VERT = createMemo(() => {
-    // console.log("scaledThickness()", scaledThickness());
     return Math.round(reMap(0, 200, 1, 8, scaledThickness()));
   });
 
+  /**
+   *
+   */
   const vertexGrid = createMemo<Simple2D[][]>(() => {
     const finalArc = finalArcLength();
     if (!finalArc) {
@@ -96,8 +84,8 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     }
 
     const scaledThicknessVal = scaledThickness();
-    const _centerX = centerX();
-    const _centerY = centerY();
+    const _centerX = center().x;
+    const _centerY = center().y;
     const scaledInnerRad = scaledInnerRadius();
     const useResolution = USE_RESOLUTION();
     const useResolutionVert = USE_RESOLUTION_VERT();
@@ -145,6 +133,9 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     return res;
   });
 
+  /**
+   *
+   */
   const vertexGridCells = createMemo<
     {
       row: number;
@@ -170,7 +161,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           cellRightBottom,
           cellLeftBottom,
         ] as [Simple2D, Simple2D, Simple2D, Simple2D];
-        if (!isShapeOutsideViewport(cvsWidth(), cvsHeight(), points)) {
+        if (!isShapeOutsideViewport(dimension().x, dimension().y, points)) {
           cells.push({
             row,
             col,
@@ -393,10 +384,8 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
     setRadius,
     setThickness,
     setProgress,
-    setCenterX,
-    setCenterY,
-    setCvsWidth,
-    setCvsHeight,
+    setCenter,
+    setDimensions,
     setStartOffset,
     startOffset,
   };

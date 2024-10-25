@@ -136,7 +136,6 @@ export const isShapeOutsideViewport = (
   heightOfRect: number,
   pointsOfShape: Simple2D[],
 ): boolean => {
-  // Prüfen, ob Punkte innerhalb Viewports sind
   const someInside = pointsOfShape.some((point) => {
     return (
       (point.x >= 0 && point.x <= widthOfRect) ||
