@@ -34,6 +34,7 @@ import {
   useP5Effects,
   useSetCenterMemo,
 } from "~/components/animation/animation-factories";
+import { COLORS_3A } from "~/_util-client-only";
 
 export default function BrockmannSceneWrapper(
   props: ParentProps &
@@ -76,7 +77,8 @@ export default function BrockmannSceneWrapper(
     const sketch = (_p5: P5) => {
       _p5.setup = () => {
         const canvas = _p5.createCanvas(width(), useHeight(), _p5.P2D);
-        // _p5.noSmooth();
+
+        _p5.frameRate(60);
         _p5.angleMode(_p5.DEGREES);
         canvas.parent(ref);
 
@@ -102,6 +104,9 @@ export default function BrockmannSceneWrapper(
       };
     };
 
+    let frame = 0;
+    let frameAmount = 0;
+
     const draw = () => {
       p5.background(props.bgColor);
 
@@ -117,6 +122,14 @@ export default function BrockmannSceneWrapper(
       if (props.fadeInOut) {
         fadeInout(p5, props.bgColor, progress());
       }
+
+      // DEBUG FPS
+      // p5.fill(COLORS_3A.GREEN);
+      // frame += p5.frameRate();
+      // frameAmount++;
+      // p5.text(frame / frameAmount, 20, 20);
+      // p5.fill(COLORS_3A.RED);
+      // p5.text(p5.frameRate(), 220, 20);
     };
 
     const p5 = new P5(sketch, ref);

@@ -37,9 +37,9 @@ export default function BrockmanAnimation04(
           animateOffsetMs={props.animateOffsetMs}
           animate={true}
           animateBpm={props.animateBpm}
-          setStartRadius={(w) => w / 4}
+          setStartRadius={(w) => w / 6}
           bgColor={COLORS_3A[props.bgColor]}
-          fadeInOut={true}
+          fadeInOut={false}
           setCenter={(width, height, progress) => {
             return {
               x: width / 3,
@@ -57,7 +57,7 @@ export default function BrockmanAnimation04(
           }}
           arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
-            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 3),
+            sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / 2),
           })}
           arcConfig={{
             bgColor: COLORS_3A[props.bgColor],

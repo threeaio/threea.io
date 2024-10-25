@@ -10,7 +10,7 @@ import {
   reMap,
   isShapeOutsideViewport,
 } from "~/_util";
-import { coordOfCircle } from "~/_util-client-only";
+import { COLORS_3A, coordOfCircle } from "~/_util-client-only";
 import { dvtx } from "~/components/animation/animation-drawables";
 export type VerticeArcConfig = {
   debug: boolean;
@@ -67,7 +67,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
   );
 
   const USE_RESOLUTION = createMemo(() => {
-    return Math.round(reMap(50, 2000, 10, 90, finalArcLength()));
+    return Math.round(reMap(300, 2000, 50, 90, finalArcLength()));
   });
 
   const USE_RESOLUTION_VERT = createMemo(() => {
@@ -121,7 +121,6 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           res[row][col] = createSimple2D(rowPosLinear, colPosLinear);
         } else {
           res[row][col] = coordOfCircle(
-            p5,
             { x: _centerX, y: _centerY },
             angle,
             colPosAsRadius,
@@ -161,6 +160,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
           cellRightBottom,
           cellLeftBottom,
         ] as [Simple2D, Simple2D, Simple2D, Simple2D];
+
         if (!isShapeOutsideViewport(dimension().x, dimension().y, points)) {
           cells.push({
             row,
@@ -190,47 +190,21 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
     const cells = vertexGridCells();
 
+    if (config.fill) {
+      p5.stroke(config.fill.color);
+      p5.fill(config.fill.color);
+    } else if (config.stroke) {
+      p5.strokeWeight(0.5);
+      p5.noFill();
+      p5.stroke(config.stroke.color);
+    } else if (config.debug) {
+      p5.strokeWeight(0.5);
+      p5.noFill();
+      p5.stroke(COLORS_3A.PAPER);
+    }
+
     for (let i = 0; i < cells.length; i++) {
       const cell = cells[i];
-
-      p5.push();
-
-      if (config.fill) {
-        // p5.noStroke();
-        // p5.stroke([
-        //   config.fill.color[0],
-        //   config.fill.color[1],
-        //   config.fill.color[2],
-        //   cell.row * 5,
-        // ]);
-        const t1 = 1 - cell.row / USE_RESOLUTION();
-        const t2 = 1 - cell.col / USE_RESOLUTION_VERT();
-        const t = 0;
-        p5.strokeWeight(1);
-        p5.stroke([
-          lerp(config.fill.color[0], config.bgColor[0], t),
-          lerp(config.fill.color[1], config.bgColor[1], t),
-          lerp(config.fill.color[2], config.bgColor[2], t),
-          255,
-        ]);
-        p5.fill([
-          lerp(config.fill.color[0], config.bgColor[0], t),
-          lerp(config.fill.color[1], config.bgColor[1], t),
-          lerp(config.fill.color[2], config.bgColor[2], t),
-          255,
-        ]);
-      }
-      if (config.stroke) {
-        p5.noFill();
-        p5.strokeWeight(0.5);
-        p5.stroke([
-          config.stroke.color[0],
-          config.stroke.color[1],
-          config.stroke.color[2],
-          cell.row * 5,
-        ]);
-      }
-
       p5.beginShape();
       dvtx(p5, cell.points[0]);
       dvtx(p5, cell.points[1]);
@@ -238,140 +212,7 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       dvtx(p5, cell.points[3]);
       dvtx(p5, cell.points[0]);
       p5.endShape(p5.CLOSE);
-      p5.pop();
-      // dvtx(cell[3]);
-      // dvtx(cell[0]);
     }
-
-    // p5.fill("red");
-    // p5.text(p5.frameRate(), 20, 20);
-    // p5.text(USE_RESOLUTION_VERT(), 400 + USE_RESOLUTION_VERT() * 10, 20);
-
-    // p5.updatePixels();
-
-    // p5.image(buffer, -p5.width / 2, -p5.height / 2);
-
-    // if (!config.debug) {
-    //   if (config.fill) {
-    //     p5.push();
-    //     p5.strokeWeight(0.5);
-    //     p5.noStroke();
-    //     p5.fill(config.fill.color);
-    //     p5.beginShape();
-    //     for (let i = 0; i < vertexPoints().length; i++) {
-    //       dvtx(vertexPoints()[i].top);
-    //     }
-    //     const reversed = [...vertexPoints()].reverse();
-    //     for (let i = 0; i < vertexPoints().length; i++) {
-    //       dvtx(reversed[i].bottom);
-    //     }
-    //     p5.endShape(p5.CLOSE);
-    //     p5.pop();
-    //   }
-    //
-    //   if (config.stroke) {
-    //     p5.push();
-    //     p5.noFill();
-    //     p5.stroke(config.stroke.color);
-    //     p5.strokeWeight(0.5);
-    //
-    //     p5.beginShape();
-    //     /// outline
-    //     for (let i = 0; i < vertexPoints().length; i++) {
-    //       dvtx(vertexPoints()[i].top);
-    //     }
-    //     const reversed = [...vertexPoints()].reverse();
-    //     for (let i = 0; i < vertexPoints().length; i++) {
-    //       dvtx(reversed[i].bottom);
-    //     }
-    //     p5.endShape(p5.CLOSE);
-    //
-    //     /// center
-    //     for (let i = 0; i < vertexPoints().length - 1; i++) {
-    //       p5.line(
-    //         vertexPoints()[i].center!.x,
-    //         vertexPoints()[i].center!.y,
-    //         vertexPoints()[i + 1].center!.x,
-    //         vertexPoints()[i + 1].center!.y,
-    //       );
-    //     }
-    //
-    //     /// verticals
-    //     for (let i = 0; i < vertexPoints().length; i++) {
-    //       if (i % 4 === 0) {
-    //         p5.line(
-    //           vertexPoints()[i].top.x,
-    //           vertexPoints()[i].top.y,
-    //           vertexPoints()[i].bottom.x,
-    //           vertexPoints()[i].bottom.y,
-    //         );
-    //       }
-    //     }
-    //     p5.pop();
-    //   }
-    // } else if (config.debug) {
-    //   p5.push();
-    //   p5.stroke(COLORS_3A.RED);
-    //   p5.fill(COLORS_3A.GRAY_DARKEST);
-    //   p5.strokeWeight(0.5);
-    //   p5.line(center().x, 0, center().x, p5.height);
-    //   p5.circle(center().x, center().y, 15);
-    //   p5.pop();
-    //
-    //   p5.push();
-    //
-    //   p5.noFill();
-    //   p5.stroke(strokeColor());
-    //   p5.strokeWeight(0.5);
-    //
-    //   p5.beginShape();
-    //   for (let i = 0; i < vertexPoints().length; i++) {
-    //     if (i % 4 === 0) {
-    //       dvtx(vertexPoints()[i].center!);
-    //     }
-    //   }
-    //   p5.endShape();
-    //
-    //   p5.push();
-    //   p5.stroke(COLORS_3A.RED);
-    //   let shadI = -1;
-    //   for (let i = 0; i < vertexPoints().length; i++) {
-    //     if (vertexPoints()[i].shadow && i % 4 === 0) {
-    //       p5.circle(
-    //         vertexPoints()[i].shadow!.x,
-    //         vertexPoints()[i].shadow!.y,
-    //         5,
-    //       );
-    //       shadI = i;
-    //     }
-    //   }
-    //
-    //   if (shadI > -1) {
-    //     p5.line(
-    //       vertexPoints()[shadI].shadow!.x,
-    //       vertexPoints()[shadI].shadow!.y - 20,
-    //       center().x,
-    //       vertexPoints()[shadI].shadow!.y - 20,
-    //     );
-    //     p5.line(
-    //       center().x,
-    //       center().y,
-    //       vertexPoints()[shadI].center!.x,
-    //       vertexPoints()[shadI].center!.y,
-    //     );
-    //   }
-    //   p5.pop();
-    //
-    //   for (let i = 0; i < vertexPoints().length; i++) {
-    //     if (i % 4 === 0) {
-    //       p5.circle(
-    //         vertexPoints()[i].center!.x,
-    //         vertexPoints()[i].center!.y,
-    //         5,
-    //       );
-    //     }
-    //   }
-    // }
   };
 
   // Return functions to set various arc properties and the draw function

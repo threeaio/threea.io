@@ -103,7 +103,7 @@ export const step1: AnimatedSubSection = {
 };
 
 export const step2: AnimatedSubSection = {
-  title: "Weiteres",
+  title: "Weiteres zur Implementierung",
   num: "03",
   animation: () => <ANIMATION_02 />,
   description: () => (

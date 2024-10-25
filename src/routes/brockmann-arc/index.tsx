@@ -32,7 +32,6 @@ import {
   NavigationConfiguration,
 } from "~/Navigation-Context";
 import { gsap } from "gsap";
-import { useNavigate } from "@solidjs/router";
 
 const ANIMATION_04 = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-4"),
@@ -72,7 +71,7 @@ export default function BrockmannArc() {
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_03" },
-        title: "Weiteres",
+        title: "Weiteres zur Implementierung",
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_04" },
@@ -213,8 +212,8 @@ export default function BrockmannArc() {
               <AnimationAsPoster>
                 <ANIMATION_04
                   bgColor={"WHITE"}
-                  animateOffsetMs={100}
-                  animateBpm={30}
+                  animateOffsetMs={250}
+                  animateBpm={15}
                   animateCommand={animateClick()}
                 />
                 <PosterContentBeethoven>Miles Davis</PosterContentBeethoven>
@@ -223,13 +222,17 @@ export default function BrockmannArc() {
               {/*Poster 3*/}
               <AnimationAsPoster>
                 <ANIMATION_04
-                  animateOffsetMs={200}
+                  animateOffsetMs={500}
                   animateBpm={15}
                   bgColor={"GREEN"}
                   animateCommand={animateClick()}
                 />
                 <PosterContentBeethoven>Ice Cube</PosterContentBeethoven>
               </AnimationAsPoster>
+
+              {/*<div class={"col-span-3 py-64"}>*/}
+              {/*  <HugeText>Da geht noch anderes</HugeText>*/}
+              {/*</div>*/}
 
               {/*Cover 1*/}
               <AnimationAsSquare right={true}>
@@ -262,7 +265,9 @@ export default function BrockmannArc() {
                   arcSettingsPartial={{
                     amountOfArcs: 5,
                     gap: 3,
-                    arcRange: createArrayFromLength(12).map((i) => i * 1.5),
+                    arcRange: createArrayFromLength(12).map(
+                      (i) => i * 1.5 + 0.5,
+                    ),
                     sizes: createArrayFromLength(12).map(
                       (i) => Math.pow(i, i) * 0.5,
                     ),
@@ -302,6 +307,35 @@ export default function BrockmannArc() {
                   </PosterTextHeadline>
                 </AnimationTypoForSquare>
               </AnimationAsSquare>
+              {/*Cover 4*/}
+              <AnimationAsSquare>
+                <ANIMATION_05
+                  animateBpm={30}
+                  bgColor={"GRAY_DARKER"}
+                  strokeColor={"RED"}
+                  progress={0.3}
+                  speed={6000}
+                  ampl={12}
+                  animateCommand={animateClick()}
+                  arcSettingsPartial={{
+                    amountOfArcs: 18,
+                    gap: 2,
+                    arcRange: createArrayFromLength(18).map((i) =>
+                      reMap(0, 18, 4, 32, i),
+                    ),
+                    sizes: createArrayFromLength(18).map((i) => i * i),
+                  }}
+                />
+                <AnimationTypoForSquare>
+                  <span class={"text-3a-green"}>
+                    CIRCLE
+                    <br />
+                    SQUARE
+                    <br />
+                    TRIANGLE
+                  </span>
+                </AnimationTypoForSquare>
+              </AnimationAsSquare>
             </div>
           </FullWidth>
         </div>
@@ -313,9 +347,13 @@ export default function BrockmannArc() {
 
 function AnimationAsPoster(props: ParentProps) {
   return (
-    <div class={"bg-3a-gray-darker p-2 xl:p-4"}>
-      <div class="relative max-h-[100svh] aspect-[1/1.6] mx-auto ">
-        {props.children}
+    <div class={""}>
+      <div
+        class={
+          "bg-3a-gray-darker h-full w-full p-2 xl:p-4  max-h-[100svh] aspect-[1/1.414] mx-auto"
+        }
+      >
+        <div class="relative h-full w-full ">{props.children}</div>
       </div>
     </div>
   );
