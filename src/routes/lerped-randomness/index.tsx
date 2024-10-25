@@ -6,15 +6,36 @@ import { onMount } from "solid-js";
 import { gsap } from "gsap";
 import { Divider } from "~/components/Divider";
 import { clientOnly } from "@solidjs/start";
+import {
+  NavigationConfiguration,
+  useNavigationContext,
+} from "~/Navigation-Context";
 
 const ANIMATION = clientOnly(
   () => import("~/routes/lerped-randomness/cube-animation-1"),
 );
 
 export default function LerpedRandomness() {
+  const [_, { setOnThisPage, setPages }] = useNavigationContext();
+
+  const navItems: NavigationConfiguration = {
+    onThisPage: [
+      {
+        linkProps: { type: "anchor", target: "#LERPED_RANDOMNESS_TOP" },
+        title: "Anfang",
+      },
+    ],
+    pages: [
+      {
+        linkProps: { type: "link", href: "/brockmann-arc" },
+        title: "Brockmanns Beethoven",
+      },
+    ],
+  };
+
   onMount(() => {
-    // setPages(navItems.pages);
-    // setOnThisPage(navItems.onThisPage);
+    setPages(navItems.pages);
+    setOnThisPage(navItems.onThisPage);
     const page = document.querySelector("#PAGE_3a")!;
     gsap.to(page, {
       opacity: 1,
@@ -28,7 +49,7 @@ export default function LerpedRandomness() {
 
       <HeaderSimple class="absolute z-20 w-full" />
 
-      <FullWidth class="">
+      <FullWidth class="" id={"LERPED_RANDOMNESS_TOP"}>
         <div class="h-svh relative flex flex-col justify-center">
           <div class="mb-4 text-3a-green">
             Bewegungs-Sammlung &ndash; Animationen und Dinge ohne weiteren Zweck

@@ -61,7 +61,7 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
     const CIRCLE_STEP = CIRCLE / AMOUNT_EDGES();
     const PROGRESS = progress();
 
-    // calculate item size and respect overlap
+    // calculate item-step-size and respect overlap
     const additionalSpace = (AMOUNT_ITEMS() - 1) * OVERLAP;
     const I_STEP_WITHOVERLAP = (1 + additionalSpace) / AMOUNT_ITEMS();
 

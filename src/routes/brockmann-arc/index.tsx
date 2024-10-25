@@ -60,7 +60,7 @@ export default function BrockmannArc() {
     onThisPage: [
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_TOP" },
-        title: "Oben",
+        title: "Anfang",
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_01" },
