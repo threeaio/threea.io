@@ -173,14 +173,14 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
 
     if (config.debug && config.debug === 1) {
       p5.strokeWeight(0.5);
-      p5.stroke(COLORS_3A.PAPER);
+      p5.stroke(COLORS_3A.WHITE);
       p5.noFill();
       p5.circle(center().x, center().y, radius() * 2);
       p5.line(center().x, 0, center().x, dimension().y);
     }
     if (config.debug && config.debug === 2) {
       const DEBUG2_LINE_SIZE = 42;
-      p5.stroke(COLORS_3A.RED);
+      p5.stroke(COLORS_3A.WHITE);
 
       p5.line(
         center().x - radius(),

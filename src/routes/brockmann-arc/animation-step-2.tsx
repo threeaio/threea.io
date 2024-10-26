@@ -8,7 +8,7 @@ const ANIMATION = clientOnly(
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { reMap, remapT } from "~/_util";
+import { AnimationTrigger, reMap, remapT } from "~/_util";
 import { ParentProps } from "solid-js";
 import { TW_BREAKPOINTS } from "~/_constants/constants";
 
@@ -16,7 +16,11 @@ import { TW_BREAKPOINTS } from "~/_constants/constants";
  * CLIENT-ONLY !
  */
 
-export default function BrockmanAnimation02(props: ParentProps) {
+export default function BrockmanAnimation02(
+  props: ParentProps & {
+    animateCommand: AnimationTrigger;
+  },
+) {
   return (
     <CanvasScrollAnimationWrapper
       start={"clamp(top top+=80%)"}
@@ -25,6 +29,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
         <ANIMATION
           setStartRadius={(width, height) => Math.max(width / 12, 70)}
           bgColor={COLORS_3A.GRAY_DARKER}
+          animateCommand={props.animateCommand}
           fadeInOut={true}
           draw={(p5, arcs, progress, center) => {
             // Math.sin(p5.millis() / 800) + 1.2

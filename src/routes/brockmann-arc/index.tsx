@@ -32,6 +32,7 @@ import {
   NavigationConfiguration,
 } from "~/Navigation-Context";
 import { gsap } from "gsap";
+import Kbd from "~/components/typo/Kbd";
 
 const ANIMATION_04 = clientOnly(
   () => import("~/routes/brockmann-arc/animation-step-4"),
@@ -171,12 +172,21 @@ export default function BrockmannArc() {
         {/* Inspiration Ende */}
 
         <FullAnimatedBg content={step1} withRotatedBg={false} />
-        <FullAnimatedBg content={step2} withRotatedBg={"-rotate-2"} />
-        <FullAnimatedBg
-          content={step3}
-          withRotatedBg={false}
-          animationTrigger={animateClick}
-        />
+        <div>
+          <ControllerHere>
+            <ClickForAnimationControl setAnimateClick={setAnimateClick} />
+          </ControllerHere>
+          <FullAnimatedBg
+            content={step2}
+            withRotatedBg={"-rotate-2"}
+            animationTrigger={animateClick}
+          />
+          <FullAnimatedBg
+            content={step3}
+            withRotatedBg={false}
+            animationTrigger={animateClick}
+          />
+        </div>
 
         {/*////x*/}
         <div class={"mb-24"} id={"BROCKMANN_GALLERY"}>
@@ -458,6 +468,18 @@ function ControllerHere(props: ParentProps) {
         class={`absolute w-full  pt-4 left-0 transition scale-75 opacity-0 group-[.is-sticky]:opacity-100 group-[.is-sticky]:scale-100  `}
       >
         {props.children}
+      </div>
+    </div>
+  );
+}
+
+function ClickForAnimationControl(props: { setAnimateClick: () => void }) {
+  return (
+    <div class="flex flex-row justify-center">
+      <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-3a-black/30 shadow-lg font-mono text-sm">
+        <button class={"p-3 text-3a-green"} onClick={props.setAnimateClick}>
+          Klicke hier oder drücke <Kbd>A</Kbd> für Variationen
+        </button>
       </div>
     </div>
   );

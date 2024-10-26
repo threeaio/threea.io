@@ -9,6 +9,7 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { batch, ParentProps } from "solid-js";
+import { AnimationTrigger } from "~/_util";
 
 /**
  * CLIENT-ONLY !
@@ -18,12 +19,7 @@ export default function BrockmanAnimation04(
   props: {
     animateBpm?: number;
     animateOffsetMs?: number;
-    animateCommand:
-      | PointerEvent
-      | MouseEvent
-      | KeyboardEvent
-      | number
-      | undefined;
+    animateCommand: AnimationTrigger;
     bgColor: keyof typeof COLORS_3A;
   } & ParentProps,
 ) {

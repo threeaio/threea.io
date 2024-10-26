@@ -226,9 +226,9 @@ export default function BrockmannSceneWrapper(
 
   createEffect(
     on(useAnimateCommand, () => {
-      // if (useAnimateCommand() && active()) {
-      //   animateArcs();
-      // }
+      if (useAnimateCommand() && active() && p5Instance) {
+        animateArcs(p5Instance);
+      }
     }),
   );
 
@@ -268,7 +268,7 @@ function drawAngles(
   const DEBUG2_LINE_SIZE = 12;
   p5.strokeWeight(0.5);
   p5.noFill();
-  p5.stroke(COLORS_3A.RED);
+  p5.stroke(COLORS_3A.WHITE);
   // p5.circle(center().x, center().y, outerRadius() * 2);
 
   const SEG = (2 * Math.PI) / 32;

@@ -23,7 +23,6 @@
   @apply fixed;
   @apply top-0;
   @apply right-0;
-  @apply z-30;
   @apply sm:rounded-xl;
   @apply sm:shadow-2xl;
 
@@ -37,6 +36,7 @@
   @apply max-sm:bg-3a-black;
   /*@apply sm:bg-auto;*/
   /*@apply border-opacity-0;*/
+  z-index: 100;
   transform-origin: 2rem 0%;
 
   /*@apply sm:transition-transform;*/
