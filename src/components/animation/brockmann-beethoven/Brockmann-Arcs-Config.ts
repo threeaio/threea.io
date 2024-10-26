@@ -3,16 +3,6 @@ import {
   getRandomFloat,
 } from "~/_util/generic.functions";
 
-// export type ArcSettings = {
-//   minArc: number;
-//   arcSeg: number;
-//   arcRange: number[];
-//   maxArc: number;
-//   gap: number;
-//   sizes: number[];
-//   amountOfArcs: number;
-// };
-
 const ARC_SEG_SITE = 90 / 8;
 const MAX_ARC_MULTIPLIER = 2;
 
@@ -95,19 +85,6 @@ export const generateArcs = (
         endAngle,
         thickness,
       });
-      // if (!(i % 3)) {
-      //   const { startAngleNew, endAngleNew } = getAdditionalBrockmannAngles(
-      //     i,
-      //     startAngle,
-      //     endAngle,
-      //   );
-      //   newItems.push({
-      //     radius,
-      //     startAngle: startAngleNew,
-      //     endAngle: endAngleNew,
-      //     thickness,
-      //   });
-      // }
 
       return [...acc, ...newItems];
     },

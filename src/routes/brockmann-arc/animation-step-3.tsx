@@ -48,7 +48,6 @@ export default function BrockmanAnimation03(
           })}
           arcConfig={{
             bgColor: COLORS_3A.GRAY_DARKEST,
-            debug: false,
             stroke: false,
             fill: {
               color: COLORS_3A.PAPER,

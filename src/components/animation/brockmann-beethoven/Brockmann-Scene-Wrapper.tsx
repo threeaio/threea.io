@@ -21,7 +21,13 @@ import VerticeArc, {
   VerticeArcConfig,
   VerticeArcType,
 } from "~/components/animation/brockmann-beethoven/Primitives/Vertice-Arc";
-import { ColorArray, getRandomFloat, Simple2D } from "~/_util";
+import {
+  ColorArray,
+  getPointOnEllipse,
+  getRandomFloat,
+  Simple2D,
+  translate2D,
+} from "~/_util";
 import { gsap } from "gsap";
 import {
   AnimatedSceneProps,
@@ -115,6 +121,37 @@ export default function BrockmannSceneWrapper(
           arcs[i].setDimensions(dimensions());
           arcs[i].setCenter(center());
         });
+      }
+
+      const lastArc = arcs.at(-1);
+      if (lastArc) {
+        if (lastArc.debug && lastArc.debug === 2) {
+          const DEBUG2_LINE_SIZE = 42;
+          p5.strokeWeight(0.5);
+          p5.noFill();
+          p5.stroke(COLORS_3A.PAPER);
+          // p5.circle(center().x, center().y, outerRadius() * 2);
+
+          const SEG = (2 * Math.PI) / 32;
+          for (let i = 0; i < 32; i++) {
+            // if (i > 28 || i < 20) {
+            const targetOuter = translate2D(
+              getPointOnEllipse(
+                i * SEG - Math.PI / 2,
+                lastArc.outerRadius() + DEBUG2_LINE_SIZE,
+              ),
+              center().x,
+              center().y,
+            );
+            const targetInner = translate2D(
+              getPointOnEllipse(i * SEG - Math.PI / 2, lastArc.outerRadius()),
+              center().x,
+              center().y,
+            );
+            p5.line(targetInner.x, targetInner.y, targetOuter.x, targetOuter.y);
+            // }
+          }
+        }
       }
 
       props.draw(p5, arcs, progress(), center(), dimensions());

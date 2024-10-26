@@ -71,7 +71,7 @@ export default function BrockmannArc() {
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_03" },
-        title: "Weiteres zur Implementierung",
+        title: "Weitere Parameter",
       },
       {
         linkProps: { type: "anchor", target: "#BROCKMANN_04" },
@@ -237,11 +237,11 @@ export default function BrockmannArc() {
               {/*Cover 1*/}
               <AnimationAsSquare right={true}>
                 <ANIMATION_05
-                  animateBpm={30}
+                  animateBpm={7.5}
                   bgColor={"WHITE"}
                   progress={0.2}
                   speed={2000}
-                  ampl={3}
+                  ampl={5}
                   animateCommand={animateClick()}
                   arcSettingsPartial={{ amountOfArcs: 7 }}
                 />
@@ -256,11 +256,11 @@ export default function BrockmannArc() {
               {/*Cover 2*/}
               <AnimationAsSquare>
                 <ANIMATION_05
-                  animateBpm={30}
+                  animateBpm={7.5}
                   bgColor={"WHITE"}
                   progress={0.24}
                   speed={4000}
-                  ampl={20}
+                  ampl={3}
                   animateCommand={animateClick()}
                   arcSettingsPartial={{
                     amountOfArcs: 5,
@@ -310,7 +310,7 @@ export default function BrockmannArc() {
               {/*Cover 4*/}
               <AnimationAsSquare>
                 <ANIMATION_05
-                  animateBpm={30}
+                  animateBpm={7.5}
                   bgColor={"GRAY_DARKER"}
                   strokeColor={"RED"}
                   progress={0.3}
@@ -327,13 +327,15 @@ export default function BrockmannArc() {
                   }}
                 />
                 <AnimationTypoForSquare>
-                  <span class={"text-3a-green"}>
-                    CIRCLE
-                    <br />
-                    SQUARE
-                    <br />
-                    TRIANGLE
-                  </span>
+                  <PosterTextHeadline>
+                    <span class={"text-3a-green font-black uppercase"}>
+                      Angle
+                      <br />
+                      Vector
+                      <br />
+                      Triangle
+                    </span>
+                  </PosterTextHeadline>
                 </AnimationTypoForSquare>
               </AnimationAsSquare>
             </div>

@@ -103,7 +103,7 @@ export const step1: AnimatedSubSection = {
 };
 
 export const step2: AnimatedSubSection = {
-  title: "Weiteres zur Implementierung",
+  title: "Weitere Parameter",
   num: "03",
   animation: () => <ANIMATION_02 />,
   description: () => (
@@ -141,7 +141,8 @@ export const step3: AnimatedSubSection = {
     <>
       <p>
         Hier ist ein weiterer Zufallsparameter eingabaut, der die Startposition
-        der Bögen verschiebt.
+        der Bögen verschiebt. Außerdem wurde ein wenig Abstand zwischen die
+        Bögen eingefügt.
       </p>
       {/*<p>*/}
       {/*  Durch Drücken der <Kbd>A</Kbd>-Taste kannst du sowohl Startposition,*/}

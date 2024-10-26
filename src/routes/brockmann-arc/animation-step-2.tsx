@@ -29,7 +29,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
           draw={(p5, arcs, progress, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             // console.log("progress STEP 2", progress);
-            const p = remapT(progress, 0, 0.7);
+            const p = remapT(progress, 0, 0.6);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);
               arcs[i].draw();
@@ -43,12 +43,13 @@ export default function BrockmanAnimation02(props: ParentProps) {
           arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
             arcRange: [5, 6, 7, 9, 11, 14, 17, 21],
+            gap: 0,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map(
               (s) => s / reMap(300, 1600, 8, 6, width),
             ),
           })}
           arcConfig={{
-            debug: false,
+            debug: 2,
             bgColor: COLORS_3A.GRAY_DARKER,
             stroke: {
               color: COLORS_3A.GREEN,

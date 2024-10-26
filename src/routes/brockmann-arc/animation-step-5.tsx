@@ -67,7 +67,6 @@ export default function BrockmanAnimation05(
             ...props.arcSettingsPartial,
           })}
           arcConfig={{
-            debug: false,
             bgColor: COLORS_3A[props.bgColor],
             fill: {
               color: props.strokeColor

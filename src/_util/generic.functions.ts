@@ -66,10 +66,11 @@ export function translate2D(
 export function getPointOnEllipse(
   angle: number,
   radiusX: number,
-  radiusY: number,
+  radiusY?: number,
 ): Simple2D {
   const x = radiusX * Math.cos(angle);
-  const y = radiusY * Math.sin(angle);
+  const y =
+    (typeof radiusY !== "undefined" ? radiusY : radiusX) * Math.sin(angle);
   return { x, y };
 }
 
