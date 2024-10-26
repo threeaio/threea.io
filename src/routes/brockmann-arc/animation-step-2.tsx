@@ -52,7 +52,7 @@ export default function BrockmanAnimation02(props: ParentProps) {
             debug: 2,
             bgColor: COLORS_3A.GRAY_DARKER,
             stroke: {
-              color: COLORS_3A.GREEN,
+              color: COLORS_3A.PAPER,
             },
             fill: false,
             randomizeStartPosition: false,

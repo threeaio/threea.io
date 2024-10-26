@@ -7,6 +7,7 @@ module.exports = {
     colors: {
       "3a-green": "rgb(var(--color-3a-green))",
       "3a-red": "rgb(var(--color-3a-red))",
+      "3a-blue": "rgb(var(--color-3a-blue))",
       "3a-white": "rgb(var(--color-3a-white))",
       "3a-paper": "rgb(var(--color-3a-paper))",
       "3a-gray": "rgb(var(--color-3a-gray))",

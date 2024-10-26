@@ -126,31 +126,14 @@ export default function BrockmannSceneWrapper(
       const lastArc = arcs.at(-1);
       if (lastArc) {
         if (lastArc.debug && lastArc.debug === 2) {
-          const DEBUG2_LINE_SIZE = 42;
-          p5.strokeWeight(0.5);
-          p5.noFill();
-          p5.stroke(COLORS_3A.PAPER);
-          // p5.circle(center().x, center().y, outerRadius() * 2);
+          drawAngles(p5, lastArc, center(), 1);
+        }
+      }
 
-          const SEG = (2 * Math.PI) / 32;
-          for (let i = 0; i < 32; i++) {
-            // if (i > 28 || i < 20) {
-            const targetOuter = translate2D(
-              getPointOnEllipse(
-                i * SEG - Math.PI / 2,
-                lastArc.outerRadius() + DEBUG2_LINE_SIZE,
-              ),
-              center().x,
-              center().y,
-            );
-            const targetInner = translate2D(
-              getPointOnEllipse(i * SEG - Math.PI / 2, lastArc.outerRadius()),
-              center().x,
-              center().y,
-            );
-            p5.line(targetInner.x, targetInner.y, targetOuter.x, targetOuter.y);
-            // }
-          }
+      const firstArc = arcs.at(0);
+      if (firstArc) {
+        if (firstArc.debug && firstArc.debug === 2) {
+          drawAngles(p5, firstArc, center(), -1);
         }
       }
 
@@ -274,4 +257,37 @@ export default function BrockmannSceneWrapper(
       ref={setAnimationParent}
     ></div>
   );
+}
+
+function drawAngles(
+  p5: P5,
+  arc: VerticeArcType,
+  center: Simple2D,
+  position: 1 | -1,
+) {
+  const DEBUG2_LINE_SIZE = 12;
+  p5.strokeWeight(0.5);
+  p5.noFill();
+  p5.stroke(COLORS_3A.RED);
+  // p5.circle(center().x, center().y, outerRadius() * 2);
+
+  const SEG = (2 * Math.PI) / 32;
+  for (let i = 0; i < 32; i++) {
+    // if (i > 28 || i < 20) {
+    const targetOuter = translate2D(
+      getPointOnEllipse(
+        i * SEG - Math.PI / 2,
+        arc.outerRadius() + DEBUG2_LINE_SIZE * position,
+      ),
+      center.x,
+      center.y,
+    );
+    const targetInner = translate2D(
+      getPointOnEllipse(i * SEG - Math.PI / 2, arc.outerRadius()),
+      center.x,
+      center.y,
+    );
+    p5.line(targetInner.x, targetInner.y, targetOuter.x, targetOuter.y);
+    // }
+  }
 }
