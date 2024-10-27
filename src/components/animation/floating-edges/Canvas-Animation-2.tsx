@@ -22,7 +22,6 @@ export default function CanvasAnimation2(
   const hasSize = createMemo(() => width() > 0 && height() > 0);
 
   const useHeight = createMemo(() => {
-    console.log("andingPageState.screenHeight", landingPageState.screenHeight);
     return height() < landingPageState.screenHeight
       ? height()
       : landingPageState.screenHeight;

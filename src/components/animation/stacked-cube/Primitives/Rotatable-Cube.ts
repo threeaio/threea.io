@@ -10,16 +10,22 @@ import {
   translate2D,
 } from "~/_util";
 import { COLORS_3A } from "~/_util-client-only";
+import { drawAsStackedCubes } from "~/components/animation/stacked-cube/Primitives/Draw-As-Stacked-Cubes";
+import { drawAsOther } from "~/components/animation/stacked-cube/Primitives/Draw-As-Other";
+import { drawAsColored } from "~/components/animation/stacked-cube/Primitives/Draw-As-Colored";
 
 export type RotatableCubeConfig = {
   debug?: boolean;
   amountEdges: number;
   amountItems: number;
+  maxGap: number;
+  padding: number;
+  addRandom: boolean;
+  hideOutlinesWhenStable: boolean;
+  drawAs: "CUBE_ROTATE" | "COLORED" | "OTHER";
 };
 
 export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
-  const MAX_GAP = 5;
-
   const [center, setCenter] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [dimension, setDimensions] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [progress, setProgress] = createSignal(0);
@@ -27,41 +33,42 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
 
   const [AMOUNT_EDGES, setAmountEdges] = createSignal(config.amountEdges);
   const [AMOUNT_ITEMS, setAmountItems] = createSignal(config.amountItems);
-  const [PADDING, setPadding] = createSignal(120);
 
-  const RAD_X = createMemo(() => dimension().x / 2 - PADDING());
-  const RAD_Y = createMemo(() => dimension().x / 10);
+  const RAD_X = createMemo(() => dimension().x / 2 - config.padding);
+  const RAD_Y = createMemo(() => dimension().x / 12);
 
-  const ACTUAL_DISTANCE = createMemo(() => {});
-
+  const AVAIL_HEIGHT = createMemo(() => {
+    return dimension().y - 2 * config.padding - 2 * RAD_Y();
+  });
   const HEIGHT_OF_ELEMENTS = createMemo(() => {
-    return (dimension().y - 2 * PADDING() - 2 * RAD_Y()) / AMOUNT_ITEMS();
+    return AVAIL_HEIGHT() / AMOUNT_ITEMS();
   });
 
   const GAP = createMemo(() => {
-    if (progress() <= 0.25) {
-      return reMap(0, 0.25, 0, 1, progress()) * MAX_GAP;
+    if (progress() < 0.25) {
+      return reMap(0, 0.25, 0, 1, progress()) * config.maxGap;
     } else {
-      return reMap(0.5, 0.75, 1, 0, progress()) * MAX_GAP;
+      return reMap(0.5, 0.75, 1, 0, progress()) * config.maxGap;
     }
   });
 
   /**
    * First Calculation Memo
    */
-  const getTopBottomOfForm = createMemo(() => {
-    // Config
+  const getPlanes = createMemo(() => {
+    // Config!
     // Zw. 0 und 1 ! 1 = alle Gleichzeitig; 0 = Alle nacheinander !
     let OVERLAP = 0.2;
 
     // eine halbe Umdrehung. Configurable ?
-    const SPEED = Math.PI / 2;
+    const SPEED = ((4 / AMOUNT_EDGES()) * Math.PI) / 2;
 
     // private
     const FORM_CENTER = {
       x: center().x,
       y: RAD_Y(),
     };
+
     const CIRCLE = 2 * Math.PI;
     const CIRCLE_STEP = CIRCLE / AMOUNT_EDGES();
 
@@ -80,26 +87,19 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
 
     return createArrayFromLength(AMOUNT_ITEMS())
       .map((i) => {
-        // const rand1 = p5.noise(I_STEP * i) / 6 + p5.noise(I_STEP * i) / 40;
-        // const rand2 = p5.noise(I_STEP * i * 5) / 5;
-        const rand1 = 0;
-        const rand2 = 0;
+        let rand1 = 0;
+        if (config.addRandom) {
+          rand1 =
+            p5.noise(CIRCLE_STEP * i) / 3 + p5.noise(CIRCLE_STEP * i) / 10;
+        }
 
         const overlapForStepStart = i * -OVERLAP;
 
         const iFrom = clamp(0, 1, i * I_STEP_WITHOVERLAP + overlapForStepStart);
         const iTo = clamp(0, 1, iFrom + I_STEP_WITHOVERLAP);
 
-        //
-        const mappedRotationProgress = reMap(
-          iFrom,
-          iTo,
-          0,
-          1,
-          PROGRESS_ROTATION,
-        );
-        // const myRotationProgress =
-        //   mapped + rand1 * mapped + rand2 * (1 - mapped);
+        const mappedRotationProgress =
+          reMap(iFrom, iTo, 0, 1, PROGRESS_ROTATION) + rand1;
 
         const actualRotation = mappedRotationProgress * SPEED;
 
@@ -119,21 +119,21 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
               p,
               FORM_CENTER.x,
               FORM_CENTER.y +
-                PADDING() +
+                config.padding +
                 yPosition +
                 i * GAP() -
-                (AMOUNT_ITEMS() * GAP()) / 2,
+                ((AMOUNT_ITEMS() - 2) * GAP()) / 2,
             ),
           );
       })
       .reverse();
   });
 
+  /**
+   *
+   */
   const getConnectors = createMemo(() => {
-    // TODO: to Config
-    const GAP = 0;
-
-    return getTopBottomOfForm().map((form) => {
+    return getPlanes().map((form) => {
       const sortedByX = [...form].sort((a, b) => a.x - b.x);
       const minY = Math.min(sortedByX[0].y, sortedByX.at(-1)!.y);
 
@@ -143,85 +143,22 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
         return [
           frontPoints[i],
           frontPoints[i + 1],
-          translate2D(frontPoints[i + 1], 0, HEIGHT_OF_ELEMENTS() - GAP),
-          translate2D(frontPoints[i], 0, HEIGHT_OF_ELEMENTS() - GAP),
+          translate2D(frontPoints[i + 1], 0, HEIGHT_OF_ELEMENTS()),
+          translate2D(frontPoints[i], 0, HEIGHT_OF_ELEMENTS()),
         ];
       });
     });
   });
 
   const draw = () => {
-    const planes = getTopBottomOfForm();
-    const connectors = getConnectors();
-
-    // const vex
-
-    p5.stroke(COLORS_3A.WHITE);
-    p5.strokeWeight(1);
-
-    for (let i = 0; i < planes.length; i++) {
-      p5.fill(COLORS_3A.GRAY);
-      p5.stroke(COLORS_3A.GRAY);
-      p5.beginShape();
-      for (let j = 0; j < planes[i].length; j++) {
-        dvtx(p5, planes[i][j]);
-      }
-      p5.endShape(p5.CLOSE);
-
-      p5.fill(COLORS_3A.PAPER);
-      if (GAP() > 0) {
-        p5.stroke(COLORS_3A.GRAY);
-        for (let j = 0; j < connectors[i].length; j++) {
-          p5.beginShape();
-          dvtx(p5, connectors[i][j][0]);
-          dvtx(p5, connectors[i][j][1]);
-          dvtx(p5, connectors[i][j][2]);
-          dvtx(p5, connectors[i][j][3]);
-          p5.endShape(p5.CLOSE);
-        }
-      } else {
-        for (let j = 0; j < connectors[i].length; j++) {
-          p5.noStroke();
-          p5.beginShape();
-          dvtx(p5, connectors[i][j][0]);
-          dvtx(p5, connectors[i][j][1]);
-          dvtx(p5, connectors[i][j][2]);
-          dvtx(p5, connectors[i][j][3]);
-          p5.endShape(p5.CLOSE);
-          p5.stroke(COLORS_3A.GRAY);
-          p5.line(
-            connectors[i][j][0].x,
-            connectors[i][j][0].y,
-            connectors[i][j][3].x,
-            connectors[i][j][3].y,
-          );
-          p5.line(
-            connectors[i][j][1].x,
-            connectors[i][j][1].y,
-            connectors[i][j][2].x,
-            connectors[i][j][2].y,
-          );
-        }
-      }
+    if (config.drawAs === "CUBE_ROTATE") {
+      drawAsStackedCubes(p5, getPlanes(), getConnectors(), config, GAP() > 0);
+    } else if (config.drawAs === "COLORED") {
+      drawAsColored(p5, getPlanes(), getConnectors(), config, center());
+    } else {
+      drawAsOther(p5, getPlanes(), getConnectors(), config, center());
     }
-
-    const last = connectors.at(0)!;
-    for (let j = 0; j < last.length; j++) {
-      const lastConnector = last[j];
-      p5.stroke(COLORS_3A.GRAY);
-      p5.line(
-        lastConnector[2].x,
-        lastConnector[2].y,
-        lastConnector[3].x,
-        lastConnector[3].y,
-      );
-      p5.line(
-        lastConnector[1].x,
-        lastConnector[1].y,
-        lastConnector[2].x,
-        lastConnector[2].y,
-      );
-    }
+    // p5.line(0, dimension().y / 2, dimension().x, dimension().y / 2);
   };
 
   return {
@@ -231,7 +168,6 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
     setProgress,
     setAmountEdges,
     setAmountItems,
-    setPadding,
   };
 }
 

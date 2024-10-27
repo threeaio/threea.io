@@ -11,8 +11,14 @@ import {
   useNavigationContext,
 } from "~/Navigation-Context";
 
-const ANIMATION = clientOnly(
+const ANIMATION_1 = clientOnly(
   () => import("~/routes/lerped-randomness/cube-animation-1"),
+);
+const ANIMATION_2 = clientOnly(
+  () => import("~/routes/lerped-randomness/cube-animation-2"),
+);
+const ANIMATION_3 = clientOnly(
+  () => import("~/routes/lerped-randomness/cube-animation-3"),
 );
 
 export default function LerpedRandomness() {
@@ -66,9 +72,46 @@ export default function LerpedRandomness() {
       <Divider />
       <div class={` p-2 xl:p-24 2xl:p-32 `}>
         <div class="relative ">
-          <div class={` w-1/2 h-[400svh] relative  mx-auto `}>
+          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
             <div class="relative h-full w-full ">
-              <ANIMATION bgColor="PAPER" />
+              <ANIMATION_1 bgColor="PAPER" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class={` m-2 xl:m-24 2xl:m-32 `}>
+        <div class="relative ">
+          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
+            <div class="relative h-full w-full ">
+              <ANIMATION_2 bgColor="GRAY_DARKER" cubeConfig={{}} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class={` m-2 xl:m-24 2xl:m-32 `}>
+        <div class="relative ">
+          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
+            <div class="relative h-full w-full ">
+              <ANIMATION_2
+                bgColor="GRAY_DARKER"
+                cubeConfig={{
+                  amountEdges: 12,
+                  amountItems: 42,
+                  padding: 260,
+                  maxGap: 12,
+                  addRandom: true,
+                  drawAs: "COLORED",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class={` m-2 xl:m-24 2xl:m-32 `}>
+        <div class="relative ">
+          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
+            <div class="relative h-full w-full ">
+              <ANIMATION_3 bgColor="GRAY_DARKER" />
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ import { batch, ParentProps } from "solid-js";
  * CLIENT-ONLY !
  */
 
-export default function CubeAnimation1(
+export default function CubeAnimation3(
   props: {
     bgColor: keyof typeof COLORS_3A;
   } & ParentProps,
@@ -23,16 +23,16 @@ export default function CubeAnimation1(
       animation={ANIMATION({
         bgColor: COLORS_3A[props.bgColor],
         cubeConfig: {
-          amountItems: 12,
+          amountItems: 60,
           amountEdges: 4,
-          maxGap: 18,
-          padding: 240,
-          addRandom: false,
-          hideOutlinesWhenStable: true,
-          drawAs: "CUBE_ROTATE",
+          padding: 180,
+          maxGap: 4,
+          addRandom: true,
+          hideOutlinesWhenStable: false,
+          drawAs: "OTHER",
         },
         draw: (p5, cubes, progress, center, dims) => {
-          const ms = p5.millis() / 4000;
+          const ms = p5.millis() / 6000;
           // const p = (Math.sin(ms) + 1) / 2;
           const p = ms % 1;
 

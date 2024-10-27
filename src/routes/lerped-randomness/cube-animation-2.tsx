@@ -6,15 +6,16 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { batch, ParentProps } from "solid-js";
+import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
 
 /**
  * CLIENT-ONLY !
  */
 
-export default function CubeAnimation1(
+export default function CubeAnimation2(
   props: {
     bgColor: keyof typeof COLORS_3A;
-  } & ParentProps,
+  } & ParentProps & { cubeConfig: Partial<RotatableCubeConfig> },
 ) {
   return (
     <CanvasScrollAnimationWrapper
@@ -23,16 +24,17 @@ export default function CubeAnimation1(
       animation={ANIMATION({
         bgColor: COLORS_3A[props.bgColor],
         cubeConfig: {
-          amountItems: 12,
+          amountItems: 5,
           amountEdges: 4,
-          maxGap: 18,
           padding: 240,
-          addRandom: false,
-          hideOutlinesWhenStable: true,
-          drawAs: "CUBE_ROTATE",
+          maxGap: 100,
+          addRandom: true,
+          hideOutlinesWhenStable: false,
+          drawAs: "COLORED",
+          ...props.cubeConfig,
         },
         draw: (p5, cubes, progress, center, dims) => {
-          const ms = p5.millis() / 4000;
+          const ms = p5.millis() / 8000;
           // const p = (Math.sin(ms) + 1) / 2;
           const p = ms % 1;
 
