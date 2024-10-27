@@ -4,7 +4,7 @@ import AboutWork from "~/routes/(index)/02_About-Work";
 import { onMount } from "solid-js";
 import { Title } from "@solidjs/meta";
 import BlackBook from "~/routes/(index)/03_Black-Book";
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
 import { clientOnly } from "@solidjs/start";
 import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
@@ -14,8 +14,9 @@ import {
   useNavigationContext,
 } from "~/Navigation-Context";
 const ANIMATION = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
+  () => import("~/components/animation/floating-edges/Canvas-Animation-2"),
 );
+
 import { gsap } from "gsap";
 export default function Home() {
   const [_, { setOnThisPage, setPages }] = useNavigationContext();
@@ -44,6 +45,10 @@ export default function Home() {
         linkProps: { type: "link", href: "/brockmann-arc" },
         title: "Brockmanns Beethoven",
       },
+      {
+        linkProps: { type: "link", href: "/lerped-randomness" },
+        title: "Lerped Randomness",
+      },
     ],
   };
 
@@ -59,14 +64,14 @@ export default function Home() {
 
   return (
     <div>
-      <Title>Welcome to Threea.io</Title>
+      <Title>Threea.io - Nikolaj Sokolowksis Entwickler-Blackbook</Title>
       <GridIndicator />
       <main>
         <div id={"INDEX_START"}>
           <Introduction />
         </div>
         <div class={"relative"}>
-          <CanvasAnimationWrapper
+          <CanvasScrollAnimationWrapper
             start={"clamp(top top+=80%)"}
             end={"clamp(bottom bottom-=100%)"}
             animation={<ANIMATION />}
@@ -93,7 +98,7 @@ export default function Home() {
             <div class="bg-gradient-to-t from-3a-gray-darkest to-transparent ">
               <Divider />
             </div>
-          </CanvasAnimationWrapper>
+          </CanvasScrollAnimationWrapper>
         </div>
 
         {/*<Contact />*/}

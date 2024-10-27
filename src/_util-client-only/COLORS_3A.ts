@@ -20,11 +20,13 @@ const WHITE = asColorArray(style.getPropertyValue("--color-3a-white"));
 const GREEN = asColorArray(style.getPropertyValue("--color-3a-green"));
 const RED = asColorArray(style.getPropertyValue("--color-3a-red"));
 const BLACK = asColorArray(style.getPropertyValue("--color-3a-black"));
+const BLUE = asColorArray(style.getPropertyValue("--color-3a-blue"));
 
 export const COLORS_3A = {
   WHITE,
   PAPER,
   GREEN,
+  BLUE,
   RED,
   GRAY,
   GRAY_DARKER,

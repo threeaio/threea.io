@@ -1,5 +1,4 @@
 import {
-  Accessor,
   batch,
   createEffect,
   createMemo,
@@ -10,7 +9,7 @@ import {
   ParentProps,
 } from "solid-js";
 import P5 from "p5";
-import { useAnimationWrapperContext } from "~/components/animation/Canvas-Animation-Wrapper";
+import { useAnimationWrapperContext } from "~/components/animation/CanvasScrollAnimationWrapper";
 import { fromLandingPageState } from "~/landing-page-state";
 import {
   Arc,
@@ -22,91 +21,70 @@ import VerticeArc, {
   VerticeArcConfig,
   VerticeArcType,
 } from "~/components/animation/brockmann-beethoven/Primitives/Vertice-Arc";
-import { ColorArray, getRandomFloat, remapT } from "~/_util";
+import {
+  ColorArray,
+  getPointOnEllipse,
+  getRandomFloat,
+  Simple2D,
+  translate2D,
+} from "~/_util";
 import { gsap } from "gsap";
+import {
+  AnimatedSceneProps,
+  DrawCallbackProp,
+  SetStartRadius,
+} from "~/components/animation/animation-types";
+import { fadeInout } from "~/components/animation/animation-drawables";
+import {
+  useHeightMemo,
+  useP5Effects,
+  useSetCenterMemo,
+} from "~/components/animation/animation-factories";
+import { COLORS_3A } from "~/_util-client-only";
 
-export default function ArcAnimationStep1(
-  props: ParentProps & {
-    bgColor: ColorArray;
-    fadeInOut: boolean;
-    forceContentHeight?: true;
-    draw: (
-      p5: P5,
-      progress: number,
-      arcs: VerticeArcType[],
-      center: { x: number; y: number },
-      dims: { x: number; y: number },
-    ) => void;
-    setCenter: (
-      width: number,
-      height: number,
-      progress: number,
-    ) => { x: number; y: number };
-    getStartRadius: (width: number, height: number) => number;
-    arcSettings: (width: number, height: number) => ArcSettings;
-    arcConfig: VerticeArcConfig;
-    animate?: boolean;
-    animateBpm?: number;
-    animateOffsetMs?: number;
-    animateCommand?:
-      | PointerEvent
-      | MouseEvent
-      | KeyboardEvent
-      | number
-      | undefined;
-  },
+export default function BrockmannSceneWrapper(
+  props: ParentProps &
+    AnimatedSceneProps &
+    DrawCallbackProp<VerticeArcType> & {
+      setStartRadius: SetStartRadius;
+      arcSettings: (width: number, height: number) => ArcSettings;
+      arcConfig: VerticeArcConfig;
+    },
 ) {
+  let p5Instance: P5 | undefined;
+
   const { progress, width, height, active } = useAnimationWrapperContext();
+
   const [{ landingPageState }] = fromLandingPageState;
 
   const [animationParent, setAnimationParent] = createSignal<
     HTMLElement | undefined
   >();
-  const useHeight = createMemo(() => {
-    if (props.forceContentHeight) {
-      return height();
-    }
-    return height() < landingPageState.screenHeight
-      ? height()
-      : landingPageState.screenHeight;
-  }); // Memoized screen height
+  const useHeight = useHeightMemo(props, height, landingPageState.screenHeight);
 
   const useAnimateCommand = createMemo(() => {
     return props.animateCommand || null;
   });
 
-  const hasSize = createMemo(() => width() > 0 && useHeight() > 0); // Check if dimensions are valid
-  const START_RAD = createMemo(() => props.getStartRadius(width(), height())); // the smallest radius
+  const center = useSetCenterMemo(props, width, useHeight, progress);
+  const dimensions = createMemo<Simple2D>(() => ({
+    x: width(),
+    y: useHeight(),
+  }));
 
-  let p5Instance: P5 | undefined;
-
-  // Proxy objects to allow GSAP-Animation
-  const animationProxies = {
-    scale: 1,
-    rotate: 0,
-    outlineColor: [0, 0, 0, 0] as ColorArray,
-    fillColor: [0, 0, 0, 0] as ColorArray,
-    center: { x: 0, y: 0 },
-  };
+  const START_RAD = createMemo(() => props.setStartRadius(width(), height())); // the smallest radius
 
   const arcs: VerticeArcType[] = [];
 
-  createEffect(() => {
-    const newCenter = props.setCenter(width(), useHeight(), progress());
-    console.log("newCenter", newCenter);
-    animationProxies.center.x = newCenter.x;
-    animationProxies.center.y = newCenter.y;
-  });
-
   /**
-   * P5 Starts here
-   * ==============
+   * Create Sketch
    */
   const createSketch = (ref: HTMLElement) => {
     const sketch = (_p5: P5) => {
       _p5.setup = () => {
         const canvas = _p5.createCanvas(width(), useHeight(), _p5.P2D);
-        // _p5.noSmooth();
+
+        _p5.frameRate(60);
         _p5.angleMode(_p5.DEGREES);
         canvas.parent(ref);
 
@@ -118,88 +96,79 @@ export default function ArcAnimationStep1(
         for (let i = 0; i < arcProps.length; i++) {
           const arc = VerticeArc(_p5, props.arcConfig);
           const propForArc = arcProps[i];
-          arc.setCvsWidth(_p5.width);
-          arc.setCvsHeight(_p5.height);
-          arc.setCenterX(animationProxies.center.x);
-          arc.setCenterY(animationProxies.center.y);
-          arc.setRadius(propForArc.radius);
-          arc.setThickness(propForArc.thickness);
-          arc.setArcStartAngle(propForArc.startAngle);
-          arc.setArcEndAngle(propForArc.endAngle);
+          batch(() => {
+            arc.setDimensions(dimensions());
+            arc.setCenter(center());
+            arc.setRadius(propForArc.radius);
+            arc.setThickness(propForArc.thickness);
+            arc.setArcStartAngle(propForArc.startAngle);
+            arc.setArcEndAngle(propForArc.endAngle);
+          });
 
           arcs.push(arc);
         }
       };
     };
 
+    let frame = 0;
+    let frameAmount = 0;
+
     const draw = () => {
       p5.background(props.bgColor);
 
       for (let i = 0; i < arcs.length; i++) {
         batch(() => {
-          arcs[i].setCvsWidth(p5.width);
-          arcs[i].setCvsHeight(p5.height);
-          arcs[i].setCenterX(animationProxies.center.x);
-          arcs[i].setCenterY(animationProxies.center.y);
+          arcs[i].setDimensions(dimensions());
+          arcs[i].setCenter(center());
         });
       }
 
-      props.draw(p5, progress(), arcs, animationProxies.center, {
-        x: p5.width,
-        y: p5.height,
-      });
+      const lastArc = arcs.at(-1);
+      if (lastArc) {
+        if (lastArc.debug && lastArc.debug === 2) {
+          drawAngles(p5, lastArc, center(), 1);
+        }
+      }
+
+      const firstArc = arcs.at(0);
+      if (firstArc) {
+        if (firstArc.debug && firstArc.debug === 2) {
+          drawAngles(p5, firstArc, center(), -1);
+        }
+      }
+
+      props.draw(p5, arcs, progress(), center(), dimensions());
 
       if (props.fadeInOut) {
-        p5.push();
-        p5.noStroke();
-        p5.fill(
-          props.bgColor[0],
-          props.bgColor[1],
-          props.bgColor[2],
-          (1 - remapT(progress(), 0, 0.1)) * 255,
-        );
-        p5.rect(0, 0, p5.width, p5.height);
-        p5.pop();
-
-        p5.push();
-        p5.noStroke();
-        p5.fill(
-          props.bgColor[0],
-          props.bgColor[1],
-          props.bgColor[2],
-          remapT(progress(), 0.9, 1) * 255,
-        );
-        p5.rect(0, 0, p5.width, p5.height);
-        p5.pop();
+        fadeInout(p5, props.bgColor, progress());
       }
+
+      // DEBUG FPS
+      // p5.fill(COLORS_3A.GREEN);
+      // frame += p5.frameRate();
+      // frameAmount++;
+      // p5.text(frame / frameAmount, 20, 20);
+      // p5.fill(COLORS_3A.RED);
+      // p5.text(p5.frameRate(), 220, 20);
     };
 
     const p5 = new P5(sketch, ref);
 
-    createEffect(() => {
-      p5.resizeCanvas(width(), useHeight());
-    });
+    useP5Effects(p5, width, useHeight, active);
 
-    createEffect(() => {
-      if (active() && !p5.isLooping()) {
-        p5.loop();
-      } else if (!active() && p5.isLooping()) {
-        p5.noLoop();
-      }
-    });
     p5.draw = draw;
     p5Instance = p5;
   };
 
   /**
-   * On Mount
+   * Animation
    */
-
-  // animate Arcs
   let timeoutsHere: Array<string | number | NodeJS.Timeout | undefined> = [];
+
   const animateArcs = (p5: P5) => {
     timeoutsHere.forEach(clearTimeout);
     timeoutsHere = [];
+
     for (let i = 0; i < arcs.length; i++) {
       const animatePartial = {
         start: arcs[i].startOffset(),
@@ -245,7 +214,7 @@ export default function ArcAnimationStep1(
       const animationTimeoutRecursion = setTimeout(
         () => recursiveAnimate(p5Instance!),
         interval,
-      ); //500ms => 120bpm
+      );
     }
   };
 
@@ -257,13 +226,15 @@ export default function ArcAnimationStep1(
 
   createEffect(
     on(useAnimateCommand, () => {
-      // if (useAnimateCommand() && active()) {
-      //   animateArcs();
-      // }
+      if (useAnimateCommand() && active() && p5Instance) {
+        animateArcs(p5Instance);
+      }
     }),
   );
 
-  // init P5
+  /**
+   * Init P5
+   */
   onMount(() => {
     createSketch(animationParent()!); // Create sketch
     onCleanup(() => p5Instance?.remove()); // Clean up P5 instance on unmount
@@ -286,4 +257,38 @@ export default function ArcAnimationStep1(
       ref={setAnimationParent}
     ></div>
   );
+}
+
+function drawAngles(
+  p5: P5,
+  arc: VerticeArcType,
+  center: Simple2D,
+  position: 1 | -1,
+) {
+  const DEBUG2_LINE_SIZE = 12;
+  p5.strokeWeight(1);
+  p5.strokeCap(p5.SQUARE);
+  p5.noFill();
+  p5.stroke(COLORS_3A.WHITE);
+  // p5.circle(center().x, center().y, outerRadius() * 2);
+
+  const SEG = (2 * Math.PI) / 32;
+  for (let i = 0; i < 32; i++) {
+    if (i > 28 || i < 20) {
+      const targetOuter = translate2D(
+        getPointOnEllipse(
+          i * SEG - Math.PI / 2,
+          arc.outerRadius() + DEBUG2_LINE_SIZE * position,
+        ),
+        center.x,
+        center.y,
+      );
+      const targetInner = translate2D(
+        getPointOnEllipse(i * SEG - Math.PI / 2, arc.outerRadius()),
+        center.x,
+        center.y,
+      );
+      p5.line(targetInner.x, targetInner.y, targetOuter.x, targetOuter.y);
+    }
+  }
 }

@@ -8,13 +8,6 @@
   white-space: nowrap;
 }
 
-/*body:global(.preview-layout) .navOuter {*/
-/*  !*left: 100%;*!*/
-/*  !*transform: scale(1.6);*!*/
-/*  @apply translate-y-8;*/
-/*  @apply -translate-x-8;*/
-/*}*/
-
 .navOuter {
   @apply grid;
   @apply relative;
@@ -23,32 +16,23 @@
   @apply fixed;
   @apply top-0;
   @apply right-0;
-  @apply z-30;
   @apply sm:rounded-xl;
   @apply sm:shadow-2xl;
 
   @apply sm:-translate-x-5;
   @apply sm:translate-y-5;
-  /*@apply sm:bg-none;*/
-  /*@apply bg-3a-gray-darkest;*/
   @apply m-0;
   @apply sm:border-0;
   @apply sm:border-3a-green;
   @apply max-sm:bg-3a-black;
-  /*@apply sm:bg-auto;*/
-  /*@apply border-opacity-0;*/
+  z-index: 100;
   transform-origin: 2rem 0%;
-
-  /*@apply sm:transition-transform;*/
 }
 
 .navOuter.navOuterShow {
   @apply transition-transform;
   @apply sm:transition-[transform_background_border];
-  /*@apply sm:transition-[background];*/
-  /*@apply sm:transition-[border];*/
   @apply bg-3a-black;
-  /*@apply sm:border-[0.5px];*/
 }
 
 .navInner {
@@ -101,13 +85,7 @@
   @apply text-3a-white;
   @apply text-sm;
   @apply font-bold;
-  /*@apply bg-3a-gray-darkest;*/
   transition: all 0.3s;
-}
-
-.navOuter.navOuterShow .navHead {
-  /*@apply mt-2;*/
-  /*@apply sm:mt-0;*/
 }
 
 .navHeadSymbol {
@@ -124,8 +102,6 @@
   @apply bg-3a-green;
   transform: scaleX(1);
   transform-origin: top left;
-  /*transition: all 0.3s calc(var(--i) * 0.3s);*/
-  /*animation: 2s calc(var(--is) * 0.3s) infinite navHeadSymbolHover;*/
 }
 
 .navOuter:not(.navOuterShow) .navHeadSymbol:hover > span {

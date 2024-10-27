@@ -1,15 +1,15 @@
-import CanvasAnimationWrapper from "~/components/animation/Canvas-Animation-Wrapper";
+import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
 import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/brockmann-beethoven/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
 const ANIMATION = clientOnly(
   () =>
     import(
-      "~/components/animation/brockmann-beethoven/Canvas-Animation-arc-step-1"
+      "~/components/animation/brockmann-beethoven/Brockmann-Scene-Wrapper"
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { createEffect, createSignal, onMount, ParentProps } from "solid-js";
-import { TW_BREAKPOINTS } from "~/_contants/contants";
+import { TW_BREAKPOINTS } from "~/_constants/constants";
 import { reMap } from "~/_util";
 import { createElementSize } from "@solid-primitives/resize-observer";
 
@@ -41,12 +41,12 @@ export default function BrockmanAnimationIntro(
   });
 
   return (
-    <CanvasAnimationWrapper
+    <CanvasScrollAnimationWrapper
       start={"top top+=80%"}
       end={"clamp(bottom bottom-=100%)"}
       animation={
         <ANIMATION
-          getStartRadius={(width) => Math.max(width / 5, 80)}
+          setStartRadius={(width) => Math.max(width / 5, 80)}
           bgColor={COLORS_3A[props.bgColor]}
           forceContentHeight={true}
           fadeInOut={false}
@@ -59,7 +59,7 @@ export default function BrockmanAnimationIntro(
               y: width > TW_BREAKPOINTS.md ? height / 2 : height / 2.5,
             };
           }}
-          draw={(p5, progress, arcs, center, dims) => {
+          draw={(p5, arcs, progress, center, dims) => {
             const p = 1;
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);
@@ -89,6 +89,6 @@ export default function BrockmanAnimationIntro(
           }}
         />
       }
-    ></CanvasAnimationWrapper>
+    ></CanvasScrollAnimationWrapper>
   );
 }

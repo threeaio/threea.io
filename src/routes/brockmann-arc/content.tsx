@@ -103,9 +103,11 @@ export const step1: AnimatedSubSection = {
 };
 
 export const step2: AnimatedSubSection = {
-  title: "Weiteres",
+  title: "Weitere Parameter",
   num: "03",
-  animation: () => <ANIMATION_02 />,
+  animation: (trigger) => (
+    <ANIMATION_02 animateCommand={trigger && trigger()} />
+  ),
   description: () => (
     <>
       <p>
@@ -113,9 +115,10 @@ export const step2: AnimatedSubSection = {
         paar Parameter zur Geometrie des Plakats finden.
       </p>
       <p>
-        So liegen die Winkel selbst auf einem Raster, welches den Kreis in 32
-        Segmente unterteilt &ndash; also 11.25&deg;. Die <Anf>Dicke</Anf> der
-        Bögen verdoppelt sich nach außen hin mit jedem Bogen.
+        So liegen Start und Ende der Bögen selbst auf einem Raster, welches den
+        Kreis in 32 Segmente unterteilt &ndash; also 11.25&deg;. Die{" "}
+        <Anf>Dicke</Anf> der Bögen verdoppelt sich nach außen hin mit jedem
+        Bogen.
       </p>
       <p>
         Ich habe mich hier entschieden eine leichte Zufälligkeit in den Start-

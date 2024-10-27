@@ -8,7 +8,7 @@ export const normalize = (min: number, max: number, value: number) => {
         " and min" +
         min,
     );
-  return value / (max - min);
+  return (value - min) / (max - min);
 };
 
 export const clamp = (min: number, max: number, value: number) => {
@@ -51,6 +51,28 @@ export const getAngleFromArcLengthInDegrees = (
   const angleInRadians = arcLength / radius;
   return angleInRadians * (180 / PI);
 };
+
+export function translate2D(
+  p: Simple2D,
+  translateX: number,
+  translateY: number,
+): Simple2D {
+  return {
+    x: p.x + translateX,
+    y: p.y + translateY,
+  };
+}
+
+export function getPointOnEllipse(
+  angle: number,
+  radiusX: number,
+  radiusY?: number,
+): Simple2D {
+  const x = radiusX * Math.cos(angle);
+  const y =
+    (typeof radiusY !== "undefined" ? radiusY : radiusX) * Math.sin(angle);
+  return { x, y };
+}
 
 export const getRandomFloat = (min: number, max: number, precision = 2) => {
   const minCeiled = min * Math.pow(10, precision);
@@ -115,7 +137,6 @@ export const isShapeOutsideViewport = (
   heightOfRect: number,
   pointsOfShape: Simple2D[],
 ): boolean => {
-  // Prüfen, ob Punkte innerhalb Viewports sind
   const someInside = pointsOfShape.some((point) => {
     return (
       (point.x >= 0 && point.x <= widthOfRect) ||
