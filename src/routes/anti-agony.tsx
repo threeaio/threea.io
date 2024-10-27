@@ -4,9 +4,6 @@ import { AntiAgony } from "~/content/Anti-Agony";
 import MainArticle from "~/components/Main-Article";
 import { clientOnly } from "@solidjs/start";
 import { onMount } from "solid-js";
-const CanvasAnimationRounded = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-rounded"),
-);
 
 export default function PageAntiAgony() {
   onMount(() => {});

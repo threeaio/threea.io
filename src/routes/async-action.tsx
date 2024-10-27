@@ -4,9 +4,6 @@ import { clientOnly } from "@solidjs/start";
 import MainArticle from "~/components/Main-Article";
 import { AsyncAction } from "~/content/Async-Action";
 import { onMount } from "solid-js";
-const CanvasAnimation2 = clientOnly(
-  () => import("~/components/animation/Canvas-Animation-2"),
-);
 
 export default function PageAsyncAction() {
   onMount(() => {});
