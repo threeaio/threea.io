@@ -30,6 +30,10 @@ export default function LerpedRandomness() {
         linkProps: { type: "link", href: "/brockmann-arc" },
         title: "Brockmanns Beethoven",
       },
+      {
+        linkProps: { type: "link", href: "/lerped-randomness" },
+        title: "Lerped Randomness",
+      },
     ],
   };
 

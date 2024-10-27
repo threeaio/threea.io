@@ -45,6 +45,10 @@ export default function Home() {
         linkProps: { type: "link", href: "/brockmann-arc" },
         title: "Brockmanns Beethoven",
       },
+      {
+        linkProps: { type: "link", href: "/lerped-randomness" },
+        title: "Lerped Randomness",
+      },
     ],
   };
 
@@ -60,7 +64,7 @@ export default function Home() {
 
   return (
     <div>
-      <Title>Welcome to Threea.io</Title>
+      <Title>Threea.io - Nikolaj Sokolowksis Entwickler-Blackbook</Title>
       <GridIndicator />
       <main>
         <div id={"INDEX_START"}>

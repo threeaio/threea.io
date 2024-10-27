@@ -40,15 +40,10 @@ export default function BrockmanAnimation02(
               arcs[i].draw();
             }
           }}
-          // arcSettings={{
-          //   ...BROCKMAN_ARC_SETTINGS,
-          //   sizes: BROCKMAN_ARC_SETTINGS.sizes.map((s) => s / s / reMap(300, 1600, 8, 4, width)),
-          //   gap: 6,
-          // }},
           arcSettings={(width, height) => ({
             ...BROCKMAN_ARC_SETTINGS,
             arcRange: [5, 6, 7, 9, 11, 14, 17, 21],
-            gap: 0,
+            gap: 5,
             sizes: BROCKMAN_ARC_SETTINGS.sizes.map(
               (s) => s / reMap(300, 1600, 8, 6, width),
             ),
@@ -56,9 +51,7 @@ export default function BrockmanAnimation02(
           arcConfig={{
             debug: 2,
             bgColor: COLORS_3A.GRAY_DARKER,
-            stroke: {
-              color: COLORS_3A.PAPER,
-            },
+            stroke: false,
             fill: false,
             randomizeStartPosition: false,
           }}

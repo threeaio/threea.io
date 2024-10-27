@@ -54,10 +54,6 @@ export default function BlackBook() {
                 <h2 data-animate-headline="" class="text-pretty max-w-[50rem]">
                   Blackbook
                   <br />
-                  {/*<span class={"text-3a-green"}>Code</span>//*/}
-                  {/*<span class={"text-3a-green"}>Skizzen</span>//*/}
-                  {/*<span class={"text-3a-green"}>Foo</span>*/}
-                  {/*<span class="headline-item text-3a-green inline-block ">*/}
                   <span class={"text-3a-green"}>Sketchbook</span>
                   <br />
                   <span class={""}>Poesiealbum</span>
@@ -68,19 +64,46 @@ export default function BlackBook() {
           </div>
         </FullWidth>
         <ol class={"pb-32"}>
-          <BlackBookItem />
+          <BlackBookItem
+            content={{
+              num: "01",
+              link: "/brockmann-arc",
+              type: "Animation",
+              title: "Brockmanns Beethoven",
+              description:
+                "Meine erste Animations-Skizze hier ist inspiriert durch das ikonische Beethoven-Plakat von Joseph Müller-Brockmann.",
+            }}
+          />
+          <BlackBookItem
+            content={{
+              num: "02",
+              link: "/lerped-randomness",
+              type: "Animation",
+              title: "Lerped Randomness",
+              description:
+                "Sammlung von Animations-Skizzen, Canvas-Experimenten und Schnellschüssen anderer Art ohne weiteren Zweck.",
+            }}
+          />
         </ol>
       </div>
     </div>
   );
 }
 
-function BlackBookItem() {
+function BlackBookItem(props: {
+  content: {
+    link: string;
+    num: string;
+    type: string;
+    title: string;
+    description: string;
+  };
+}) {
   return (
     <li data-animate-item="">
       <A
         class="block transition bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group hover:bg-3a-gray-darker/60"
-        href="/brockmann-arc"
+        href={props.content.link}
         onClick={(e) => {
           const page = document.querySelector("#PAGE_3a")!;
           gsap.to(page, {
@@ -89,7 +112,7 @@ function BlackBookItem() {
               window.lenis.scrollTo(0, {
                 immediate: true,
               });
-              window.location.href = "/brockmann-arc";
+              window.location.href = props.content.link;
             },
           });
 
@@ -99,20 +122,17 @@ function BlackBookItem() {
       >
         <div class={"grid grid-cols-26 items-baseline"}>
           <div class={"col-span-2 md:col-span-4 p-3 2xl:px-3 2xl:text-right"}>
-            <div class="md:text-2xl 2xl:text-3xl">01</div>
+            <div class="md:text-2xl 2xl:text-3xl">{props.content.num}</div>
           </div>
           <div class={"text-3a-green col-span-8 md:col-span-6 p-3 "}>
-            <div class="">Animation</div>
+            <div class="">{props.content.type}</div>
           </div>
           <div class={"col-span-13 xl:col-span-6 p-3"}>
             <div class={"text-sm "}>
               <h3 class="font-bold sm:float-left mr-1.5  text-3a-green align-baseline">
-                Brockmanns Beethoven
+                {props.content.title}
               </h3>
-              <p>
-                Meine erste Animations-Skizze hier ist inspiriert durch das
-                ikonische Beethoven-Plakat von Joseph Müller-Brockmann.
-              </p>
+              <p>{props.content.description}</p>
             </div>
           </div>
         </div>

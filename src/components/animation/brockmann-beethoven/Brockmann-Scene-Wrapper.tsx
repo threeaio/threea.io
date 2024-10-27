@@ -266,28 +266,29 @@ function drawAngles(
   position: 1 | -1,
 ) {
   const DEBUG2_LINE_SIZE = 12;
-  p5.strokeWeight(0.5);
+  p5.strokeWeight(1);
+  p5.strokeCap(p5.SQUARE);
   p5.noFill();
   p5.stroke(COLORS_3A.WHITE);
   // p5.circle(center().x, center().y, outerRadius() * 2);
 
   const SEG = (2 * Math.PI) / 32;
   for (let i = 0; i < 32; i++) {
-    // if (i > 28 || i < 20) {
-    const targetOuter = translate2D(
-      getPointOnEllipse(
-        i * SEG - Math.PI / 2,
-        arc.outerRadius() + DEBUG2_LINE_SIZE * position,
-      ),
-      center.x,
-      center.y,
-    );
-    const targetInner = translate2D(
-      getPointOnEllipse(i * SEG - Math.PI / 2, arc.outerRadius()),
-      center.x,
-      center.y,
-    );
-    p5.line(targetInner.x, targetInner.y, targetOuter.x, targetOuter.y);
-    // }
+    if (i > 28 || i < 20) {
+      const targetOuter = translate2D(
+        getPointOnEllipse(
+          i * SEG - Math.PI / 2,
+          arc.outerRadius() + DEBUG2_LINE_SIZE * position,
+        ),
+        center.x,
+        center.y,
+      );
+      const targetInner = translate2D(
+        getPointOnEllipse(i * SEG - Math.PI / 2, arc.outerRadius()),
+        center.x,
+        center.y,
+      );
+      p5.line(targetInner.x, targetInner.y, targetOuter.x, targetOuter.y);
+    }
   }
 }

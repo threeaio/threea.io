@@ -155,8 +155,8 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       p5.noFill();
       p5.stroke(config.stroke.color);
     } else if (config.debug) {
-      p5.strokeWeight(0.5);
       p5.noFill();
+      p5.strokeWeight(0.5);
       p5.stroke(COLORS_3A.PAPER);
     }
 
@@ -178,28 +178,37 @@ export default function VerticeArc(p5: P5, config: VerticeArcConfig) {
       p5.circle(center().x, center().y, radius() * 2);
       p5.line(center().x, 0, center().x, dimension().y);
     }
-    if (config.debug && config.debug === 2) {
-      const DEBUG2_LINE_SIZE = 42;
-      p5.stroke(COLORS_3A.WHITE);
 
-      p5.line(
-        center().x - radius(),
-        center().y,
-        center().x - outerRadius(),
-        center().y,
-      );
-      p5.line(
-        center().x - radius(),
+    if (config.debug && config.debug === 2) {
+      const DEBUG2_LINE_SIZE = 4;
+      p5.fill(COLORS_3A.WHITE);
+      p5.noStroke();
+
+      p5.rect(
+        center().x - (radius() + thickness()),
         center().y - DEBUG2_LINE_SIZE,
-        center().x - radius(),
-        center().y,
+        thickness(),
+        DEBUG2_LINE_SIZE,
       );
-      p5.line(
-        center().x - outerRadius(),
-        center().y - DEBUG2_LINE_SIZE,
-        center().x - outerRadius(),
-        center().y,
-      );
+
+      // p5.line(
+      //   center().x - radius(),
+      //   center().y,
+      //   center().x - outerRadius(),
+      //   center().y,
+      // );
+      // p5.line(
+      //   center().x - radius(),
+      //   center().y - DEBUG2_LINE_SIZE,
+      //   center().x - radius(),
+      //   center().y,
+      // );
+      // p5.line(
+      //   center().x - outerRadius(),
+      //   center().y - DEBUG2_LINE_SIZE,
+      //   center().x - outerRadius(),
+      //   center().y,
+      // );
     }
   };
 
