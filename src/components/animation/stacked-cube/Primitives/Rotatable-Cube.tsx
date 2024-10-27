@@ -18,12 +18,13 @@ export type RotatableCubeConfig = {
 };
 
 export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
+  const MAX_GAP = 5;
+
   const [center, setCenter] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [dimension, setDimensions] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [progress, setProgress] = createSignal(0);
   // const animationProxies: AnimationProxies = createAnimationProxies();
 
-  const [DISTANCE_OF_MOVED_ITEMS, setDistanceOfMovedItems] = createSignal(100);
   const [AMOUNT_EDGES, setAmountEdges] = createSignal(config.amountEdges);
   const [AMOUNT_ITEMS, setAmountItems] = createSignal(config.amountItems);
   const [PADDING, setPadding] = createSignal(120);
@@ -31,14 +32,18 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
   const RAD_X = createMemo(() => dimension().x / 2 - PADDING());
   const RAD_Y = createMemo(() => dimension().x / 10);
 
+  const ACTUAL_DISTANCE = createMemo(() => {});
+
   const HEIGHT_OF_ELEMENTS = createMemo(() => {
-    return (
-      (dimension().y -
-        DISTANCE_OF_MOVED_ITEMS() -
-        2 * PADDING() -
-        2 * RAD_Y()) /
-      AMOUNT_ITEMS()
-    );
+    return (dimension().y - 2 * PADDING() - 2 * RAD_Y()) / AMOUNT_ITEMS();
+  });
+
+  const GAP = createMemo(() => {
+    if (progress() <= 0.25) {
+      return reMap(0, 0.25, 0, 1, progress()) * MAX_GAP;
+    } else {
+      return reMap(0.5, 0.75, 1, 0, progress()) * MAX_GAP;
+    }
   });
 
   /**
@@ -47,7 +52,7 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
   const getTopBottomOfForm = createMemo(() => {
     // Config
     // Zw. 0 und 1 ! 1 = alle Gleichzeitig; 0 = Alle nacheinander !
-    const OVERLAP = 0.2;
+    let OVERLAP = 0.2;
 
     // eine halbe Umdrehung. Configurable ?
     const SPEED = Math.PI / 2;
@@ -59,7 +64,15 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
     };
     const CIRCLE = 2 * Math.PI;
     const CIRCLE_STEP = CIRCLE / AMOUNT_EDGES();
-    const PROGRESS = progress();
+
+    let PROGRESS_ROTATION = 0;
+    if (progress() <= 0.5) {
+      PROGRESS_ROTATION = reMap(0.25, 0.5, 0, 1, progress());
+      OVERLAP = 0.2;
+    } else {
+      PROGRESS_ROTATION = reMap(0.75, 1, 0, 1, progress());
+      OVERLAP = 1;
+    }
 
     // calculate item-step-size and respect overlap
     const additionalSpace = (AMOUNT_ITEMS() - 1) * OVERLAP;
@@ -78,19 +91,25 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
         const iTo = clamp(0, 1, iFrom + I_STEP_WITHOVERLAP);
 
         //
-        const myRotationProgress = reMap(iFrom, iTo, 0, 1, PROGRESS);
+        const mappedRotationProgress = reMap(
+          iFrom,
+          iTo,
+          0,
+          1,
+          PROGRESS_ROTATION,
+        );
         // const myRotationProgress =
         //   mapped + rand1 * mapped + rand2 * (1 - mapped);
 
-        const p = myRotationProgress * SPEED;
+        const actualRotation = mappedRotationProgress * SPEED;
 
         const offsetRadius = 0;
-        const yPosition = HEIGHT_OF_ELEMENTS() * i + DISTANCE_OF_MOVED_ITEMS();
+        const yPosition = HEIGHT_OF_ELEMENTS() * i;
 
         return createArrayFromLength(AMOUNT_EDGES())
           .map((i) => {
             return getPointOnEllipse(
-              i * CIRCLE_STEP + p + offsetRadius,
+              i * CIRCLE_STEP + actualRotation + offsetRadius,
               RAD_X(),
               RAD_Y(),
             );
@@ -101,8 +120,9 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
               FORM_CENTER.x,
               FORM_CENTER.y +
                 PADDING() +
-                yPosition -
-                myRotationProgress * DISTANCE_OF_MOVED_ITEMS(),
+                yPosition +
+                i * GAP() -
+                (AMOUNT_ITEMS() * GAP()) / 2,
             ),
           );
       })
@@ -136,12 +156,10 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
 
     // const vex
 
-    p5.push();
     p5.stroke(COLORS_3A.WHITE);
     p5.strokeWeight(1);
 
     for (let i = 0; i < planes.length; i++) {
-      p5.push();
       p5.fill(COLORS_3A.GRAY);
       p5.stroke(COLORS_3A.GRAY);
       p5.beginShape();
@@ -149,25 +167,61 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
         dvtx(p5, planes[i][j]);
       }
       p5.endShape(p5.CLOSE);
-      p5.pop();
 
-      p5.push();
       p5.fill(COLORS_3A.PAPER);
-      p5.stroke(COLORS_3A.GRAY);
-
-      for (let j = 0; j < connectors[i].length; j++) {
-        p5.beginShape();
-        dvtx(p5, connectors[i][j][0]);
-        dvtx(p5, connectors[i][j][1]);
-        dvtx(p5, connectors[i][j][2]);
-        dvtx(p5, connectors[i][j][3]);
-        p5.endShape(p5.CLOSE);
+      if (GAP() > 0) {
+        p5.stroke(COLORS_3A.GRAY);
+        for (let j = 0; j < connectors[i].length; j++) {
+          p5.beginShape();
+          dvtx(p5, connectors[i][j][0]);
+          dvtx(p5, connectors[i][j][1]);
+          dvtx(p5, connectors[i][j][2]);
+          dvtx(p5, connectors[i][j][3]);
+          p5.endShape(p5.CLOSE);
+        }
+      } else {
+        for (let j = 0; j < connectors[i].length; j++) {
+          p5.noStroke();
+          p5.beginShape();
+          dvtx(p5, connectors[i][j][0]);
+          dvtx(p5, connectors[i][j][1]);
+          dvtx(p5, connectors[i][j][2]);
+          dvtx(p5, connectors[i][j][3]);
+          p5.endShape(p5.CLOSE);
+          p5.stroke(COLORS_3A.GRAY);
+          p5.line(
+            connectors[i][j][0].x,
+            connectors[i][j][0].y,
+            connectors[i][j][3].x,
+            connectors[i][j][3].y,
+          );
+          p5.line(
+            connectors[i][j][1].x,
+            connectors[i][j][1].y,
+            connectors[i][j][2].x,
+            connectors[i][j][2].y,
+          );
+        }
       }
-
-      p5.pop();
     }
 
-    p5.pop();
+    const last = connectors.at(0)!;
+    for (let j = 0; j < last.length; j++) {
+      const lastConnector = last[j];
+      p5.stroke(COLORS_3A.GRAY);
+      p5.line(
+        lastConnector[2].x,
+        lastConnector[2].y,
+        lastConnector[3].x,
+        lastConnector[3].y,
+      );
+      p5.line(
+        lastConnector[1].x,
+        lastConnector[1].y,
+        lastConnector[2].x,
+        lastConnector[2].y,
+      );
+    }
   };
 
   return {
@@ -178,7 +232,6 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
     setAmountEdges,
     setAmountItems,
     setPadding,
-    setDistanceOfMovedItems,
   };
 }
 

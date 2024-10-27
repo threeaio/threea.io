@@ -24,22 +24,19 @@ export default function CubeAnimation1(
       animation={ANIMATION({
         bgColor: COLORS_3A[props.bgColor],
         cubeConfig: {
-          amountItems: 10,
+          amountItems: 12,
           amountEdges: 4,
         },
         draw: (p5, cubes, progress, center, dims) => {
-          const ms = p5.millis() / 1500;
-          const p = (Math.sin(ms) + 1) / 2;
+          const ms = p5.millis() / 4000;
+          // const p = (Math.sin(ms) + 1) / 2;
+          const p = ms % 1;
 
           // const p = progress;
 
           for (let i = 0; i < cubes.length; i++) {
             batch(() => {
               cubes[i].setProgress(p);
-              cubes[i].setAmountItems(20);
-              cubes[i].setAmountEdges(4);
-              cubes[i].setPadding(reMap(0, 1, 80, 120, p));
-              cubes[i].setDistanceOfMovedItems(3);
             });
             cubes[i].draw();
           }
