@@ -26,7 +26,7 @@ export default function CubeAnimation2(
         cubeConfig: {
           amountItems: 5,
           amountEdges: 4,
-          padding: 240,
+          padding: 180,
           maxGap: 100,
           addRandom: true,
           hideOutlinesWhenStable: false,

@@ -15,14 +15,14 @@ export const drawAsColored = (
 
   const _planes = planes.map((plane, planeIndex) => {
     let planeIndexFactor =
-      Math.sin(reMap(0, planes.length, 0, 3.5, planeIndex)) +
+      Math.sin(reMap(0, planes.length, 0, 3, planeIndex)) +
       p5.noise(planeIndex) / 6;
     return plane.map((planePoint) => {
       const moved = translate2D(planePoint, -center.x, -center.y);
       const movedSignx = moved.x;
       return translate2D(
         {
-          x: moved.x + (movedSignx / 2) * planeIndexFactor,
+          x: moved.x * planeIndexFactor,
           y: moved.y,
         },
         center.x,
@@ -58,10 +58,10 @@ export const drawAsColored = (
     p5.push();
     p5.blendMode(p5.ADD);
     p5.fill([
-      reMap(0, _planes.length, 10, 255, i),
       50,
+      reMap(0, _planes.length, 10, 255, i),
       reMap(0, _planes.length, 255, 120, i),
-      reMap(0, _planes.length, 6, 40, i),
+      reMap(0, _planes.length, 6, 40, _planes.length - i),
     ]);
     p5.noStroke();
 

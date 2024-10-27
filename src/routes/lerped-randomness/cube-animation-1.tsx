@@ -23,16 +23,16 @@ export default function CubeAnimation1(
       animation={ANIMATION({
         bgColor: COLORS_3A[props.bgColor],
         cubeConfig: {
-          amountItems: 12,
+          amountItems: 4,
           amountEdges: 4,
-          maxGap: 18,
-          padding: 240,
+          maxGap: 130,
+          padding: 260,
           addRandom: false,
           hideOutlinesWhenStable: true,
           drawAs: "CUBE_ROTATE",
         },
         draw: (p5, cubes, progress, center, dims) => {
-          const ms = p5.millis() / 4000;
+          const ms = p5.millis() / 3000;
           // const p = (Math.sin(ms) + 1) / 2;
           const p = ms % 1;
 

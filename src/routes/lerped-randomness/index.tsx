@@ -2,7 +2,7 @@ import { Title } from "@solidjs/meta";
 import { HeaderSimple } from "~/content/Header-Simple";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/typo/HugeText";
-import { onMount } from "solid-js";
+import { onMount, ParentProps } from "solid-js";
 import { gsap } from "gsap";
 import { Divider } from "~/components/Divider";
 import { clientOnly } from "@solidjs/start";
@@ -70,53 +70,41 @@ export default function LerpedRandomness() {
         </div>
       </FullWidth>
       <Divider />
-      <div class={` p-2 xl:p-24 2xl:p-32 `}>
-        <div class="relative ">
-          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
-            <div class="relative h-full w-full ">
-              <ANIMATION_1 bgColor="PAPER" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class={` m-2 xl:m-24 2xl:m-32 `}>
-        <div class="relative ">
-          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
-            <div class="relative h-full w-full ">
-              <ANIMATION_2 bgColor="GRAY_DARKER" cubeConfig={{}} />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class={` m-2 xl:m-24 2xl:m-32 `}>
-        <div class="relative ">
-          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
-            <div class="relative h-full w-full ">
-              <ANIMATION_2
-                bgColor="GRAY_DARKER"
-                cubeConfig={{
-                  amountEdges: 12,
-                  amountItems: 42,
-                  padding: 260,
-                  maxGap: 12,
-                  addRandom: true,
-                  drawAs: "COLORED",
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class={` m-2 xl:m-24 2xl:m-32 `}>
-        <div class="relative ">
-          <div class={` w-1/2 h-[200svh] relative  mx-auto `}>
-            <div class="relative h-full w-full ">
-              <ANIMATION_3 bgColor="GRAY_DARKER" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <PieceWrapper>
+        <ANIMATION_1 bgColor="PAPER" />
+      </PieceWrapper>
+      <PieceWrapper>
+        <ANIMATION_2 bgColor="GRAY_DARKER" cubeConfig={{}} />
+      </PieceWrapper>
+      <PieceWrapper>
+        <ANIMATION_2
+          bgColor="GRAY_DARKER"
+          cubeConfig={{
+            amountEdges: 12,
+            amountItems: 42,
+            padding: 220,
+            maxGap: 12,
+            addRandom: true,
+            drawAs: "COLORED",
+          }}
+        />
+      </PieceWrapper>
+      <PieceWrapper>
+        <ANIMATION_3 bgColor="GRAY_DARKER" />
+      </PieceWrapper>
       <Divider />
     </main>
+  );
+}
+
+function PieceWrapper(props: ParentProps) {
+  return (
+    <div class={` m-2 xl:m-24 2xl:m-32 `}>
+      <div class="relative ">
+        <div class={`xl:w-2/3 2xl:w-1/2 h-[200svh] relative  mx-auto `}>
+          <div class="relative h-full w-full ">{props.children}</div>
+        </div>
+      </div>
+    </div>
   );
 }

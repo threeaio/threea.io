@@ -29,19 +29,24 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
   const [center, setCenter] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [dimension, setDimensions] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [progress, setProgress] = createSignal(0);
-  // const animationProxies: AnimationProxies = createAnimationProxies();
 
   const [AMOUNT_EDGES, setAmountEdges] = createSignal(config.amountEdges);
   const [AMOUNT_ITEMS, setAmountItems] = createSignal(config.amountItems);
 
-  const RAD_X = createMemo(() => dimension().x / 2 - config.padding);
+  const USE_PADDING = createMemo(() => {
+    return reMap(200, 700, config.padding / 5, config.padding, dimension().x);
+  });
+  const RAD_X = createMemo(() => dimension().x / 2 - USE_PADDING());
   const RAD_Y = createMemo(() => dimension().x / 12);
 
-  const AVAIL_HEIGHT = createMemo(() => {
-    return dimension().y - 2 * config.padding - 2 * RAD_Y();
+  const USE_HEIGHT = createMemo(() => {
+    return (RAD_X() * 2) / Math.sqrt(2);
+  });
+  const SPACE_Y_LEFT = createMemo(() => {
+    return (dimension().y - USE_HEIGHT()) / 2 - RAD_Y();
   });
   const HEIGHT_OF_ELEMENTS = createMemo(() => {
-    return AVAIL_HEIGHT() / AMOUNT_ITEMS();
+    return USE_HEIGHT() / AMOUNT_ITEMS();
   });
 
   const GAP = createMemo(() => {
@@ -119,10 +124,10 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
               p,
               FORM_CENTER.x,
               FORM_CENTER.y +
-                config.padding +
                 yPosition +
+                SPACE_Y_LEFT() +
                 i * GAP() -
-                ((AMOUNT_ITEMS() - 2) * GAP()) / 2,
+                ((AMOUNT_ITEMS() - 1) * GAP()) / 2,
             ),
           );
       })
