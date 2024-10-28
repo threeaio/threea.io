@@ -17,17 +17,17 @@ export const drawAsStackedCubes = (
   p5.strokeWeight(1);
 
   for (let i = 0; i < planes.length; i++) {
-    p5.fill(COLORS_3A.GRAY);
-    p5.stroke(COLORS_3A.GRAY);
+    p5.fill(COLORS_3A[config.outlineColor]);
+    p5.stroke(COLORS_3A[config.outlineColor]);
     p5.beginShape();
     for (let j = 0; j < planes[i].length; j++) {
       dvtx(p5, planes[i][j]);
     }
     p5.endShape(p5.CLOSE);
 
-    p5.fill(COLORS_3A.PAPER);
+    p5.fill(COLORS_3A[config.fillColor]);
     if (hasGap || !config.hideOutlinesWhenStable) {
-      p5.stroke(COLORS_3A.GRAY);
+      p5.stroke(COLORS_3A[config.outlineColor]);
       for (let j = 0; j < connectors[i].length; j++) {
         p5.beginShape();
         dvtx(p5, connectors[i][j][0]);
@@ -45,7 +45,7 @@ export const drawAsStackedCubes = (
         dvtx(p5, connectors[i][j][2]);
         dvtx(p5, connectors[i][j][3]);
         p5.endShape(p5.CLOSE);
-        p5.stroke(COLORS_3A.GRAY);
+        p5.stroke(COLORS_3A[config.outlineColor]);
         p5.line(
           connectors[i][j][0].x,
           connectors[i][j][0].y,
@@ -66,7 +66,7 @@ export const drawAsStackedCubes = (
     const last = connectors.at(0)!;
     for (let j = 0; j < last.length; j++) {
       const lastConnector = last[j];
-      p5.stroke(COLORS_3A.GRAY);
+      p5.stroke(COLORS_3A[config.outlineColor]);
       p5.line(
         lastConnector[2].x,
         lastConnector[2].y,

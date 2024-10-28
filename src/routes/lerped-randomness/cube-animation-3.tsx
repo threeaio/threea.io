@@ -6,6 +6,8 @@ const ANIMATION = clientOnly(
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { batch, ParentProps } from "solid-js";
+import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
+import { smoothStep } from "~/_util";
 
 /**
  * CLIENT-ONLY !
@@ -14,7 +16,7 @@ import { batch, ParentProps } from "solid-js";
 export default function CubeAnimation3(
   props: {
     bgColor: keyof typeof COLORS_3A;
-  } & ParentProps,
+  } & { cubeConfig: Partial<RotatableCubeConfig>; animateBpm: number },
 ) {
   return (
     <CanvasScrollAnimationWrapper
@@ -25,18 +27,23 @@ export default function CubeAnimation3(
         cubeConfig: {
           amountItems: 60,
           amountEdges: 4,
-          padding: 180,
+          padding: 220,
+          overlap: 0.2,
           maxGap: 4,
           addRandom: true,
+          asGlobe: false,
+          outlineColor: "RED",
+          fillColor: props.bgColor,
           hideOutlinesWhenStable: false,
           drawAs: "OTHER",
+          ...props.cubeConfig,
         },
         draw: (p5, cubes, progress, center, dims) => {
-          const ms = p5.millis() / 6000;
-          // const p = (Math.sin(ms) + 1) / 2;
-          const p = ms % 1;
+          const bpmInMillis = 1000 / (props.animateBpm / 60);
+          const timePerSecond = (p5.millis() / bpmInMillis) % 1; //  % (props.animateBpm! / 60)
 
-          // const p = progress;
+          // const p = Math.sin(ms / (500 / (props.animateBpm / 60))) / 2 + 0.5;
+          const p = smoothStep(timePerSecond);
 
           for (let i = 0; i < cubes.length; i++) {
             batch(() => {

@@ -8,7 +8,7 @@ const ANIMATION = clientOnly(
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { AnimationTrigger, reMap, remapT } from "~/_util";
+import { AnimationTrigger, reMap, mapToNewUnitRange } from "~/_util";
 import { ParentProps } from "solid-js";
 import { TW_BREAKPOINTS } from "~/_constants/constants";
 
@@ -34,7 +34,7 @@ export default function BrockmanAnimation02(
           draw={(p5, arcs, progress, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
             // console.log("progress STEP 2", progress);
-            const p = remapT(progress, 0, 0.6);
+            const p = mapToNewUnitRange(progress, 0, 0.6);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);
               arcs[i].draw();

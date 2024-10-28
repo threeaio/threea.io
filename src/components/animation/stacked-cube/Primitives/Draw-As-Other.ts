@@ -1,7 +1,7 @@
 import { COLORS_3A } from "~/_util-client-only";
 import { dvtx } from "~/components/animation/animation-drawables";
 import P5 from "p5";
-import { reMap, remapT, Simple2D, translate2D } from "~/_util";
+import { reMap, mapToNewUnitRange, Simple2D, translate2D } from "~/_util";
 import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
 
 export const drawAsOther = (
@@ -36,7 +36,7 @@ export const drawAsOther = (
 
   const iStep = 1 / _planes.length;
   for (let i = 0; i < _planes.length; i++) {
-    const origColor = COLORS_3A.RED;
+    const origColor = COLORS_3A[config.outlineColor];
     const color = [...origColor];
 
     // color[2] = origColor[2] * iStep * i;

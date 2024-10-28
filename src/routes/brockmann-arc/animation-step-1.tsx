@@ -1,5 +1,5 @@
 import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAnimationWrapper";
-import { clamp, reMap, remapT } from "~/_util";
+import { clamp, reMap, mapToNewUnitRange } from "~/_util";
 import { BROCKMAN_ARC_SETTINGS } from "~/components/animation/brockmann-beethoven/Brockmann-Arcs-Config";
 import { clientOnly } from "@solidjs/start";
 import { COLORS_3A } from "~/_util-client-only";
@@ -29,7 +29,7 @@ export default function BrockmanAnimation01(props: ParentProps) {
           fadeInOut={true}
           draw={(_p5, arcs, progress, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
-            const p = remapT(progress, 0, 0.6);
+            const p = mapToNewUnitRange(progress, 0, 0.6);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);
               arcs[i].draw();

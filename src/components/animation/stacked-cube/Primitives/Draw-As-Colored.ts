@@ -1,7 +1,13 @@
 import { COLORS_3A } from "~/_util-client-only";
 import { dvtx } from "~/components/animation/animation-drawables";
 import P5 from "p5";
-import { reMap, remapT, Simple2D, translate2D } from "~/_util";
+import {
+  getSliceLengthOnCircle,
+  reMap,
+  mapToNewUnitRange,
+  Simple2D,
+  translate2D,
+} from "~/_util";
 import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
 
 export const drawAsColored = (
@@ -13,23 +19,10 @@ export const drawAsColored = (
 ) => {
   // const vex
 
-  const _planes = planes.map((plane, planeIndex) => {
-    let planeIndexFactor =
-      Math.sin(reMap(0, planes.length, 0, 3, planeIndex)) +
-      p5.noise(planeIndex) / 6;
-    return plane.map((planePoint) => {
-      const moved = translate2D(planePoint, -center.x, -center.y);
-      const movedSignx = moved.x;
-      return translate2D(
-        {
-          x: moved.x * planeIndexFactor,
-          y: moved.y,
-        },
-        center.x,
-        center.y,
-      );
-    });
-  });
+  const top = planes.at(-1)![0].y;
+  const radiusOfElement = (planes.at(-1)![0].y - planes.at(0)![0].y) / 2;
+
+  const _planes = planes;
 
   p5.push();
   p5.colorMode(p5.RGB);

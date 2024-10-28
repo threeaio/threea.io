@@ -2,6 +2,7 @@ import { createMemo, createSignal } from "solid-js";
 import P5 from "p5";
 import { dvtx } from "~/components/animation/animation-drawables";
 import {
+  getSliceLengthOnCircle,
   clamp,
   createArrayFromLength,
   getPointOnEllipse,
@@ -20,8 +21,12 @@ export type RotatableCubeConfig = {
   amountItems: number;
   maxGap: number;
   padding: number;
+  overlap: number;
   addRandom: boolean;
   hideOutlinesWhenStable: boolean;
+  asGlobe: boolean;
+  outlineColor: keyof typeof COLORS_3A;
+  fillColor: keyof typeof COLORS_3A;
   drawAs: "CUBE_ROTATE" | "COLORED" | "OTHER";
 };
 
@@ -37,7 +42,7 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
     return reMap(200, 700, config.padding / 5, config.padding, dimension().x);
   });
   const RAD_X = createMemo(() => dimension().x / 2 - USE_PADDING());
-  const RAD_Y = createMemo(() => dimension().x / 12);
+  const RAD_Y = createMemo(() => dimension().x / 22);
 
   const USE_HEIGHT = createMemo(() => {
     return (RAD_X() * 2) / Math.sqrt(2);
@@ -63,12 +68,11 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
   const getPlanes = createMemo(() => {
     // Config!
     // Zw. 0 und 1 ! 1 = alle Gleichzeitig; 0 = Alle nacheinander !
-    let OVERLAP = 0.2;
+    let OVERLAP = config.overlap;
 
     // eine halbe Umdrehung. Configurable ?
     const SPEED = ((4 / AMOUNT_EDGES()) * Math.PI) / 2;
 
-    // private
     const FORM_CENTER = {
       x: center().x,
       y: RAD_Y(),
@@ -111,12 +115,22 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
         const offsetRadius = 0;
         const yPosition = HEIGHT_OF_ELEMENTS() * i;
 
+        let USE_RAD_X = RAD_X();
+        let USE_RAD_Y = RAD_Y();
+
+        if (config.asGlobe) {
+          const h = HEIGHT_OF_ELEMENTS() * (i + 0.5);
+          const height = USE_HEIGHT();
+          USE_RAD_X = getSliceLengthOnCircle(height / 2, h) / 2;
+          USE_RAD_Y = USE_RAD_X / 2;
+        }
+
         return createArrayFromLength(AMOUNT_EDGES())
           .map((i) => {
             return getPointOnEllipse(
               i * CIRCLE_STEP + actualRotation + offsetRadius,
-              RAD_X(),
-              RAD_Y(),
+              USE_RAD_X,
+              USE_RAD_Y,
             );
           })
           .map((p) =>

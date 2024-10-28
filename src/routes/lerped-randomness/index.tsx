@@ -11,12 +11,6 @@ import {
   useNavigationContext,
 } from "~/Navigation-Context";
 
-const ANIMATION_1 = clientOnly(
-  () => import("~/routes/lerped-randomness/cube-animation-1"),
-);
-const ANIMATION_2 = clientOnly(
-  () => import("~/routes/lerped-randomness/cube-animation-2"),
-);
 const ANIMATION_3 = clientOnly(
   () => import("~/routes/lerped-randomness/cube-animation-3"),
 );
@@ -71,26 +65,63 @@ export default function LerpedRandomness() {
       </FullWidth>
       <Divider />
       <PieceWrapper>
-        <ANIMATION_1 bgColor="PAPER" />
-      </PieceWrapper>
-      <PieceWrapper>
-        <ANIMATION_2 bgColor="GRAY_DARKER" cubeConfig={{}} />
-      </PieceWrapper>
-      <PieceWrapper>
-        <ANIMATION_2
-          bgColor="GRAY_DARKER"
+        <ANIMATION_3
+          bgColor="PAPER"
+          animateBpm={15}
           cubeConfig={{
-            amountEdges: 12,
-            amountItems: 42,
-            padding: 220,
-            maxGap: 12,
-            addRandom: true,
-            drawAs: "COLORED",
+            amountEdges: 4,
+            amountItems: 4,
+            padding: 200,
+            maxGap: 40,
+            addRandom: false,
+            hideOutlinesWhenStable: true,
+            outlineColor: "GRAY",
+            fillColor: "PAPER",
+            drawAs: "CUBE_ROTATE",
           }}
         />
       </PieceWrapper>
       <PieceWrapper>
-        <ANIMATION_3 bgColor="GRAY_DARKER" />
+        <ANIMATION_3
+          bgColor="GRAY_DARKER"
+          animateBpm={15}
+          cubeConfig={{
+            outlineColor: "PAPER",
+          }}
+        />
+      </PieceWrapper>
+      <PieceWrapper>
+        <ANIMATION_3
+          bgColor="GRAY_DARKER"
+          animateBpm={7.5 / 2}
+          cubeConfig={{
+            amountEdges: 8,
+            amountItems: 80,
+            padding: 140,
+            maxGap: 3,
+            addRandom: false,
+            overlap: 0.2,
+            asGlobe: true,
+            outlineColor: "PAPER",
+            fillColor: "GRAY_DARKER",
+            drawAs: "OTHER",
+          }}
+        />
+      </PieceWrapper>
+      <PieceWrapper>
+        <ANIMATION_3
+          bgColor="GRAY_DARKER"
+          animateBpm={7.5}
+          cubeConfig={{
+            amountEdges: 4,
+            amountItems: 40,
+            padding: 140,
+            maxGap: 4,
+            asGlobe: true,
+            addRandom: true,
+            drawAs: "COLORED",
+          }}
+        />
       </PieceWrapper>
       <Divider />
     </main>
