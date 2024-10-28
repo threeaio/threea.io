@@ -24,23 +24,13 @@ export default function SubNavigation() {
   return (
     <div ref={setTarget}>
       <div class={`navOuter  ${show() ? "navOuterShow" : ""}`}>
-        <h3
-          class={`navHead`}
-          onPointerUp={() => {
-            setShow(!show());
-            // if (
-            //   document.querySelector("body")!.classList.contains("preview-layout")
-            // ) {
-            //   document.querySelector("body")!.classList.toggle("preview-layout");
-            //   setTimeout(() => {
-            //     window.scrollTrigger.refresh();
-            //   }, 700);
-            //
-            //   window.scrollTo(0, 0);
-            // }
-          }}
-        >
-          <span class={`navHeadSymbol`}>
+        <h3 class={`navHead`}>
+          <span
+            class={`navHeadSymbol`}
+            onPointerUp={() => {
+              setShow(!show());
+            }}
+          >
             <span style="--is: 0"></span>
             <span style="--is: 1"></span>
             <span style="--is: 2"></span>

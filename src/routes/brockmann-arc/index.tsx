@@ -128,7 +128,9 @@ export default function BrockmannArc() {
                   <div class={"grid md:grid-cols-3 "}>
                     <div class={"md:col-start-3"}>
                       <SmallText>
-                        <div class="text-sm xl:w-1/2">{intro.text()}</div>
+                        <div class="text-sm xl:w-1/2 pr-8 xl:pr-0">
+                          {intro.text()}
+                        </div>
                       </SmallText>
                     </div>
                   </div>
@@ -466,10 +468,10 @@ function ControllerHere(props: ParentProps) {
   return (
     <div
       ref={(el) => setTargets((list) => [...list, el])}
-      class={`group transition-all duration-600 z-30 sticky top-[-1px]`}
+      class={`group transition-all duration-600 z-50 sticky  top-[-1px]`}
     >
       <div
-        class={`absolute w-full  pt-4 left-0 transition scale-75 opacity-0 group-[.is-sticky]:opacity-100 group-[.is-sticky]:scale-100  `}
+        class={`absolute w-full left-0 transition scale-75 opacity-0 group-[.is-sticky]:opacity-100 group-[.is-sticky]:scale-100  `}
       >
         {props.children}
       </div>
@@ -479,10 +481,18 @@ function ControllerHere(props: ParentProps) {
 
 function ClickForAnimationControl(props: { setAnimateClick: () => void }) {
   return (
-    <div class="flex flex-row justify-center">
+    <div class="flex flex-row justify-center pt-2 pl-2  ">
       <div class="flex flex-row rounded-lg bg-3a-gray-darker shadow-3a-black/30 shadow-lg font-mono text-sm">
-        <button class={"p-3 text-3a-green"} onClick={props.setAnimateClick}>
-          Klicke hier oder drücke <Kbd>A</Kbd> für Variationen
+        <button
+          class={"p-3 text-3a-green text-left sm:text-center"}
+          onClick={props.setAnimateClick}
+        >
+          Klicke hier
+          <span class={"hidden sm:inline"}>
+            {" "}
+            oder drücke <Kbd>A</Kbd>
+          </span>{" "}
+          für Variationen
         </button>
       </div>
     </div>

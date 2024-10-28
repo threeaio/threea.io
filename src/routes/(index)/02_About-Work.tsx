@@ -89,7 +89,7 @@ function SectionHere(props: { content: BasicTextContent }) {
   return (
     <div data-animate-item="" class="mb-24">
       <SmallText></SmallText>
-      <SmallText class="">
+      <SmallText class="pr-8 xl:pr-0">
         <h2 class="font-bold float-left mr-1.5 leading-relaxed text-3a-green align-baseline">
           {props.content.headline()}
         </h2>

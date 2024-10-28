@@ -68,7 +68,6 @@
   @apply absolute;
   @apply right-0;
   @apply w-full;
-  /*@apply sm:relative;*/
   @apply h-16;
   @apply cursor-pointer;
   @apply pl-4;
@@ -85,10 +84,12 @@
   @apply text-3a-white;
   @apply text-sm;
   @apply font-bold;
+  pointer-events: none;
   transition: all 0.3s;
 }
 
 .navHeadSymbol {
+  pointer-events: all;
   @apply flex;
   @apply flex-col;
   @apply gap-1;
