@@ -11,7 +11,20 @@ export default function BlackBook() {
     let mm = gsap.matchMedia(),
       breakPoint = 800;
     const headline = target()!.querySelector('[data-animate-headline=""]');
+    const headlineWords = headline!.querySelectorAll("span");
+    const yDiffBetweenWords =
+      headlineWords[1].getBoundingClientRect().y -
+      headlineWords[0].getBoundingClientRect().y;
     const items = target()!.querySelectorAll('[data-animate-item=""]');
+
+    const headlineWordsSequence = [
+      [0, 1, 2],
+      [0, 1, -1],
+      [0, -2, -1],
+    ];
+    const headlineHighlightSequence = [1, 0, 2];
+
+    let step = 0;
 
     mm.add(
       {
@@ -19,6 +32,35 @@ export default function BlackBook() {
         isMobile: `(max-width: ${breakPoint - 1}px) and (prefers-reduced-motion: no-preference)`,
       },
       (context) => {
+        // let tlHeadlinItems = gsap
+        //   .timeline({
+        //     scrollTrigger: {
+        //       trigger: target(),
+        //       scrub: false,
+        //       start: "top top-+=90%",
+        //       end: "bottom bottom+=100px",
+        //     },
+        //   })
+        gsap.to(headlineWords, {
+          repeat: -1,
+          repeatRefresh: true,
+          repeatDelay: 4,
+          y: (i) => {
+            headlineWords.forEach((item, i) => {
+              item.classList.toggle(
+                "text-3a-green",
+                i === headlineHighlightSequence[step],
+              );
+            });
+            return headlineWordsSequence[i][step] * yDiffBetweenWords;
+          },
+          duration: 0.3,
+          ease: "power2.inOut",
+          onRepeat: () => {
+            step = (step + 1) % 3;
+          },
+        });
+
         let tl = gsap.timeline({
           scrollTrigger: {
             trigger: target(),
@@ -51,13 +93,13 @@ export default function BlackBook() {
             <div class={"col-span-3 xl:col-span-2 xl:col-start-2"}>
               <HugeText>
                 {/*xl:py-42 mb-[105rem]*/}
-                <h2 data-animate-headline="" class="text-pretty max-w-[50rem]">
-                  Blackbook
-                  <br />
+                <h2
+                  data-animate-headline=""
+                  class="text-pretty max-w-[50rem] grid grid-cols-1"
+                >
+                  <span>Blackbook</span>
                   <span class={"text-3a-green"}>Sketchbook</span>
-                  <br />
-                  <span class={""}>Poesiealbum</span>
-                  {/*</span>*/}
+                  <span>Poesiealbum</span>
                 </h2>
               </HugeText>
             </div>
