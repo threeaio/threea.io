@@ -107,7 +107,7 @@ export default function BrockmannArc() {
 
   return (
     <main>
-      <Title>Threea - Brockmanns Beethoven</Title>
+      <Title>Threea.io - Brockmanns Beethoven</Title>
 
       <HeaderSimple class="snap-start absolute z-20 w-full" />
 

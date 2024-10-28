@@ -55,7 +55,7 @@ export default function LerpedRandomness() {
 
   return (
     <main>
-      <Title>Threea - Lerped Randomness - Experimentet</Title>
+      <Title>Threea.io - Lerped Randomness - Code-Experimente</Title>
 
       <HeaderSimple class="absolute z-20 w-full" />
 
