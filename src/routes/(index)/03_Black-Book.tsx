@@ -32,16 +32,16 @@ export default function BlackBook() {
         isMobile: `(max-width: ${breakPoint - 1}px) and (prefers-reduced-motion: no-preference)`,
       },
       (context) => {
-        // let tlHeadlinItems = gsap
-        //   .timeline({
-        //     scrollTrigger: {
-        //       trigger: target(),
-        //       scrub: false,
-        //       start: "top top-+=90%",
-        //       end: "bottom bottom+=100px",
-        //     },
-        //   })
-        gsap.to(headlineWords, {
+        const tlWords = gsap.timeline({
+          scrollTrigger: {
+            trigger: target(),
+            scrub: false,
+            start: "top top-+=90%",
+            end: "bottom bottom+=100px",
+          },
+        });
+
+        tlWords.to(headlineWords, {
           repeat: -1,
           repeatRefresh: true,
           repeatDelay: 4,
@@ -61,7 +61,7 @@ export default function BlackBook() {
           },
         });
 
-        let tl = gsap.timeline({
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: target(),
             scrub: 2,
