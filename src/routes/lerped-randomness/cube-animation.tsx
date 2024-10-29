@@ -13,11 +13,11 @@ import { smoothStep } from "~/_util";
  * CLIENT-ONLY !
  */
 
-export default function CubeAnimation3(
-  props: {
-    bgColor: keyof typeof COLORS_3A;
-  } & { cubeConfig: Partial<RotatableCubeConfig>; animateBpm: number },
-) {
+export default function CubeAnimation(props: {
+  cubeConfig: Partial<RotatableCubeConfig>;
+  bgColor: keyof typeof COLORS_3A;
+  animateBpm: number;
+}) {
   return (
     <CanvasScrollAnimationWrapper
       start={"clamp(top top+=90%)"}

@@ -108,7 +108,7 @@ export default function BlackBook() {
         <ol class={"pb-32"}>
           <BlackBookItem
             content={{
-              num: "01",
+              num: "001",
               link: "/brockmann-arc",
               type: "Animation",
               title: "Brockmanns Beethoven",
@@ -118,7 +118,7 @@ export default function BlackBook() {
           />
           <BlackBookItem
             content={{
-              num: "02",
+              num: "002",
               link: "/lerped-randomness",
               type: "Animation",
               title: "Lerped Randomness",
@@ -164,7 +164,7 @@ function BlackBookItem(props: {
       >
         <div class={"grid grid-cols-26 items-baseline"}>
           <div class={"col-span-2 md:col-span-4 p-3 2xl:px-3 2xl:text-right"}>
-            <div class="md:text-2xl 2xl:text-3xl">{props.content.num}</div>
+            <div class="font-mono text-3a-white">{props.content.num}</div>
           </div>
           <div class={"text-3a-green col-span-8 md:col-span-6 p-3 "}>
             <div class="">{props.content.type}</div>

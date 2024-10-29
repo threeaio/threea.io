@@ -11,8 +11,8 @@ import {
   useNavigationContext,
 } from "~/Navigation-Context";
 
-const ANIMATION_3 = clientOnly(
-  () => import("~/routes/lerped-randomness/cube-animation-3"),
+const ANIMATION = clientOnly(
+  () => import("~/routes/lerped-randomness/cube-animation"),
 );
 
 export default function LerpedRandomness() {
@@ -65,7 +65,7 @@ export default function LerpedRandomness() {
       </FullWidth>
       <Divider />
       <PieceWrapper>
-        <ANIMATION_3
+        <ANIMATION
           bgColor="PAPER"
           animateBpm={15}
           cubeConfig={{
@@ -82,7 +82,7 @@ export default function LerpedRandomness() {
         />
       </PieceWrapper>
       <PieceWrapper>
-        <ANIMATION_3
+        <ANIMATION
           bgColor="GRAY_DARKER"
           animateBpm={15}
           cubeConfig={{
@@ -91,9 +91,9 @@ export default function LerpedRandomness() {
         />
       </PieceWrapper>
       <PieceWrapper>
-        <ANIMATION_3
+        <ANIMATION
           bgColor="GRAY_DARKER"
-          animateBpm={7.5 / 2}
+          animateBpm={7.5}
           cubeConfig={{
             amountEdges: 8,
             amountItems: 80,
@@ -102,14 +102,14 @@ export default function LerpedRandomness() {
             addRandom: false,
             overlap: 0.2,
             asGlobe: true,
-            outlineColor: "PAPER",
-            fillColor: "GRAY_DARKER",
-            drawAs: "OTHER",
+            outlineColor: "GRAY_DARKER",
+            fillColor: "PAPER",
+            drawAs: "CUBE_ROTATE",
           }}
         />
       </PieceWrapper>
       <PieceWrapper>
-        <ANIMATION_3
+        <ANIMATION
           bgColor="GRAY_DARKER"
           animateBpm={7.5}
           cubeConfig={{
@@ -119,7 +119,8 @@ export default function LerpedRandomness() {
             maxGap: 4,
             asGlobe: true,
             addRandom: true,
-            drawAs: "COLORED",
+            outlineColor: "PAPER",
+            drawAs: "OTHER",
           }}
         />
       </PieceWrapper>

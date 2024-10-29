@@ -46,7 +46,7 @@ export const intro = {
 
 export const inspiration = {
   title: "Inspiration",
-  num: "01",
+  num: "001",
   text: () => (
     <>
       <p>
@@ -76,7 +76,7 @@ export const inspiration = {
 
 export const step1: AnimatedSubSection = {
   title: "Idee zur Animation",
-  num: "02",
+  num: "002",
   animation: () => <ANIMATION_01_IDEA />,
   description: () => (
     <>
@@ -104,7 +104,7 @@ export const step1: AnimatedSubSection = {
 
 export const step2: AnimatedSubSection = {
   title: "Weitere Parameter",
-  num: "03",
+  num: "003",
   animation: (trigger) => (
     <ANIMATION_02 animateCommand={trigger && trigger()} />
   ),
@@ -136,7 +136,7 @@ export const step2: AnimatedSubSection = {
 
 export const step3: AnimatedSubSection = {
   title: "Zwischenergebnis",
-  num: "04",
+  num: "004",
   animation: (trigger) => (
     <ANIMATION_03 animateCommand={trigger && trigger()} />
   ),
@@ -171,5 +171,5 @@ export const step3: AnimatedSubSection = {
 
 export const gallery = {
   title: "Galerie",
-  num: "05",
+  num: "005",
 };
