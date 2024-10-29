@@ -11,8 +11,6 @@ export const drawAsStackedCubes = (
   config: RotatableCubeConfig,
   hasGap: boolean,
 ) => {
-  // const vex
-
   p5.stroke(COLORS_3A.WHITE);
   p5.strokeWeight(1);
 
