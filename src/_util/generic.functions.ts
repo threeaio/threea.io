@@ -41,6 +41,30 @@ export const clamp = (min: number, max: number, value: number) => {
 export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
 
 /**
+ * Calculates a value for an animation that progresses from 0 to 1, then restarts from 0 to 1,
+ * effectively running twice within the 0 to 1 input range.
+ *
+ * @param {number} t - A value between 0 and 1 representing the progress of the animation.
+ * @returns {number} - The calculated value that makes the animation run twice in a continuous range from 0 to 1.
+ *
+ * @throws {Error} - If `t` is outside the range [0, 1].
+ *
+ * @example
+ * doubleRange(0);    // 0
+ * doubleRange(0.25); // 0.5
+ * doubleRange(0.5);  // 1
+ * doubleRange(0.75); // 0.5
+ * doubleRange(1);    // 1
+ */
+export const doubleRange = (t: number): number => {
+  if (t < 0 || t > 1) {
+    throw new Error("Der Wert von t muss zwischen 0 und 1 liegen.");
+  }
+
+  return t <= 0.5 ? t * 2 : t * 2 - 1;
+};
+
+/**
  * Remaps a value from one range to another.
  * @param origMin Original minimum value.
  * @param origMax Original maximum value.

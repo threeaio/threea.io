@@ -82,9 +82,10 @@ export default function RotatableCube(p5: P5, config: RotatableCubeConfig) {
     const CIRCLE_STEP = CIRCLE / AMOUNT_EDGES();
 
     let PROGRESS_ROTATION = 0;
+
     if (progress() <= 0.5) {
       PROGRESS_ROTATION = reMap(0.25, 0.5, 0, 1, progress());
-      OVERLAP = 0.2;
+      OVERLAP = config.overlap;
     } else {
       PROGRESS_ROTATION = reMap(0.75, 1, 0, 1, progress());
       OVERLAP = 1;

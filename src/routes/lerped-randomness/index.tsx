@@ -86,6 +86,7 @@ export default function LerpedRandomness() {
           bgColor="GRAY_DARKER"
           animateBpm={15}
           cubeConfig={{
+            overlap: 0.5,
             outlineColor: "PAPER",
           }}
         />
@@ -96,11 +97,11 @@ export default function LerpedRandomness() {
           animateBpm={7.5}
           cubeConfig={{
             amountEdges: 8,
-            amountItems: 80,
+            amountItems: 49,
             padding: 140,
             maxGap: 3,
-            addRandom: false,
-            overlap: 0.2,
+            addRandom: true,
+            overlap: 0.05,
             asGlobe: true,
             outlineColor: "GRAY_DARKER",
             fillColor: "PAPER",
@@ -133,7 +134,7 @@ function PieceWrapper(props: ParentProps) {
   return (
     <div class={` m-2 xl:m-24 2xl:m-32 `}>
       <div class="relative ">
-        <div class={`xl:w-2/3 2xl:w-1/2 h-[200svh] relative  mx-auto `}>
+        <div class={`xl:w-2/3 2xl:w-1/2 h-[400svh] relative  mx-auto `}>
           <div class="relative h-full w-full ">{props.children}</div>
         </div>
       </div>

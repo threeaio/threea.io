@@ -7,7 +7,7 @@ const ANIMATION = clientOnly(
 import { COLORS_3A } from "~/_util-client-only";
 import { batch, ParentProps } from "solid-js";
 import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
-import { smoothStep } from "~/_util";
+import { doubleRange, smoothStep } from "~/_util";
 
 /**
  * CLIENT-ONLY !
@@ -39,11 +39,10 @@ export default function CubeAnimation(props: {
           ...props.cubeConfig,
         },
         draw: (p5, cubes, progress, center, dims) => {
-          const bpmInMillis = 1000 / (props.animateBpm / 60);
-          const timePerSecond = (p5.millis() / bpmInMillis) % 1; //  % (props.animateBpm! / 60)
+          // const bpmInMillis = 1000 / (props.animateBpm / 60);
+          // const timePerSecond = (p5.millis() / bpmInMillis) % 1;
 
-          // const p = Math.sin(ms / (500 / (props.animateBpm / 60))) / 2 + 0.5;
-          const p = smoothStep(timePerSecond);
+          const p = smoothStep(doubleRange(progress)); // smoothStep(timePerSecond);
 
           for (let i = 0; i < cubes.length; i++) {
             batch(() => {
