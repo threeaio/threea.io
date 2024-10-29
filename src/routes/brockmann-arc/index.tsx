@@ -63,19 +63,19 @@ export default function BrockmannArc() {
         title: "Anfang",
       },
       {
-        linkProps: { type: "anchor", target: "#BROCKMANN_01" },
+        linkProps: { type: "anchor", target: "#BROCKMANN_001" },
         title: "Inspiration",
       },
       {
-        linkProps: { type: "anchor", target: "#BROCKMANN_02" },
+        linkProps: { type: "anchor", target: "#BROCKMANN_002" },
         title: "Idee zur Animation",
       },
       {
-        linkProps: { type: "anchor", target: "#BROCKMANN_03" },
+        linkProps: { type: "anchor", target: "#BROCKMANN_003" },
         title: "Weitere Parameter",
       },
       {
-        linkProps: { type: "anchor", target: "#BROCKMANN_04" },
+        linkProps: { type: "anchor", target: "#BROCKMANN_004" },
         title: "Ergebnis + Zwischenfazit",
       },
       {
@@ -145,7 +145,7 @@ export default function BrockmannArc() {
 
         {/* Inspiration */}
 
-        <div class={"relative py-32"} id={"BROCKMANN_01"}>
+        <div class={"relative py-32"} id={"BROCKMANN_001"}>
           <RotatedPageBg rotateClass={"rotate-2"} />
           <BleedRightSmall
             class="relative"
