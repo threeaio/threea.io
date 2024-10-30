@@ -42,15 +42,18 @@ export default function SubNavigation() {
           <nav class="overflow-hidden">
             <div class={`navInner`}>
               {onThisPage().length && (
-                <>
-                  <h4 class="nav-section-heading text-sm text-3a-white px-4 sm:px-8">
+                <div style={`--inum-items:${onThisPage().length + 1}`}>
+                  <h4
+                    style={`--i:0`}
+                    class="nav-section-heading text-sm text-3a-white px-4 sm:px-8"
+                  >
                     Auf dieser Seite
                   </h4>
                   <ul>
                     <For each={onThisPage()}>
                       {(item, i) => (
                         <li
-                          style={`--i:${i()}`}
+                          style={`--i:${i() + 1}`}
                           class={`pl-4 sm:pl-8 pr-20 ${i() === onThisPage().length - 1 ? "mb-4" : ""} `}
                         >
                           {item.linkProps.type === "link" && (
@@ -71,78 +74,79 @@ export default function SubNavigation() {
                       )}
                     </For>
                   </ul>
-                </>
+                </div>
               )}
-
-              <h4 class="nav-section-heading text-3a-white text-sm px-4 sm:px-8">
-                Seiten
-              </h4>
-              <ul class={"mb-4"}>
-                <li
-                  style={`--i:${pages().length}`}
-                  class={`pl-4 sm:pl-8 pr-20`}
+              <div style={`--inum-items:${pages().length + 2}`}>
+                <h4
+                  style={`--i:0`}
+                  class="nav-section-heading text-3a-white text-sm px-4 sm:px-8"
                 >
-                  <Button
-                    href="/"
-                    asA={true}
-                    active={location.pathname === "/"}
-                    handleClick={(e) => {
-                      const page = document.querySelector("#PAGE_3a")!;
-                      gsap.to(page, {
-                        opacity: 0,
-                        onComplete: () => {
-                          window.lenis.scrollTo(0, {
-                            immediate: true,
-                          });
-                          navigate("/");
-                        },
-                      });
-
-                      e.preventDefault();
-                      return false;
-                    }}
-                  >
-                    Startseite
-                  </Button>
-                </li>
-                <For each={pages()}>
-                  {(item, i) => (
-                    <li style={`--i:${i()}`} class={`pl-4 sm:pl-8 pr-20`}>
-                      {item.linkProps.type === "link" && (
-                        <Button
-                          href={item.linkProps.href}
-                          asA={true}
-                          active={location.pathname === item.linkProps.href}
-                          handleClick={(e) => {
-                            const page = document.querySelector("#PAGE_3a")!;
-                            gsap.to(page, {
-                              opacity: 0,
-                              onComplete: () => {
-                                window.lenis.scrollTo(0, {
-                                  immediate: true,
-                                });
-                                if ("href" in item.linkProps) {
-                                  navigate(item.linkProps.href);
-                                }
-                              },
+                  Seiten
+                </h4>
+                <ul class={"mb-4"}>
+                  <li style={`--i:1`} class={`pl-4 sm:pl-8 pr-20`}>
+                    <Button
+                      href="/"
+                      asA={true}
+                      active={location.pathname === "/"}
+                      handleClick={(e) => {
+                        const page = document.querySelector("#PAGE_3a")!;
+                        gsap.to(page, {
+                          opacity: 0,
+                          onComplete: () => {
+                            window.lenis.scrollTo(0, {
+                              immediate: true,
                             });
+                            navigate("/");
+                          },
+                        });
 
-                            e.preventDefault();
-                            return false;
-                          }}
-                        >
-                          {item.title}
-                        </Button>
-                      )}
-                      {item.linkProps.type === "anchor" && (
-                        <Button target={item.linkProps.target}>
-                          {item.title}
-                        </Button>
-                      )}
-                    </li>
-                  )}
-                </For>
-              </ul>
+                        e.preventDefault();
+                        return false;
+                      }}
+                    >
+                      Startseite
+                    </Button>
+                  </li>
+                  <For each={pages()}>
+                    {(item, i) => (
+                      <li style={`--i:${i() + 2}`} class={`pl-4 sm:pl-8 pr-20`}>
+                        {item.linkProps.type === "link" && (
+                          <Button
+                            href={item.linkProps.href}
+                            asA={true}
+                            active={location.pathname === item.linkProps.href}
+                            handleClick={(e) => {
+                              const page = document.querySelector("#PAGE_3a")!;
+                              gsap.to(page, {
+                                opacity: 0,
+                                onComplete: () => {
+                                  window.lenis.scrollTo(0, {
+                                    immediate: true,
+                                  });
+                                  if ("href" in item.linkProps) {
+                                    navigate(item.linkProps.href);
+                                  }
+                                },
+                              });
+
+                              e.preventDefault();
+                              return false;
+                            }}
+                          >
+                            {item.title}
+                          </Button>
+                        )}
+                        {item.linkProps.type === "anchor" && (
+                          <Button target={item.linkProps.target}>
+                            {item.title}
+                          </Button>
+                        )}
+                      </li>
+                    )}
+                  </For>
+                </ul>
+              </div>
             </div>
           </nav>
         </div>

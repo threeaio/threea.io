@@ -1,161 +1,101 @@
 :root {
-  --i: 0;
-  --is: 0;
-  --numItems: 4;
+  --nav-timing: 0.3s;
+  --nav-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --stagger-delay: 0.03s;
 }
 
-.nav li {
-  white-space: nowrap;
-}
-
+/* Core Layout */
 .navOuter {
-  @apply grid;
-  @apply relative;
-  @apply w-full;
-  @apply sm:w-auto;
-  @apply fixed;
-  @apply top-0;
-  @apply right-0;
-  @apply sm:rounded-xl;
-  @apply sm:shadow-2xl;
-
-  @apply sm:-translate-x-5;
-  @apply sm:translate-y-5;
-  @apply m-0;
-  @apply sm:border-0;
-  @apply sm:border-3a-green;
+  @apply grid fixed top-0 right-0 z-[100];
+  @apply w-full sm:w-auto;
   @apply max-sm:bg-3a-black;
-  z-index: 100;
+  @apply sm:-translate-x-5 sm:translate-y-5;
+  @apply sm:rounded-xl sm:shadow-2xl sm:border-3a-green;
   transform-origin: 2rem 0%;
+  transition: all var(--nav-timing) var(--nav-ease);
+  will-change: transform, background-color;
 }
 
 .navOuter.navOuterShow {
-  @apply transition-transform;
-  @apply sm:transition-[transform_background_border];
   @apply bg-3a-black;
 }
 
-.navInner {
-  @apply w-full;
-  @apply sm:w-auto;
-  @apply flex;
-  @apply flex-col;
-  @apply gap-3;
-  @apply pt-24;
-  @apply pb-4;
-}
-
+/* Navigation Grid */
 .nav {
   @apply grid;
-  grid-template-rows: 0fr;
-  grid-template-columns: 0fr;
-  transition:
-    grid-template-rows 0.2s ease-out,
-    grid-template-columns 0.1s ease-out;
-  /*transition-delay: 0.2s;*/
+  grid-template: 0fr / 0fr;
+  transition: grid-template var(--nav-timing) var(--nav-ease);
 }
 
 .navOuter.navOuterShow .nav {
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr;
-  transition:
-    grid-template-rows 0.3s ease-out,
-    grid-template-columns 0.1s ease-out;
-  transition-delay: 0s;
+  grid-template: 1fr / 1fr;
 }
 
+.navInner {
+  @apply w-full sm:w-auto flex flex-col gap-3 pt-24 pb-4;
+  min-height: 0;
+}
+
+/* Header */
 .navHead {
-  @apply absolute;
-  @apply right-0;
-  @apply w-full;
-  @apply h-16;
-  @apply cursor-pointer;
-  @apply pl-4;
-  @apply pr-8;
-  @apply sm:px-8;
-  @apply mt-8;
-  @apply sm:mt-4;
-  @apply flex;
-  @apply flex-row;
-  @apply gap-3;
-  @apply items-center;
-  @apply justify-between;
-  @apply flex-row-reverse;
-  @apply text-3a-white;
-  @apply text-sm;
-  @apply font-bold;
-  pointer-events: none;
-  transition: all 0.3s;
+  @apply absolute right-0 w-full pointer-events-none;
+  @apply h-16 mt-8 sm:mt-4 px-4 sm:px-8;
+  @apply flex flex-row-reverse items-center justify-between gap-3;
+  @apply text-3a-white text-sm font-bold;
 }
 
+/* Hamburger Button */
 .navHeadSymbol {
-  pointer-events: all;
-  @apply flex;
-  @apply flex-col;
-  @apply gap-1;
-  transition: all 0.3s;
+  @apply pointer-events-auto flex flex-col gap-1;
 }
 
 .navHeadSymbol > span {
-  @apply h-0.5;
-  @apply w-5;
-  @apply rounded;
-  @apply bg-3a-green;
-  transform: scaleX(1);
+  @apply h-0.5 rounded bg-3a-green;
+  @apply w-5 even:w-4;
   transform-origin: top left;
 }
 
 .navOuter:not(.navOuterShow) .navHeadSymbol:hover > span {
-  animation: 0.6s calc(var(--is) * 0.1s) infinite navHeadSymbolHover;
+  animation: hamburger-hover 0.6s calc(var(--is) * 0.1s) infinite;
 }
 
-@keyframes navHeadSymbolHover {
-  0% {
-    transform: scaleX(1);
-  }
+@keyframes hamburger-hover {
   50% {
     transform: scaleX(0.8);
   }
 }
 
-.navHeadSymbol > span:nth-child(even) {
-  @apply w-4;
-}
-
 .navOuter.navOuterShow .navHeadSymbol span {
   @apply bg-3a-white;
 }
-.navOuter:hover .navHeadSymbol span {
-}
 
+/* Menu Title */
 .navHeadSymbol + span {
-  @apply opacity-0;
-  @apply blur-xl;
-  @apply transition-opacity;
-  transition-delay: 0s;
+  @apply opacity-0 transition-[opacity,filter];
+  transition-timing-function: var(--nav-ease);
+  transition-duration: var(--nav-timing);
 }
 
 .navOuter.navOuterShow .navHeadSymbol + span {
   @apply opacity-100;
-  @apply blur-0;
   transition-delay: 0.25s;
+}
+
+/* Navigation Items */
+.nav li {
+  @apply whitespace-nowrap;
 }
 
 .navOuter nav li,
 .nav-section-heading {
-  @apply opacity-0;
-  @apply -translate-y-2;
-  @apply blur-xl;
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-  transition-delay: calc(0.015s * (var(--numItems) - (var(--i))));
+  @apply opacity-0 -translate-y-2;
+  transition: all var(--nav-timing) var(--nav-ease);
+  transition-delay: calc(0.015s * (var(--numItems) - var(--i)));
+  will-change: transform, opacity, filter;
 }
 
 .navOuter.navOuterShow nav li,
 .navOuter.navOuterShow .nav-section-heading {
-  @apply blur-0;
-  @apply opacity-100;
-  @apply translate-y-0;
-  transition-delay: calc(0.2s + 0.02s * var(--i));
+  @apply opacity-100 translate-y-0;
+  transition-delay: calc(0.2s + var(--stagger-delay) * var(--i));
 }
