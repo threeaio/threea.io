@@ -89,7 +89,7 @@ export default function CanvasScrollAnimationWrapper(
       }}
     >
       <div
-        id={Math.random() * 10000 + "-animation"}
+        id={Math.floor(Math.random() * 10000) + "-animation"}
         class={"h-full w-full"}
         ref={(el) => setTarget(el)}
       >
