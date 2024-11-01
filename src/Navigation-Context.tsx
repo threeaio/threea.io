@@ -1,13 +1,10 @@
-import { createStore } from "solid-js/store";
 import {
   Accessor,
   Context,
   createContext,
   createMemo,
-  createRoot,
   createSignal,
   ParentProps,
-  Setter,
   useContext,
 } from "solid-js";
 
@@ -26,25 +23,24 @@ export interface AnchorProps extends BaseNavigationProps {
   target: string;
 }
 
-export interface NavigationItem {
+export interface NavigationItem<T extends LinkProps | AnchorProps> {
   title: string;
-  linkProps: LinkProps | AnchorProps;
+  linkProps: T;
 }
-// }
 
 export type NavigationConfiguration = {
-  onThisPage: NavigationItem[];
-  pages: NavigationItem[]; // or section-wise?
+  onThisPage: NavigationItem<AnchorProps>[];
+  pages: NavigationItem<LinkProps>[]; // or section-wise?
 };
 
 type NavigationContextType = [
   {
-    onThisPage: Accessor<NavigationItem[]>;
-    pages: Accessor<NavigationItem[]>;
+    onThisPage: Accessor<NavigationItem<AnchorProps>[]>;
+    pages: Accessor<NavigationItem<LinkProps>[]>;
   },
   {
-    setOnThisPage(items: NavigationItem[]): void;
-    setPages(items: NavigationItem[]): void;
+    setOnThisPage(items: NavigationItem<AnchorProps>[]): void;
+    setPages(items: NavigationItem<LinkProps>[]): void;
   },
 ];
 
@@ -57,10 +53,25 @@ export const useNavigationContext = () => {
   return context;
 };
 
+export const DefaultPages: NavigationItem<LinkProps>[] = [
+  {
+    linkProps: { type: "link", href: "/brockmann-arc" },
+    title: "Brockmanns Beethoven",
+  },
+  {
+    linkProps: { type: "link", href: "/lerped-randomness" },
+    title: "Lerped Randomness",
+  },
+  {
+    linkProps: { type: "link", href: "/simple-functions" },
+    title: "Simple Functions",
+  },
+];
+
 export const NavigationProvider = (props: ParentProps) => {
   const [navigation, setNavigation] = createSignal<NavigationConfiguration>({
     onThisPage: [],
-    pages: [],
+    pages: DefaultPages,
   });
   const navigationState: NavigationContextType = [
     {
@@ -68,13 +79,13 @@ export const NavigationProvider = (props: ParentProps) => {
       pages: createMemo(() => navigation().pages),
     },
     {
-      setOnThisPage(items: NavigationItem[]) {
+      setOnThisPage(items: NavigationItem<AnchorProps>[]) {
         setNavigation((c) => ({
           ...c,
           onThisPage: items,
         }));
       },
-      setPages(items: NavigationItem[]) {
+      setPages(items: NavigationItem<LinkProps>[]) {
         setNavigation((c) => ({
           ...c,
           pages: items,

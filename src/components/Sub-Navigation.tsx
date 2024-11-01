@@ -56,20 +56,9 @@ export default function SubNavigation() {
                           style={`--i:${i() + 1}`}
                           class={`pl-4 sm:pl-8 pr-20 ${i() === onThisPage().length - 1 ? "mb-4" : ""} `}
                         >
-                          {item.linkProps.type === "link" && (
-                            <Button
-                              href={item.linkProps.href}
-                              asA={true}
-                              active={location.pathname === item.linkProps.href}
-                            >
-                              {item.title}
-                            </Button>
-                          )}
-                          {item.linkProps.type === "anchor" && (
-                            <Button target={item.linkProps.target}>
-                              {item.title}
-                            </Button>
-                          )}
+                          <Button target={item.linkProps.target}>
+                            {item.title}
+                          </Button>
                         </li>
                       )}
                     </For>
@@ -134,11 +123,6 @@ export default function SubNavigation() {
                               return false;
                             }}
                           >
-                            {item.title}
-                          </Button>
-                        )}
-                        {item.linkProps.type === "anchor" && (
-                          <Button target={item.linkProps.target}>
                             {item.title}
                           </Button>
                         )}

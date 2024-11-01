@@ -7,7 +7,9 @@ import { gsap } from "gsap";
 import { Divider } from "~/components/Divider";
 import { clientOnly } from "@solidjs/start";
 import {
+  AnchorProps,
   NavigationConfiguration,
+  NavigationItem,
   useNavigationContext,
 } from "~/Navigation-Context";
 
@@ -16,30 +18,17 @@ const ANIMATION = clientOnly(
 );
 
 export default function LerpedRandomness() {
-  const [_, { setOnThisPage, setPages }] = useNavigationContext();
+  const [_, { setOnThisPage }] = useNavigationContext();
 
-  const navItems: NavigationConfiguration = {
-    onThisPage: [
-      {
-        linkProps: { type: "anchor", target: "#LERPED_RANDOMNESS_TOP" },
-        title: "Anfang",
-      },
-    ],
-    pages: [
-      {
-        linkProps: { type: "link", href: "/brockmann-arc" },
-        title: "Brockmanns Beethoven",
-      },
-      {
-        linkProps: { type: "link", href: "/lerped-randomness" },
-        title: "Lerped Randomness",
-      },
-    ],
-  };
+  const navItems: NavigationItem<AnchorProps>[] = [
+    {
+      linkProps: { type: "anchor", target: "#LERPED_RANDOMNESS_TOP" },
+      title: "Anfang",
+    },
+  ];
 
   onMount(() => {
-    setPages(navItems.pages);
-    setOnThisPage(navItems.onThisPage);
+    setOnThisPage(navItems);
     const page = document.querySelector("#PAGE_3a")!;
     gsap.to(page, {
       opacity: 1,
@@ -67,7 +56,6 @@ export default function LerpedRandomness() {
       <PieceWrapper>
         <ANIMATION
           bgColor="PAPER"
-          animateBpm={15}
           cubeConfig={{
             amountEdges: 4,
             amountItems: 4,
@@ -84,7 +72,6 @@ export default function LerpedRandomness() {
       <PieceWrapper>
         <ANIMATION
           bgColor="GRAY_DARKER"
-          animateBpm={15}
           cubeConfig={{
             overlap: 0.5,
             outlineColor: "PAPER",
@@ -94,7 +81,6 @@ export default function LerpedRandomness() {
       <PieceWrapper>
         <ANIMATION
           bgColor="GRAY_DARKER"
-          animateBpm={7.5}
           cubeConfig={{
             amountEdges: 8,
             amountItems: 49,
@@ -112,7 +98,6 @@ export default function LerpedRandomness() {
       <PieceWrapper>
         <ANIMATION
           bgColor="GRAY_DARKER"
-          animateBpm={7.5}
           cubeConfig={{
             amountEdges: 4,
             amountItems: 40,

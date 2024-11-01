@@ -34,6 +34,7 @@ export const Button = (props: {
 
         if (props.target) {
           const el: HTMLElement | null = document.querySelector(props.target);
+          console.log("el", props.target, el);
           if (el) {
             window.lenis.scrollTo(el, {
               duration: 3,

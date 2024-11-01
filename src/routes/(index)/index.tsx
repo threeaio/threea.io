@@ -10,7 +10,9 @@ import { Divider } from "~/components/Divider";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/typo/HugeText";
 import {
+  AnchorProps,
   NavigationConfiguration,
+  NavigationItem,
   useNavigationContext,
 } from "~/Navigation-Context";
 const ANIMATION = clientOnly(
@@ -21,40 +23,27 @@ import { gsap } from "gsap";
 export default function Home() {
   const [_, { setOnThisPage, setPages }] = useNavigationContext();
   // onMount(() => {
-  const navItems: NavigationConfiguration = {
-    onThisPage: [
-      {
-        linkProps: { type: "anchor", target: "#INDEX_START" },
-        title: "Anfang",
-      },
-      {
-        linkProps: { type: "anchor", target: "#INDEX_ABOUT_WORK" },
-        title: "Über mich",
-      },
-      {
-        linkProps: { type: "anchor", target: "#INDEX_BLACKBOOK" },
-        title: "Blackbook",
-      },
-      {
-        linkProps: { type: "anchor", target: "#INDEX_THE_END" },
-        title: "Ende",
-      },
-    ],
-    pages: [
-      {
-        linkProps: { type: "link", href: "/brockmann-arc" },
-        title: "Brockmanns Beethoven",
-      },
-      {
-        linkProps: { type: "link", href: "/lerped-randomness" },
-        title: "Lerped Randomness",
-      },
-    ],
-  };
+  const navItems: NavigationItem<AnchorProps>[] = [
+    {
+      linkProps: { type: "anchor", target: "#INDEX_START" },
+      title: "Anfang",
+    },
+    {
+      linkProps: { type: "anchor", target: "#INDEX_ABOUT_WORK" },
+      title: "Über mich",
+    },
+    {
+      linkProps: { type: "anchor", target: "#INDEX_BLACKBOOK" },
+      title: "Blackbook",
+    },
+    {
+      linkProps: { type: "anchor", target: "#INDEX_THE_END" },
+      title: "Ende",
+    },
+  ];
 
   onMount(() => {
-    setPages(navItems.pages);
-    setOnThisPage(navItems.onThisPage);
+    setOnThisPage(navItems);
 
     const page = document.querySelector("#PAGE_3a")!;
     gsap.to(page, {

@@ -2,20 +2,23 @@ import CanvasScrollAnimationWrapper from "~/components/animation/CanvasScrollAni
 import { clientOnly } from "@solidjs/start";
 const ANIMATION = clientOnly(
   () =>
-    import("~/components/animation/stacked-cube/Canvas-Animation-Rotated-Cube"),
+    import(
+      "~/components/animation/simple-functions/Canvas-Animation-Simple-Function"
+    ),
 );
 import { COLORS_3A } from "~/_util-client-only";
 import { batch, ParentProps } from "solid-js";
 import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
 import { doubleRange, smoothStep } from "~/_util";
-import { getBpmOscillator } from "~/_util/oscillator";
+import { getBpmOscillator, getRawWaveform } from "~/_util/oscillator";
+import { SimpleFunctionConfig } from "~/components/animation/_skeleton/Simple-Function";
 
 /**
  * CLIENT-ONLY !
  */
 
-export default function CubeAnimation(props: {
-  cubeConfig: Partial<RotatableCubeConfig>;
+export default function SimpleFunction(props: {
+  functionConfig: Partial<SimpleFunctionConfig>;
   bgColor: keyof typeof COLORS_3A;
 }) {
   return (
@@ -24,30 +27,19 @@ export default function CubeAnimation(props: {
       end={"clamp(bottom bottom-=90%)"}
       animation={ANIMATION({
         bgColor: COLORS_3A[props.bgColor],
-        cubeConfig: {
-          amountItems: 60,
-          amountEdges: 4,
-          padding: 220,
-          overlap: 0.2,
-          maxGap: 4,
-          addRandom: true,
-          asGlobe: false,
-          outlineColor: "RED",
-          fillColor: props.bgColor,
-          hideOutlinesWhenStable: false,
-          drawAs: "OTHER",
-          ...props.cubeConfig,
+        simpleFunctionsConfig: {
+          ...props.functionConfig,
         },
-        draw: (p5, cubes, progress, center, dims) => {
+        draw: (p5, simpleFunction, progress, center, dims) => {
           const p = smoothStep(doubleRange(progress));
 
+          const ms = p5.millis();
+          const progressHere = getBpmOscillator(ms, 30, "sawtooth");
+          const getY = (x: number) => getRawWaveform("noise", x);
           // const p = getBpmOscillator(p5.millis(), 30, "sawtooth");
 
-          for (let i = 0; i < cubes.length; i++) {
-            batch(() => {
-              cubes[i].setProgress(p);
-            });
-            cubes[i].draw();
+          for (let i = 0; i < simpleFunction.length; i++) {
+            simpleFunction[i].draw(progressHere, getY);
           }
         },
         fadeInOut: false,

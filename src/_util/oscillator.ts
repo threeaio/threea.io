@@ -84,49 +84,85 @@ const DEFAULT_CONFIG: Required<Omit<OscillatorConfig, "morph">> = {
   elasticity: 3,
 };
 
-// Internal raw waveform calculator
-const getRawWaveform = (
+/**
+ * Gets the raw waveform value for a normalized position (0-1)
+ * Can be used directly for visualization/plotting
+ */
+export const getRawWaveform = (
   shape: OscillatorShape,
   position: number,
-  config: Required<Omit<OscillatorConfig, "morph">>,
+  config: Partial<OscillatorConfig> = {},
 ): number => {
+  const finalConfig = { ...DEFAULT_CONFIG, ...config };
+  const { dutyCycle, elasticity, steps } = finalConfig;
+
+  // Ensure position is between 0 and 1
+  const normalizedPosition = position % 1;
+
   switch (shape) {
     case "sine":
-      return (Math.sin(position * Math.PI * 2) + 1) / 2;
+      return (Math.sin(normalizedPosition * Math.PI * 2) + 1) / 2;
+
     case "triangle":
-      return position < 0.5 ? position * 2 : 2 - position * 2;
+      return normalizedPosition < 0.5
+        ? normalizedPosition * 2
+        : 2 - normalizedPosition * 2;
+
     case "sawtooth":
-      return position;
+      return normalizedPosition;
+
     case "square":
-      return position < 0.5 ? 1 : 0;
-    case "bounce":
-      const t = position < 0.5 ? position * 2 : (1 - position) * 2;
+      return normalizedPosition < 0.5 ? 1 : 0;
+
+    case "bounce": {
+      const t =
+        normalizedPosition < 0.5
+          ? normalizedPosition * 2
+          : (1 - normalizedPosition) * 2;
       return 1 - t * t * (3 - 2 * t);
+    }
+
     case "pulse":
-      return position < config.dutyCycle ? 1 : 0;
-    case "elastic":
-      const p = position * 2 * Math.PI;
+      return normalizedPosition < dutyCycle ? 1 : 0;
+
+    case "elastic": {
+      const p = normalizedPosition * 2 * Math.PI;
       return (
-        (Math.sin(config.elasticity * p) * Math.exp(-position * 2) + 1) / 2
+        (Math.sin(elasticity * p) * Math.exp(-normalizedPosition * 2) + 1) / 2
       );
-    case "noise":
+    }
+
+    case "noise": {
       let val = 0;
       for (let i = 1; i <= 3; i++) {
-        val += Math.sin(position * Math.PI * 2 * i * 1.618) / i;
+        val += Math.sin(normalizedPosition * Math.PI * 2 * i * 1.618) / i;
       }
       return (val + 1) / 2;
-    case "exponential":
-      const exp = position < 0.5 ? position * 2 : (1 - position) * 2;
+    }
+
+    case "exponential": {
+      const exp =
+        normalizedPosition < 0.5
+          ? normalizedPosition * 2
+          : (1 - normalizedPosition) * 2;
       return 1 - Math.exp(-exp * 4);
-    case "circular":
-      const circ = position < 0.5 ? position * 2 : (position - 0.5) * 2;
-      return position < 0.5
+    }
+
+    case "circular": {
+      const circ =
+        normalizedPosition < 0.5
+          ? normalizedPosition * 2
+          : (normalizedPosition - 0.5) * 2;
+      return normalizedPosition < 0.5
         ? 1 - Math.sqrt(1 - circ * circ)
         : Math.sqrt(1 - (circ - 1) * (circ - 1));
+    }
+
     case "stepped":
-      return Math.round(position * config.steps) / config.steps;
+      return Math.round(normalizedPosition * steps) / steps;
+
     default:
-      return (Math.sin(position * Math.PI * 2) + 1) / 2;
+      return (Math.sin(normalizedPosition * Math.PI * 2) + 1) / 2;
   }
 };
 

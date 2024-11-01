@@ -17,15 +17,8 @@
     --color-3a-gray-darker: 33 40 39;
     --color-3a-gray-darkest: 23 28 26;
     --color-3a-black: 13 16 15;
-    --background-rgb: var(--color-3a-paper);
-    --foreground-rgb: var(--color-3a-gray-darkest);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background-rgb: var(--color-3a-gray-darkest);
-      --foreground-rgb: var(--color-3a-paper);
-    }
+    --background-rgb: var(--color-3a-gray-darkest);
+    --foreground-rgb: var(--color-3a-paper);
   }
 }
 

@@ -30,6 +30,8 @@ import { PosterContentBeethoven } from "~/components/animation-html-additions/Po
 import {
   useNavigationContext,
   NavigationConfiguration,
+  NavigationItem,
+  AnchorProps,
 } from "~/Navigation-Context";
 import { gsap } from "gsap";
 import Kbd from "~/components/typo/Kbd";
@@ -56,48 +58,35 @@ export default function BrockmannArc() {
     });
   });
 
-  const navItems: NavigationConfiguration = {
-    onThisPage: [
-      {
-        linkProps: { type: "anchor", target: "#BROCKMANN_TOP" },
-        title: "Anfang",
-      },
-      {
-        linkProps: { type: "anchor", target: "#BROCKMANN_001" },
-        title: "Inspiration",
-      },
-      {
-        linkProps: { type: "anchor", target: "#BROCKMANN_002" },
-        title: "Idee zur Animation",
-      },
-      {
-        linkProps: { type: "anchor", target: "#BROCKMANN_003" },
-        title: "Weitere Parameter",
-      },
-      {
-        linkProps: { type: "anchor", target: "#BROCKMANN_004" },
-        title: "Ergebnis + Zwischenfazit",
-      },
-      {
-        linkProps: { type: "anchor", target: "#BROCKMANN_GALLERY" },
-        title: "Gallerie",
-      },
-    ],
-    pages: [
-      {
-        linkProps: { type: "link", href: "/brockmann-arc" },
-        title: "Brockmanns Beethoven",
-      },
-      {
-        linkProps: { type: "link", href: "/lerped-randomness" },
-        title: "Lerped Randomness",
-      },
-    ],
-  };
+  const navItems: NavigationItem<AnchorProps>[] = [
+    {
+      linkProps: { type: "anchor", target: "#BROCKMANN_TOP" },
+      title: "Anfang",
+    },
+    {
+      linkProps: { type: "anchor", target: "#BROCKMANN_001" },
+      title: "Inspiration",
+    },
+    {
+      linkProps: { type: "anchor", target: "#BROCKMANN_002" },
+      title: "Idee zur Animation",
+    },
+    {
+      linkProps: { type: "anchor", target: "#BROCKMANN_003" },
+      title: "Weitere Parameter",
+    },
+    {
+      linkProps: { type: "anchor", target: "#BROCKMANN_004" },
+      title: "Ergebnis + Zwischenfazit",
+    },
+    {
+      linkProps: { type: "anchor", target: "#BROCKMANN_GALLERY" },
+      title: "Gallerie",
+    },
+  ];
 
   onMount(() => {
-    setPages(navItems.pages);
-    setOnThisPage(navItems.onThisPage);
+    setOnThisPage(navItems);
     const page = document.querySelector("#PAGE_3a")!;
     gsap.to(page, {
       opacity: 1,
