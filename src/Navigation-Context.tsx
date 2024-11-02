@@ -63,8 +63,8 @@ export const DefaultPages: NavigationItem<LinkProps>[] = [
     title: "Lerped Randomness",
   },
   {
-    linkProps: { type: "link", href: "/simple-functions" },
-    title: "Simple Functions",
+    linkProps: { type: "link", href: "/essential-simplicity" },
+    title: "Essentielle Einfachheit",
   },
 ];
 
