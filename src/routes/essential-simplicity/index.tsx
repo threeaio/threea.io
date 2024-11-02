@@ -116,7 +116,7 @@ export default function SimpleFunctions() {
             <section id={entry.id} class={""}>
               <FullWidth>
                 <Headline>
-                  <div class="mb-12">{entry.title}</div>
+                  <h2 class="mb-12">{entry.title}</h2>
                 </Headline>
                 <CodeBlock
                   class="mb-12"
