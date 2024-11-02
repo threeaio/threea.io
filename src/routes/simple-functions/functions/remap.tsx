@@ -4,10 +4,10 @@ import { RangeSlider, SliderContainer } from "~/components/Range-Slider";
 import { FunctionEntry } from "~/routes/simple-functions/functions/Function-Entry.interface";
 
 export const createRemapEntry = (): FunctionEntry => {
-  const [origMin, setOrigMin] = createSignal(0.2);
-  const [origMax, setOrigMax] = createSignal(0.8);
-  const [targetMin, setTargetMin] = createSignal(0.4);
-  const [targetMax, setTargetMax] = createSignal(0.6);
+  const [origMin, setOrigMin] = createSignal(0);
+  const [origMax, setOrigMax] = createSignal(10);
+  const [targetMin, setTargetMin] = createSignal(5);
+  const [targetMax, setTargetMax] = createSignal(8);
 
   return {
     id: "remap",
@@ -37,14 +37,14 @@ export const createRemapEntry = (): FunctionEntry => {
               value={origMin()}
               onChange={setOrigMin}
               min={0}
-              max={0.4}
+              max={10}
             />
             <RangeSlider
               label="Maximum"
               value={origMax()}
               onChange={setOrigMax}
-              min={0.6}
-              max={1}
+              min={0}
+              max={10}
               class="mt-4"
             />
           </div>
@@ -55,14 +55,14 @@ export const createRemapEntry = (): FunctionEntry => {
               value={targetMin()}
               onChange={setTargetMin}
               min={0}
-              max={1}
+              max={10}
             />
             <RangeSlider
               label="Maximum"
               value={targetMax()}
               onChange={setTargetMax}
               min={0}
-              max={1}
+              max={10}
               class="mt-4"
             />
           </div>
@@ -86,9 +86,7 @@ const reMap = (
 };`,
     theFunction: (x: number) =>
       reMap(origMin(), origMax(), targetMin(), targetMax(), x),
-    config: {
-      min: 0,
-      max: 1,
-    },
+    getXRange: () => [origMin(), origMax()],
+    getYRange: () => [targetMin(), targetMax()],
   };
 };

@@ -13,4 +13,5 @@ export interface FunctionEntry {
     // other config options specific to each function
   };
   getXRange?: () => [number, number];
+  getYRange?: () => [number, number];
 }

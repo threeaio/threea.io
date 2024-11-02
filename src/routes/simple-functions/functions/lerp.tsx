@@ -5,7 +5,7 @@ import { RangeSlider, SliderContainer } from "~/components/Range-Slider";
 
 export const createLerpEntry = (): FunctionEntry => {
   const [start, setStart] = createSignal(0);
-  const [end, setEnd] = createSignal(1);
+  const [end, setEnd] = createSignal(10);
 
   return {
     id: "lerp",
@@ -33,14 +33,14 @@ export const createLerpEntry = (): FunctionEntry => {
             value={start()}
             onChange={setStart}
             min={0}
-            max={1}
+            max={10}
           />
           <RangeSlider
             label="Endwert"
             value={end()}
             onChange={setEnd}
             min={0}
-            max={1}
+            max={10}
           />
         </SliderContainer>
       </>
@@ -54,9 +54,6 @@ const lerp = (a: number, b: number, t: number) => {
       const b = end();
       return a + t * (b - a);
     },
-    config: {
-      min: 0,
-      max: 1,
-    },
+    getYRange: () => [start(), end()],
   };
 };

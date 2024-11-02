@@ -65,7 +65,7 @@ export default function SimpleFunctions() {
         <div class="h-svh relative flex flex-col justify-center">
           <div class={"grid items-baseline grid-cols-3 gap-12"}>
             <HugeText>
-              <h1 class="mb-24 text-left">Functions</h1>
+              <h1 class="mb-24 text-left">Essentielle Funktionen</h1>
             </HugeText>
             <div>
               <SmallText>
@@ -75,7 +75,8 @@ export default function SimpleFunctions() {
                   Grundbausteine für Animationen und generative Grafik. Hier
                   zeige ich ein paar nützliche Funktionen, die mir in letzter
                   Zeit geholfen haben, Bewegungen zu steuern und Grafiken zu
-                  generieren.
+                  generieren und die in keinem Baukasten für diesen
+                  Anwendungsbereich fehlen sollten.
                 </p>
               </SmallText>
             </div>
@@ -115,7 +116,7 @@ export default function SimpleFunctions() {
                   <div class="h-full min-h-[500px] relative">
                     <ANIMATION
                       functionConfig={{}}
-                      rangeFunc={entry.getXRange}
+                      xRangeGetter={entry.getXRange}
                       theFunction={entry.theFunction}
                       bgColor="GRAY_DARKER"
                     />

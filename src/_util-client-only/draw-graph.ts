@@ -16,7 +16,7 @@ interface GraphDimensions {
   height: number;
 }
 
-interface GraphConfig {
+export interface GraphConfig {
   padding?: number;
   minTickSpacing?: number;
   tickSize?: number;

@@ -15,6 +15,10 @@ export default function SimpleFunction(p5: P5, config: SimpleFunctionConfig) {
     max: 1,
     fixed: true,
   });
+  const [yRange, setYRange] = createSignal<GraphConfig["yRange"]>({
+    min: 0,
+    max: 1,
+  });
 
   const draw = (progress: number, fn: (x: number) => number) => {
     drawGraph(
@@ -24,6 +28,7 @@ export default function SimpleFunction(p5: P5, config: SimpleFunctionConfig) {
       fn,
       {
         xRange: xRange(),
+        yRange: yRange(),
       },
     );
   };
@@ -34,6 +39,7 @@ export default function SimpleFunction(p5: P5, config: SimpleFunctionConfig) {
     setDimensions,
     setProgress,
     setXRange,
+    setYRange,
   };
 }
 

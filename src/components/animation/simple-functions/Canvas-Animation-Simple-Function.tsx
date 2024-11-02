@@ -34,6 +34,7 @@ export default function CanvasAnimationSimpleFunction(
     DrawCallbackProp<SimpleFunctionType> & {
       simpleFunctionsConfig: SimpleFunctionConfig;
       setXRange: () => GraphConfig["xRange"];
+      setYRange: () => GraphConfig["yRange"];
     },
 ) {
   let p5Instance: P5 | undefined;
@@ -81,6 +82,7 @@ export default function CanvasAnimationSimpleFunction(
       for (let i = 0; i < simpleFunctions.length; i++) {
         batch(() => {
           simpleFunctions[i].setXRange(props.setXRange);
+          simpleFunctions[i].setYRange(props.setYRange);
           simpleFunctions[i].setDimensions(dimensions());
           simpleFunctions[i].setCenter(center());
         });
