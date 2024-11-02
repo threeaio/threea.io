@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { FunctionEntry } from "~/routes/simple-functions/functions/Function-Entry.interface";
+import { FunctionEntry } from "~/routes/essential-simplicity/functions/Function-Entry.interface";
 import { clamp } from "~/_util";
 import { RangeSlider, SliderContainer } from "~/components/Range-Slider";
 
@@ -26,27 +26,33 @@ export const createClampEntry = (): FunctionEntry => {
           der Maximalwert. Liegt der Wert innerhalb des definierten Bereichs,
           bleibt er unverändert.
         </p>
+        <p>
+          Für den flexiblen Einsatz ist es wichtig, dass es egal ist, ob nun
+          zuerst das Minimum oder das Maximum eingegeben wird.
+        </p>
         <SliderContainer>
           <RangeSlider
             label="Untere Grenze"
             value={min()}
             onChange={setMin}
             min={0}
-            max={0.5}
+            max={1}
           />
           <RangeSlider
             label="Obere Grenze"
             value={max()}
             onChange={setMax}
-            min={0.5}
+            min={0}
             max={1}
           />
         </SliderContainer>
       </>
     ),
     theFunctionText: `
-const clamp = (min: number, max: number, value: number) => {
-  return Math.min(Math.max(min, value), max);
+export const clamp = (rangeStart: number, rangeEnd: number, value: number) => {
+  const _min = rangeStart < rangeEnd ? rangeStart : rangeEnd;
+  const _max = rangeStart < rangeEnd ? rangeEnd : rangeStart;
+  return Math.min(Math.max(_min, value), _max);
 };`,
     theFunction: (x: number) => clamp(min(), max(), x),
     config: {

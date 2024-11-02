@@ -7,16 +7,7 @@ const ANIMATION = clientOnly(
     ),
 );
 import { COLORS_3A } from "~/_util-client-only";
-import { batch, ParentProps } from "solid-js";
-import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
-import {
-  clamp,
-  doubleRange,
-  lerp,
-  mapToNewUnitRange,
-  reMap,
-  smoothStep,
-} from "~/_util";
+import { reMap } from "~/_util";
 import { Easing, getBpmOscillator, getRawWaveform } from "~/_util/oscillator";
 import { SimpleFunctionConfig } from "~/components/animation/_skeleton/Simple-Function";
 
@@ -28,6 +19,7 @@ export default function SimpleFunction(props: {
   functionConfig: Partial<SimpleFunctionConfig>;
   theFunction: (x: number) => number;
   xRangeGetter?: () => [number, number];
+  yRangeGetter?: () => [number, number];
   bgColor: keyof typeof COLORS_3A;
 }) {
   return (
@@ -40,6 +32,10 @@ export default function SimpleFunction(props: {
           min: props.xRangeGetter ? props.xRangeGetter()[0] : 0,
           max: props.xRangeGetter ? props.xRangeGetter()[1] : 1,
           fixed: true,
+        }),
+        setYRange: () => ({
+          min: props.yRangeGetter ? props.yRangeGetter()[0] : 0,
+          max: props.yRangeGetter ? props.yRangeGetter()[1] : 1,
         }),
         simpleFunctionsConfig: {
           ...props.functionConfig,

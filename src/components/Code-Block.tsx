@@ -1,18 +1,14 @@
-import { createSignal, ParentProps } from "solid-js";
+import { createSignal, JSX, ParentProps } from "solid-js";
 
 type CodeBlockProps = {
   code: string;
   showLineNumbers?: boolean;
   showCopyButton?: boolean;
   maxHeight?: string;
-} & ParentProps;
+} & ParentProps &
+  JSX.HTMLAttributes<HTMLDivElement>;
 
-export default function CodeBlock({
-  code,
-  showLineNumbers = true,
-  showCopyButton = true,
-  maxHeight = "max-h-[80vh]",
-}: CodeBlockProps) {
+export default function CodeBlock(props: CodeBlockProps) {
   const [copied, setCopied] = createSignal(false);
 
   const formatCode = (code: string) => {
@@ -41,7 +37,7 @@ export default function CodeBlock({
         // Function names
         .replace(
           /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\((?![^<]*>)/g,
-          '<span class="text-3a-white">$1</span>(',
+          '<span class="text-3a-green">$1</span>(',
         )
         // Types
         .replace(
@@ -53,7 +49,7 @@ export default function CodeBlock({
         // String literals
         .replace(
           /(["'`])(.*?)\1(?![^<]*>)/g,
-          '<span class="text-3a-green">$1$2$1</span>',
+          '<span class="text-3a-white">$1$2$1</span>',
         )
         // Comments (if any)
         .replace(
@@ -65,33 +61,33 @@ export default function CodeBlock({
     });
   };
 
-  const formattedLines = formatCode(code);
+  const formattedLines = formatCode(props.code);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(code);
+    await navigator.clipboard.writeText(props.code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div class="relative rounded bg-3a-gray-darker p-4">
-      {showCopyButton && (
-        <div class="mb-2 flex justify-end">
+    <div class={`relative rounded bg-3a-gray-darker p-4 ${props.class}`}>
+      {props.showCopyButton && (
+        <div class="absolute right-0 top-0 z-20">
           <button
             onClick={handleCopy}
-            class="rounded bg-3a-gray-darker px-3 py-1 text-sm text-3a-paper transition-colors hover:bg-3a-gray hover:text-3a-white"
+            class="rounded-tr rounded-bl bg-3a-gray-darker px-3 py-1 text-sm text-3a-paper transition-colors hover:bg-3a-gray hover:text-3a-white"
           >
-            {copied() ? "Copied!" : "Copy"}
+            {copied() ? "Kopiert!" : "Kopieren"}
           </button>
         </div>
       )}
 
-      <div class={`relative overflow-auto ${maxHeight}`}>
+      <div class={`relative overflow-auto ${props.maxHeight}`}>
         <pre class="font-mono text-sm leading-6">
-          <code class="grid">
+          <code class="grid text-3a-white">
             {formattedLines.map((line, idx) => (
               <div class="flex">
-                {showLineNumbers && (
+                {props.showLineNumbers && (
                   <span
                     class="select-none pr-4 text-right text-3a-paper/50"
                     style={{ "min-width": "3rem" }}

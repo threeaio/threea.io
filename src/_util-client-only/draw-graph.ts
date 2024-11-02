@@ -248,10 +248,15 @@ export const drawGraph = (
   // Coordinate conversion functions
   const toScreenX = (x: number): number =>
     padding + ((x - xRange.min) / (xRange.max - xRange.min)) * drawingWidth;
-  const toScreenY = (y: number): number =>
-    dimensions.height -
-    padding -
-    ((y - yRange.min) / (yRange.max - yRange.min)) * drawingHeight;
+  const toScreenY = (y: number): number => {
+    const minHere = yRange.min <= yRange.max ? yRange.min : yRange.max;
+    const maxHere = yRange.max >= yRange.min ? yRange.max : yRange.min;
+    return (
+      dimensions.height -
+      padding -
+      ((y - minHere) / (maxHere - minHere)) * drawingHeight
+    );
+  };
 
   // Setup drawing style for font
   p5.noStroke();

@@ -126,6 +126,16 @@ export default function BlackBook() {
                 "Sammlung von Animations-Skizzen, Canvas-Experimenten und Schnellschüssen anderer Art ohne weiteren Zweck.",
             }}
           />
+          <BlackBookItem
+            content={{
+              num: "003",
+              link: "/essential-simplicity",
+              type: "Typescript",
+              title: "Essential Simplicity",
+              description:
+                "Sammlung von Funktionen, die ich für wichtig halte und irgendwie auch lieb gewonnen habe.",
+            }}
+          />
         </ol>
       </div>
     </div>

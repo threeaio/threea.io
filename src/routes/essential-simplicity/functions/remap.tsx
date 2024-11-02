@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import { reMap } from "~/_util";
 import { RangeSlider, SliderContainer } from "~/components/Range-Slider";
-import { FunctionEntry } from "~/routes/simple-functions/functions/Function-Entry.interface";
+import { FunctionEntry } from "~/routes/essential-simplicity/functions/Function-Entry.interface";
 
 export const createRemapEntry = (): FunctionEntry => {
   const [origMin, setOrigMin] = createSignal(0);
@@ -84,9 +84,21 @@ const reMap = (
   // Scale to target range
   return targetMin + normalizedValue * (targetMax - targetMin);
 };`,
-    theFunction: (x: number) =>
-      reMap(origMin(), origMax(), targetMin(), targetMax(), x),
-    getXRange: () => [origMin(), origMax()],
-    getYRange: () => [targetMin(), targetMax()],
+    theFunction: (x: number) => {
+      try {
+        return reMap(origMin(), origMax(), targetMin(), targetMax(), x);
+      } catch (e) {
+        console.error(e);
+        return 0;
+      }
+    },
+    getXRange: () => [
+      origMin() - 2 * Math.sign(origMax() - origMin()),
+      origMax() + 2 * Math.sign(origMax() - origMin()),
+    ],
+    getYRange: () => [
+      targetMin() - 2 * Math.sign(targetMax() - targetMin()),
+      targetMax() + 2 * Math.sign(targetMax() - targetMin()),
+    ],
   };
 };

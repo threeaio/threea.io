@@ -1,7 +1,8 @@
-import { FunctionEntry } from "~/routes/simple-functions/functions/Function-Entry.interface";
+import { FunctionEntry } from "~/routes/essential-simplicity/functions/Function-Entry.interface";
 import { createSignal } from "solid-js";
 import { lerp } from "~/_util";
 import { RangeSlider, SliderContainer } from "~/components/Range-Slider";
+import Anf from "~/components/typo/Anf";
 
 export const createLerpEntry = (): FunctionEntry => {
   const [start, setStart] = createSignal(0);
@@ -9,7 +10,7 @@ export const createLerpEntry = (): FunctionEntry => {
 
   return {
     id: "lerp",
-    title: "Linear Interpolation (Lerp)",
+    title: "Lerp (Linear Interpolation)",
     description: () => (
       <>
         <p>
@@ -17,15 +18,16 @@ export const createLerpEntry = (): FunctionEntry => {
           Teil unseres Transformations-Duos. Als Gegenstück zu{" "}
           <code>normalize</code> nimmt sie einen normalisierten Wert zwischen 0
           und 1 und überführt ihn in einen gewünschten Zielbereich. Wo normalize
-          "nach innen" auf [0,1] abbildet, geht lerp "nach außen" in einen
-          beliebigen Bereich.
+          nach <Anf>innen</Anf> auf <code>[0,1]</code> abbildet, geht lerp{" "}
+          <Anf>nach außen</Anf> in einen beliebigen Bereich.
         </p>
         <p>
           Der Parameter t bestimmt dabei die relative Position im Zielbereich:
-          Bei t=0 erhält man den Startwert, bei t=1 den Endwert, bei t=0.5 genau
-          die Mitte. Gemeinsam mit <code>normalize</code> bildet lerp das
-          mathematische Fundament für die <code>remap</code>-Funktion und ist
-          unerlässlich für Animationen und Übergänge aller Art.
+          Bei <code>t=0</code> erhält man den Startwert, bei <code>t=1</code>{" "}
+          den Endwert, bei <code>t=0.5</code> genau die Mitte. Gemeinsam mit{" "}
+          <code>normalize</code> bildet lerp das mathematische Fundament für die{" "}
+          <code>remap</code>-Funktion und ist unerlässlich für Animationen und
+          Übergänge aller Art.
         </p>
         <SliderContainer>
           <RangeSlider
@@ -50,9 +52,7 @@ const lerp = (a: number, b: number, t: number) => {
   return a + t * (b - a);
 };`,
     theFunction: (t: number) => {
-      const a = start();
-      const b = end();
-      return a + t * (b - a);
+      return lerp(start(), end(), t);
     },
     getYRange: () => [start(), end()],
   };

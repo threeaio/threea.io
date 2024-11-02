@@ -91,6 +91,11 @@ body {
   src: url("/fonts/TT_Hoves_Pro_Mono_Italic.woff2") format("woff2");
 }
 
+code {
+  @apply font-mono;
+  @apply text-3a-green;
+}
+
 svg .logo-main-color {
   fill: var(--color-3a-white);
 }
@@ -124,19 +129,19 @@ html.lenis body {
   pointer-events: none;
 }
 
-.main-layout {
-  transform-origin: left top;
-  position: relative;
-  left: 0%;
-  transition: all 0.66s;
-}
-body.preview-layout .main-layout {
-  transition: all 0.33s;
-  @apply w-[80%];
-  left: -10%;
-  @apply translate-y-8;
-  @apply translate-x-8;
-  /*@apply -translate-x-[20%];*/
-  @apply shadow-2xl;
-  @apply scale-[.45];
-}
+/*.main-layout {*/
+/*  transform-origin: left top;*/
+/*  position: relative;*/
+/*  left: 0%;*/
+/*  transition: all 0.66s;*/
+/*}*/
+/*body.preview-layout .main-layout {*/
+/*  transition: all 0.33s;*/
+/*  @apply w-[80%];*/
+/*  left: -10%;*/
+/*  @apply translate-y-8;*/
+/*  @apply translate-x-8;*/
+/*  !*@apply -translate-x-[20%];*!*/
+/*  @apply shadow-2xl;*/
+/*  @apply scale-[.45];*/
+/*}*/

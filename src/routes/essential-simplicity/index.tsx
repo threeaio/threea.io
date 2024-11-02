@@ -1,5 +1,5 @@
-import { createClampEntry } from "~/routes/simple-functions/functions/clamp";
-import { createLerpEntry } from "~/routes/simple-functions/functions/lerp";
+import { createClampEntry } from "~/routes/essential-simplicity/functions/clamp";
+import { createLerpEntry } from "~/routes/essential-simplicity/functions/lerp";
 import {
   AnchorProps,
   NavigationItem,
@@ -10,19 +10,19 @@ import { Title } from "@solidjs/meta";
 import { HeaderSimple } from "~/content/Header-Simple";
 import { FullWidth } from "~/components/layouts/Full-Width";
 import { HugeText } from "~/components/typo/HugeText";
-import { BleedRightSmall } from "~/components/layouts/bleed-right/Bleed-Right-Small";
 import { Headline } from "~/components/typo/Headline";
 import { SmallText } from "~/components/typo/SmallText";
 import CodeBlock from "~/components/Code-Block";
 import { Divider } from "~/components/Divider";
 import { clientOnly } from "@solidjs/start";
 import { gsap } from "gsap";
-import { createRemapEntry } from "~/routes/simple-functions/functions/remap";
-import { createSmoothstepEntry } from "~/routes/simple-functions/functions/smoothstep";
-import { createNormalizeEntry } from "~/routes/simple-functions/functions/normalize";
+import { createRemapEntry } from "~/routes/essential-simplicity/functions/remap";
+import { createSmoothstepEntry } from "~/routes/essential-simplicity/functions/smoothstep";
+import { createNormalizeEntry } from "~/routes/essential-simplicity/functions/normalize";
+import { BleedRight } from "~/components/layouts/bleed-right/Bleed-Right";
 
 const ANIMATION = clientOnly(
-  () => import("~/routes/simple-functions/simple-function"),
+  () => import("~/routes/essential-simplicity/simple-function"),
 );
 
 export default function SimpleFunctions() {
@@ -57,35 +57,47 @@ export default function SimpleFunctions() {
 
   return (
     <main>
-      <Title>Threea.io - Simple Functions - Mein kleiner Werkzeugkasten</Title>
-      <HeaderSimple class="absolute z-20 w-full" />
+      <Title>
+        Threea.io - Essentielle Einfachheit - Basis-Funktionen für Animationen
+      </Title>
+      <HeaderSimple class=" z-20 w-full" />
 
       {/* Header section */}
       <FullWidth class="" id="SIMPLE_FUNCTIONS_TOP">
-        <div class="h-svh relative flex flex-col justify-center">
-          <div class={"grid items-baseline grid-cols-3 gap-12"}>
-            <HugeText>
-              <h1 class="mb-24 text-left">Essentielle Funktionen</h1>
-            </HugeText>
-            <div>
+        <div class="py-32 relative flex flex-col justify-center">
+          <div
+            class={
+              "grid items-baseline grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-6 xl:gap-12"
+            }
+          >
+            <div class={"sm:col-span-2"}>
+              <HugeText>
+                <h1 class="text-left">Essentielle Einfachheit</h1>
+              </HugeText>
+            </div>
+            <div class={"xl:col-start-3 xl:col-span-2"}>
               <SmallText>
                 <p>
-                  Das Abbilden von Werten auf einen normalisierten Bereich –
-                  meist zwischen 0 und 1 – ist einer der wichtigsten
-                  Grundbausteine für Animationen und generative Grafik. Hier
-                  zeige ich ein paar nützliche Funktionen, die mir in letzter
-                  Zeit geholfen haben, Bewegungen zu steuern und Grafiken zu
-                  generieren und die in keinem Baukasten für diesen
-                  Anwendungsbereich fehlen sollten.
+                  Ich möchte hier ein paar Funktionen darstellen, die sich bei
+                  meinem Start in die Welt der generativen Grafik und Animation
+                  schon fast wie von selbst in meinen Baukasten geschlichen
+                  haben. So ist es dann auch kein Zufall, dass sich diese in so
+                  ziemlich jeder Bibliothek zum Thema wiederfinden &ndash; mal
+                  unter anderen Namen, mal mit leichten Variationen. Das
+                  wirklich Schöne an Ihnen ist ihre Einfachheit und vermutlich
+                  daher rührend ihre unfassbar vielseitigen
+                  Anwendungsmöglichkeiten.
                 </p>
               </SmallText>
             </div>
-            <div>
+            <div class={"xl:col-span-2"}>
               <SmallText>
                 <p>
-                  Ein besonders interessanter Aspekt ist die Verkettung dieser
-                  Funktionen: Durch die Normalisierung lassen sich Werte aus
-                  völlig unterschiedlichen Kontexten – sei es Scrollposition,
+                  Es geht hier um mehr als um Helfer für einen simplen Dreisatz,
+                  denn ein besonders interessanter Aspekt ist die
+                  Verkettungsmöglichkeit dieser Funktionen: Durch Normalisierung
+                  auf den Raum zwischen 0 und 1 lassen sich Werte aus völlig
+                  unterschiedlichen Kontexten – sei es Scrollposition,
                   Mausbewegung oder Zeit – einheitlich verarbeiten und dann
                   wieder in den gewünschten Zielbereich transformieren. So
                   entstehen komplexe Animationen oft aus der Kombination
@@ -102,14 +114,20 @@ export default function SimpleFunctions() {
         {(entry) => (
           <>
             <section id={entry.id} class={""}>
-              <BleedRightSmall
+              <FullWidth>
+                <Headline>
+                  <div class="mb-12">{entry.title}</div>
+                </Headline>
+                <CodeBlock
+                  class="mb-12"
+                  code={entry.theFunctionText}
+                  showCopyButton={true}
+                />
+              </FullWidth>
+              <BleedRight
                 Left={
-                  <div class="mr-32">
-                    <Headline>
-                      <div class="mb-12">{entry.title}</div>
-                    </Headline>
+                  <div class="sm:mr-12 xl:mr-20">
                     <SmallText class="mb-8">{entry.description()}</SmallText>
-                    <CodeBlock code={entry.theFunctionText} />
                   </div>
                 }
                 Right={
@@ -117,8 +135,9 @@ export default function SimpleFunctions() {
                     <ANIMATION
                       functionConfig={{}}
                       xRangeGetter={entry.getXRange}
+                      yRangeGetter={entry.getYRange}
                       theFunction={entry.theFunction}
-                      bgColor="GRAY_DARKER"
+                      bgColor="GRAY_DARKEST"
                     />
                   </div>
                 }

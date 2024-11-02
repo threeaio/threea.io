@@ -13,22 +13,21 @@ import { Simple2D, Simple2DAndTuple, Simple2DLine } from "~/_util/types";
  * @throws RangeError if the range is zero.
  */
 export const normalize = (min: number, max: number, value: number) => {
-  if (max - min === 0)
-    throw new RangeError(
-      `Must be a range greater than 0. Given was a range with max: ${max} and min: ${min}`,
-    );
+  if (max - min === 0) return 0.5;
   return (value - min) / (max - min);
 };
 
 /**
- * Clamps a value between min and max.
- * @param min Minimum limit.
- * @param max Maximum limit.
- * @param value The value to clamp.
+ * Clamps a value between rangeStart and rangeEnd.
+ * @param rangeStart Range start.
+ * @param rangeEnd Range end.
+ * @param value The value to clamp inside the range.
  * @returns The clamped value.
  */
-export const clamp = (min: number, max: number, value: number) => {
-  return Math.min(Math.max(min, value), max);
+export const clamp = (rangeStart: number, rangeEnd: number, value: number) => {
+  const _min = rangeStart < rangeEnd ? rangeStart : rangeEnd;
+  const _max = rangeStart < rangeEnd ? rangeEnd : rangeStart;
+  return Math.min(Math.max(_min, value), _max);
 };
 
 /**
