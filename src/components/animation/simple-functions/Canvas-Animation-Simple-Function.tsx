@@ -24,6 +24,7 @@ import SimpleFunction, {
   SimpleFunctionConfig,
   SimpleFunctionType,
 } from "~/components/animation/simple-functions/Simple-Function";
+import { GraphConfig } from "~/_util-client-only/draw-graph";
 
 // TODO: should be return type of function
 
@@ -32,6 +33,7 @@ export default function CanvasAnimationSimpleFunction(
     AnimatedSceneProps &
     DrawCallbackProp<SimpleFunctionType> & {
       simpleFunctionsConfig: SimpleFunctionConfig;
+      setXRange: () => GraphConfig["xRange"];
     },
 ) {
   let p5Instance: P5 | undefined;
@@ -78,6 +80,7 @@ export default function CanvasAnimationSimpleFunction(
 
       for (let i = 0; i < simpleFunctions.length; i++) {
         batch(() => {
+          simpleFunctions[i].setXRange(props.setXRange);
           simpleFunctions[i].setDimensions(dimensions());
           simpleFunctions[i].setCenter(center());
         });

@@ -19,6 +19,7 @@ import { clientOnly } from "@solidjs/start";
 import { gsap } from "gsap";
 import { createRemapEntry } from "~/routes/simple-functions/functions/remap";
 import { createSmoothstepEntry } from "~/routes/simple-functions/functions/smoothstep";
+import { createNormalizeEntry } from "~/routes/simple-functions/functions/normalize";
 
 const ANIMATION = clientOnly(
   () => import("~/routes/simple-functions/simple-function"),
@@ -28,8 +29,9 @@ export default function SimpleFunctions() {
   const [_, { setOnThisPage }] = useNavigationContext();
 
   const functionEntries = [
-    createClampEntry(),
+    createNormalizeEntry(),
     createLerpEntry(),
+    createClampEntry(),
     createRemapEntry(),
     createSmoothstepEntry(),
     // Add more functions...
@@ -113,6 +115,7 @@ export default function SimpleFunctions() {
                   <div class="h-full min-h-[500px] relative">
                     <ANIMATION
                       functionConfig={{}}
+                      rangeFunc={entry.getXRange}
                       theFunction={entry.theFunction}
                       bgColor="GRAY_DARKER"
                     />

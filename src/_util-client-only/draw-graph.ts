@@ -23,7 +23,7 @@ interface GraphConfig {
   tickLabelOffset?: number;
   fontSize?: number;
   lineResolution?: number;
-  xRange?: { min: number; max: number };
+  xRange?: { min: number; max: number; fixed?: boolean };
   yRange?: { min: number; max: number };
   colors?: {
     text?: number[];
@@ -44,20 +44,21 @@ interface Range {
   max: number;
 }
 
-// Add this helper function to enforce minimum range
-const enforceMinimumRange = (range: Range): Range => {
-  // Always include 0 to 1 at minimum
-  const min = Math.min(0, range.min);
-  const max = Math.max(1, range.max);
-
-  // Add padding
-  const span = max - min;
-  const padding = span * 0.05;
-
+/**
+ * Returns the actual minimum and maximum values of a range, regardless of order
+ */
+const getRangeBounds = (range: Range): { min: number; max: number } => {
   return {
-    min: min - padding,
-    max: max + padding,
+    min: Math.min(range.min, range.max),
+    max: Math.max(range.min, range.max),
   };
+};
+
+/**
+ * Checks if a range is reversed (max < min)
+ */
+const isRangeReversed = (range: Range): boolean => {
+  return range.max < range.min;
 };
 
 /**
@@ -75,41 +76,65 @@ const calculateRange = (values: number[]): Range => {
 };
 
 /**
- * Updates X range based on new value
+ * Updates X range based on new value, respecting fixed ranges and direction
  */
-const updateXRange = (current: Range | undefined, value: number): Range => {
+const updateXRange = (
+  current: (Range & { fixed?: boolean }) | undefined,
+  value: number,
+): Range => {
+  // If no current range exists, create initial range
   if (!current) return { min: 0, max: Math.max(1, value) };
 
-  return {
-    min: Math.min(current.min, value, 0), // Always include 0
-    max: Math.max(current.max, value),
+  // If range is fixed, return current range without modification
+  if (current.fixed) return current;
+
+  // Determine if the range is reversed
+  const reversed = isRangeReversed(current);
+  const bounds = getRangeBounds(current);
+
+  // Update bounds while maintaining direction
+  const newBounds = {
+    min: Math.min(bounds.min, value, 0),
+    max: Math.max(bounds.max, value),
   };
+
+  // Return range in the correct direction
+  return reversed
+    ? { min: newBounds.max, max: newBounds.min }
+    : { min: newBounds.min, max: newBounds.max };
 };
 
 /**
  * Ensures range includes zero and adds padding
  */
 const ensureRangeIncludesZero = (range: Range): Range => {
-  const span = range.max - range.min;
+  const bounds = getRangeBounds(range);
+  const span = bounds.max - bounds.min;
   const padding = span * 0.05;
+  const reversed = isRangeReversed(range);
 
-  if (range.min > 0) {
-    return { min: 0, max: range.max + padding };
+  let result: Range;
+  if (bounds.min > 0) {
+    result = { min: 0, max: bounds.max + padding };
+  } else if (bounds.max < 0) {
+    result = { min: bounds.min - padding, max: 0 };
+  } else {
+    result = {
+      min: bounds.min - padding,
+      max: bounds.max + padding,
+    };
   }
-  if (range.max < 0) {
-    return { min: range.min - padding, max: 0 };
-  }
-  return {
-    min: range.min - padding,
-    max: range.max + padding,
-  };
+
+  // Maintain direction if reversed
+  return reversed ? { min: result.max, max: result.min } : result;
 };
 
 /**
  * Calculates nice tick values for an axis
  */
 const calculateTicks = (range: Range, maxTicks: number): number[] => {
-  const span = range.max - range.min;
+  const bounds = getRangeBounds(range);
+  const span = bounds.max - bounds.min;
   const step = Math.pow(10, Math.floor(Math.log10(span / maxTicks)));
   const steps = [1, 2, 5, 10];
 
@@ -123,20 +148,21 @@ const calculateTicks = (range: Range, maxTicks: number): number[] => {
   }
 
   const ticks: number[] = [];
-  const start = Math.ceil(range.min / bestStep) * bestStep;
-  const end = Math.floor(range.max / bestStep) * bestStep;
+  const start = Math.ceil(bounds.min / bestStep) * bestStep;
+  const end = Math.floor(bounds.max / bestStep) * bestStep;
 
   for (let tick = start; tick <= end; tick += bestStep) {
     ticks.push(Number(tick.toFixed(10))); // Avoid floating point errors
   }
 
   // Always include 0 if it's within range
-  if (range.min <= 0 && range.max >= 0 && !ticks.includes(0)) {
+  if (bounds.min <= 0 && bounds.max >= 0 && !ticks.includes(0)) {
     ticks.push(0);
     ticks.sort((a, b) => a - b);
   }
 
-  return ticks;
+  // Reverse ticks if range is reversed
+  return isRangeReversed(range) ? ticks.reverse() : ticks;
 };
 
 /**
@@ -146,37 +172,14 @@ const calculateDynamicResolution = (
   xRange: Range,
   availableWidth: number,
 ): number => {
-  const range = xRange.max - xRange.min;
+  const bounds = getRangeBounds(xRange);
+  const range = bounds.max - bounds.min;
   const baseResolution = Math.max(BASE_LINE_RESOLUTION * range, availableWidth);
   return Math.min(baseResolution, availableWidth * 2);
 };
 
 /**
- * Draws a graph with axes and plots a function with dynamic ranges
- *
- * @param p5 - P5.js instance
- * @param dimensions - Width and height of the graph
- * @param progress - Current progress value (x-axis)
- * @param fn - Function to plot
- * @param config - Optional configuration object
- *
- * @example
- * // Basic usage
- * drawGraph(p5, { width: 800, height: 600 }, 0.5, (x) => Math.sin(x));
- *
- * @example
- * // With custom configuration
- * drawGraph(p5, { width: 800, height: 600 }, 0.5, (x) => Math.sin(x), {
- *   padding: 60,
- *   colors: {
- *     text: COLORS_3A.GREEN,
- *     line: COLORS_3A.RED,
- *   },
- *   grid: {
- *     show: true,
- *     dashed: true,
- *   }
- * });
+ * Draws a graph with axes and plots a function with support for reversed ranges
  */
 export const drawGraph = (
   p5: P5,
@@ -210,9 +213,13 @@ export const drawGraph = (
   const drawingWidth = dimensions.width - padding * 2;
   const drawingHeight = dimensions.height - padding * 2;
 
-  // Calculate ranges
-  let xRange = config.xRange ?? { min: 0, max: 1 };
-  xRange = updateXRange(xRange, progress);
+  // Calculate ranges, respecting fixed x-axis range if specified
+  let xRange = config.xRange ? { ...config.xRange } : { min: 0, max: 1 };
+
+  // Only update range if it's not fixed
+  if (!xRange.fixed) {
+    xRange = updateXRange(xRange, progress);
+  }
 
   // Calculate dynamic resolution based on x-axis range and available width
   const lineResolution = Math.round(
@@ -221,12 +228,14 @@ export const drawGraph = (
 
   // Calculate Y range by sampling function
   if (!config.yRange) {
+    const xBounds = getRangeBounds(xRange);
     const yValues = Array.from({ length: lineResolution + 1 }, (_, i) => {
-      const x = xRange.min + (i / lineResolution) * (xRange.max - xRange.min);
+      const t = i / lineResolution;
+      const x = xBounds.min + t * (xBounds.max - xBounds.min);
       return fn(x);
     });
     const calcedRange = calculateRange(yValues);
-    config.yRange = enforceMinimumRange(calcedRange);
+    config.yRange = ensureRangeIncludesZero(calcedRange);
   }
   const yRange = config.yRange;
 
@@ -320,8 +329,11 @@ export const drawGraph = (
   p5.noFill();
   p5.stroke(colors.line);
   p5.strokeWeight(1);
+
+  const xBounds = getRangeBounds(xRange);
   for (let i = 0; i <= lineResolution; i++) {
-    const x = xRange.min + (i / lineResolution) * (xRange.max - xRange.min);
+    const t = i / lineResolution;
+    const x = xBounds.min + t * (xBounds.max - xBounds.min);
     const y = fn(x);
     p5.vertex(toScreenX(x), toScreenY(y));
   }

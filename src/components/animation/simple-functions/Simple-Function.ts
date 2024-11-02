@@ -1,17 +1,7 @@
 import { createMemo, createSignal } from "solid-js";
 import P5 from "p5";
-import {
-  getSliceLengthOnCircle,
-  clamp,
-  createArrayFromLength,
-  getPointOnEllipse,
-  reMap,
-  Simple2D,
-  translate2D,
-  createSimple2D,
-} from "~/_util";
-import { COLORS_3A } from "~/_util-client-only";
-import { drawGraph } from "~/_util-client-only/draw-graph";
+import { Simple2D } from "~/_util";
+import { drawGraph, GraphConfig } from "~/_util-client-only/draw-graph";
 
 export interface SimpleFunctionConfig {}
 
@@ -20,6 +10,11 @@ export default function SimpleFunction(p5: P5, config: SimpleFunctionConfig) {
   const [center, setCenter] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [dimension, setDimensions] = createSignal<Simple2D>({ x: 0, y: 0 });
   const [progress, setProgress] = createSignal(0);
+  const [xRange, setXRange] = createSignal<GraphConfig["xRange"]>({
+    min: 0,
+    max: 1,
+    fixed: true,
+  });
 
   const draw = (progress: number, fn: (x: number) => number) => {
     drawGraph(
@@ -27,6 +22,9 @@ export default function SimpleFunction(p5: P5, config: SimpleFunctionConfig) {
       { width: dimension().x, height: dimension().y },
       progress,
       fn,
+      {
+        xRange: xRange(),
+      },
     );
   };
 
@@ -35,6 +33,7 @@ export default function SimpleFunction(p5: P5, config: SimpleFunctionConfig) {
     setCenter,
     setDimensions,
     setProgress,
+    setXRange,
   };
 }
 

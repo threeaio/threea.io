@@ -9,6 +9,8 @@ export interface FunctionEntry {
   config?: {
     min?: number;
     max?: number;
+    range?: [number, number];
     // other config options specific to each function
   };
+  getXRange?: () => [number, number];
 }

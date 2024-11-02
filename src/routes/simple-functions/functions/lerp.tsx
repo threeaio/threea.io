@@ -13,18 +13,19 @@ export const createLerpEntry = (): FunctionEntry => {
     description: () => (
       <>
         <p>
-          Die <code>lerp</code>-Funktion (Linear Interpolation) ist ein
-          unverzichtbares Werkzeug für Animationen und Übergänge. Sie berechnet
-          einen Zwischenwert zwischen zwei Punkten basierend auf einem
-          Interpolationsparameter t. Bei t=0 erhält man den Startwert, bei t=1
-          den Endwert, und bei t=0.5 genau die Mitte.
+          Die <code>lerp</code>-Funktion (Linear Interpolation) ist der zweite
+          Teil unseres Transformations-Duos. Als Gegenstück zu{" "}
+          <code>normalize</code> nimmt sie einen normalisierten Wert zwischen 0
+          und 1 und überführt ihn in einen gewünschten Zielbereich. Wo normalize
+          "nach innen" auf [0,1] abbildet, geht lerp "nach außen" in einen
+          beliebigen Bereich.
         </p>
         <p>
-          Diese Funktion ist besonders nützlich für weiche Bewegungen und
-          Transitionen. Sie bildet die Grundlage für komplexere
-          Easing-Funktionen und ermöglicht präzise Kontrolle über
-          Animations-Sequenzen. Ob Position, Größe, Farbe oder Transparenz –
-          lerp macht aus harten Sprüngen fließende Übergänge.
+          Der Parameter t bestimmt dabei die relative Position im Zielbereich:
+          Bei t=0 erhält man den Startwert, bei t=1 den Endwert, bei t=0.5 genau
+          die Mitte. Gemeinsam mit <code>normalize</code> bildet lerp das
+          mathematische Fundament für die <code>remap</code>-Funktion und ist
+          unerlässlich für Animationen und Übergänge aller Art.
         </p>
         <SliderContainer>
           <RangeSlider

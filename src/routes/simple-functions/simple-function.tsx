@@ -27,6 +27,7 @@ import { SimpleFunctionConfig } from "~/components/animation/_skeleton/Simple-Fu
 export default function SimpleFunction(props: {
   functionConfig: Partial<SimpleFunctionConfig>;
   theFunction: (x: number) => number;
+  rangeFunc?: () => [number, number];
   bgColor: keyof typeof COLORS_3A;
 }) {
   return (
@@ -35,12 +36,26 @@ export default function SimpleFunction(props: {
       end={"clamp(bottom bottom-=90%)"}
       animation={ANIMATION({
         bgColor: COLORS_3A[props.bgColor],
+        setXRange: () => ({
+          min: props.rangeFunc ? props.rangeFunc()[0] : 0,
+          max: props.rangeFunc ? props.rangeFunc()[1] : 1,
+          fixed: true,
+        }),
         simpleFunctionsConfig: {
           ...props.functionConfig,
         },
+
         draw: (p5, simpleFunction, progress, center, dims) => {
+          const range = props.rangeFunc ? props.rangeFunc() : [0, 1];
+
           const ms = p5.millis();
-          const progressHere = getBpmOscillator(ms, 30, "sawtooth");
+          const progressHere = reMap(
+            0,
+            1,
+            range[0],
+            range[1],
+            getBpmOscillator(ms, 30, "sawtooth"),
+          );
           const getY = props.theFunction;
           for (let i = 0; i < simpleFunction.length; i++) {
             simpleFunction[i].draw(progressHere, getY);
