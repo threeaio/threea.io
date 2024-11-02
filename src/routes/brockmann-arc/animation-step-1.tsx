@@ -29,7 +29,7 @@ export default function BrockmanAnimation01(props: ParentProps) {
           fadeInOut={true}
           draw={(_p5, arcs, progress, center) => {
             // Math.sin(p5.millis() / 800) + 1.2
-            const p = mapToNewUnitRange(progress, 0, 0.6);
+            const p = mapToNewUnitRange(0, 0.6, progress);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);
               arcs[i].draw();

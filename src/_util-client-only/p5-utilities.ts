@@ -1,9 +1,8 @@
-import P5 from "p5";
 import { createSimple2D, Simple2DAndTuple } from "~/_util";
 
 export const coordOfCircle = (
   center: { x: number; y: number },
-  angle: number, // respects settings in P5
+  angle: number,
   radius: number,
 ): Simple2DAndTuple => {
   const ang = angle * (Math.PI / 180);

@@ -85,8 +85,59 @@ const DEFAULT_CONFIG: Required<Omit<OscillatorConfig, "morph">> = {
 };
 
 /**
- * Gets the raw waveform value for a normalized position (0-1)
- * Can be used directly for visualization/plotting
+ * Gets the raw waveform value for a normalized position (0-1).
+ * Used directly for visualization/plotting or as a building block for complex waveforms.
+ *
+ * @param shape - The type of waveform to generate
+ * @param position - Normalized position in the waveform cycle (0 to 1)
+ * @param config - Optional configuration parameters
+ *
+ * @returns A value between 0 and 1 representing the waveform amplitude at the given position
+ *
+ * @example
+ * // Basic sine wave
+ * const value = getRawWaveform('sine', 0.5); // Returns ~1 at peak
+ *
+ * @example
+ * // Square wave with custom duty cycle
+ * const value = getRawWaveform('square', 0.3, { dutyCycle: 0.3 }); // Returns 1
+ *
+ * @example
+ * // Elastic wave with custom elasticity
+ * const value = getRawWaveform('elastic', 0.2, { elasticity: 5 });
+ *
+ * @example
+ * // Stepped wave with custom number of steps
+ * const value = getRawWaveform('stepped', 0.7, { steps: 8 });
+ *
+ * @example
+ * // Visualization example:
+ * // Plot 100 points of a triangle wave
+ * const points = Array.from({length: 100}, (_, i) => {
+ *   const x = i / 99; // Normalize to 0-1
+ *   const y = getRawWaveform('triangle', x);
+ *   return { x, y };
+ * });
+ *
+ * Supported shapes:
+ * - 'sine': Smooth sinusoidal wave
+ * - 'triangle': Linear transitions between min/max
+ * - 'sawtooth': Linear ramp up with instant drop
+ * - 'square': Instant transitions between min/max
+ * - 'bounce': Smooth bounce effect with easing
+ * - 'pulse': Square wave with adjustable duty cycle
+ * - 'elastic': Spring-like oscillation with decay
+ * - 'noise': Smooth noise using harmonics
+ * - 'exponential': Exponential growth and decay
+ * - 'circular': Circular easing pattern
+ * - 'stepped': Quantized step transitions
+ *
+ * Configuration options:
+ * - dutyCycle: Sets high/low ratio for pulse waves (0 to 1, default: 0.5)
+ * - elasticity: Controls bounce/spring effect (default: 3)
+ * - steps: Number of discrete levels for stepped wave (default: 4)
+ *
+ * @throws {Error} If position is outside the range [0, 1]
  */
 export const getRawWaveform = (
   shape: OscillatorShape,

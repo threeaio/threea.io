@@ -12,7 +12,7 @@ export function fadeInout(p5: P5, bgColor: ColorArray, progress: number) {
     bgColor[0],
     bgColor[1],
     bgColor[2],
-    (1 - mapToNewUnitRange(progress, 0, 0.1)) * 255,
+    (1 - mapToNewUnitRange(0, 0.1, progress)) * 255,
   );
   p5.rect(0, 0, p5.width, p5.height);
   // p5.pop();
@@ -23,7 +23,7 @@ export function fadeInout(p5: P5, bgColor: ColorArray, progress: number) {
     bgColor[0],
     bgColor[1],
     bgColor[2],
-    mapToNewUnitRange(progress, 0.9, 1) * 255,
+    mapToNewUnitRange(0.9, 1, progress) * 255,
   );
   p5.rect(0, 0, p5.width, p5.height);
   // p5.pop();

@@ -5,6 +5,7 @@ module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     colors: {
+      "transparent": "rgba(0,0,0,0)",
       "3a-green": "rgb(var(--color-3a-green))",
       "3a-red": "rgb(var(--color-3a-red))",
       "3a-blue": "rgb(var(--color-3a-blue))",

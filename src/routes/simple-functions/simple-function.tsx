@@ -9,8 +9,15 @@ const ANIMATION = clientOnly(
 import { COLORS_3A } from "~/_util-client-only";
 import { batch, ParentProps } from "solid-js";
 import { RotatableCubeConfig } from "~/components/animation/stacked-cube/Primitives/Rotatable-Cube";
-import { doubleRange, smoothStep } from "~/_util";
-import { getBpmOscillator, getRawWaveform } from "~/_util/oscillator";
+import {
+  clamp,
+  doubleRange,
+  lerp,
+  mapToNewUnitRange,
+  reMap,
+  smoothStep,
+} from "~/_util";
+import { Easing, getBpmOscillator, getRawWaveform } from "~/_util/oscillator";
 import { SimpleFunctionConfig } from "~/components/animation/_skeleton/Simple-Function";
 
 /**
@@ -19,6 +26,7 @@ import { SimpleFunctionConfig } from "~/components/animation/_skeleton/Simple-Fu
 
 export default function SimpleFunction(props: {
   functionConfig: Partial<SimpleFunctionConfig>;
+  theFunction: (x: number) => number;
   bgColor: keyof typeof COLORS_3A;
 }) {
   return (
@@ -31,13 +39,9 @@ export default function SimpleFunction(props: {
           ...props.functionConfig,
         },
         draw: (p5, simpleFunction, progress, center, dims) => {
-          const p = smoothStep(doubleRange(progress));
-
           const ms = p5.millis();
           const progressHere = getBpmOscillator(ms, 30, "sawtooth");
-          const getY = (x: number) => getRawWaveform("noise", x);
-          // const p = getBpmOscillator(p5.millis(), 30, "sawtooth");
-
+          const getY = props.theFunction;
           for (let i = 0; i < simpleFunction.length; i++) {
             simpleFunction[i].draw(progressHere, getY);
           }

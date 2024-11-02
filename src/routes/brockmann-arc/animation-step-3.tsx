@@ -33,7 +33,7 @@ export default function BrockmanAnimation03(
           bgColor={COLORS_3A.GRAY_DARKEST}
           fadeInOut={true}
           draw={(_p5, arcs, progress, center) => {
-            const p = mapToNewUnitRange(progress, 0, 0.7);
+            const p = mapToNewUnitRange(0, 0.7, progress);
             for (let i = 0; i < arcs.length; i++) {
               arcs[i].setProgress(p);
               arcs[i].draw();
