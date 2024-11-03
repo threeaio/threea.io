@@ -1,7 +1,7 @@
 /* Base range input resets */
 input[type="range"] {
   @apply appearance-none bg-transparent cursor-pointer;
-  height: 1.5rem; /* For proper thumb hitbox */
+  height: 2rem;
 }
 
 /* Remove default styles in Firefox */
@@ -17,38 +17,30 @@ input[type="range"]::-webkit-slider-runnable-track {
   @apply h-0.5 bg-3a-paper rounded-full;
 }
 
-/* Thumb styles */
-
-input[type="range"]::-webkit-slider-thumb,
-input[type="range"]::-moz-range-thumb {
-  @apply appearance-none;
-  @apply h-3 w-3 mt-[-5px]; /* Center thumb vertically */
-  @apply bg-3a-paper rounded-full;
-  @apply border border-3a-gray-darker;
-  @apply transition-transform duration-150;
-  @apply hover:scale-125 hover:bg-3a-green;
-  @apply active:scale-90;
-}
-
+/* Thumb styles with larger hit area */
 input[type="range"]::-webkit-slider-thumb {
   @apply appearance-none;
-  @apply h-3 w-3 mt-[-5px]; /* Center thumb vertically */
-  @apply bg-3a-paper rounded-full;
-  @apply border border-3a-gray-darker;
+  width: 24px; /* Larger hit area */
+  height: 24px; /* Larger hit area */
+  @apply bg-3a-green rounded-full;
   @apply transition-transform duration-150;
-  @apply hover:scale-125 hover:bg-3a-green;
+  @apply hover:scale-125;
   @apply active:scale-90;
+  border: 8.5px solid rgba(var(--color-3a-green) / 0.2); /* Creates invisible border that maintains hit area */
+  background-clip: padding-box; /* Ensures the visible part stays small */
+  margin-top: -11px; /* Center the thumb */
 }
 
 input[type="range"]::-moz-range-thumb {
   @apply appearance-none;
-  @apply h-3 w-3; /* Firefox centers automatically */
-  @apply bg-3a-paper rounded-sm rotate-45;
-  @apply border border-3a-gray-darker;
+  width: 24px; /* Larger hit area */
+  height: 24px; /* Larger hit area */
+  @apply bg-3a-green rounded-full;
   @apply transition-transform duration-150;
-  @apply hover:scale-125 hover:bg-3a-green;
+  @apply hover:scale-125;
   @apply active:scale-90;
-  @apply border-0; /* Remove default Firefox border */
+  border: 10.5px solid transparent; /* Creates invisible border that maintains hit area */
+  background-clip: padding-box; /* Ensures the visible part stays small */
 }
 
 /* Focus styles */
@@ -64,32 +56,4 @@ input[type="range"]:focus::-webkit-slider-thumb {
 input[type="range"]:focus::-moz-range-thumb {
   @apply bg-3a-green;
   @apply shadow-[0_0_0_4px_rgba(62,241,152,0.1)];
-}
-
-/* Disabled state */
-input[type="range"]:disabled {
-  @apply opacity-50 cursor-not-allowed;
-}
-
-input[type="range"]:disabled::-webkit-slider-thumb {
-  @apply hover:scale-100 hover:bg-3a-paper;
-}
-
-input[type="range"]:disabled::-moz-range-thumb {
-  @apply hover:scale-100 hover:bg-3a-paper;
-}
-
-/* Optional: Active track highlighting */
-input[type="range"].highlight-track {
-  @apply relative;
-}
-
-input[type="range"].highlight-track::-webkit-slider-runnable-track {
-  /*@apply bg-gradient-to-r from-3a-green/25  to-3a-gray-darker;*/
-  @apply bg-3a-paper;
-}
-
-input[type="range"].highlight-track::-moz-range-track {
-  /*@apply bg-gradient-to-r from-3a-green/25  to-3a-gray-darker;*/
-  @apply bg-3a-paper;
 }

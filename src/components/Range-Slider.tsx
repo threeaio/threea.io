@@ -38,7 +38,9 @@ interface SliderContainerProps {
 
 export function SliderContainer(props: SliderContainerProps) {
   return (
-    <div class={`grid grid-cols-2 gap-12 mb-12 mt-12 ${props.class ?? ""}`}>
+    <div
+      class={`grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 mb-12 mt-12 ${props.class ?? ""}`}
+    >
       {props.children}
     </div>
   );
