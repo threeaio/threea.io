@@ -89,7 +89,7 @@ export default function SubNavigation() {
                             navigate("/");
                           },
                         });
-
+                        e.stopImmediatePropagation();
                         e.preventDefault();
                         return false;
                       }}
@@ -118,7 +118,7 @@ export default function SubNavigation() {
                                   }
                                 },
                               });
-
+                              e.stopImmediatePropagation();
                               e.preventDefault();
                               return false;
                             }}

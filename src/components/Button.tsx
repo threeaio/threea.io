@@ -8,19 +8,23 @@ export const Button = (props: {
   disabled?: boolean;
   asA?: boolean; // TODO group with href
   isBack?: boolean;
-  handleClick?: (e: {
-    currentTarget: Element;
-    target: Element;
-    preventDefault: () => void;
-  }) => void;
+  handleClick?: (
+    e: PointerEvent & {
+      currentTarget: Element;
+      target: Element;
+      preventDefault: () => void;
+    },
+  ) => void;
   href?: string;
   buttonType?: "button" | "submit" | "reset";
 }) => {
-  const handleClick = (e: {
-    currentTarget: Element;
-    target: Element;
-    preventDefault: () => void;
-  }) => {
+  const handleClick = (
+    e: PointerEvent & {
+      currentTarget: Element;
+      target: Element;
+      preventDefault: () => void;
+    },
+  ) => {
     props.handleClick?.(e);
     if (props.target) {
       const el: HTMLElement | null = document.querySelector(props.target);
@@ -37,6 +41,10 @@ export const Button = (props: {
       href={props.href!}
       end
       activeClass={"btn--active"}
+      onClick={(e) => {
+        e.preventDefault();
+        return false;
+      }}
       onPointerUp={(e) => {
         props.handleClick?.(e);
       }}
@@ -47,7 +55,7 @@ export const Button = (props: {
   ) : (
     <button
       type={props.buttonType || "button"}
-      onPointerUp={handleClick}
+      onPointerUp={(e) => handleClick(e)}
       class={`btn  ${props.isBack ? "btn--back" : ""} ${props.disabled === true ? "btn--disabled" : ""}`}
     >
       {props.children}

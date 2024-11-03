@@ -161,6 +161,12 @@ const calculateTicks = (range: Range, maxTicks: number): number[] => {
     ticks.sort((a, b) => a - b);
   }
 
+  // Always include last value
+  if (!ticks.includes(bounds.max)) {
+    ticks.push(bounds.max);
+    ticks.sort((a, b) => a - b);
+  }
+
   // Reverse ticks if range is reversed
   return isRangeReversed(range) ? ticks.reverse() : ticks;
 };

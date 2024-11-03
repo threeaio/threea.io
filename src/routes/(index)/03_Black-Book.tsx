@@ -156,8 +156,13 @@ function BlackBookItem(props: {
       <A
         class="block transition bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group hover:bg-3a-gray-darker/60"
         href={props.content.link}
+        onClick={(e) => {
+          e.preventDefault();
+          return false;
+        }}
         onPointerUp={(e) => {
           const page = document.querySelector("#PAGE_3a")!;
+          console.log("page", page);
           gsap.to(page, {
             opacity: 0,
             onComplete: () => {
@@ -167,7 +172,7 @@ function BlackBookItem(props: {
               window.location.href = props.content.link;
             },
           });
-
+          console.log("e", e);
           e.preventDefault();
           return false;
         }}
