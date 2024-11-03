@@ -46,7 +46,7 @@
 
 /* Hamburger Button */
 .navHeadSymbol {
-  @apply pointer-events-auto cursor-pointer flex flex-col gap-1;
+  @apply pointer-events-auto cursor-pointer flex flex-col gap-1 bg-transparent p-4 -m-4;
 }
 
 .navHeadSymbol > span {

@@ -156,7 +156,7 @@ function BlackBookItem(props: {
       <A
         class="block transition bg-3a-gray-darker/40 py-8 md:py-12 mb-1 relative group hover:bg-3a-gray-darker/60"
         href={props.content.link}
-        onClick={(e) => {
+        onPointerUp={(e) => {
           const page = document.querySelector("#PAGE_3a")!;
           gsap.to(page, {
             opacity: 0,
