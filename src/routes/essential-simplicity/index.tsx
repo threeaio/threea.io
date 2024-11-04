@@ -34,7 +34,6 @@ export default function SimpleFunctions() {
     createClampEntry(),
     createRemapEntry(),
     createSmoothstepEntry(),
-    // Add more functions...
   ];
 
   // Navigation setup

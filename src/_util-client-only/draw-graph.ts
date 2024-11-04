@@ -4,7 +4,7 @@ import { COLORS_3A } from "~/_util-client-only";
 
 // Constants for configuring the graph appearance
 const PADDING = 80;
-const MIN_TICK_SPACING = 40;
+const MIN_TICK_SPACING = 50;
 const TICK_SIZE = 6;
 const TICK_LABEL_OFFSET = 20;
 const FONT_SIZE = 12;
@@ -158,14 +158,15 @@ const calculateTicks = (range: Range, maxTicks: number): number[] => {
   // Always include 0 if it's within range
   if (bounds.min <= 0 && bounds.max >= 0 && !ticks.includes(0)) {
     ticks.push(0);
-    ticks.sort((a, b) => a - b);
   }
-
   // Always include last value
   if (!ticks.includes(bounds.max)) {
     ticks.push(bounds.max);
-    ticks.sort((a, b) => a - b);
   }
+  if (!ticks.includes(bounds.min)) {
+    ticks.push(bounds.min);
+  }
+  ticks.sort((a, b) => a - b);
 
   // Reverse ticks if range is reversed
   return isRangeReversed(range) ? ticks.reverse() : ticks;
@@ -203,8 +204,8 @@ export const drawGraph = (
   } = config;
 
   const colors = {
-    text: config.colors?.text ?? COLORS_3A.PAPER,
-    axis: config.colors?.axis ?? COLORS_3A.WHITE,
+    text: config.colors?.text ?? COLORS_3A.WHITE,
+    axis: config.colors?.axis ?? COLORS_3A.PAPER,
     grid: config.colors?.grid ?? COLORS_3A.PAPER,
     line: config.colors?.line ?? COLORS_3A.WHITE,
     point: config.colors?.point ?? COLORS_3A.GREEN,
@@ -265,11 +266,9 @@ export const drawGraph = (
   };
 
   // Setup drawing style for font
-  p5.noStroke();
   p5.textSize(fontSize);
   p5.textStyle(p5.NORMAL);
   p5.textFont("Hoves-Mono");
-  p5.fill(colors.text);
 
   // Setup drawing style for lines
   p5.stroke(colors.axis);
@@ -295,13 +294,21 @@ export const drawGraph = (
     if (isVertical) {
       const y = toScreenY(value);
       p5.line(padding - tickSize, y, padding, y);
+      p5.push();
       p5.textAlign(p5.RIGHT, p5.CENTER);
+      p5.noStroke();
+      p5.fill(colors.text);
       p5.text(formattedValue, padding - tickSize - tickLabelOffset, y);
+      p5.pop();
     } else {
       const x = toScreenX(value);
       p5.line(x, xAxisY, x, xAxisY + tickSize);
+      p5.push();
+      p5.noStroke();
+      p5.fill(colors.text);
       p5.textAlign(p5.CENTER, p5.TOP);
       p5.text(formattedValue, x, xAxisY + tickSize + tickLabelOffset);
+      p5.pop();
     }
   };
 

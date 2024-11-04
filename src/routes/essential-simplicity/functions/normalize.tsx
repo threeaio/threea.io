@@ -1,4 +1,3 @@
-// functions/entries/normalize.tsx
 import { createSignal } from "solid-js";
 import { normalize } from "~/_util";
 import { FunctionEntry } from "~/routes/essential-simplicity/functions/Function-Entry.interface";

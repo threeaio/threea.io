@@ -8,7 +8,6 @@ import { Divider } from "~/components/Divider";
 import { clientOnly } from "@solidjs/start";
 import {
   AnchorProps,
-  NavigationConfiguration,
   NavigationItem,
   useNavigationContext,
 } from "~/Navigation-Context";
@@ -53,6 +52,7 @@ export default function LerpedRandomness() {
         </div>
       </FullWidth>
       <Divider />
+
       <PieceWrapper>
         <ANIMATION
           bgColor="PAPER"
