@@ -17,10 +17,9 @@ export const createRemapEntry = (): FunctionEntry => {
         <p>
           Die <code>remap</code>-Funktion ist ein mächtiges Werkzeug zur
           Transformation von Wertebereichen. Sie übersetzt einen Wert aus einem
-          Ursprungsbereich proportional in einen Zielbereich – ähnlich wie ein
-          Übersetzer, der nicht nur die Sprache, sondern auch den kulturellen
-          Kontext anpasst. Dies ist besonders nützlich, wenn Daten aus
-          verschiedenen Quellen harmonisiert werden müssen.
+          Ursprungsbereich proportional in einen Zielbereich. Dies ist besonders
+          nützlich, wenn Daten aus verschiedenen Quellen harmonisiert oder
+          ineinander übersetzt werden müssen.
         </p>
         <p>
           Ob Sensordaten in Bildschirmkoordinaten, Mausbewegungen in
