@@ -13,7 +13,7 @@
     "types": ["vinxi/types/client","vite/client", "@testing-library/jest-dom"],
     "isolatedModules": true,
     "paths": {
-      "~/*": ["./src/*"],
+      "~/*": ["./src/*"]
     }
   }
 }

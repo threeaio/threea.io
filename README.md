@@ -1,32 +1,75 @@
-# SolidStart
+# threea.io - Personal Developer Portfolio
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+This Readme is AI-generated =D
 
-## Creating a project
+A modern, interactive portfolio website built with SolidJS, featuring creative animations, case studies, and technical experiments. The site showcases web development work and creative coding experiments with a focus on animation and design.
+
+## Key Features
+
+- Creative canvas-based animations and experiments
+- Smooth scrolling with GSAP animations
+- Responsive design with mobile-first approach
+- Interactive code demonstrations
+- Project case studies and technical writing
+- Custom typography with TT Hoves font family
+
+## Technology Stack
+
+- **Framework**: SolidJS with solid-start
+- **Styling**: TailwindCSS
+- **Animations**:
+  - GSAP for scroll-based animations
+  - P5.js for creative coding
+  - Canvas API for custom graphics
+- **Routing**: @solidjs/router
+- **Smooth Scrolling**: @studio-freight/lenis
+- **Build Tool**: Vinxi
+
+## Project Structure
+
+The project is organized into several main sections:
+
+- **Introduction**: Personal introduction and site overview
+- **About Work**: Professional experience and skills
+- **Blackbook**: Collection of creative experiments and case studies including:
+  - Brockmann Arc: Creative interpretation of Josef Müller-Brockmann's work
+  - Lerped Randomness: Animation experiments
+  - Essential Simplicity: Technical writing about fundamental functions
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
-# create a new project in the current directory
-npm init solid@latest
-
-# create a new project in my-app
-npm init solid@latest my-app
+pnpm install
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+3. Start the development server:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev
 ```
 
-## Building
+4. For production build:
 
-Solid apps are built with _presets_, which optimise your project for deployment to different environments.
+```bash
+pnpm build
+```
 
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
+## Development Notes
 
-## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+- The project uses signals for state management
+- Custom components are built with shadcn/solid
+- Animations are implemented using a combination of GSAP and custom Canvas/P5.js code
+- TypeScript is used throughout with strict type checking
+
+## Browser Support
+
+- Modern browsers with CSS Grid and Canvas API support
+- Designed with progressive enhancement in mind
+- Includes reduced-motion support for accessibility
+
+## License
+
+All rights reserved. This is a personal portfolio project and is not open for redistribution.

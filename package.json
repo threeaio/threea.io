@@ -6,7 +6,9 @@
     "dev-host": "vinxi dev --host",
     "build": "vinxi build",
     "start": "vinxi start",
-    "test": "vitest"
+    "test": "vitest",
+    "flatten-src": "node scripts/flatten-src.js",
+    "full-project": "node scripts/full-project.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.3",

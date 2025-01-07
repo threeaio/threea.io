@@ -146,25 +146,11 @@ export const step3: AnimatedSubSection = {
         Hier ist ein weiterer Zufallsparameter eingabaut, der die Startposition
         der Bögen verschiebt.
       </p>
-      {/*<p>*/}
-      {/*  Durch Drücken der <Kbd>A</Kbd>-Taste kannst du sowohl Startposition,*/}
-      {/*  als auch die Zielwinkel auf neue Werte animieren*/}
-      {/*</p>*/}
-      {/*<h3>Zwischenfazit</h3>*/}
       <p>
         Es gäbe noch einige weitere Ideen. Trotzdem lege ich hier erstmal eine
         Pause ein und schaue, was sich mit ein paar Parametern aus diesem Teil
         generieren lässt.
       </p>
-      {/*<p>*/}
-      {/*  Neben den fehlenden Segmenten, wirkt das <Anf>Einfahren</Anf> von*/}
-      {/*  links und die damit verbundene <Anf>Extra-Umdrehung</Anf> noch nicht*/}
-      {/*  so, wie ich es mir ausgemalt hatte.*/}
-      {/*</p>*/}
-      {/*<p>*/}
-      {/*  Trotzdem lege ich hier erstmal eine Pause ein und schaue, was sich mit*/}
-      {/*  ein paar Parametern aus diesem Teil generieren lässt.*/}
-      {/*</p>*/}
     </>
   ),
 };
